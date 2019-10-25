@@ -36,6 +36,26 @@ All the reducers from the different folders are combined in src/reducer.js
 The aspects of redux which interact asynchronously with Holochain, use a library called “hc-redux-middleware”
 https://www.npmjs.com/package/@holochain/hc-redux-middleware
 
+___ 
+
+HTML5 Canvas drawing
+
+The folder where this all happens is `drawing`. 
+
+`drawing/index.js` exports a `render` function which is the main one. It handles the drawing of everything from the redux state, onto the Canvas. A new paint occurs every time the redux state is udpated. It is very fast, so performance is not an issue. In order to repaint, first it clears what was drawn on the Canvas, then paints everything fresh.
+
+Canvas is fairly easy to work with. Great resources for it can be found at MDN: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API.
+
+It uses other functions from the folder such as `drawGoal` `drawEdge`, etc. Files with `draw` in their name are for painting elements to the Canvas.
+
+Because of "zooming and panning" features, there are two coordinate systems that we need to deal with. The regular coordinate system of the browser window, which appear in browser events like clicks and mousemove, etc. Then there's the zoomed and panned coordinate system of the Canvas. `coordinateSystems.js` has functions for converting from either one to the other. Internally it uses Matrix math to handle the conversion.
+
+`layoutFormula.js` contains the 'auto-layout' algorithm that determines that layout the of the Goals on the screen.
+
+`eventDetection.js` is used to check whether mousemove events, and mouseclick events occur "over" a Goal so that we can change and update the UI, with hover states, or selection.
+
+___
+
 
 This is a sample snapshot of the redux state
 
