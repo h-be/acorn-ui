@@ -19,6 +19,9 @@ Folders:
     - components
 - HTML5 Canvas
     - drawing
+- Keyboard, Mouse, and Screen Event Listeners
+    - event-listeners
+        - These should be "broken out" into separate files, rather than all stuck in here together, but all these event listeners get set up when the page first loads.
 
 
 Folders are, in general, organized according to “features”, which relates to slices of the redux state. Such as “keyboard”. 
