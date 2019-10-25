@@ -29,6 +29,7 @@ class GoalForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.createGoal = this.createGoal.bind(this)
     this.updateGoal = this.updateGoal.bind(this)
+    this.hadleBlur = this.hadleBlur.bind(this)
   }
 
   /*
@@ -46,12 +47,24 @@ class GoalForm extends Component {
       this.handleSubmit()
     }
   }
+
+  hadleBlur(event){
+    if(!this.props.editAddress){
+      event.preventDefault()
+      this.handleSubmit()
+    }
+  }
+
   handleSubmit(event) {
     if (event) {
       // this is to prevent the page from refreshing
       // when the form is submitted, which is the
       // default behaviour
       event.preventDefault()
+    }
+
+    if(!this.props.content || this.props.content === ''){
+      return 
     }
 
     // depending on editAddress, this
@@ -113,6 +126,7 @@ class GoalForm extends Component {
           onKeyDown={this.handleKeyDown}
           autoFocus
           onFocus={this.handleFocus}
+          onBlur={this.hadleBlur}
         />
         {editAddress && <button type='submit' className='goal_form_save'>Save</button>}
       </form>
