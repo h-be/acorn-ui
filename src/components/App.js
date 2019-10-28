@@ -14,6 +14,7 @@ function App(props) {
   }
   return (
     <div>
+      
       <Help />
       {hasSelection && <MultiEditBar />}
       <div style={transform}>
