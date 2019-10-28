@@ -32,7 +32,6 @@ const websocketUrl = `ws://${DEFAULT_HOLOCHAIN_HOST}:${DEFAULT_HOLOCHAIN_PORT}`
 // attempts to form a websocket (two way messages) connection to a running
 // Holochain Conductor
 const connectOpts = process.env.NODE_ENV === 'development' ? { url: websocketUrl } : undefined
-window.alert(JSON.stringify(connectOpts))
 const hcWc = connect(connectOpts)
 
 // holochainMiddleware takes in the hc-web-client websocket connection

@@ -24,7 +24,8 @@ import {
 } from '../mouse/actions'
 import {
   openGoalForm,
-  closeGoalForm
+  closeGoalForm,
+  updateContent
 } from '../goal-form/actions'
 import {
   archiveGoal
@@ -36,6 +37,7 @@ import {
   changeTranslate,
   changeScale
 } from '../viewport/actions'
+import layoutFormula from '../drawing/layoutFormula'
 
 export default function setupEventListeners(store, canvas) {
 
@@ -151,6 +153,19 @@ export default function setupEventListeners(store, canvas) {
   })
   canvas.addEventListener('mouseup', event => {
     store.dispatch(unsetMousedown())
+  })
+
+
+  canvas.addEventListener('dblclick', event => {
+    const state = store.getState()
+    const { goals, edges, ui: { viewport: { translate, scale }, screensize: { width } }} = state
+    const goalAddress = checkForGoalAtCoordinates(canvas.getContext('2d'), translate, scale, width, goals, edges, event.clientX, event.clientY)
+    if (goalAddress ) {
+      let goalCoord =layoutFormula(width, goals, edges)[goalAddress]
+      store.dispatch(unselectAll())
+      store.dispatch(openGoalForm(goalCoord.x,goalCoord.y, goalAddress))
+      store.dispatch(updateContent(goals[goalAddress].content))
+    }
   })
 
   // This listener is bound to the canvas only so clicks on other parts of
