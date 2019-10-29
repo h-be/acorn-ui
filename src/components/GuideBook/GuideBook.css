@@ -1,0 +1,7 @@
+#guide-book{
+  background: #fff;
+}
+
+#guide-book > h4:first-child{
+  text-align: center;;
+}
