@@ -1,24 +1,96 @@
 import React from 'react'
 import './GuideBook.css'
 import Tabs from '../Tabs/Tabs'
+import GettingStarted from './Sections/GettingStarted'
 
 export default class GuideBook extends React.Component{
   render(){
     return(
       <div id="guide-book">
-        <h4>Guide Book</h4>
+        <h2 className="guidebook-title">Guide Book</h2>
         <Tabs
           tabs={[ {title: 'Getting Started'}, {title: "How To's"}, {title: 'Shortcuts'}, {title: 'FAQ'}]}
         >
-          <div>
-              <p className='instructions'>Hold down 'g' and click anywhere to start creating a Goal</p>
-              <p className='instructions'>Click on a node to select it</p>
-              <p className='instructions'>With a node selected, hold down 'g' and click anywhere to create a connected (child) Goal</p>
-              <p className='instructions'>Press 'Esc' to close the Goal creator and deselect Goals</p>
-              <p className='instructions'>Press 'Delete' to archive a Goal</p>
-          </div>          
+          <GettingStarted />
         </Tabs>
       </div>
+    )
+  }
+}
+
+export function NavItemsGroup(props) {
+  return(
+    <nav>
+      { 
+        props.items &&
+        props.items.map((ni,i)=>(
+          <NavItem
+            key={i}
+            id={i}
+            title={ni.title}
+            icon={ni.icon}
+            url={ni.url}
+            submenu={ni.submenu}
+            className={ni.className}
+            selectSection={props.selectSection}
+          />
+        ))
+      }
+    </nav> 
+  )
+}
+
+class NavItem extends React.Component{
+  
+  constructor(props){
+    super(props)
+    this.state ={
+      expand: false,
+    }
+    this.handleExpand = this.handleExpand.bind(this)
+  }
+  
+
+  handleExpand(){
+    this.setState({
+      expand: this.state.expand ? false : true
+    })
+  }
+
+  render(){
+    const expand = this.state.expand ? 'active' : ''
+    return(
+      <section>
+      {
+        this.props.submenu 
+        ?
+          <>
+          <button 
+            className={`nav-item ${this.props.className || ''}`}
+            onClick={this.handleExpand}>
+            {this.props.title}
+            </button>
+          <div className={`sidebar-submenu ${expand}`}>
+            <ul>
+            {
+              this.props.submenu.map((ni,i)=>(
+                <li key={i}>
+                  {/* <NavLink to={ni.url}><span>-</span> {ni.title}</NavLink> */}
+                  <button type="button" onClick={()=>{this.props.selectSection(ni.url)}}>{ni.title}</button>
+                </li>
+              ))
+            }
+            </ul>     
+          </div>
+          </>
+        :
+        // <NavLink className={`nav-item ${this.props.className || ''}`} to={this.props.url ? this.props.url : '/' }>
+        //   {this.props.icon && <img src={this.props.icon} alt=""/> }
+        //   {this.props.title && this.props.title}
+        // </NavLink>
+        <>{ this.props.title} </>
+      }
+      </section>
     )
   }
 }
