@@ -14,7 +14,7 @@ export default function (state = defaultState, action) {
   const { payload, type } = action
   switch (type) {
     case fetchAgents.success().type:
-      return payload
+      return _.keyBy(payload, 'address')
     default:
       return state
   }

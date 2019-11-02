@@ -32,10 +32,10 @@ function PeoplePicker({ people, goalAddress, addMemberOfGoal, archiveMemberOfGoa
                     .map((person, index) => {
                         const onClick = () => {
                             if (person.is_member) archiveMemberOfGoal(person.goal_member_address)
-                            else addMemberOfGoal(goalAddress, person.agent_address)
+                            else addMemberOfGoal(goalAddress, person.address)
                         }
                         return (<li key={index} className={person.is_member ? 'member' : ''} onClick={onClick}>
-                            <img src={person.avatar} className='avatar' />
+                            <img src={person.avatar_url} className='avatar' />
                             <div className='hover_wrapper'>
                                 <span className='person_name'>{person.name}</span>
                                 {person.is_member && <Icon size='small' name='check_mark.svg' />}
@@ -50,8 +50,9 @@ function PeoplePicker({ people, goalAddress, addMemberOfGoal, archiveMemberOfGoa
 
 PeoplePicker.propTypes = {
     people: PropTypes.arrayOf(PropTypes.shape({
+        address: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
-        avatar: PropTypes.string.isRequired,
+        avatar_url: PropTypes.string.isRequired,
         is_member: PropTypes.bool.isRequired,
         goal_member_address: PropTypes.string
     })).isRequired,
@@ -66,15 +67,14 @@ function mapStateToProps(state) {
     const membersOfGoal = Object.keys(state.goalMembers)
         .map(address => state.goalMembers[address])
         .filter(goalMember => goalMember.goal_address === goalAddress)
+    const agents = Object.keys(state.agents).map(address => state.agents[address])
     return {
-        people: state.agents.map(agent_address => {
-            const member = membersOfGoal.find(goalMember => goalMember.agent_address === agent_address)
+        people: agents.map(agent => {
+            const member = membersOfGoal.find(goalMember => goalMember.agent_address === agent.address)
             return {
-                agent_address,
-                name: 'Somebody Cool',
+                ...agent, // address, name, avatar_url
                 is_member: member ? true : false,
                 goal_member_address: member ? member.address : null,
-                avatar: '/img/profile.png'
             }
         }),
         goalAddress
