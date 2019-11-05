@@ -6,6 +6,7 @@ import GoalForm from './GoalForm'
 import Help from './Help'
 import MultiEditBar from './MultiEditBar'
 import HoverOverlay from './HoverOverlay'
+import Header from './Empty/Header'
 
 function App(props) {
   const { hasSelection, hasHover, goalFormIsOpen, translate, scale } = props
@@ -13,15 +14,15 @@ function App(props) {
     transform: `matrix(${scale}, 0, 0, ${scale}, ${translate.x}, ${translate.y})`
   }
   return (
-    <div>
+    <>
       
-      <Help />
+      <Header />
       {hasSelection && <MultiEditBar />}
       <div style={transform}>
         {goalFormIsOpen && <GoalForm />}
         {hasHover && <HoverOverlay />}
       </div>
-    </div>
+    </>
   )
 }
 
