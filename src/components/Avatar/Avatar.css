@@ -1,0 +1,19 @@
+.avatar.clickable {
+  cursor: pointer;
+}
+
+.avatar.small {
+  height: 24px;
+  width: 24px;
+  border-radius: 12px;
+}
+
+.avatar.medium {
+  height: 32px;
+  width: 32px;
+  border-radius: 16px;
+}
+
+.avatar.highlighted {
+  box-shadow: 0 0 0 2px #5F65FF;
+}
