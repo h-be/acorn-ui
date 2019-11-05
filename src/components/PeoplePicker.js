@@ -7,6 +7,7 @@ import {
     addMemberOfGoal,
     archiveMemberOfGoal
 } from '../goal-members/actions'
+import Avatar from './Avatar/Avatar'
 
 function PeoplePicker({ people, goalAddress, addMemberOfGoal, archiveMemberOfGoal, onClose }) {
     const [filterText, setFilterText] = useState('')
@@ -22,7 +23,10 @@ function PeoplePicker({ people, goalAddress, addMemberOfGoal, archiveMemberOfGoa
             <ul className='people_picker_people'>
                 {people
                     // filter people out if there's filter text defined, and don't bother case matching
-                    .filter(person => !filterText || person.name.toLowerCase().indexOf(filterText.toLowerCase()) > -1)
+                    .filter(person => {
+                      const name = `${person.first_name} ${person.last_name}`
+                      return !filterText || name.toLowerCase().indexOf(filterText.toLowerCase()) > -1
+                    })
                     // sort members (people attached to Goal) to the top of the list
                     .sort((p1, p2) => {
                         if (p1.is_member && !p2.is_member) return -1
@@ -35,9 +39,9 @@ function PeoplePicker({ people, goalAddress, addMemberOfGoal, archiveMemberOfGoa
                             else addMemberOfGoal(goalAddress, person.address)
                         }
                         return (<li key={index} className={person.is_member ? 'member' : ''} onClick={onClick}>
-                            <img src={person.avatar_url} className='avatar' />
+                            <Avatar avatar_url={person.avatar_url} highlighted={person.is_member} small />
                             <div className='hover_wrapper'>
-                                <span className='person_name'>{person.name}</span>
+                                <span className='person_name'>{person.first_name} {person.last_name}</span>
                                 {person.is_member && <Icon size='small' name='check_mark.svg' />}
                             </div>
                         </li>)
@@ -51,7 +55,9 @@ function PeoplePicker({ people, goalAddress, addMemberOfGoal, archiveMemberOfGoa
 PeoplePicker.propTypes = {
     people: PropTypes.arrayOf(PropTypes.shape({
         address: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
+        first_name: PropTypes.string.isRequired,
+        last_name: PropTypes.string.isRequired,
+        handle: PropTypes.string.isRequired,
         avatar_url: PropTypes.string.isRequired,
         is_member: PropTypes.bool.isRequired,
         goal_member_address: PropTypes.string
