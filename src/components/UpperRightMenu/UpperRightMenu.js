@@ -7,11 +7,15 @@ import Avatar from '../Avatar/Avatar'
 function UpperRightMenu({ whoami, onProfileSettingsClick }) {
   const [profileMenuOpen, setProfileMenuOpen] = useState(false)
   UpperRightMenu.handleClickOutside = () => setProfileMenuOpen(false)
+  const innerOnProfileSettingsClick = () => {
+    setProfileMenuOpen(false)
+    onProfileSettingsClick()
+  }
   return <div className="upper_right_menu">
     <Avatar avatar_url={whoami.avatar_url} highlighted medium clickable onClick={() => setProfileMenuOpen(!profileMenuOpen)} />
     {profileMenuOpen && <div className="profile_menu">
       <ul>
-        <li onClick={onProfileSettingsClick}>Profile Settings</li>
+        <li onClick={innerOnProfileSettingsClick}>Profile Settings</li>
         {/* <li>Preferences</li> */}
       </ul>
     </div>}

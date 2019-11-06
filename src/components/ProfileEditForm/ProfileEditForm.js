@@ -34,7 +34,7 @@ function ProfileEditForm({ onSubmit, onClose, agentAddress, whoami, titleText, s
   const usernameHelp = "Choose something easy for your teammates to use and recall. Avoid space and @."
 
   return <div className="profile_edit_form">
-    {canClose && <Icon onClick={onClose} name="x.svg" />}
+    {canClose && <Icon onClick={onClose} name="x.svg" size="small" className="close_icon" />}
     <h1>{titleText}</h1>
     <h2>{subText}</h2>
     <form onSubmit={innerOnSubmit}>
