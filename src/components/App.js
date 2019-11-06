@@ -1,21 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import UpperRightMenu from './UpperRightMenu/UpperRightMenu'
+import ProfileEditForm from './ProfileEditForm/ProfileEditForm'
 import GoalForm from './GoalForm'
 import Help from './Help'
 import MultiEditBar from './MultiEditBar'
 import HoverOverlay from './HoverOverlay'
 
 function App(props) {
-  const { hasSelection, hasHover, goalFormIsOpen, translate, scale, whoami } = props
+  const { hasSelection, hasHover, goalFormIsOpen, translate, scale, whoami, showProfileEditForm } = props
   const transform = {
     transform: `matrix(${scale}, 0, 0, ${scale}, ${translate.x}, ${translate.y})`
   }
+
+  const onProfileSubmit = () => {
+    console.log('onProfileSubmit')
+  }
+  const titleText = 'First, let\'s set up your profile on Acorn.'
+  const subText = 'You\'ll be able to edit them later in your Profile Settings.'
+  const submitText = 'ready to start'
+  const canClose = false
+
   return (
     <div>
-      {whoami && <UpperRightMenu whoami={whoami} />}
+      {whoami && <UpperRightMenu whoami={whoami} onProfileSettingsClick={() => {}} />}
+      {showProfileEditForm && <ProfileEditForm onSubmit={onProfileSubmit} whoami={whoami} {...{canClose, titleText, subText, submitText }} />}
       <Help />
       {hasSelection && <MultiEditBar />}
       <div style={transform}>
@@ -41,7 +52,8 @@ App.propTypes = {
     handle: PropTypes.string,
     avatar_url: PropTypes.string,
     address: PropTypes.string
-  })
+  }),
+  showProfileEditForm: PropTypes.bool
 }
 
 function mapStateToProps(state) {
@@ -52,7 +64,8 @@ function mapStateToProps(state) {
     goalFormIsOpen: state.ui.goalForm.isOpen,
     translate: state.ui.viewport.translate,
     scale: state.ui.viewport.scale,
-    whoami: state.whoami && state.whoami.entry
+    whoami: state.whoami ? state.whoami.entry : {},
+    showProfileEditForm: true // TODO
   }
 }
 
