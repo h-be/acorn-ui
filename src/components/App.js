@@ -8,25 +8,44 @@ import GoalForm from './GoalForm'
 import Help from './Help'
 import MultiEditBar from './MultiEditBar'
 import HoverOverlay from './HoverOverlay'
+import { createWhoami, updateWhoami } from '../who-am-i/actions'
 
 function App(props) {
-  const { hasSelection, hasHover, goalFormIsOpen, translate, scale, whoami, showProfileEditForm } = props
+  const {
+    agentAddress,
+    hasSelection,
+    hasHover,
+    goalFormIsOpen,
+    translate,
+    scale,
+    whoami, // .entry and .address
+    showProfileCreateForm,
+    createWhoami,
+    updateWhoami
+  } = props
   const transform = {
     transform: `matrix(${scale}, 0, 0, ${scale}, ${translate.x}, ${translate.y})`
   }
+  const [showProfileEditForm, setShowProfileEditForm] = useState(false)
 
-  const onProfileSubmit = () => {
-    console.log('onProfileSubmit')
+  const onProfileSubmit = (info) => {
+    showProfileEditForm ? updateWhoami(info, whoami.address) : createWhoami(info)
+    setShowProfileEditForm(false)
   }
-  const titleText = 'First, let\'s set up your profile on Acorn.'
-  const subText = 'You\'ll be able to edit them later in your Profile Settings.'
-  const submitText = 'ready to start'
-  const canClose = false
+  const titleText = showProfileEditForm ? 'Profile Settings' : 'First, let\'s set up your profile on Acorn.'
+  const subText = showProfileEditForm ? '' : 'You\'ll be able to edit them later in your Profile Settings.'
+  const submitText = showProfileEditForm ? 'save changes' : 'ready to start'
+  const canClose = showProfileEditForm
 
   return (
     <div>
-      {whoami && <UpperRightMenu whoami={whoami} onProfileSettingsClick={() => {}} />}
-      {showProfileEditForm && <ProfileEditForm onSubmit={onProfileSubmit} whoami={whoami} {...{canClose, titleText, subText, submitText }} />}
+      {whoami && <UpperRightMenu whoami={whoami.entry} onProfileSettingsClick={() => setShowProfileEditForm(true)} />}
+      {(showProfileCreateForm || showProfileEditForm) &&
+        <ProfileEditForm
+          onSubmit={onProfileSubmit}
+          onClose={() => setShowProfileEditForm(false)}
+          whoami={whoami ? whoami.entry : null}
+          {...{canClose, titleText, subText, submitText, agentAddress }} />}
       <Help />
       {hasSelection && <MultiEditBar />}
       <div style={transform}>
@@ -39,7 +58,7 @@ function App(props) {
 
 App.propTypes = {
   hasSelection: PropTypes.bool.isRequired, // whether or not there are Goals selected
-  hasHover: PropTypes.bool.isRequired, // whether or not a Goal is hovered over
+  hasHover: PropTypes.bool, // whether or not a Goal is hovered over
   goalFormIsOpen: PropTypes.bool.isRequired,
   translate: PropTypes.shape({
     x: PropTypes.number.isRequired,
@@ -53,7 +72,20 @@ App.propTypes = {
     avatar_url: PropTypes.string,
     address: PropTypes.string
   }),
-  showProfileEditForm: PropTypes.bool
+  showProfileEditForm: PropTypes.bool,
+  createWhoami: PropTypes.func,
+  updateWhoami: PropTypes.func
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    createWhoami: (whoami) => {
+      return dispatch(createWhoami.create({ profile: whoami }))
+    },
+    updateWhoami: (whoami, address) => {
+      return dispatch(updateWhoami.create({ profile: whoami, address }))
+    }
+  }
 }
 
 function mapStateToProps(state) {
@@ -64,9 +96,10 @@ function mapStateToProps(state) {
     goalFormIsOpen: state.ui.goalForm.isOpen,
     translate: state.ui.viewport.translate,
     scale: state.ui.viewport.scale,
-    whoami: state.whoami ? state.whoami.entry : {},
-    showProfileEditForm: true // TODO
+    whoami: state.whoami,
+    showProfileCreateForm: !state.whoami,
+    agentAddress: state.agentAddress
   }
 }
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App)

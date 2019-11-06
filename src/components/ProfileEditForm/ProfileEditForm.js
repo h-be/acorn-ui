@@ -4,15 +4,22 @@ import './ProfileEditForm.css'
 import Button from '../Button/Button'
 import ValidatingFormInput from '../ValidatingFormInput/ValidatingFormInput'
 import Avatar from '../Avatar/Avatar'
+import Icon from '../Icon'
 
-function ProfileEditForm({ onSubmit, whoami, titleText, subText, submitText, canClose }) {
+function ProfileEditForm({ onSubmit, onClose, agentAddress, whoami, titleText, subText, submitText, canClose }) {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [handle, setHandle] = useState('')
   const [avatarUrl, setAvatarUrl] = useState('')
   const innerOnSubmit = (e) => {
     e.preventDefault()
-    onSubmit()
+    onSubmit({
+      first_name: firstName,
+      last_name: lastName,
+      avatar_url: avatarUrl,
+      address: agentAddress,
+      handle
+    })
   }
 
   useEffect(() => {
@@ -27,7 +34,7 @@ function ProfileEditForm({ onSubmit, whoami, titleText, subText, submitText, can
   const usernameHelp = "Choose something easy for your teammates to use and recall. Avoid space and @."
 
   return <div className="profile_edit_form">
-    {canClose && <div>canClose</div>}
+    {canClose && <Icon onClick={onClose} name="x.svg" />}
     <h1>{titleText}</h1>
     <h2>{subText}</h2>
     <form onSubmit={innerOnSubmit}>
@@ -46,7 +53,7 @@ function ProfileEditForm({ onSubmit, whoami, titleText, subText, submitText, can
         </div>
       </div>
       <div className="row">
-        <ValidatingFormInput value={"HcSciGpYDHTaa5dmw583AO7Jy9kHz9K3gu6MtTsB8Nwbfe3y3hD8rOb9aj5B8za" || whoami.address} readOnly label="Your Public Key" />
+        <ValidatingFormInput value={agentAddress} readOnly label="Your Public Key" />
       </div>
     </form>
     <Button onClick={innerOnSubmit} text={submitText} />
@@ -54,7 +61,9 @@ function ProfileEditForm({ onSubmit, whoami, titleText, subText, submitText, can
 }
 
 ProfileEditForm.propTypes = {
+  agentAddress: PropTypes.string,
   onSubmit: PropTypes.func,
+  onClose: PropTypes.func,
   whoami: PropTypes.shape({
     address: PropTypes.string,
     first_name: PropTypes.string,
