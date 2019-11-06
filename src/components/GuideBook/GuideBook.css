@@ -6,8 +6,15 @@
   box-shadow: 0px 1px 5px 1px #ccc;
 }
 
+#guide-book *{
+  margin: 0;
+  padding: 0;
+}
+
 #guide-book > .guidebook-title:first-child{
   text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
 }
 
 #guide-book .nav-item{
@@ -17,6 +24,7 @@
   padding: 0;
   font-size: 18px;
   font-weight: bold;
+  margin-bottom: 1.5rem;;
 }
 
 #guide-book .sidebar-submenu{
@@ -43,11 +51,41 @@
   font-size: 1rem;
 }
 
+#guide-book .guidebook-section{
+  display: flex;
+  flex-direction: row;
+}
+
+#guide-book .guidebook-section .guidebook-section-control{ margin-right: 1.5rem; }
+
+#guide-book .guidebook-section .guidebook-section-control >  button{
+  display: inline-block;
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  justify-content: space-around;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 #guide-book .sidebar-submenu.active ul li button:hover{ color: #5F65FF; }
 
-#guide-book .guidebook-section ol li{ margin-bottom: 1.5rem; }
+#guide-book .guidebook-section ol{
+  margin: 0;
+  padding: 0;
+  padding-left: 1rem;
+}
+#guide-book .guidebook-section ol li{  
+  margin: 0;
+  margin-bottom: 1.5rem;
+}
 
 #guide-book .guidebook-section .guidebook-section-title{
   font-size: 1.17rem;
-  margin-bottom: 1.5rem;
+  margin: 0 0 1.5rem 0;
 }
+
+
+#guide-book button{ outline: none; }

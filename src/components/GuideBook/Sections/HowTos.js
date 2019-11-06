@@ -38,12 +38,17 @@ export default function HowTos(props){
 
 const CreateCard = props => (
   <div className="guidebook-section">
-    <button onClick={props.goBack} type="button">go Back</button>
-    <h3 className="guidebook-section-title">Create a Card</h3>
-    <ol>
-      <li> hold G on keyboard left click on any empty space on the canvas</li>
-      <li> type in a title for the card</li>
-      <li> press Enter</li>
-    </ol>
+    <div className="guidebook-section-control">
+      <button onClick={props.goBack} type="button">{'<'}</button>
+    </div>
+    <div className="guidebook-section-content">
+      <h3 className="guidebook-section-title">Create a Card</h3>
+      <ol>
+        <li> hold G on keyboard left click on any empty space on the canvas</li>
+        <li> type in a title for the card</li>
+        <li> press Enter</li>
+      </ol>
+
+    </div>
   </div>
 )
