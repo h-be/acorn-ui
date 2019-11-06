@@ -1,5 +1,6 @@
 import React from 'react'
 import GuideBook from '../GuideBook/GuideBook'
+import './empty.css'
 export default class Header extends React.Component{
     constructor(props){
         
@@ -22,13 +23,13 @@ export default class Header extends React.Component{
             <>
             <div className="header">
                 <div className="logos">
-                    <div className="logo">
+                    <div className="logo" >
                         <img src="img/acorn-svgrepo-com.svg"/>
-                        <h1>acorn</h1>
+                        <p className="semi">acorn</p>
                     </div>
                     <div className="logo">
                         <img src="img/maps-lines.svg"/>
-                        <h3>H-BE SoA</h3>
+                        <p className="regular">H-BE SoA</p>
                     </div>
                 </div>
                 <div className="estado">
