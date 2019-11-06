@@ -61,7 +61,7 @@
     align-items: center;
   }
   
-  .estado > img,div{
+  .estado > img,.estado >div{
     width: 23px;
     height: 23px;
     margin: 0px;
@@ -78,6 +78,39 @@
     top: 80%;
     left: 80%;
     transform: translate(-50%,-50%);
-    background-color: blue;
     border-radius: 50%;
+   }
+   .blue img + span{
+    background-color: blue;
+   }
+   .green img + span{
+    background-color: green;
+   }
+   button.green img{
+    background-color: green;
+   }
+   button.blue img {
+    background-color: blue;
+   }
+   button.yellow img {
+    background-color: yellow;
+   }
+   button.gray img {
+    background-color: gray;
+   }
+   .status_change button img {
+    border-radius: 50%;
+   }
+   .status_change button{
+    outline: none;
+     background: none;
+     border: none;
+     display: flex;
+   }
+   .instructions_wrapper{
+    float: right;
+   }
+   .status_change{
+    float: right;
+    
    }
