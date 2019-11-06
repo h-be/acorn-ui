@@ -556,38 +556,76 @@ div.react {
 .bg_Complete {
   background-color: #83E300;
 }
-.acornTOP{
-  position: absolute;
-  top: 14px;
-  left: 13px;
+.react{
+  width: 99.4%;
+  margin-left: .4%;
+}
+.logos{display: flex;}
+.header{
+  margin-top: .5%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.logo{
+  margin-left: 5%;
   width: 150px;
   height: 50px;
   background: #FFFFFF 0% 0% no-repeat padding-box;
   border-radius: 10px;
   opacity: 0.8;
   display: flex;
-
 }
-.acornTOP  h2{
-  position: absolute;
+.logo img{
+  width: 30px;
+  height: 30px;
   margin: 0px;
-  top: 11px;
-  left: 45px;
-  width: 80px;
-  height: 45px;
+  padding: 8% 4% 0% 8%;
+}
+.logos{
+  width: auto;
+}
+.logo h1,h3{
+  margin:8% 0px;
   text-align: left;
   font: SemiBold 28px/22px Quebec;
   letter-spacing: 0;
   color: #222222;
-  opacity: 1;
+}
+.logo h3{
+  margin-top: 16px;
 }
 
-.acornTOP .logo{
-  position: absolute;
-  top: 10px;
-  left: 12px;
-  width: 30px;
-  height: 30px;
-  background: transparent url('img/acorn-svgrepo-com.svg') 0% 0% no-repeat padding-box;
-  opacity: 1;
+.estado{
+  margin-left: 10px;
+  width: 150px;
+  height: 50px;
+  padding: 0% .5%;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border-radius: 10px;
+  opacity: 0.8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
+.estado > img,div{
+  width: 23px;
+  height: 23px;
+  margin: 0px;
+  display: inline-block;
+  position: relative;
+}
+
+.estado div img{ width: 100%;display: block; }
+
+.estado div img + span{
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  top: 80%;
+  left: 80%;
+  transform: translate(-50%,-50%);
+  background-color: blue;
+  border-radius: 50%;
+ }

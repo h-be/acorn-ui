@@ -16,7 +16,7 @@ function App(props) {
   return (
     <>
       
-      <Header />
+      <Header/>
       {hasSelection && <MultiEditBar />}
       <div style={transform}>
         {goalFormIsOpen && <GoalForm />}
