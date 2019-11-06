@@ -37,12 +37,12 @@ function ProfileEditForm({ onSubmit, whoami, titleText, subText, submitText, can
         <ValidatingFormInput value={lastName} onChange={setLastName} label="Last Name" placeholder="Potter" />
       </div>
       <div className="row halfSize">
-        <ValidatingFormInput value={handle} onChange={setHandle} label="Username" helpText={usernameHelp} placeholder="harrypotter" />
+        <ValidatingFormInput value={handle} onChange={setHandle} label="Username" helpText={usernameHelp} placeholder="harrypotter" withAtSymbol />
       </div>
       <div className="row">
         <ValidatingFormInput value={avatarUrl} onChange={setAvatarUrl} label="Profile Picture" placeholder="Paste in your profile picture URL here" />
         <div className="profile_edit_form_avatar">
-          <Avatar avatar_url={avatarUrl} medium />
+          <Avatar avatar_url={avatarUrl} large />
         </div>
       </div>
       <div className="row">
