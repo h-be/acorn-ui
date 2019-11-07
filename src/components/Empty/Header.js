@@ -1,6 +1,7 @@
 import React from 'react'
 import GuideBook from '../GuideBook/GuideBook'
 import './empty.css'
+
 import Avatar from '../Avatar/Avatar'
 export default class Header extends React.Component{
     constructor(props){
@@ -10,6 +11,8 @@ export default class Header extends React.Component{
         this.clickBook  = this.clickBook.bind(this)
         this.clickStatus  = this.clickStatus.bind(this)
         this.changeStatus  = this.changeStatus.bind(this)
+        this.clickProfile  = this.clickProfile.bind(this)
+
         this.hover  = this.hover.bind(this)
         this.state={isOpen:false,online:{},isStatusOpen:false,lista:{},avatar:false,listaProfile:{}}
 
@@ -24,8 +27,12 @@ export default class Header extends React.Component{
             
         ],
         avatar:false,
-        listaProfile:["Profile Settings","Preferences"]
+        listaProfile:[{titulo:"Profile Settings",click:this.clickProfile},{titulo:"Preferences",click:null}]
     })
+    }
+    clickProfile(e){
+        this.props.setShowProfileEditForm(true)
+        this.setState({isProfileOpen:false,isStatusOpen:false,isOpen:false})
     }
     clickAvatar(e){
         this.setState({isProfileOpen:!this.state.isProfileOpen,isStatusOpen:false,isOpen:false})
@@ -82,7 +89,7 @@ export default class Header extends React.Component{
                             this.hover(true)
                         }} onMouseOut={e=>{
                             this.hover(false)
-                        }} onClick={this.clickAvatar}><Avatar avatar_url="https://www.w3schools.com/howto/img_avatar2.png" highlighted={this.state.avatar}/></div>
+                        }}><Avatar avatar_url="https://www.w3schools.com/howto/img_avatar2.png" highlighted={this.state.avatar} clickable onClick={this.clickAvatar}/></div>
                         
                         <span>
                             <img src={this.state.online.img} onClick={this.clickStatus}/>
@@ -95,7 +102,7 @@ export default class Header extends React.Component{
                 {this.state.isOpen &&<GuideBook />  || this.state.isStatusOpen && Object.keys(this.state.lista).map(key=>
                     <ListStatus key={key }img={this.state.lista[key].img} color={this.state.lista[key].color} titulo={this.state.lista[key].titulo} changeStatus={this.changeStatus}/>) 
                     || this.state.isProfileOpen && Object.keys(this.state.listaProfile).map(key=>
-                        <ListProfile key={key }  titulo={this.state.listaProfile[key]} />)
+                        <ListProfile key={key }  titulo={this.state.listaProfile[key].titulo} click={this.state.listaProfile[key].click} />)
                 }
             </div>
                 
@@ -112,6 +119,6 @@ const ListStatus=(props)=>{
 }
 const ListProfile=(props)=>{
     return(
-            <button ><p>{props.titulo}</p></button>
+            <button onClick={props.click}><p>{props.titulo}</p></button>
     )
 }
