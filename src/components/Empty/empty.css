@@ -84,31 +84,32 @@
     border-radius: 50%;
    }
    .blue .avatar_container + span{
-    background-color: blue;
+    background-color: #5F65FF;
    }
    .green .avatar_container + span{
-    background-color: green;
+    background-color: #00D0C0;
    }
    .yellow .avatar_container + span{
-    background-color: yellow;
+    background-color: #FFC400;
    }
    .gray .avatar_container + span{
-    background-color: gray;
+    background-color: #D1D1D1;
    }
-   button.green .avatar_container{
-    background-color: green;
+   button.green img{
+    background-color: #00D0C0;
    }
-   button.blue .avatar_container {
-    background-color: blue;
+   button.blue img {
+    background-color: #5F65FF;
    }
-   button.yellow .avatar_container {
-    background-color: yellow;
+   button.yellow img {
+    background-color: #FFC400;
    }
-   button.gray .avatar_container {
-    background-color: gray;
+   button.gray img {
+    background-color: #D1D1D1;
    }
    .status_change button img {
     border-radius: 50%;
+    height: 15px;
    }
    .status_change button{
     outline: none;
@@ -117,7 +118,6 @@
     border: none;
     display: flex;
     padding: 0px;
-    
     text-decoration: none;
     cursor: pointer;
    }
