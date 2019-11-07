@@ -19,6 +19,11 @@
     display: flex;
     
   }
+  .fixed{
+    position: fixed;
+    top: 0;
+    width: 99%;
+  }
   .logo img{
     width: 30px;
     height: 30px;
@@ -49,6 +54,7 @@
   }
   
   .status2{
+    
     margin-left: 10px;
     width: 150px;
     height: 50px;

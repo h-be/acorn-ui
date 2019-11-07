@@ -40,8 +40,8 @@ function App(props) {
 
   return (
     <div>
+      <div className="fixed">{whoami && <Header whoami={whoami} setShowProfileEditForm={setShowProfileEditForm} />}</div>
       
-      {whoami && <Header whoami={whoami} setShowProfileEditForm={setShowProfileEditForm} />}
       {(showProfileCreateForm || showProfileEditForm) &&
         <ProfileEditForm
           onSubmit={onProfileSubmit}
