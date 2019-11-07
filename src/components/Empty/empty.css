@@ -103,9 +103,26 @@
    }
    .status_change button{
     outline: none;
-     background: none;
-     border: none;
-     display: flex;
+    background: none;
+    width: 100px;
+    border: none;
+    display: flex;
+    padding: 9px;
+    background-color: #FFFFFF;
+    text-decoration: none;
+    cursor: pointer;
+   }
+   .status_change button:first-child{
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+   }
+   .status_change button:last-child{
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    
+   }
+   .status_change{
+     margin-top: 20px;
    }
    .instructions_wrapper{
     float: right;
