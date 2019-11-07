@@ -1,0 +1,62 @@
+
+.profile_edit_form {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -378px;
+  margin-left: -317px;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 6px #00000041;
+  border-radius: 10px;
+  width: 510px;
+  height: 612px;
+  padding: 72px 62px;
+  text-align: center;
+}
+
+.profile_edit_form .close_icon {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  cursor: pointer;
+}
+
+.profile_edit_form h1 {
+  margin-top: 0;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0.2px;
+  color: #222222;
+}
+
+.profile_edit_form h2 {
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.14px;
+  color: #717171;
+  font-weight: normal;
+  margin-bottom: 63px;
+}
+
+.profile_edit_form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile_edit_form .row {
+  flex: 1;
+  display: flex;
+}
+
+.profile_edit_form .row.halfSize {
+  width: 50%;
+}
+
+.profile_edit_form .profile_edit_form_avatar {
+  margin-top: 26px;
+  margin-left: 6px;
+}
+
+.profile_edit_form button {
+  margin: 0 auto;
+}
