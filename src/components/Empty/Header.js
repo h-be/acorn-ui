@@ -11,7 +11,7 @@ export default class Header extends React.Component{
         this.clickStatus  = this.clickStatus.bind(this)
         this.changeStatus  = this.changeStatus.bind(this)
         this.clickProfile  = this.clickProfile.bind(this)
-
+        this.clickSearch  = this.clickSearch.bind(this)
         this.hover  = this.hover.bind(this)
         this.state={isOpen:false,online:{},isStatusOpen:false,lista:{},avatar:false,listaProfile:{}}
 
@@ -42,6 +42,9 @@ export default class Header extends React.Component{
     clickStatus(e){
         this.changeStatus("blue")
         this.setState({isStatusOpen:!this.state.isStatusOpen,isOpen:false,isProfileOpen:false})
+        
+    }
+    clickSearch(e){
         
     }
     changeStatus(status){
@@ -79,6 +82,7 @@ export default class Header extends React.Component{
                     </div>
                 </div>
                 <div className="status2">
+                < img src = "img/search-line.svg" onClick={this.clickSearch}/>
                     <img src="img/notebook-line.svg" onClick={this.clickBook}/>
                     <div className={this.state.online.color}>
                         <div className="avatar_container" onMouseEnter={e=>{
