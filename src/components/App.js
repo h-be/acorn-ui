@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -9,6 +10,7 @@ import Help from './Help'
 import MultiEditBar from './MultiEditBar'
 import HoverOverlay from './HoverOverlay'
 import { createWhoami, updateWhoami } from '../who-am-i/actions'
+import Header from './Empty/Header'
 
 function App(props) {
   const {
@@ -38,6 +40,8 @@ function App(props) {
   const canClose = showProfileEditForm
 
   return (
+
+    <>
     <div>
       {whoami && <UpperRightMenu whoami={whoami.entry} onProfileSettingsClick={() => setShowProfileEditForm(true)} />}
       {(showProfileCreateForm || showProfileEditForm) &&
@@ -46,13 +50,13 @@ function App(props) {
           onClose={() => setShowProfileEditForm(false)}
           whoami={whoami ? whoami.entry : null}
           {...{canClose, titleText, subText, submitText, agentAddress }} />}
-      <Help />
+       <Header/>
       {hasSelection && <MultiEditBar />}
       <div style={transform}>
         {goalFormIsOpen && <GoalForm />}
         {hasHover && <HoverOverlay />}
       </div>
-    </div>
+    </>
   )
 }
 
