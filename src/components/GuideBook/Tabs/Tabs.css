@@ -19,7 +19,7 @@
   border:none;
   border-bottom:3px solid #ccc; 
   line-height: 3;
-  padding: .5rem;
+  padding: .5rem !important;
   transition: all .5s;
   font-weight: bold;
   margin: 0 !important;
@@ -39,12 +39,12 @@
 .tabs-contents > .tab-content{
   width: 100%;
   background: #fff;
-  border: 1px solid #ccc5;
+  /* border: 1px solid #ccc5; */
   border-top:none;
   border-top: transparent;
   display: none;  
-  padding: 1rem 0;
-  position: absolute;
+  padding: 2rem 0 !important;
+  /* position: absolute; */
   top: 0;
   left: 0;
 }
