@@ -40,8 +40,6 @@ function App(props) {
   const canClose = showProfileEditForm
 
   return (
-
-    <>
     <div>
       {whoami && <UpperRightMenu whoami={whoami.entry} onProfileSettingsClick={() => setShowProfileEditForm(true)} />}
       {(showProfileCreateForm || showProfileEditForm) &&
@@ -56,7 +54,7 @@ function App(props) {
         {goalFormIsOpen && <GoalForm />}
         {hasHover && <HoverOverlay />}
       </div>
-    </>
+    </div>
   )
 }
 

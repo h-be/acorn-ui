@@ -1,6 +1,7 @@
 import React from 'react'
 import GuideBook from '../GuideBook/GuideBook'
 import './empty.css'
+import Avatar from '../Avatar/Avatar'
 export default class Header extends React.Component{
     constructor(props){
         
@@ -10,7 +11,7 @@ export default class Header extends React.Component{
         this.clickStatus  = this.clickStatus.bind(this)
         this.changeStatus  = this.changeStatus.bind(this)
         this.hover  = this.hover.bind(this)
-        this.state={isOpen:false,online:{},isStatusOpen:false,lista:{},avatar:"",listaProfile:{}}
+        this.state={isOpen:false,online:{},isStatusOpen:false,lista:{},avatar:false,listaProfile:{}}
 
 
     }
@@ -22,7 +23,7 @@ export default class Header extends React.Component{
             {color:"gray",img:"img/Mask Group 3.svg",titulo:"Offline"},
             
         ],
-        avatar:"img/user avatar.png",
+        avatar:false,
         listaProfile:["Profile Settings","Preferences"]
     })
     }
@@ -30,7 +31,7 @@ export default class Header extends React.Component{
         this.setState({isProfileOpen:!this.state.isProfileOpen,isStatusOpen:false,isOpen:false})
     }
     hover(bool){
-        this.setState({avatar:bool?"img/user avatar2.png":"img/user avatar.png"})
+        this.setState({avatar:bool})
     }
     clickStatus(e){
         this.changeStatus("blue")
@@ -77,11 +78,12 @@ export default class Header extends React.Component{
                     
                     <img src="img/bell-line.svg"/>
                     <div className={this.state.online.color}>
-                        <img src={this.state.avatar} onMouseEnter={e=>{
+                        <div className="avatar_container" onMouseEnter={e=>{
                             this.hover(true)
                         }} onMouseOut={e=>{
                             this.hover(false)
-                        }} onClick={this.clickAvatar}/>
+                        }} onClick={this.clickAvatar}><Avatar avatar_url="https://www.w3schools.com/howto/img_avatar2.png" highlighted={this.state.avatar}/></div>
+                        
                         <span>
                             <img src={this.state.online.img} onClick={this.clickStatus}/>
                         </span>
