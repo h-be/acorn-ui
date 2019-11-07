@@ -24,6 +24,7 @@ import { fetchGoals } from './goals/actions'
 import { fetchEdges } from './edges/actions'
 import { fetchGoalMembers } from './goal-members/actions'
 import { whoami } from './who-am-i/actions'
+import { fetchAgentAddress } from './agent-address/actions'
 import { setScreenDimensions } from './screensize/actions'
 import App from './components/App'
 
@@ -54,6 +55,7 @@ store.dispatch(fetchEdges.create({}))
 store.dispatch(fetchGoals.create({}))
 store.dispatch(fetchGoalMembers.create({}))
 store.dispatch(whoami.create({}))
+store.dispatch(fetchAgentAddress.create({}))
 /*
   store.subscribe(cb)
   store.getState()
