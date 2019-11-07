@@ -79,10 +79,7 @@ export default class Header extends React.Component{
                     </div>
                 </div>
                 <div className="status2">
-                    <img src="img/search-line.svg"/>
                     <img src="img/notebook-line.svg" onClick={this.clickBook}/>
-                    
-                    <img src="img/bell-line.svg"/>
                     <div className={this.state.online.color}>
                         <div className="avatar_container" onMouseEnter={e=>{
                             this.hover(true)
