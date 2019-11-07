@@ -48,7 +48,7 @@
     margin-top: 16px;
   }
   
-  .estado{
+  .status2{
     margin-left: 10px;
     width: 150px;
     height: 50px;
@@ -61,7 +61,7 @@
     align-items: center;
   }
   
-  .estado > img,.estado >div{
+  .status2 > img,.status2 >div{
     width: 23px;
     height: 23px;
     margin: 0px;
@@ -69,9 +69,9 @@
     position: relative;
   }
   
-  .estado div img{ width: 100%;display: block; }
+  .status2 div img{ width: 100%;display: block; }
   
-  .estado div img + span{
+  .status2 div img + span{
     position: absolute;
     width: 12px;
     height: 12px;
@@ -85,6 +85,12 @@
    }
    .green img + span{
     background-color: green;
+   }
+   .yellow img + span{
+    background-color: yellow;
+   }
+   .gray img + span{
+    background-color: gray;
    }
    button.green img{
     background-color: green;
@@ -104,30 +110,41 @@
    .status_change button{
     outline: none;
     background: none;
-    width: 100px;
+    width: 115px;
     border: none;
     display: flex;
-    padding: 9px;
-    background-color: #FFFFFF;
+    padding: 0px;
+    
     text-decoration: none;
     cursor: pointer;
-   }
-   .status_change button:first-child{
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-   }
-   .status_change button:last-child{
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    
    }
    .status_change{
      margin-top: 20px;
    }
    .instructions_wrapper{
+     margin: 10px 10px;
     float: right;
    }
    .status_change{
     float: right;
-    
+    border-radius:14px;
+    background-color: #FFFFFF;
+    padding: 15px 0px;
    }
+  .status_change button img{
+    margin-left: 14px;
+  }
+  .status_change button p{
+    width: 100%;
+    font-family:'rennerbook', Helvetica, Sans-Serif;
+    font-size: 14px;
+    text-align: center;
+
+  }
+   .status_change button:hover{
+     background-color: #F2F2F2;
+     color:#5F65FF;
+   }
+   .but:hover{
+    background-color: #F2F2F2;
+  }
