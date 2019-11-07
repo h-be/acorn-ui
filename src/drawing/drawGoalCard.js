@@ -95,7 +95,7 @@ export default function render(goal, members, { x, y }, isEditing, editText, isS
   }
 
   members.forEach((member, index) => {
-    const img = getOrSetImageForUrl(member.avatar, avatarWidth, avatarHeight)
+    const img = getOrSetImageForUrl(member.avatar_url, avatarWidth, avatarHeight)
     // assume that it will be drawn the next time 'render' is called
     // if it isn't already set
     if (!img) return

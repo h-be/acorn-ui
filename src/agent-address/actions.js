@@ -14,14 +14,8 @@ import {
 
 /* action creator functions */
 
-const whoami = createHolochainZomeCallAsyncAction(DEVELOPMENT_INSTANCE_NAME, ZOME_NAME, 'whoami')
-
-const createWhoami = createHolochainZomeCallAsyncAction(DEVELOPMENT_INSTANCE_NAME, ZOME_NAME, 'create_whoami')
-
-const updateWhoami = createHolochainZomeCallAsyncAction(DEVELOPMENT_INSTANCE_NAME, ZOME_NAME, 'update_whoami')
+const fetchAgentAddress = createHolochainZomeCallAsyncAction(DEVELOPMENT_INSTANCE_NAME, ZOME_NAME, 'fetch_agent_address')
 
 export {
-  whoami,
-  createWhoami,
-  updateWhoami
+  fetchAgentAddress
 }

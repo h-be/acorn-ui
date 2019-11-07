@@ -413,14 +413,6 @@ div.react {
   cursor: pointer;
 }
 
-.people_picker_people li .avatar {
-  height: 24px;
-  width: 24px;
-  border-radius: 12px;
-  box-sizing: border-box;
-  margin: 2px 0px 2px 4px;
-}
-
 .people_picker_people li .hover_wrapper {
   margin-left: 5px;
   border-radius: 5px;
