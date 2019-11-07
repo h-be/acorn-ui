@@ -19,6 +19,11 @@
     display: flex;
     
   }
+  .fixed{
+    position: fixed;
+    top: 0;
+    width: 99%;
+  }
   .logo img{
     width: 30px;
     height: 30px;
@@ -49,6 +54,7 @@
   }
   
   .status2{
+    
     margin-left: 10px;
     width: 150px;
     height: 50px;
@@ -68,10 +74,13 @@
     display: inline-block;
     position: relative;
   }
+  .avatar_container img{
+    border-radius: 50%;
+  }
   
   .status2 div img{ width: 100%;display: block; }
   
-  .status2 div img + span{
+  .status2 div .avatar_container + span{
     position: absolute;
     width: 12px;
     height: 12px;
@@ -80,32 +89,33 @@
     transform: translate(-50%,-50%);
     border-radius: 50%;
    }
-   .blue img + span{
-    background-color: blue;
+   .blue .avatar_container + span{
+    background-color: #5F65FF;
    }
-   .green img + span{
-    background-color: green;
+   .green .avatar_container + span{
+    background-color: #00D0C0;
    }
-   .yellow img + span{
-    background-color: yellow;
+   .yellow .avatar_container + span{
+    background-color: #FFC400;
    }
-   .gray img + span{
-    background-color: gray;
+   .gray .avatar_container + span{
+    background-color: #D1D1D1;
    }
    button.green img{
-    background-color: green;
+    background-color: #00D0C0;
    }
    button.blue img {
-    background-color: blue;
+    background-color: #5F65FF;
    }
    button.yellow img {
-    background-color: yellow;
+    background-color: #FFC400;
    }
    button.gray img {
-    background-color: gray;
+    background-color: #D1D1D1;
    }
    .status_change button img {
     border-radius: 50%;
+    height: 15px;
    }
    .status_change button{
     outline: none;
@@ -114,7 +124,6 @@
     border: none;
     display: flex;
     padding: 0px;
-    
     text-decoration: none;
     cursor: pointer;
    }

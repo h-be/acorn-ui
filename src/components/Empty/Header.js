@@ -1,6 +1,7 @@
 import React from 'react'
 import GuideBook from '../GuideBook/GuideBook'
 import './empty.css'
+import Avatar from '../Avatar/Avatar'
 export default class Header extends React.Component{
     constructor(props){
         
@@ -9,8 +10,10 @@ export default class Header extends React.Component{
         this.clickBook  = this.clickBook.bind(this)
         this.clickStatus  = this.clickStatus.bind(this)
         this.changeStatus  = this.changeStatus.bind(this)
+        this.clickProfile  = this.clickProfile.bind(this)
+        this.clickSearch  = this.clickSearch.bind(this)
         this.hover  = this.hover.bind(this)
-        this.state={isOpen:false,online:{},isStatusOpen:false,lista:{},avatar:"",listaProfile:{}}
+        this.state={isOpen:false,online:{},isStatusOpen:false,lista:{},avatar:false,listaProfile:{}}
 
 
     }
@@ -22,20 +25,27 @@ export default class Header extends React.Component{
             {color:"gray",img:"img/Mask Group 3.svg",titulo:"Offline"},
             
         ],
-        avatar:"img/user avatar.png",
-        listaProfile:["Profile Settings","Preferences"]
+        avatar:false,
+        listaProfile:[{titulo:"Profile Settings",click:this.clickProfile},{titulo:"Preferences",click:null}]
     })
+    }
+    clickProfile(e){
+        this.props.setShowProfileEditForm(true)
+        this.setState({isProfileOpen:false,isStatusOpen:false,isOpen:false})
     }
     clickAvatar(e){
         this.setState({isProfileOpen:!this.state.isProfileOpen,isStatusOpen:false,isOpen:false})
     }
     hover(bool){
-        this.setState({avatar:bool?"img/user avatar2.png":"img/user avatar.png"})
+        this.setState({avatar:bool})
     }
     clickStatus(e){
         this.changeStatus("blue")
         this.setState({isStatusOpen:!this.state.isStatusOpen,isOpen:false,isProfileOpen:false})
         
+    }
+    clickSearch(e){
+
     }
     changeStatus(status){
         switch (status){
@@ -72,16 +82,15 @@ export default class Header extends React.Component{
                     </div>
                 </div>
                 <div className="status2">
-                    <img src="img/search-line.svg"/>
+                <Icon titulo="img/search-line.svg" click={this.clickSearch}/>
                     <img src="img/notebook-line.svg" onClick={this.clickBook}/>
-                    
-                    <img src="img/bell-line.svg"/>
                     <div className={this.state.online.color}>
-                        <img src={this.state.avatar} onMouseEnter={e=>{
+                        <div className="avatar_container" onMouseEnter={e=>{
                             this.hover(true)
                         }} onMouseOut={e=>{
                             this.hover(false)
-                        }} onClick={this.clickAvatar}/>
+                        }}><Avatar avatar_url={this.props.whoami.entry.avatar_url} highlighted={this.state.avatar} clickable onClick={this.clickAvatar}/></div>
+                        
                         <span>
                             <img src={this.state.online.img} onClick={this.clickStatus}/>
                         </span>
@@ -93,7 +102,7 @@ export default class Header extends React.Component{
                 {this.state.isOpen &&<GuideBook />  || this.state.isStatusOpen && Object.keys(this.state.lista).map(key=>
                     <ListStatus key={key }img={this.state.lista[key].img} color={this.state.lista[key].color} titulo={this.state.lista[key].titulo} changeStatus={this.changeStatus}/>) 
                     || this.state.isProfileOpen && Object.keys(this.state.listaProfile).map(key=>
-                        <ListProfile key={key }  titulo={this.state.listaProfile[key]} />)
+                        <ListProfile key={key }  titulo={this.state.listaProfile[key].titulo} click={this.state.listaProfile[key].click} />)
                 }
             </div>
                 
@@ -110,6 +119,11 @@ const ListStatus=(props)=>{
 }
 const ListProfile=(props)=>{
     return(
-            <button ><p>{props.titulo}</p></button>
+            <button onClick={props.click}><p>{props.titulo}</p></button>
+    )
+}
+const Icon=(props)=>{
+    return(
+        < img src ={props.titulo} onClick={props.click}/>
     )
 }
