@@ -45,7 +45,7 @@ export default class Header extends React.Component{
         
     }
     clickSearch(e){
-        
+
     }
     changeStatus(status){
         switch (status){
@@ -82,7 +82,7 @@ export default class Header extends React.Component{
                     </div>
                 </div>
                 <div className="status2">
-                < img src = "img/search-line.svg" onClick={this.clickSearch}/>
+                <Icon titulo="img/search-line.svg" click={this.clickSearch}/>
                     <img src="img/notebook-line.svg" onClick={this.clickBook}/>
                     <div className={this.state.online.color}>
                         <div className="avatar_container" onMouseEnter={e=>{
@@ -120,5 +120,10 @@ const ListStatus=(props)=>{
 const ListProfile=(props)=>{
     return(
             <button onClick={props.click}><p>{props.titulo}</p></button>
+    )
+}
+const Icon=(props)=>{
+    return(
+        < img src ={props.titulo} onClick={props.click}/>
     )
 }
