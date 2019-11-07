@@ -1,7 +1,6 @@
 import React from 'react'
 import GuideBook from '../GuideBook/GuideBook'
 import './empty.css'
-
 import Avatar from '../Avatar/Avatar'
 export default class Header extends React.Component{
     constructor(props){
