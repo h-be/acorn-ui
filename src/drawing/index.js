@@ -91,12 +91,7 @@ function render(store, canvas) {
     const membersOfGoal = Object.keys(state.goalMembers)
         .map(address => state.goalMembers[address])
         .filter(goalMember => goalMember.goal_address === goal.address)
-        .map(goalMember => goalMember.agent_address)
-        .map(agentAddress => ({
-          address: agentAddress,
-          avatar: '/img/profile.png',
-          name: 'Somebody Cool',
-        }))
+        .map(goalMember => state.agents[goalMember.agent_address])
     drawGoalCard(goal, membersOfGoal, coordinates[goal.address], isEditing, '', isSelected, isHovered, ctx)
   })
 
@@ -120,12 +115,7 @@ function render(store, canvas) {
     const membersOfGoal = Object.keys(state.goalMembers)
         .map(address => state.goalMembers[address])
         .filter(goalMember => goalMember.goal_address === goal.address)
-        .map(goalMember => goalMember.agent_address)
-        .map(agentAddress => ({
-          address: agentAddress,
-          avatar: '/img/profile.png',
-          name: 'Somebody Cool',
-        }))
+        .map(goalMember => state.agents[goalMember.agent_address])
     drawGoalCard(goal, membersOfGoal, coordinates[goal.address], isEditing, '', isSelected, isHovered, ctx)
   })
 
@@ -138,12 +128,7 @@ function render(store, canvas) {
     const membersOfGoal = Object.keys(state.goalMembers)
         .map(address => state.goalMembers[address])
         .filter(goalMember => goalMember.goal_address === editingGoal.address)
-        .map(goalMember => goalMember.agent_address)
-        .map(agentAddress => ({
-          address: agentAddress,
-          avatar: '/img/profile.png',
-          name: 'Somebody Cool',
-        }))
+        .map(goalMember => state.agents[goalMember.agent_address])
     drawGoalCard(editingGoal, membersOfGoal, coordinates[editingGoal.address], isEditing, editText, false, false, ctx)
   } else if (state.ui.goalForm.isOpen) {
     // creating a new Goal

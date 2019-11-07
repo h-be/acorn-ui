@@ -6,16 +6,14 @@
 */
 import _ from 'lodash'
 
-import { whoami, createWhoami, updateWhoami } from './actions'
+import { fetchAgentAddress } from './actions'
 
-const defaultState = null
+const defaultState = ''
 
 export default function (state = defaultState, action) {
   const { payload, type } = action
   switch (type) {
-    case whoami.success().type:
-    case createWhoami.success().type:
-    case updateWhoami.success().type:
+    case fetchAgentAddress.success().type:
       return payload
     default:
       return state

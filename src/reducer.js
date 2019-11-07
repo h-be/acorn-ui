@@ -13,6 +13,7 @@ import goals from './goals/reducer'
 import edges from './edges/reducer'
 import goalMembers from './goal-members/reducer'
 import whoami from './who-am-i/reducer'
+import agentAddress from './agent-address/reducer'
 import goalForm from './goal-form/reducer'
 import selection from './selection/reducer'
 import hover from './hover/reducer'
@@ -29,6 +30,7 @@ export default combineReducers({
   edges, // edges: edges,
   goalMembers,
   whoami,
+  agentAddress,
   ui: combineReducers({
     goalForm,
     selection,
