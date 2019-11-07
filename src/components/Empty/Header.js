@@ -89,7 +89,7 @@ export default class Header extends React.Component{
                             this.hover(true)
                         }} onMouseOut={e=>{
                             this.hover(false)
-                        }}><Avatar avatar_url="https://www.w3schools.com/howto/img_avatar2.png" highlighted={this.state.avatar} clickable onClick={this.clickAvatar}/></div>
+                        }}><Avatar avatar_url={this.props.whoami.entry.avatar_url} highlighted={this.state.avatar} clickable onClick={this.clickAvatar}/></div>
                         
                         <span>
                             <img src={this.state.online.img} onClick={this.clickStatus}/>
