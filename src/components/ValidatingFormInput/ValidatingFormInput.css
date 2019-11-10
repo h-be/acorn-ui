@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   text-align: left;
+  font-family: 'rennerbook'
 }
 
 .validating_form_input label {
@@ -33,11 +34,12 @@
   outline: none;
   font-size: 14px;
   line-height: 16px;
-  color: #717171;
+  color: #222222;
   padding: 11px;
   border-radius: 5px;
   display: block;
   flex: 1;
+  font-family: 'rennerbook';
 }
 
 .validating_form_input input.with_at_symbol {

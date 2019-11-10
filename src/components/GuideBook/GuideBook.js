@@ -40,8 +40,8 @@ export default class GuideBook extends React.Component{
 
   render(){
     return(
-      <div id="guide-book">
-        <h2 className="guidebook-title">Guide Book</h2>
+      <div className="guide-book">
+        <h2 className="guidebook-title">Guidebook</h2>
         <Tabs
           tabs={this.state.tabs}
           selected={this.state.tabSelected}

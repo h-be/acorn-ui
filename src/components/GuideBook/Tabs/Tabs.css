@@ -3,7 +3,6 @@
 }
 .tabs  > .tabs-links {
     position: relative;
-    top: 1px;
     display: flex;
     justify-content: space-between;
     flex-flow: nowrap row;
@@ -16,22 +15,29 @@
   display: block;
   cursor: pointer;
   background-color: #fff;
-  border:none;
-  border-bottom:3px solid #ccc; 
+  border: none;
+  border-bottom: 1px solid #E8E8E8; 
   line-height: 3;
-  padding: .5rem !important;
-  transition: all .5s;
-  font-weight: bold;
-  margin: 0 !important;
+  transition: all .3s;
+  margin: 0;
+  color: #222222;
+  font-family: 'rennerbold', Helvetica, sans-serif;
+  box-sizing: border-box;
+  height: 50px;
+  letter-spacing: 0.5px;
+  font-size: 16px;
 }
 
 .tabs  > .tabs-links > button.tab-link:hover{
-  background-color: #f5f5f5;
+  color: #5F65FF;
+  border-bottom: 3px solid #5F65FF;
+  stroke-linecap: round;
 }
 
 .tabs  > .tabs-links > button.tab-link.active{
   color: #5F65FF;
   border-bottom: 3px solid #5F65FF;
+  stroke-linecap: round;
 }
 
 .tabs-contents{ position: relative; }
