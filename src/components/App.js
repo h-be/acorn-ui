@@ -35,7 +35,7 @@ function App(props) {
   }
   const titleText = showProfileEditForm ? 'Profile Settings' : 'First, let\'s set up your profile on Acorn.'
   const subText = showProfileEditForm ? '' : 'You\'ll be able to edit them later in your Profile Settings.'
-  const submitText = showProfileEditForm ? 'save changes' : 'ready to start'
+  const submitText = showProfileEditForm ? 'Save Changes' : 'Ready to Start'
   const canClose = showProfileEditForm
 
   return (

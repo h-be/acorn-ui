@@ -1,64 +1,86 @@
 .react{
-    width: 99.4%;
-    margin-left: .4%;
-  }
-  .logos{display: flex;}
-  .header{
-    margin-top: .5%;
     width: 100%;
+  }
+
+  .header{
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
     display: flex;
     justify-content: space-between;
+    max-height: 50px;
   }
+
+  .top-left-panel {
+    display: flex;
+    width: auto;
+  }
+
   .logo{
-    margin-left: 5%;
-    width: 150px;
-    height: 50px;
+    padding-right: 20px;
+    padding-left: 20px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     border-radius: 10px;
     opacity: 0.8;
+    display: -webkit-flex; /* Safari */
+    -webkit-align-items: center; /* Safari 7.0+ */
     display: flex;
-    
+    align-items: center;
   }
+
+  .current-canvas{
+    margin-left: 5px;
+    padding-right: 20px;
+    padding-left: 20px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border-radius: 10px;
+    opacity: 0.8;
+    display: -webkit-flex; /* Safari */
+    -webkit-align-items: center; /* Safari 7.0+ */
+    display: flex;
+    align-items: center;
+  }
+
   .fixed{
-    position: fixed;
-    top: 0;
-    width: 99%;
+    width: 100%;
   }
-  .logo img{
-    width: 30px;
-    height: 30px;
+
+  .header-icon {
+    height: 24px;
     margin: 0px;
-    padding: 8% 4% 0% 8%;
+    display: inline-block;
+    position: relative;
+    margin: 12px;
   }
-  .logos{
-    width: auto;
-  }
+
   .logo p{
     text-align: left;
     letter-spacing: 0;
-    color: #222222;
-  }.regular{
-    margin-top: 10px;
+    color: black;
+    margin-top: -10px;
+  }
+  
+  .canvas-name {
     font-family: 'quebecregular', Helvetica, Sans-Serif;
     font-weight: normal;
-    font-size:14px;
+    font-size: 18px;
+    margin-bottom: 23px;
   }
-  .semi{
+
+  .logo-name{
     margin: 1px;
     font-family: 'quebecsemibold', Helvetica, Sans-Serif;
     font-weight: bold;
-    font-size: 22px;
+    font-size: 28px;
   }
+
   .logo h3{
     margin-top: 16px;
   }
   
-  .status2{
-    
+  .top-right-panel{
     margin-left: 10px;
-    width: 150px;
-    height: 50px;
-    padding: 0% .5%;
+    padding: 5px 20px 5px 20px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     border-radius: 10px;
     opacity: 0.8;
@@ -67,93 +89,179 @@
     align-items: center;
   }
   
-  .status2 > img,.status2 >div{
-    width: 23px;
-    height: 23px;
+
+  .stop-right-panel div img{ width: 100%;display: block; }
+  
+  
+  /* guidebook section on header */
+ 
+  .instructions_wrapper{
+    float: right;
+    position: relative;
+    border-radius: 10px 0 0 10px;
+    margin-top: 20px;
+    background-color: #FFFFFF;
+    padding: 20px 36px;
+    box-shadow: 0px 0px 6px #00000029;
+    width: 616px;
+    min-height: 80%;
+  }
+
+  .instructions_wrapper button {
+   margin: 10px;
+  }
+
+  .instructions {
+    font-family: 'rennerbook', Helvetica, Sans-Serif;
+    margin-left: 10px;
+    color: #4D4D4D;
+  }
+
+
+   /* profile section on header */
+
+   .top-right-panel> img,.top-right-panel >div{
+    width: 32px;
+    height: 32px;
     margin: 0px;
     display: inline-block;
     position: relative;
   }
+
+  .top-right-panel icon{
+    margin-right: 10px;
+  }
+
   .avatar_container img{
     border-radius: 50%;
+    height: 32px;
+    width: 32px;
   }
-  
-  .status2 div img{ width: 100%;display: block; }
-  
-  .status2 div .avatar_container + span{
+
+   .top-right-panel div .avatar_container + span{
     position: absolute;
-    width: 12px;
-    height: 12px;
+    width: 16px;
+    height: 16px;
     top: 80%;
     left: 80%;
     transform: translate(-50%,-50%);
     border-radius: 50%;
    }
-   .blue .avatar_container + span{
-    background-color: #5F65FF;
+
+   .profile-wrapper button p{
+    font-family:'rennerbook', Helvetica, Sans-Serif;
+    font-size: 14px;
+    padding: 0 20px;
    }
-   .green .avatar_container + span{
-    background-color: #00D0C0;
+
+  .profile-wrapper button:hover{
+     background: #F4F4F4 none repeat scroll 0% 0%;
+     color:#5F65FF;
    }
-   .yellow .avatar_container + span{
-    background-color: #FFC400;
-   }
-   .gray .avatar_container + span{
-    background-color: #D1D1D1;
-   }
-   button.green img{
-    background-color: #00D0C0;
-   }
-   button.blue img {
-    background-color: #5F65FF;
-   }
-   button.yellow img {
-    background-color: #FFC400;
-   }
-   button.gray img {
-    background-color: #D1D1D1;
-   }
-   .status_change button img {
+
+   .profile-wrapper button img {
     border-radius: 50%;
-    height: 15px;
+    height: 16px;
+    width: 16px;
    }
-   .status_change button{
+
+   .profile-wrapper button{
     outline: none;
     background: none;
-    width: 115px;
     border: none;
-    display: flex;
-    padding: 0px;
     text-decoration: none;
     cursor: pointer;
-   }
-   .status_change{
-     margin-top: 20px;
-   }
-   .instructions_wrapper{
-     margin: 10px 10px;
-    float: right;
-   }
-   .status_change{
+    display: flex;
+    align-items: center;
+  }
+
+  .profile-wrapper{
+    margin-top: 5px;
+    margin-right: 10px;
     float: right;
     border-radius:14px;
     background-color: #FFFFFF;
-    padding: 15px 0px;
+    padding: 12px 0;
+    box-shadow: 0px 0px 6px #00000029;
+    display: flex;
+    flex-direction: column;
    }
-  .status_change button img{
-    margin-left: 14px;
-  }
-  .status_change button p{
-    width: 100%;
-    font-family:'rennerbook', Helvetica, Sans-Serif;
-    font-size: 14px;
-    text-align: center;
 
-  }
-   .status_change button:hover{
-     background-color: #F2F2F2;
-     color:#5F65FF;
-   }
-   .but:hover{
+   /* user status on header */
+
+   .btn:hover{
     background-color: #F2F2F2;
   }
+
+   .purple .avatar_container + span{
+    background-color: #5F65FF;
+   }
+
+   .green .avatar_container + span{
+    background-color: #00D0C0;
+   }
+
+   .yellow .avatar_container + span{
+    background-color: #FFC400;
+   }
+
+   .gray .avatar_container + span{
+    background-color: #D1D1D1;
+   }
+
+   button.green img{
+    background-color: #00D0C0;
+   }
+
+   button.purple img {
+    background-color: #5F65FF;
+   }
+
+   button.yellow img {
+    background-color: #FFC400;
+   }
+
+   button.gray img {
+    background-color: #D1D1D1;
+   }
+
+   .user-status-wrapper{
+    margin-top: 5px;
+    margin-right: 10px;
+    float: right;
+    border-radius:14px;
+    background-color: #FFFFFF;
+    padding: 12px 0;
+    box-shadow: 0px 0px 6px #00000029;
+    display: flex;
+    flex-direction: column;
+   }
+
+   .user-status-wrapper button{
+    padding: 0 25px;
+    outline: none;
+    background: none;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  .user-status-wrapper button img {
+    border-radius: 50%;
+    height: 16px;
+    width: 16px;
+   }
+
+   .user-status-wrapper button p{
+    font-family:'rennerbook', Helvetica, Sans-Serif;
+    font-size: 14px;
+    padding-left: 10px;
+   }
+
+  .user-status-wrapper button:hover{
+     background: #F4F4F4 none repeat scroll 0% 0%;
+     color:#5F65FF;
+   }
+
