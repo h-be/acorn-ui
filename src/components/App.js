@@ -5,11 +5,10 @@ import { connect } from 'react-redux'
 
 import ProfileEditForm from './ProfileEditForm/ProfileEditForm'
 import GoalForm from './GoalForm'
-import Help from './Help'
 import MultiEditBar from './MultiEditBar'
 import HoverOverlay from './HoverOverlay'
 import { createWhoami, updateWhoami } from '../who-am-i/actions'
-import Header from './Empty/Header'
+import Header from './Header/Header'
 
 function App(props) {
   const {

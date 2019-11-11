@@ -6,6 +6,7 @@ import TextareaAutosize from 'react-textarea-autosize'
 import { createGoal, updateGoal } from '../goals/actions'
 import { createEdge } from '../edges/actions'
 import { closeGoalForm, updateContent } from '../goal-form/actions'
+import layoutFormula from '../drawing/layoutFormula'
 
 import VerticalActionsList from './VerticalActionsList'
 
@@ -159,6 +160,11 @@ GoalForm.propTypes = {
 function mapStateToProps(state) {
   // all the state for this component is store under state->ui->goalForm
   const { parentAddress, editAddress, content, xLoc, yLoc } = state.ui.goalForm
+  const { goals, edges, ui: { screensize: { width } } } = state
+  let goalCoord
+  if (editAddress) {
+    goalCoord = layoutFormula(width, goals, edges)[editAddress]
+  }
   // the name of the expected proptypes is the same
   // as the name of the properties as stored in state
   return {
@@ -166,8 +172,8 @@ function mapStateToProps(state) {
     parentAddress,
     content,
     status: editAddress ? state.goals[editAddress].status : 'Uncertain', // use Uncertain as a default
-    xLoc: xLoc,
-    yLoc: yLoc
+    xLoc: editAddress ? goalCoord.x : xLoc,
+    yLoc: editAddress ? goalCoord.y : yLoc
   }
 }
 
