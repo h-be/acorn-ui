@@ -1,13 +1,16 @@
 import React from 'react'
+import onClickOutside from 'react-onclickoutside'
 import GuideBook from '../GuideBook/GuideBook'
 import './Header.css'
 import Avatar from '../Avatar/Avatar'
 import Icon from '../Icon'
-export default class Header extends React.Component {
+
+class Header extends React.Component {
 
   constructor(props) {
 
     super(props)
+    this.handleClickOutside = this.handleClickOutside.bind(this)
     this.clickAvatar = this.clickAvatar.bind(this)
     this.clickBook = this.clickBook.bind(this)
     this.clickStatus = this.clickStatus.bind(this)
@@ -38,10 +41,13 @@ export default class Header extends React.Component {
 
       ],
       avatar: false,
-      listaProfile: [{ title: "Profile Settings", click: this.clickProfile }, { title: "Preferences", click: null }]
+      listaProfile: [{ title: "Profile Settings", click: this.clickProfile }]
     })
   }
 
+  handleClickOutside(e) {
+    this.setState({ isProfileOpen: false, isStatusOpen: false, isGuideOpen: false })
+  }
   clickProfile(e) {
     this.props.setShowProfileEditForm(true)
     this.setState({ isProfileOpen: false, isStatusOpen: false, isGuideOpen: false })
@@ -54,7 +60,6 @@ export default class Header extends React.Component {
   }
   clickStatus(e) {
     this.setState({ isStatusOpen: !this.state.isStatusOpen, isGuideOpen: false, isProfileOpen: false })
-
   }
   clickSearch(e) {
 
@@ -73,23 +78,18 @@ export default class Header extends React.Component {
     }
     this.setState({ isProfileOpen: false, isStatusOpen: false, isGuideOpen: false })
   }
-
   clickBook(e) {
     this.setState({ isGuideOpen: !this.state.isGuideOpen, isStatusOpen: false, isProfileOpen: false })
   }
-
   handleStatusEnter() {
     this.setState({ isStatusHover: true })
   }
-
   handleStatusLeave() {
     this.setState({ isStatusHover: false })
   }
-
-
   render() {
     return (
-      <>
+      <div>
         <div className="header">
           <div className="top-left-panel">
             <div className="logo" >
@@ -133,7 +133,7 @@ export default class Header extends React.Component {
           )}
         </div>}
 
-      </>
+      </div>
     )
   }
 }
@@ -149,3 +149,5 @@ const ListProfile = (props) => {
     <button onClick={props.click}><p>{props.title}</p></button>
   )
 }
+
+export default onClickOutside(Header)
