@@ -1,3 +1,10 @@
+
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 html, body, canvas {
   height: 100%;
   width: 100%;
@@ -208,7 +215,7 @@ div.react {
 }
 
 .goal_form {
-
+  width: 360px;
 }
 
 .goal_form textarea {
@@ -246,23 +253,6 @@ div.react {
   border-radius: 4px;
   text-align: center;
   cursor: pointer;
-}
-
-/* Help */
-
-.instructions_wrapper {
-  
-  width: 500px;
-}
-
-.instructions_wrapper button {
-  margin: 10px;
-}
-
-.instructions {
-  font-family: 'rennerbook', Helvetica, Sans-Serif;
-  margin-left: 10px;
-  color: #4D4D4D;
 }
 
 /* Multi Edit Bar */
@@ -312,16 +302,53 @@ div.react {
 /* Icon */
 
 .icon {
-  width: 40px;
   height: 40px;
   box-sizing: border-box;
   padding: 6px;
+  cursor: pointer;
 }
 
 .icon.small {
   width: 18px;
   height: 18px;
   padding: 1px;
+  cursor: pointer;
+}
+
+.icon.logo {
+  width: 28px;
+  height: 28px;
+  margin: 0px;
+  padding: 0px;
+  display: inline-block;
+  position: relative;
+}
+
+.icon.header-view-mode {
+  height: 24px;
+  padding: 1px;
+  display: inline-block;
+  position: relative;
+  margin-top: 0;
+  margin-right: 10px;
+  margin-left: 0;
+}
+
+.icon.header {
+  height: 24px;
+  padding: 1px;
+  display: inline-block;
+  position: relative;
+  margin-top: 0;
+  margin-right: 20px;
+  margin-left: 0;
+}
+
+.icon.user-status {
+  width: 18px;
+  height: 18px;
+  padding: 0px;
+  cursor: pointer;
 }
 
 .icon.with_background {

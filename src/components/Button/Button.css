@@ -1,5 +1,5 @@
 .button {
-  border-radius: 10px;
+  border-radius: 25px;
   background: #6600FFF2;
   color: #FFFFFF;
   outline: none;
@@ -8,8 +8,9 @@
   line-height: 19px;
   padding: 16px 45px;
   cursor: pointer;
+  font-family: 'rennerbook'
 }
 
 .button:hover {
-  background: #00A599;
+  background: #7C24FF;
 }
