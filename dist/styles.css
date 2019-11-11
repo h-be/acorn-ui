@@ -207,6 +207,12 @@ div.react {
 
 }
 
+/* transform */
+
+.transform-container {
+  position: fixed;
+}
+
 
 /* GoalForm */
 
