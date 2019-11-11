@@ -9,8 +9,7 @@
   box-shadow: 0px 0px 6px #00000041;
   border-radius: 10px;
   width: 510px;
-  height: 612px;
-  padding: 72px 62px;
+  padding: 64px 64px;
   text-align: center;
 }
 
@@ -25,8 +24,9 @@
   margin-top: 0;
   font-size: 20px;
   line-height: 24px;
-  letter-spacing: 0.2px;
+  letter-spacing: 0.5px;
   color: #222222;
+  font-family: 'rennerbold'
 }
 
 .profile_edit_form h2 {
@@ -38,9 +38,15 @@
   margin-bottom: 63px;
 }
 
+.help_text {
+flex: 1;
+
+}
+
 .profile_edit_form form {
   display: flex;
   flex-direction: column;
+  margin-bottom: 26px;
 }
 
 .profile_edit_form .row {
