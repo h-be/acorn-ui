@@ -49,7 +49,7 @@ function App(props) {
           {...{canClose, titleText, subText, submitText, agentAddress }} />}
        
       {hasSelection && <MultiEditBar />}
-      <div style={transform}>
+      <div className="transform-container" style={transform}>
         {goalFormIsOpen && <GoalForm />}
         {hasHover && <HoverOverlay />}
       </div>
