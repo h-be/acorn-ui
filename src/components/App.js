@@ -5,11 +5,10 @@ import { connect } from 'react-redux'
 
 import ProfileEditForm from './ProfileEditForm/ProfileEditForm'
 import GoalForm from './GoalForm'
-import Help from './Help'
 import MultiEditBar from './MultiEditBar'
 import HoverOverlay from './HoverOverlay'
 import { createWhoami, updateWhoami } from '../who-am-i/actions'
-import Header from './Empty/Header'
+import Header from './Header/Header'
 
 function App(props) {
   const {
@@ -35,7 +34,7 @@ function App(props) {
   }
   const titleText = showProfileEditForm ? 'Profile Settings' : 'First, let\'s set up your profile on Acorn.'
   const subText = showProfileEditForm ? '' : 'You\'ll be able to edit them later in your Profile Settings.'
-  const submitText = showProfileEditForm ? 'save changes' : 'ready to start'
+  const submitText = showProfileEditForm ? 'Save Changes' : 'Ready to Start'
   const canClose = showProfileEditForm
 
   return (
@@ -50,7 +49,7 @@ function App(props) {
           {...{canClose, titleText, subText, submitText, agentAddress }} />}
        
       {hasSelection && <MultiEditBar />}
-      <div style={transform}>
+      <div className="transform-container" style={transform}>
         {goalFormIsOpen && <GoalForm />}
         {hasHover && <HoverOverlay />}
       </div>

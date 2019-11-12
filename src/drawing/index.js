@@ -45,7 +45,6 @@ function render(store, canvas) {
   const dpr = window.devicePixelRatio || 1
   ctx.setTransform(scale * dpr, 0, 0, scale * dpr, translate.x * dpr, translate.y * dpr)
 
-
   // converts the goals object to an array
   const goalsAsArray = Object.keys(state.goals).map(address => state.goals[address])
   // convert the edges object to an array
