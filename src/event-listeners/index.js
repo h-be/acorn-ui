@@ -1,7 +1,7 @@
 import _ from 'lodash'
 
 import { coordsPageToCanvas } from '../drawing/coordinateSystems'
-import { checkForGoalAtCoordinates } from '../drawing/eventDetection'
+import { checkForGoalAtCoordinates,checkForGoalAtCoordinatesInBox } from '../drawing/eventDetection'
 
 import {
   selectGoal,
@@ -40,7 +40,11 @@ import {
 import layoutFormula from '../drawing/layoutFormula'
 
 export default function setupEventListeners(store, canvas) {
-
+  let convertedClick 
+  let goalAddresses=null
+  let boolean=false;
+  let x=0;
+  let y = 0;
   window.addEventListener('resize', event => {
     // Get the device pixel ratio, falling back to 1.
     const dpr = window.devicePixelRatio || 1
@@ -108,14 +112,60 @@ export default function setupEventListeners(store, canvas) {
   // kill performance
   canvas.addEventListener('mousemove', event => {
     const state = store.getState()
-    if (state.ui.mouse.mousedown) {
-      store.dispatch(changeTranslate(event.movementX, event.movementY))
-      return
-    }
     const { goals, edges, ui: { viewport: { translate, scale }, screensize: { width } }} = state
+    if (state.ui.mouse.mousedown) {
+     
+      if(event.shiftKey){
+        if(boolean===false){
+          x=event.clientX
+          y=event.clientY
+           convertedClick = coordsPageToCanvas({
+            x: event.clientX,
+            y: event.clientY
+        }, translate, scale)
+          boolean=true
+        }
+        
+         let lienzo = canvas.getContext("2d")
+         store.dispatch(unhoverGoal())
+         const convertedIni = coordsPageToCanvas({
+          x: event.clientX,
+          y: event.clientY
+      }, translate, scale)
+         let xd=convertedIni.x-convertedClick.x
+         let yd=convertedIni.y-convertedClick.y
+
+         lienzo.beginPath()
+        
+        lienzo.moveTo(convertedClick.x,convertedClick.y)
+        lienzo.lineTo(convertedClick.x+xd,convertedClick.y)
+        lienzo.lineTo(convertedClick.x+xd,convertedClick.y+yd)
+        lienzo.lineTo(convertedClick.x,convertedClick.y+yd)
+        lienzo.lineTo(convertedClick.x,convertedClick.y)
+
+        lienzo.closePath()
+        lienzo.stroke()
+        
+        goalAddresses = checkForGoalAtCoordinatesInBox(canvas.getContext('2d'), translate, scale, width, goals, edges, event.clientX, event.clientY,x,y)
+      }else{ store.dispatch(changeTranslate(event.movementX, event.movementY))}
+
+    }else{
+      if(goalAddresses!==null&&boolean){
+        boolean=false;
+        console.log(goalAddresses)
+        goalAddresses.forEach(value=>(store.dispatch(selectGoal(value))))
+        goalAddresses=null
+        x=0
+        y=0
+        state.ui.selection.selectedGoals=[]
+        store.dispatch(unsetShiftKeyDown())
+        return
+      }
+      
+    }
     const goalAddress = checkForGoalAtCoordinates(canvas.getContext('2d'), translate, scale, width, goals, edges, event.clientX, event.clientY)
     if (goalAddress && state.ui.hover.hoveredGoal !== goalAddress) {
-      store.dispatch(hoverGoal(goalAddress))
+      if(!state.ui.mouse.mousedown)store.dispatch(hoverGoal(goalAddress))
     } else if (!goalAddress && state.ui.hover.hoveredGoal) {
       store.dispatch(unhoverGoal())
     }
@@ -172,6 +222,7 @@ export default function setupEventListeners(store, canvas) {
   // the UI like the GoalForm won't trigger it.
   canvas.addEventListener('click', event => {
     const state = store.getState()
+   
     // if the GoalForm is open, any click on the
     // canvas should close it
     if (state.ui.goalForm.isOpen) {

@@ -124,6 +124,6 @@ const ListProfile=(props)=>{
 }
 const Icon=(props)=>{
     return(
-        < img src ={props.titulo} onClick={props.click}/>
+        <img src ={props.titulo} onClick={props.click}/>
     )
 }
