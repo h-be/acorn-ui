@@ -40,10 +40,10 @@ function VerticalActionsList({ goalAddress, goal, onArchiveClick, updateGoal }) 
         <StatusIcon size='small' status={goal.status} hideTooltip />
         <span>status</span>
       </div>
-      {viewsOpen.status && <StatusPicker selectedStatus={goal.status} statusClicked={updateGoalStatus} />}
+      {viewsOpen.status && <StatusPicker selectedStatus={goal.status} statusClicked={updateGoalStatus} onClose={() => setViews({ ...defaultViews })} />}
       {/* squirrels */}
       <div className='action_list_item' key='squirrels' onClick={() => setViews({ ...defaultViews, squirrels: !viewsOpen.squirrels })}>
-        <Icon name='squirrel.png' />
+        <Icon name='squirrel_white.svg' />
         <span>squirrels</span>
       </div>
       {viewsOpen.squirrels && <PeoplePicker onClose={() => setViews({ ...defaultViews })} />}
