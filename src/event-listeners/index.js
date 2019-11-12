@@ -37,6 +37,7 @@ import {
   changeTranslate,
   changeScale
 } from '../viewport/actions'
+import drawSelectBox from '../drawing/drawSelectBox'
 import layoutFormula from '../drawing/layoutFormula'
 
 export default function setupEventListeners(store, canvas) {
@@ -125,30 +126,17 @@ export default function setupEventListeners(store, canvas) {
         }, translate, scale)
           boolean=true
         }
-        
-         let lienzo = canvas.getContext("2d")
          store.dispatch(unhoverGoal())
          const convertedIni = coordsPageToCanvas({
           x: event.clientX,
           y: event.clientY
       }, translate, scale)
-         let xd=convertedIni.x-convertedClick.x
-         let yd=convertedIni.y-convertedClick.y
-
-         lienzo.beginPath()
-        
-        lienzo.moveTo(convertedClick.x,convertedClick.y)
-        lienzo.lineTo(convertedClick.x+xd,convertedClick.y)
-        lienzo.lineTo(convertedClick.x+xd,convertedClick.y+yd)
-        lienzo.lineTo(convertedClick.x,convertedClick.y+yd)
-        lienzo.lineTo(convertedClick.x,convertedClick.y)
-
-        lienzo.closePath()
-        lienzo.stroke()
-        
+         let w=convertedIni.x-convertedClick.x
+         let h=convertedIni.y-convertedClick.y
+         drawSelectBox(convertedClick,w,h,canvas.getContext("2d"))
         goalAddresses = checkForGoalAtCoordinatesInBox(canvas.getContext('2d'), translate, scale, width, goals, edges, event.clientX, event.clientY,x,y)
       }else{ store.dispatch(changeTranslate(event.movementX, event.movementY))}
-
+      return
     }else{
       if(goalAddresses!==null&&boolean){
         boolean=false;
@@ -165,7 +153,7 @@ export default function setupEventListeners(store, canvas) {
     }
     const goalAddress = checkForGoalAtCoordinates(canvas.getContext('2d'), translate, scale, width, goals, edges, event.clientX, event.clientY)
     if (goalAddress && state.ui.hover.hoveredGoal !== goalAddress) {
-      if(!state.ui.mouse.mousedown)store.dispatch(hoverGoal(goalAddress))
+      store.dispatch(hoverGoal(goalAddress))
     } else if (!goalAddress && state.ui.hover.hoveredGoal) {
       store.dispatch(unhoverGoal())
     }
