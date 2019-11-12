@@ -8,6 +8,13 @@
 /* constants */
 const SET_MOUSEDOWN = 'SET_MOUSEDOWN'
 const UNSET_MOUSEDOWN = 'UNSET_MOUSEDOWN'
+const SET_COORDINATE='SET_COORDINATE'
+const UNSET_COORDINATE='UNSET_COORDINATE'
+const SET_SIZE='SET_SIZE'
+const UNSET_SIZE='UNSET_SIZE'
+const SET_GOALS='SET_GOALS'
+const UNSET_GOALS='UNSET_GOALS'
+
 
 /* action creator functions */
 
@@ -19,13 +26,65 @@ function setMousedown() {
 
 function unsetMousedown() {
   return {
-   type: UNSET_MOUSEDOWN
+   type: UNSET_MOUSEDOWN,
+   
  }
 }
+function setCordinate(coordinate) {
+  return {
+   type: SET_COORDINATE,
+   coordinate
+
+ }
+}
+
+function unsetCordinate() {
+  return {
+   type: UNSET_COORDINATE
+ }
+}
+function setSize(size) {
+  return {
+   type: SET_SIZE,
+   size
+
+ }
+}
+
+function unsetSize() {
+  return {
+   type: UNSET_SIZE
+ }
+}
+function setGoals(goalsAdresses) {
+  return {
+   type: SET_GOALS,
+   goalsAdresses
+
+ }
+}
+
+function unsetGoals() {
+  return {
+   type: UNSET_GOALS }
+}
+
 
 export {
   SET_MOUSEDOWN,
   UNSET_MOUSEDOWN,
+  SET_COORDINATE,
+  UNSET_COORDINATE,
+  SET_SIZE,
+  UNSET_SIZE,
+  SET_GOALS,
+  UNSET_GOALS,
   setMousedown,
-  unsetMousedown
+  unsetMousedown,
+  setCordinate,
+  unsetCordinate,
+  setSize,
+  unsetSize,
+  setGoals,
+  unsetGoals
 }

@@ -36,18 +36,10 @@ export function checkForGoalAtCoordinates(ctx, translate, scale, width, goals, e
     })
     return clickedAddress
 }
-export function checkForGoalAtCoordinatesInBox(ctx, translate, scale, width, goals, edges, clickX, clickY,inix,iniy) {
+export function checkForGoalAtCoordinatesInBox( width, goals, edges, convertedClick,convertedIni) {
     // get coordinates of all goals
     const coordinates = layoutFormula(width, goals, edges)
     // convert the coordinates of the click to canvas space
-    const convertedClick = coordsPageToCanvas({
-        x: clickX,
-        y: clickY
-    }, translate, scale)
-    const convertedIni = coordsPageToCanvas({
-        x: inix,
-        y: iniy
-    }, translate, scale)
     // keep track of whether a goal was selected
     let clickedAddresses={}
     Object.keys(goals).map(address => goals[address]).forEach(goal => {

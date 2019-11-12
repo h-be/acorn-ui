@@ -20,7 +20,13 @@ import {
 } from '../keyboard/actions'
 import {
   setMousedown,
-  unsetMousedown
+  unsetMousedown,
+  setCordinate,
+  unsetCordinate,
+  unsetGoals,
+  setGoals,
+  setSize,
+  unsetSize
 } from '../mouse/actions'
 import {
   openGoalForm,
@@ -37,15 +43,10 @@ import {
   changeTranslate,
   changeScale
 } from '../viewport/actions'
-import drawSelectBox from '../drawing/drawSelectBox'
+
 import layoutFormula from '../drawing/layoutFormula'
 
 export default function setupEventListeners(store, canvas) {
-  let convertedClick 
-  let goalAddresses=null
-  let boolean=false;
-  let x=0;
-  let y = 0;
   window.addEventListener('resize', event => {
     // Get the device pixel ratio, falling back to 1.
     const dpr = window.devicePixelRatio || 1
@@ -113,39 +114,34 @@ export default function setupEventListeners(store, canvas) {
   // kill performance
   canvas.addEventListener('mousemove', event => {
     const state = store.getState()
-    const { goals, edges, ui: { viewport: { translate, scale }, screensize: { width } }} = state
+    const { goals, edges, ui: { viewport: { translate, scale }, mouse:{coordinate:{x,y},goalsAdresses},screensize: { width } }} = state
     if (state.ui.mouse.mousedown) {
-     
       if(event.shiftKey){
-        if(boolean===false){
-          x=event.clientX
-          y=event.clientY
-           convertedClick = coordsPageToCanvas({
+        if(!goalsAdresses){
+           const convertedIni = coordsPageToCanvas({
             x: event.clientX,
             y: event.clientY
+
         }, translate, scale)
-          boolean=true
+        store.dispatch(setCordinate(convertedIni))
         }
-         store.dispatch(unhoverGoal())
-         const convertedIni = coordsPageToCanvas({
+        
+        const convertedClick = coordsPageToCanvas({
           x: event.clientX,
           y: event.clientY
       }, translate, scale)
-         let w=convertedIni.x-convertedClick.x
-         let h=convertedIni.y-convertedClick.y
-         drawSelectBox(convertedClick,w,h,canvas.getContext("2d"))
-        goalAddresses = checkForGoalAtCoordinatesInBox(canvas.getContext('2d'), translate, scale, width, goals, edges, event.clientX, event.clientY,x,y)
+         let w=convertedClick.x-x
+         let h=convertedClick.y-y
+         store.dispatch(setSize({w,h}))
+         store.dispatch(setGoals(checkForGoalAtCoordinatesInBox( width, goals, edges,convertedClick,{x,y})))
       }else{ store.dispatch(changeTranslate(event.movementX, event.movementY))}
       return
     }else{
-      if(goalAddresses!==null&&boolean){
-        boolean=false;
-        console.log(goalAddresses)
-        goalAddresses.forEach(value=>(store.dispatch(selectGoal(value))))
-        goalAddresses=null
-        x=0
-        y=0
-        state.ui.selection.selectedGoals=[]
+      if(goalsAdresses){
+        goalsAdresses.forEach(value=>(store.dispatch(selectGoal(value))))
+        store.dispatch(unsetCordinate())
+        store.dispatch(unsetGoals())
+        store.dispatch(unsetSize())
         store.dispatch(unsetShiftKeyDown())
         return
       }
