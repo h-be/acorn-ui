@@ -14,18 +14,20 @@ function PeoplePicker({ people, goalAddress, addMemberOfGoal, archiveMemberOfGoa
 
     return (
         <div className='people_picker vertical_action_overlay'>
+            <Icon className='vertical_action_close' name='x_a3a3a3.svg' size='small-close' onClick={() => onClose()} />
+            <h1 className="popup-title">squirrels</h1>
             <div className='people_picker_search'>
                 <Icon name='search.svg' size='small' />
-                <input type='text' onChange={e => setFilterText(e.target.value)} value={filterText} placeholder='Search squirrels...' autoFocus />
-                <Icon className='vertical_action_close' name='x.svg' size='small' onClick={() => onClose()} />
+                <input type='text' onChange={e => setFilterText(e.target.value)} value={filterText} placeholder='search squirrels...' autoFocus />
+                {filterText !== '' && <button onClick={() => {setFilterText('')}} className='clear_button'>clear</button>}
             </div>
             <div className='people_picker_spacer' />
             <ul className='people_picker_people'>
                 {people
                     // filter people out if there's filter text defined, and don't bother case matching
                     .filter(person => {
-                      const name = `${person.first_name} ${person.last_name}`
-                      return !filterText || name.toLowerCase().indexOf(filterText.toLowerCase()) > -1
+                        const name = `${person.first_name} ${person.last_name}`
+                        return !filterText || name.toLowerCase().indexOf(filterText.toLowerCase()) > -1
                     })
                     // sort members (people attached to Goal) to the top of the list
                     .sort((p1, p2) => {
@@ -39,11 +41,13 @@ function PeoplePicker({ people, goalAddress, addMemberOfGoal, archiveMemberOfGoa
                             else addMemberOfGoal(goalAddress, person.address)
                         }
                         return (<li key={index} className={person.is_member ? 'member' : ''} onClick={onClick}>
-                            <Avatar avatar_url={person.avatar_url} highlighted={person.is_member} small />
-                            <div className='hover_wrapper'>
+                            <Avatar avatar_url={person.avatar_url} medium />
+                            <div className='person_nameANDhandle'>
                                 <span className='person_name'>{person.first_name} {person.last_name}</span>
-                                {person.is_member && <Icon size='small' name='check_mark.svg' />}
+                                <div className='person_handle'>{person.handle}</div>
                             </div>
+                            {!person.is_member && <Icon name='radio_button.svg' size='small' className='radio_button' />}
+                            {person.is_member && <Icon name='radio_button_checked.svg' size='small' className='radio_button' />}
                         </li>)
                     })
                 }

@@ -8,9 +8,29 @@
   line-height: 19px;
   padding: 16px 45px;
   cursor: pointer;
-  font-family: 'rennerbook'
+  font-family: 'renner_mediummedium'
 }
 
 .button:hover {
   background: #7C24FF;
+}
+
+.clear_button {
+  outline: none;
+  background: none;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  font-family: 'renner_mediummedium';
+  color: ;
+  font-size: 11px;
+  padding: 0;
+  color: #00BEB0;
+}
+
+.clear_button:hover {
+  color: #5F65FF;
 }
