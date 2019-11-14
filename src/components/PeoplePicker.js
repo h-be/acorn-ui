@@ -15,7 +15,7 @@ function PeoplePicker({ people, goalAddress, addMemberOfGoal, archiveMemberOfGoa
     return (
         <div className='people_picker vertical_action_overlay'>
             <Icon className='vertical_action_close' name='x_a3a3a3.svg' size='small-close' onClick={() => onClose()} />
-            <h1 className="popup-title">squirrels</h1>
+            <div className="popup-title">squirrels</div>
             <div className='people_picker_search'>
                 <Icon name='search.svg' size='small' />
                 <input type='text' onChange={e => setFilterText(e.target.value)} value={filterText} placeholder='search squirrels...' autoFocus />
