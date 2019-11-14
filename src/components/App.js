@@ -9,6 +9,7 @@ import MultiEditBar from './MultiEditBar'
 import HoverOverlay from './HoverOverlay'
 import { createWhoami, updateWhoami } from '../who-am-i/actions'
 import Header from './Header/Header'
+import Options from './Zoom/Options'
 
 function App(props) {
   const {
@@ -52,6 +53,7 @@ function App(props) {
       <div className="transform-container" style={transform}>
         {goalFormIsOpen && <GoalForm />}
         {hasHover && <HoverOverlay />}
+        <Options/>
       </div>
     </div>
   )
