@@ -11,7 +11,7 @@ export default function GettingStarted(props){
         { title: 'Change card title', url: 'change_card_title', tab: "How To's"},
         { title: 'Associate members with a card', url: 'associate_members_with_card', tab: "How To's" },
         { title: 'Change card status', url: 'change_card_status', tab: "How To's" },
-        { title: 'select multiple cards', url: 'select_multiple_cards',tab: "How To's" },
+        { title: 'Select multiple cards', url: 'select_multiple_cards',tab: "How To's" },
     ]
     },
   ]
