@@ -1,16 +1,9 @@
 
 .profile_edit_form {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  margin-top: -378px;
-  margin-left: -317px;
-  background: #FFFFFF;
-  box-shadow: 0px 0px 6px #00000041;
-  border-radius: 10px;
   width: 510px;
   padding: 64px 64px;
   text-align: center;
+  margin: 0 auto;
 }
 
 .profile_edit_form .close_icon {
