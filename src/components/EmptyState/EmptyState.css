@@ -1,0 +1,34 @@
+.empty_state_wrapper {
+    height: 100vh;
+    width: 100%; 
+    display: flex;
+    align-items: center;
+    z-index: -1;
+    position: absolute;
+}
+
+.empty_state {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    margin: 0 auto;
+  }
+
+  .empty_state h1 {
+    font-family: 'quebecbold', Helvetica, Sans-Serif;
+    font-weight: normal;
+    margin: 10px auto;
+  }
+
+   .empty_state h4 {
+    font-family: 'quebecregular', Helvetica, Sans-Serif;
+    font-weight: normal;
+    margin: 5px auto;
+  }
+
+.empty_state img {
+    height: 220px;
+    width: 220px;
+    text-align: center;
+  }
