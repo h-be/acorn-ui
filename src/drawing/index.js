@@ -5,12 +5,11 @@
   and use well defined functions for rendering those specific parts
   to the canvas.
 */
-
 import layoutFormula from './layoutFormula'
 import drawGoalCard from './drawGoalCard'
 import drawEdge from './drawEdge'
 import drawOverlay from './drawOverlay'
-
+import drawSelectBox from '../drawing/drawSelectBox'
 function setupCanvas(canvas) {
   // Get the device pixel ratio, falling back to 1.
   const dpr = window.devicePixelRatio || 1
@@ -93,7 +92,9 @@ function render(store, canvas) {
         .map(goalMember => state.agents[goalMember.agent_address])
     drawGoalCard(goal, membersOfGoal, coordinates[goal.address], isEditing, '', isSelected, isHovered, ctx)
   })
-
+  if(state.ui.keyboard.shiftKeyDown && state.ui.mouse.mousedown && state.ui.mouse.coordinate.x!==0){
+        drawSelectBox(state.ui.mouse.coordinate,state.ui.mouse.size,canvas.getContext("2d"))
+  }
   // draw the editing highlight overlay
   /* if shift key not held down and there are more than 1 Goals selected */
   if (state.ui.goalForm.editAddress || (state.ui.selection.selectedGoals.length > 1 && !state.ui.keyboard.shiftKeyDown)) {

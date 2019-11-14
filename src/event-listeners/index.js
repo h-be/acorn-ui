@@ -1,7 +1,7 @@
 import _ from 'lodash'
 
 import { coordsPageToCanvas } from '../drawing/coordinateSystems'
-import { checkForGoalAtCoordinates } from '../drawing/eventDetection'
+import { checkForGoalAtCoordinates, checkForGoalAtCoordinatesInBox } from '../drawing/eventDetection'
 
 import {
   selectGoal,
@@ -20,7 +20,13 @@ import {
 } from '../keyboard/actions'
 import {
   setMousedown,
-  unsetMousedown
+  unsetMousedown,
+  setCoordinate,
+  unsetCoordinate,
+  unsetGoals,
+  setGoals,
+  setSize,
+  unsetSize
 } from '../mouse/actions'
 import {
   openGoalForm,
@@ -37,10 +43,10 @@ import {
   changeTranslate,
   changeScale
 } from '../viewport/actions'
+
 import layoutFormula from '../drawing/layoutFormula'
 
 export default function setupEventListeners(store, canvas) {
-
   window.addEventListener('resize', event => {
     // Get the device pixel ratio, falling back to 1.
     const dpr = window.devicePixelRatio || 1
@@ -108,11 +114,26 @@ export default function setupEventListeners(store, canvas) {
   // kill performance
   canvas.addEventListener('mousemove', event => {
     const state = store.getState()
+    let convertedMouse, goalAddressesToSelect
+    const { goals, edges, ui: { viewport: { translate, scale }, mouse: { coordinate: { x, y }, goalsAddresses }, screensize: { width } } } = state
     if (state.ui.mouse.mousedown) {
-      store.dispatch(changeTranslate(event.movementX, event.movementY))
+      if (event.shiftKey) {
+        convertedMouse = coordsPageToCanvas({
+          x: event.clientX,
+          y: event.clientY
+        }, translate, scale)
+
+        if (!goalsAddresses) {
+          store.dispatch(setCoordinate(convertedMouse))
+        }
+        store.dispatch(setSize({ w: convertedMouse.x - x, h: convertedMouse.y - y }))
+        goalAddressesToSelect = checkForGoalAtCoordinatesInBox(width, goals, edges, convertedMouse, { x, y })
+        store.dispatch(setGoals(goalAddressesToSelect))
+      } else {
+        store.dispatch(changeTranslate(event.movementX, event.movementY))
+      }
       return
     }
-    const { goals, edges, ui: { viewport: { translate, scale }, screensize: { width } }} = state
     const goalAddress = checkForGoalAtCoordinates(canvas.getContext('2d'), translate, scale, width, goals, edges, event.clientX, event.clientY)
     if (goalAddress && state.ui.hover.hoveredGoal !== goalAddress) {
       store.dispatch(hoverGoal(goalAddress))
@@ -132,14 +153,14 @@ export default function setupEventListeners(store, canvas) {
         const wheel = event.deltaY < 0 ? 1 : -1
         const zoomIntensity = 0.05
         // Compute zoom factor.
-        const zoom = Math.exp(wheel*zoomIntensity)
+        const zoom = Math.exp(wheel * zoomIntensity)
         const mouseX = event.clientX
         const mouseY = event.clientY
         store.dispatch(changeScale(zoom, mouseX, mouseY))
       } else {
         // invert the pattern so that it uses new mac style
         // of panning
-        store.dispatch(changeTranslate(-1*event.deltaX, -1*event.deltaY))
+        store.dispatch(changeTranslate(-1 * event.deltaX, -1 * event.deltaY))
       }
     }
   }, 2, { leading: true })
@@ -158,12 +179,12 @@ export default function setupEventListeners(store, canvas) {
 
   canvas.addEventListener('dblclick', event => {
     const state = store.getState()
-    const { goals, edges, ui: { viewport: { translate, scale }, screensize: { width } }} = state
+    const { goals, edges, ui: { viewport: { translate, scale }, screensize: { width } } } = state
     const goalAddress = checkForGoalAtCoordinates(canvas.getContext('2d'), translate, scale, width, goals, edges, event.clientX, event.clientY)
-    if (goalAddress ) {
-      let goalCoord =layoutFormula(width, goals, edges)[goalAddress]
+    if (goalAddress) {
+      let goalCoord = layoutFormula(width, goals, edges)[goalAddress]
       store.dispatch(unselectAll())
-      store.dispatch(openGoalForm(goalCoord.x,goalCoord.y, goalAddress))
+      store.dispatch(openGoalForm(goalCoord.x, goalCoord.y, goalAddress))
       store.dispatch(updateContent(goals[goalAddress].content))
     }
   })
@@ -172,6 +193,9 @@ export default function setupEventListeners(store, canvas) {
   // the UI like the GoalForm won't trigger it.
   canvas.addEventListener('click', event => {
     const state = store.getState()
+    // goalsAddresses are Goals to be selected
+    const { ui: { mouse: { goalsAddresses } } } = state
+
     // if the GoalForm is open, any click on the
     // canvas should close it
     if (state.ui.goalForm.isOpen) {
@@ -191,10 +215,14 @@ export default function setupEventListeners(store, canvas) {
       }, state.ui.viewport.translate, state.ui.viewport.scale)
       store.dispatch(openGoalForm(calcedPoint.x, calcedPoint.y, null, parentAddress))
     }
+    // finishing a drag box selection action
+    else if (goalsAddresses) {
+      goalsAddresses.forEach(value => (store.dispatch(selectGoal(value))))
+    }
     else {
       // check for node in clicked area
       // select it if so
-      const { goals, edges, ui: { viewport: { translate, scale }, screensize: { width } }} = state
+      const { goals, edges, ui: { viewport: { translate, scale }, screensize: { width } } } = state
       const clickedAddress = checkForGoalAtCoordinates(canvas.getContext('2d'), translate, scale, width, goals, edges, event.clientX, event.clientY)
       if (clickedAddress) {
         // if the shift key is being use, do an 'additive' select
@@ -214,5 +242,9 @@ export default function setupEventListeners(store, canvas) {
         store.dispatch(unselectAll())
       }
     }
+    // clear box selection vars
+    store.dispatch(unsetCoordinate())
+    store.dispatch(unsetGoals())
+    store.dispatch(unsetSize())
   })
 }
