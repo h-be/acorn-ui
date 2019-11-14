@@ -30,7 +30,7 @@ function unsetMousedown() {
    
  }
 }
-function setCordinate(coordinate) {
+function setCoordinate(coordinate) {
   return {
    type: SET_COORDINATE,
    coordinate
@@ -38,7 +38,7 @@ function setCordinate(coordinate) {
  }
 }
 
-function unsetCordinate() {
+function unsetCoordinate() {
   return {
    type: UNSET_COORDINATE
  }
@@ -81,8 +81,8 @@ export {
   UNSET_GOALS,
   setMousedown,
   unsetMousedown,
-  setCordinate,
-  unsetCordinate,
+  setCoordinate,
+  unsetCoordinate,
   setSize,
   unsetSize,
   setGoals,

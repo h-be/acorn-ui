@@ -21,8 +21,8 @@ import {
 import {
   setMousedown,
   unsetMousedown,
-  setCordinate,
-  unsetCordinate,
+  setCoordinate,
+  unsetCoordinate,
   unsetGoals,
   setGoals,
   setSize,
@@ -118,28 +118,20 @@ export default function setupEventListeners(store, canvas) {
     if (state.ui.mouse.mousedown) {
       if(event.shiftKey){
         if(!goalsAdresses){
-           const convertedIni = coordsPageToCanvas({
-            x: event.clientX,
-            y: event.clientY
-
-        }, translate, scale)
-        store.dispatch(setCordinate(convertedIni))
+          store.dispatch(setCoordinate(coordsPageToCanvas({ x: event.clientX,y: event.clientY }, translate, scale)))
         }
-        
         const convertedClick = coordsPageToCanvas({
-          x: event.clientX,
-          y: event.clientY
+          x: event.clientX,	         
+          y: event.clientY	          
       }, translate, scale)
-         let w=convertedClick.x-x
-         let h=convertedClick.y-y
-         store.dispatch(setSize({w,h}))
-         store.dispatch(setGoals(checkForGoalAtCoordinatesInBox( width, goals, edges,convertedClick,{x,y})))
+         store.dispatch(setSize({w:convertedClick.x-x,h:convertedClick.y-y}))
+         store.dispatch(setGoals(checkForGoalAtCoordinatesInBox( width, goals, edges,coordsPageToCanvas({x: event.clientX,y: event.clientY}, translate, scale),{x,y})))
       }else{ store.dispatch(changeTranslate(event.movementX, event.movementY))}
       return
     }else{
       if(goalsAdresses){
         goalsAdresses.forEach(value=>(store.dispatch(selectGoal(value))))
-        store.dispatch(unsetCordinate())
+        store.dispatch(unsetCoordinate())
         store.dispatch(unsetGoals())
         store.dispatch(unsetSize())
         store.dispatch(unsetShiftKeyDown())
