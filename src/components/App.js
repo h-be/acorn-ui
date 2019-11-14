@@ -14,6 +14,8 @@ import CreateProfilePage from './CreateProfilePage/CreateProfilePage'
 import ProfileEditForm from './ProfileEditForm/ProfileEditForm'
 import LoadingScreen from './LoadingScreen/LoadingScreen'
 
+import Options from './Zoom/Options'
+
 function App(props) {
   const {
     agentAddress,
@@ -55,10 +57,12 @@ function App(props) {
     <div className="transform-container" style={transform}>
       {goalFormIsOpen && <GoalForm />}
       {hasHover && <HoverOverlay />}
+     
     </div>
-
+    
     {agentAddress && !whoami && <CreateProfilePage />}
     {!agentAddress && <LoadingScreen />}
+    <Options/>
   </>)
 }
 
