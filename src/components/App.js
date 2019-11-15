@@ -3,12 +3,18 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import ProfileEditForm from './ProfileEditForm/ProfileEditForm'
+import './App.css'
+
 import GoalForm from './GoalForm'
 import MultiEditBar from './MultiEditBar'
 import HoverOverlay from './HoverOverlay'
-import { createWhoami, updateWhoami } from '../who-am-i/actions'
+import { updateWhoami } from '../who-am-i/actions'
 import Header from './Header/Header'
+import CreateProfilePage from './CreateProfilePage/CreateProfilePage'
+import ProfileEditForm from './ProfileEditForm/ProfileEditForm'
+import LoadingScreen from './LoadingScreen/LoadingScreen'
+
+import Options from './Zoom/Options'
 
 function App(props) {
   const {
@@ -19,8 +25,6 @@ function App(props) {
     translate,
     scale,
     whoami, // .entry and .address
-    showProfileCreateForm,
-    createWhoami,
     updateWhoami
   } = props
   const transform = {
@@ -28,33 +32,38 @@ function App(props) {
   }
   const [showProfileEditForm, setShowProfileEditForm] = useState(false)
 
-  const onProfileSubmit = (info) => {
-    showProfileEditForm ? updateWhoami(info, whoami.address) : createWhoami(info)
+  const onProfileSubmit = (profile) => {
+    updateWhoami(profile, whoami.address)
     setShowProfileEditForm(false)
   }
-  const titleText = showProfileEditForm ? 'Profile Settings' : 'First, let\'s set up your profile on Acorn.'
-  const subText = showProfileEditForm ? '' : 'You\'ll be able to edit them later in your Profile Settings.'
-  const submitText = showProfileEditForm ? 'Save Changes' : 'Ready to Start'
-  const canClose = showProfileEditForm
+  const titleText = 'Profile Settings'
+  const subText = ''
+  const submitText = 'Save Changes'
+  const canClose = true
 
-  return (
-    <div>
-      <div className="fixed">{whoami && <Header whoami={whoami} setShowProfileEditForm={setShowProfileEditForm} />}</div>
-      
-      {(showProfileCreateForm || showProfileEditForm) &&
+  return (<>
+    {agentAddress && <Header whoami={whoami} setShowProfileEditForm={setShowProfileEditForm} />}
+
+    {showProfileEditForm &&
+      <div className="profile_edit_wrapper">
         <ProfileEditForm
           onSubmit={onProfileSubmit}
           onClose={() => setShowProfileEditForm(false)}
           whoami={whoami ? whoami.entry : null}
-          {...{canClose, titleText, subText, submitText, agentAddress }} />}
-       
-      {hasSelection && <MultiEditBar />}
-      <div className="transform-container" style={transform}>
-        {goalFormIsOpen && <GoalForm />}
-        {hasHover && <HoverOverlay />}
-      </div>
+          {...{ canClose, titleText, subText, submitText, agentAddress }} />
+      </div>}
+
+    {hasSelection && <MultiEditBar />}
+    <div className="transform-container" style={transform}>
+      {goalFormIsOpen && <GoalForm />}
+      {hasHover && <HoverOverlay />}
+     
     </div>
-  )
+    
+    {agentAddress && !whoami && <CreateProfilePage />}
+    {!agentAddress && <LoadingScreen />}
+    <Options/>
+  </>)
 }
 
 App.propTypes = {
@@ -73,18 +82,14 @@ App.propTypes = {
     avatar_url: PropTypes.string,
     address: PropTypes.string
   }),
-  showProfileEditForm: PropTypes.bool,
   createWhoami: PropTypes.func,
   updateWhoami: PropTypes.func
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    createWhoami: (whoami) => {
-      return dispatch(createWhoami.create({ profile: whoami }))
-    },
-    updateWhoami: (whoami, address) => {
-      return dispatch(updateWhoami.create({ profile: whoami, address }))
+    updateWhoami: (profile, address) => {
+      return dispatch(updateWhoami.create({ profile, address }))
     }
   }
 }
@@ -98,7 +103,6 @@ function mapStateToProps(state) {
     translate: state.ui.viewport.translate,
     scale: state.ui.viewport.scale,
     whoami: state.whoami,
-    showProfileCreateForm: !state.whoami,
     agentAddress: state.agentAddress
   }
 }

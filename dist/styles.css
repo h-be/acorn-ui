@@ -22,6 +22,7 @@ div.react {
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
 }
 
 /* Fonts */
@@ -207,6 +208,36 @@ div.react {
 
 }
 
+/* headers */
+
+h1 {
+  font-size: 24px;
+  line-height: 30px;
+}
+
+h2 {
+  font-size: 20px;
+  line-height: 28px;
+}
+
+h3 {
+  font-size: 18px;
+  line-height: 22px;
+}
+
+h4 {
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.popup-title {
+  font-size: 16px;
+  font-family: 'rennerbold';
+  color: #717171;
+  text-align: center;
+  margin-top: -6px;
+}
+
 /* transform */
 
 .transform-container {
@@ -243,22 +274,26 @@ div.react {
 }
 
 .goal_form_save {
-  margin-top: 81px;
-  padding: 10px 22px 14px;
-  background: #20C8BD 0% 0% no-repeat padding-box;
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+  margin-top: 78px;
+  padding: 10px 30px;
+  background: #00AFA4 0% 0% no-repeat padding-box;
+  box-shadow: 0px 0px 10px #FFFFFF;
   opacity: 1;
   outline: none;
   border: 0;
   text-align: left;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 22px;
-  font-family: 'quebecregular', Helvetica, Sans-Serif;
+  font-family: 'renner_mediummedium', Helvetica, Sans-Serif;
   letter-spacing: 0;
   color: #FFFFFF;
-  border-radius: 4px;
+  border-radius: 25px;
   text-align: center;
   cursor: pointer;
+}
+
+.goal_form_save:hover {
+  background: #00BEB0 0% 0% no-repeat padding-box;
 }
 
 /* Multi Edit Bar */
@@ -321,6 +356,13 @@ div.react {
   cursor: pointer;
 }
 
+.icon.small-close {
+  width: 14px;
+  height: 14px;
+  padding: 0px;
+  cursor: pointer;
+}
+
 .icon.logo {
   width: 28px;
   height: 28px;
@@ -376,14 +418,18 @@ div.react {
 
 .vertical_action_close {
   cursor: pointer;
+  top: 20px;
+  right: 20px;
+  position: absolute;
+  height: 14px;
 }
 
 .action_list_item {
-  background-color: rgba(23, 23, 23, 0.5);
-  border: 1px solid #707070;
-  border-radius: 5px;
-  font-family: 'quebecregular', Helvetica, Sans-Serif;
-  padding: 4px 20px 4px 10px;
+  background-color: rgba(106, 106, 106, 0.9);
+  border: 1px solid rgba(106, 106, 106, 0.9);
+  border-radius: 10px;
+  font-family: 'renner_mediummedium', Helvetica, Sans-Serif;
+  padding: 5px 25px 5px 15px;
   outline: 0;
   font-size: 16px;
   line-height: 18px;
@@ -392,10 +438,12 @@ div.react {
   display: flex;
   align-items: center;
   cursor: pointer;
+  letter-spacing: 0.5px;
 }
 
 .action_list_item:hover {
-  background-color: rgba(102, 0, 255, 0.95);
+  background-color: #5f65ff;
+  border: 1px solid #5f65ff;
 }
 
 .action_list_item img {
@@ -404,24 +452,26 @@ div.react {
 
 /* PeoplePicker */
 
-.people_picker {}
+.people_picker {
+  min-width: 253px;
+  max-width: 290px;
+}
 
 .people_picker_spacer {
-  margin-top: 10px;
+  margin: 0 20px 10px 20px;
   border: 0.5px solid #F2F2F2;
-  width: 100%;
 }
 
 .people_picker_search {
   display: flex;
   align-items: center;
-  margin-left: 4px;
+  padding: 0px 20px 5px 20px;
 }
 
 .people_picker_search input {
-  font-size: 16px;
+  font-size: 14px;
   line-height: 23px;
-  color: #4D4D4D;
+  color: #4d4d4d;
   border: 0;
   outline: 0;
   padding: 2px;
@@ -435,41 +485,49 @@ div.react {
 
 .people_picker_people {
   list-style: none;
-  margin: 7px 0 0 0;
   padding: 0;
+  margin: 0;
+
 }
 
 .people_picker_people li {
-  padding: 4px 0;
+  color: #4D4D4D;
+  padding: 6px 20px;
   display: flex;
   align-items: center;
   cursor: pointer;
 }
 
-.people_picker_people li .hover_wrapper {
-  margin-left: 5px;
-  border-radius: 5px;
-  padding: 8px 6px 8px 6px;
-  flex: 1;
-  display: flex;
-  align-items: center;
-}
-
-.people_picker_people li:hover .hover_wrapper {
+.people_picker_people li:hover {
   background: #F2F2F2;
+  color: #00A599;
 }
 
 .people_picker_people li .person_name {
-  color: #4D4D4D;
   flex: 1;
   padding: 1px 0px;
+  font-family: 'renner_mediummedium', Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+.person_nameANDhandle {
+  display: flex;
+  flex-direction: column;
+  padding-left: 4px;
+}
+
+.person_handle {
+  font-size: 12px;
+  color: #A3A3A3;
+  font-family: 'rennerbook', Helvetica, sans-serif;
+}
+
+.radio_button {
+  right: 20px;
+  position: absolute;
 }
 
 /* when person is a member styles */
-
-.people_picker_people li.member .avatar {
-  box-shadow: 0 0 0 2px #FFF, 0 0 0 4px #5F65FF;
-}
 
 .people_picker_people li.member .person_name {
   color: #5F65FF;
@@ -477,11 +535,14 @@ div.react {
 
 /* StatusPicker */
 
-.status_picker {
+.status_list {
+  padding: 20px 20px 0 20px;
   display: flex;
+  flex-direction: row;
 }
 
 /* StatusIcon */
+
 
 .status_color {
   position: relative;
@@ -521,10 +582,10 @@ div.react {
 
 .vertical_action_overlay {
   position: absolute;
-  border-radius: 5px;
+  border-radius: 10px;
   background: #FFFFFF;
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
-  padding: 10px 12px;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+  padding: 20px 0px;
 }
 
 /* Tooltips */
