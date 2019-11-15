@@ -116,10 +116,10 @@ class Header extends React.Component {
             </span>
           </div>
         </div>}
-
       </div>
       {this.state.isGuideOpen && <div className="instructions_wrapper">
         <GuideBook />
+        <Icon className="close_icon" name='x_a3a3a3.svg' size='small' onClick={() => { this.setState({ isGuideOpen: false }) }} />
       </div>}
       {this.state.isProfileOpen && <div className="profile-wrapper">
         {Object.keys(this.state.listaProfile).map(key =>
