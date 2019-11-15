@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 import './App.css'
 
+import EmptyState from './EmptyState/EmptyState'
 import GoalForm from './GoalForm'
 import MultiEditBar from './MultiEditBar'
 import HoverOverlay from './HoverOverlay'
@@ -23,7 +24,8 @@ function App(props) {
     translate,
     scale,
     whoami, // .entry and .address
-    updateWhoami
+    updateWhoami,
+    showEmptyState
   } = props
   const transform = {
     transform: `matrix(${scale}, 0, 0, ${scale}, ${translate.x}, ${translate.y})`
@@ -41,6 +43,8 @@ function App(props) {
 
   return (<>
     {agentAddress && <Header whoami={whoami} setShowProfileEditForm={setShowProfileEditForm} />}
+
+    {showEmptyState && <EmptyState />}
 
     {showProfileEditForm &&
       <div className="profile_edit_wrapper">
@@ -79,7 +83,8 @@ App.propTypes = {
     address: PropTypes.string
   }),
   createWhoami: PropTypes.func,
-  updateWhoami: PropTypes.func
+  updateWhoami: PropTypes.func,
+  showEmptyState: PropTypes.bool
 }
 
 function mapDispatchToProps(dispatch) {
@@ -99,7 +104,9 @@ function mapStateToProps(state) {
     translate: state.ui.viewport.translate,
     scale: state.ui.viewport.scale,
     whoami: state.whoami,
-    agentAddress: state.agentAddress
+    agentAddress: state.agentAddress,
+    // TODO: make this also based on whether the user has just registered (created their profile)
+    showEmptyState: state.agentAddress && Object.values(state.goals).length === 0,
   }
 }
 
