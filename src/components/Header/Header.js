@@ -117,6 +117,10 @@ class Header extends React.Component {
           </div>
         </div>}
       </div>
+      {!this.state.isGuideOpen && <div className="guidebook_open_help">
+        <div>Click on the Guidebook icon to learn more</div>
+        <img src="/img/arrow_curved.svg" />
+        </div>}
       {this.state.isGuideOpen && <div className="instructions_wrapper">
         <GuideBook />
         <Icon className="close_icon" name='x_a3a3a3.svg' size='small' onClick={() => { this.setState({ isGuideOpen: false }) }} />
