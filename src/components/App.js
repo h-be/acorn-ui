@@ -13,6 +13,7 @@ import Header from './Header/Header'
 import CreateProfilePage from './CreateProfilePage/CreateProfilePage'
 import ProfileEditForm from './ProfileEditForm/ProfileEditForm'
 import LoadingScreen from './LoadingScreen/LoadingScreen'
+import ExpandedViewMode from './ExpandedViewMode/ExpandedViewMode'
 
 function App(props) {
   const {
@@ -29,6 +30,7 @@ function App(props) {
     transform: `matrix(${scale}, 0, 0, ${scale}, ${translate.x}, ${translate.y})`
   }
   const [showProfileEditForm, setShowProfileEditForm] = useState(false)
+  const [showExpandedViewMode, setShowExpandedViewMode] = useState(true)
 
   const onProfileSubmit = (profile) => {
     updateWhoami(profile, whoami.address)
@@ -54,8 +56,11 @@ function App(props) {
     {hasSelection && <MultiEditBar />}
     <div className="transform-container" style={transform}>
       {goalFormIsOpen && <GoalForm />}
-      {hasHover && <HoverOverlay />}
+      {hasHover && <HoverOverlay onExpandClick={(address) => setShowExpandedViewMode(true)} />}
     </div>
+
+    
+    {showExpandedViewMode && <ExpandedViewMode onClose={() => setShowExpandedViewMode(false)} />}
 
     {agentAddress && !whoami && <CreateProfilePage />}
     {!agentAddress && <LoadingScreen />}
