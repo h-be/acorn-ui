@@ -105,6 +105,7 @@ function mapStateToProps(state) {
     scale: state.ui.viewport.scale,
     whoami: state.whoami,
     agentAddress: state.agentAddress,
+    // TODO: make this also based on whether the user has just registered (created their profile)
     showEmptyState: state.agentAddress && Object.values(state.goals).length === 0,
   }
 }
