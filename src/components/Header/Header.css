@@ -119,6 +119,7 @@
   font-weight: normal;
   color: #717171;
   font-size: 14px;
+  z-index: -1;
 }
 
 .guidebook_open_help img {
