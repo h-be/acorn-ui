@@ -5,10 +5,11 @@ import { connect } from 'react-redux'
 
 import './App.css'
 
+import { updateWhoami } from '../who-am-i/actions'
+import { openExpandedView, closeExpandedView } from '../expanded-view/actions'
 import GoalForm from './GoalForm'
 import MultiEditBar from './MultiEditBar'
 import HoverOverlay from './HoverOverlay'
-import { updateWhoami } from '../who-am-i/actions'
 import Header from './Header/Header'
 import CreateProfilePage from './CreateProfilePage/CreateProfilePage'
 import ProfileEditForm from './ProfileEditForm/ProfileEditForm'
@@ -24,13 +25,15 @@ function App(props) {
     translate,
     scale,
     whoami, // .entry and .address
-    updateWhoami
+    updateWhoami,
+    showExpandedViewMode,
+    openExpandedView,
+    closeExpandedView
   } = props
   const transform = {
     transform: `matrix(${scale}, 0, 0, ${scale}, ${translate.x}, ${translate.y})`
   }
   const [showProfileEditForm, setShowProfileEditForm] = useState(false)
-  const [showExpandedViewMode, setShowExpandedViewMode] = useState(true)
 
   const onProfileSubmit = (profile) => {
     updateWhoami(profile, whoami.address)
@@ -56,11 +59,10 @@ function App(props) {
     {hasSelection && <MultiEditBar />}
     <div className="transform-container" style={transform}>
       {goalFormIsOpen && <GoalForm />}
-      {hasHover && <HoverOverlay onExpandClick={(address) => setShowExpandedViewMode(true)} />}
+      {hasHover && <HoverOverlay onExpandClick={openExpandedView} />}
     </div>
 
-    
-    {showExpandedViewMode && <ExpandedViewMode onClose={() => setShowExpandedViewMode(false)} />}
+    {showExpandedViewMode && <ExpandedViewMode onClose={closeExpandedView} />}
 
     {agentAddress && !whoami && <CreateProfilePage />}
     {!agentAddress && <LoadingScreen />}
@@ -84,13 +86,20 @@ App.propTypes = {
     address: PropTypes.string
   }),
   createWhoami: PropTypes.func,
-  updateWhoami: PropTypes.func
+  updateWhoami: PropTypes.func,
+  showExpandedViewMode: PropTypes.bool.isRequired
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     updateWhoami: (profile, address) => {
       return dispatch(updateWhoami.create({ profile, address }))
+    },
+    openExpandedView: (address) => {
+      return dispatch(openExpandedView(address))
+    },
+    closeExpandedView: () => {
+      return dispatch(closeExpandedView())
     }
   }
 }
@@ -104,7 +113,8 @@ function mapStateToProps(state) {
     translate: state.ui.viewport.translate,
     scale: state.ui.viewport.scale,
     whoami: state.whoami,
-    agentAddress: state.agentAddress
+    agentAddress: state.agentAddress,
+    showExpandedViewMode: state.ui.expandedView.isOpen
   }
 }
 

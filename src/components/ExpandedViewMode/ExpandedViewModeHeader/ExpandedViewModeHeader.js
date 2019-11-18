@@ -6,7 +6,7 @@ import StatusPicker from '../../StatusPicker'
 import StatusIcon from '../../StatusIcon'
 
 
-export default function ExpandedViewModeHeader({ goalAddress, onArchiveClick, updateGoal, onClose }) {
+export default function ExpandedViewModeHeader({ goalAddress, goal, updateGoal }) {
 
   const defaultViews = {
     status: false,
@@ -22,14 +22,6 @@ export default function ExpandedViewModeHeader({ goalAddress, onArchiveClick, up
       status
     }, goalAddress)
   }
-  
-
-  const goal = {
-    status: 'Uncertain'
-  }
-
-
-
 
   return (
     <div className="expanded_view_header">

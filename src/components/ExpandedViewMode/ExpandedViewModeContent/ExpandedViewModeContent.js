@@ -1,12 +1,10 @@
 import React from 'react'
 import './ExpandedViewModeContent.css'
 
-export default function ExpandedViewModeContent({ goalAddress, goal, onArchiveClick, updateGoal, onClose }) {
-
-
+export default function ExpandedViewModeContent({ goal }) {
     return (
         <div className="expanded_view_content">
-            <div className="expanded_view_title">Feature Hypothesis Statement</div>
+            <div className="expanded_view_title">{ goal.content }</div>
             <div className="expanded_view_tags">tags</div>
             <div className="squirrels_timeframe_row">
                 <div className="expanded_view_squirrels">squirrels</div>
