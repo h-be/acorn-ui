@@ -56,10 +56,10 @@ function unsetSize() {
    type: UNSET_SIZE
  }
 }
-function setGoals(goalsAdresses) {
+function setGoals(goalsAddresses) {
   return {
    type: SET_GOALS,
-   goalsAdresses
+   goalsAddresses
 
  }
 }

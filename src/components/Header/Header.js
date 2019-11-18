@@ -88,53 +88,55 @@ class Header extends React.Component {
     this.setState({ isStatusHover: false })
   }
   render() {
-    return (
-      <div>
-        <div className="header">
-          <div className="top-left-panel">
-            <div className="logo" >
-              <Icon name="acorn-logo.svg" className="logo" />
-              <p className="logo-name">acorn</p>
-            </div>
-            <div className="current-canvas">
-              <Icon name="map.svg" className="header-view-mode" />
-              <p className="canvas-name">H-BE SoA</p>
-            </div>
+    return (<div>
+      <div className="header">
+        <div className="top-left-panel">
+          <div className="logo" >
+            <Icon name="acorn-logo.svg" className="logo" />
+            <p className="logo-name">acorn</p>
           </div>
-          <div className="top-right-panel">
-            {/* <Icon name="search-line.svg" onClick={this.clickSearch}/> */}
-            <Icon name="guidebook.svg" onClick={this.clickBook} className="header" />
-            <div className={this.state.online.color}>
-              <div className="avatar_container" onMouseEnter={e => {
-                this.hover(true)
-              }} onMouseOut={e => {
-                this.hover(false)
-              }}><Avatar avatar_url={this.props.whoami.entry.avatar_url} highlighted={this.state.avatar} clickable onClick={this.clickAvatar} /></div>
-
-              <span onMouseEnter={this.handleStatusEnter} onMouseLeave={this.handleStatusLeave}>
-                {!this.state.isStatusOpen && !this.state.isStatusHover && <Icon name={this.state.online.img} onClick={this.clickStatus} className="user-status" />}
-                {(this.state.isStatusOpen || this.state.isStatusHover) && <Icon name="user-status-hover.svg" onClick={this.clickStatus} className="user-status" />}
-              </span>
-            </div>
-          </div>
-
+          {this.props.whoami && <div className="current-canvas">
+            <Icon name="map.svg" className="header-view-mode" />
+            <p className="canvas-name">H-BE SoA</p>
+          </div>}
         </div>
-        {this.state.isGuideOpen && <div className="instructions_wrapper">
-          <GuideBook />
-        </div>}
-        {this.state.isProfileOpen && <div className="profile-wrapper">
-          {Object.keys(this.state.listaProfile).map(key =>
-            <ListProfile key={key} title={this.state.listaProfile[key].title} click={this.state.listaProfile[key].click} />
-          )}
-        </div>}
-        {this.state.isStatusOpen && <div className="user-status-wrapper">
-          {Object.keys(this.state.lista).map(key =>
-            <ListStatus key={key} img={this.state.lista[key].img} color={this.state.lista[key].color} title={this.state.lista[key].title} changeStatus={this.changeStatus} />
-          )}
-        </div>}
+        {this.props.whoami && <div className="top-right-panel">
+          {/* <Icon name="search-line.svg" onClick={this.clickSearch}/> */}
+          <Icon name="guidebook.svg" onClick={this.clickBook} className="header" />
+          <div className={this.state.online.color}>
+            <div className="avatar_container" onMouseEnter={e => {
+              this.hover(true)
+            }} onMouseOut={e => {
+              this.hover(false)
+            }}><Avatar avatar_url={this.props.whoami.entry.avatar_url} highlighted={this.state.isProfileOpen || this.state.avatar} clickable onClick={this.clickAvatar} /></div>
 
+            <span onMouseEnter={this.handleStatusEnter} onMouseLeave={this.handleStatusLeave}>
+              {!this.state.isStatusOpen && !this.state.isStatusHover && <Icon name={this.state.online.img} onClick={this.clickStatus} className="user-status" />}
+              {(this.state.isStatusOpen || this.state.isStatusHover) && <Icon name="user-status-hover.svg" onClick={this.clickStatus} className="user-status" />}
+            </span>
+          </div>
+        </div>}
       </div>
-    )
+      {/* TODO: make this show based on whether the user has just recently created their profile (registered) */}
+      {!this.state.isGuideOpen && <div className="guidebook_open_help">
+        <div>Click on the Guidebook icon to learn more</div>
+        <img src="/img/arrow_curved.svg" />
+        </div>}
+      {this.state.isGuideOpen && <div className="instructions_wrapper">
+        <GuideBook />
+        <Icon className="close_icon" name='x_a3a3a3.svg' size='small' onClick={() => { this.setState({ isGuideOpen: false }) }} />
+      </div>}
+      {this.state.isProfileOpen && <div className="profile-wrapper">
+        {Object.keys(this.state.listaProfile).map(key =>
+          <ListProfile key={key} title={this.state.listaProfile[key].title} click={this.state.listaProfile[key].click} />
+        )}
+      </div>}
+      {this.state.isStatusOpen && <div className="user-status-wrapper">
+        {Object.keys(this.state.lista).map(key =>
+          <ListStatus key={key} img={this.state.lista[key].img} color={this.state.lista[key].color} title={this.state.lista[key].title} changeStatus={this.changeStatus} />
+        )}
+      </div>}
+    </div>)
   }
 }
 const ListStatus = (props) => {

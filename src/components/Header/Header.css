@@ -1,11 +1,8 @@
-.react {
-  width: 100%;
-}
 
 .header {
+  position: fixed;
+  width: 100%;
   margin-top: 10px;
-  margin-right: 10px;
-  margin-left: 10px;
   display: flex;
   justify-content: space-between;
   max-height: 50px;
@@ -14,12 +11,13 @@
 .top-left-panel {
   display: flex;
   width: auto;
+  margin-left: 10px;
 }
 
 .logo {
   padding-right: 20px;
   padding-left: 20px;
-  background: #FFFFFF 0% 0% no-repeat padding-box;
+  background: rgba(255, 255, 255, 0.9) 0% 0% no-repeat padding-box;
   border-radius: 10px;
   opacity: 0.8;
   display: -webkit-flex;
@@ -34,7 +32,7 @@
   margin-left: 5px;
   padding-right: 20px;
   padding-left: 20px;
-  background: #FFFFFF 0% 0% no-repeat padding-box;
+  background: rgba(255, 255, 255, 0.9) 0% 0% no-repeat padding-box;
   border-radius: 10px;
   opacity: 0.8;
   display: -webkit-flex;
@@ -43,11 +41,6 @@
   /* Safari 7.0+ */
   display: flex;
   align-items: center;
-}
-
-.fixed {
-  position: fixed;
-  width: 100%;
 }
 
 .header-icon {
@@ -75,7 +68,7 @@
 .logo-name {
   margin: 1px;
   font-family: 'quebecsemibold', Helvetica, Sans-Serif;
-  font-weight: bold;
+  font-weight: normal;
   font-size: 28px;
 }
 
@@ -84,11 +77,11 @@
 }
 
 .top-right-panel {
+  margin-right: 10px;
   margin-left: 10px;
   padding: 5px 20px 5px 20px;
-  background: #FFFFFF 0% 0% no-repeat padding-box;
+  background: rgba(255, 255, 255, 0.9) 0% 0% no-repeat padding-box;
   border-radius: 10px;
-  opacity: 0.8;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -105,16 +98,48 @@
   float: right;
   position: relative;
   border-radius: 10px 0 0 10px;
-  margin-top: 20px;
+  margin-top: 70px;
   background-color: #FFFFFF;
-  padding: 20px 36px;
+  padding: 40px 30px 20px 30px;
   box-shadow: 0px 0px 6px #00000029;
-  width: 616px;
+  width: 500px;
   min-height: 80%;
 }
 
+/* guidebook text and arrow help to open */
+
+.guidebook_open_help {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  top: 70px;
+  right: 89px;
+  position: absolute;
+  font-family: 'quebecregular', Helvetica, Sans-Serif;
+  font-weight: normal;
+  color: #717171;
+  font-size: 14px;
+  z-index: -1;
+}
+
+.guidebook_open_help img {
+  max-width: 70px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+}
+
+
+
+
+.instructions_wrapper .close_icon {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  cursor: pointer;
+}
+
 .instructions_wrapper button {
-  margin: 10px;
+  margin: 0;
 }
 
 .instructions {
@@ -181,7 +206,7 @@
 }
 
 .profile-wrapper {
-  margin-top: 5px;
+  margin-top: 70px;
   margin-right: 10px;
   float: right;
   border-radius: 14px;
@@ -231,7 +256,7 @@ button.gray img {
 }
 
 .user-status-wrapper {
-  margin-top: 5px;
+  margin-top: 70px;
   margin-right: 10px;
   float: right;
   border-radius: 14px;

@@ -20,7 +20,7 @@
 }
 
 .hierarchy_picker_header{
-  padding:1.5rem 1rem;
+  padding-bottom: 1rem;
   position: relative;
   text-align: center;
   font-size: 1.1rem;
@@ -32,7 +32,8 @@
 
 .hierarchy_picker_header .vertical_action_close{
   position: absolute;
-  right: .5rem;
+  right: 1.5rem;
+  top: 0;
 }
 
 .hierarchy_option_icon_container img{
@@ -48,3 +49,9 @@
 .hierarchy_option_content > span{ display: block; width: 100%; }
 
 .gray-text{ color: #A3A3A3 }
+
+.hiararchy-card-icon{
+  position: absolute;
+  left: -190%;
+  top: -30px;
+}
