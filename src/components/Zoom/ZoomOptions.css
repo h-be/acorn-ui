@@ -1,7 +1,7 @@
 .zoom-options{
   position: fixed;
-  bottom: 0;
-  right: 0;
+  bottom: 10px;
+  right: 10px;
   background-color: #FFFFFF;
   border-radius: 10px;
   padding: 10px 20px;
