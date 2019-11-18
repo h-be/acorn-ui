@@ -1,0 +1,31 @@
+.expanded_view_right_menu {
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.5px;
+}
+
+.expanded_view_right_menu img {
+  margin-top: -1px;
+  width: 50px;
+  border: 1px solid #e6e6e6;
+  border-right: none;
+  padding: 12px;
+  height: 50px;
+}
+
+
+.expanded_view_right_menu img:hover {
+  background: #5F65FF;
+  width: 58px;
+  margin-left: -8px;
+  box-shadow: 0px 0px 6px #00000029;
+  border-radius: 10px 0px 0px 10px;
+  border: none;
+  z-index: 1;
+  transition: all .2s;
+}
+
+.right_menu_help:hover {
+
+}

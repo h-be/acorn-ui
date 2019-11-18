@@ -1,0 +1,32 @@
+.expanded_view_header {
+    border-bottom: 1px solid #E8E8E8;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.expanded_view_header img{
+  margin-right: 16px;
+  height: 22;
+}
+
+.expanded_view_status_icon {
+  margin: 0 16px 0 0;
+}
+
+.expanded_view_status_icon .status_color_small, .expanded_view_status_icon .status_color_small:hover {
+  width: 26px;
+  height: 26px;
+  border-radius: 14px;
+  margin: 0;
+}
+
+
+
+.expanded_view_header .vertical_action_overlay {
+  margin-top: 36px;
+}
+
+.expanded_view_header .vertical_action_close {
+  margin-right: 0;
+}

@@ -49,7 +49,7 @@ function VerticalActionsList({ goalAddress, goal, onArchiveClick, updateGoal }) 
       {viewsOpen.squirrels && <PeoplePicker onClose={() => setViews({ ...defaultViews })} />}
       {/* archive */}
       <div className='action_list_item' key='archive' onClick={() => onArchiveClick(goalAddress)}>
-        <Icon name='archive.svg' />
+        <Icon name='archive_white.svg' />
         <span>archive</span>
       </div>
     </div>
