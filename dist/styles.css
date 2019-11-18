@@ -493,7 +493,7 @@ h4 {
 .people_picker_search {
   display: flex;
   align-items: center;
-  padding: 0px 20px 5px 20px;
+  padding: 16px 20px 5px 20px;
 }
 
 .people_picker_search input {
