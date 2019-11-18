@@ -1,0 +1,18 @@
+.zoom-options{
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  padding: 10px 20px;
+  width: 110px;
+  display: flex;
+}
+
+.zoom-options img,span{
+  display: inline-block;
+}
+
+.zoom-options img{
+  margin-right: 1rem;
+}
