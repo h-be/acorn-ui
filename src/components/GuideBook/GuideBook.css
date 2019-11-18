@@ -7,31 +7,35 @@
   padding: 0;
 }
 
-.guide-book > .guidebook-title:first-child{
+.guide-book > .guidebook-title:first-child {
   text-align: center;
-  margin-top: 15px;
   margin-bottom: 30px;
-  font-size: 24px;
+  font-size: 20px;
   font-family: 'rennerbold', Helvetica, sans-serif;
+  font-weight: normal;
+  margin-top: -2px;
 }
 
-.guide-book .nav-item{
+.guide-book .nav-item {
   cursor: pointer;
   background: none;
-  border:none;
+  border: none;
   padding: 0;
   font-size: 16px;
-  margin-bottom: 1.5rem;;
+  margin-bottom: 32px;
   font-family: 'rennerbold', Helvetica, sans-serif;
 }
 
-.guide-book .sidebar-submenu{
+.guide-book .sidebar-submenu {
   height: 0;
   transition: all .3s;
   overflow: hidden;
 }
 
-.guide-book .sidebar-submenu ul{ list-style: none; padding-left: 1rem; }
+.guide-book .sidebar-submenu ul { 
+  list-style: none; 
+  padding-left: 20px; 
+}
 
 .guide-book .sidebar-submenu.active{
   transition: all .3s;
@@ -39,7 +43,9 @@
   font-family: 'renner_mediummedium', Helvetica, sans-serif;
 }
 
-.guide-book .sidebar-submenu.active ul li{ margin-bottom: 1.5rem; }
+.guide-book .sidebar-submenu.active ul li { 
+  margin-bottom: 32px; 
+}
 
 .guide-book .sidebar-submenu.active ul li button{
   background: none;
@@ -47,7 +53,8 @@
   display: inline-block;
   border: none;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 14px;
+  font-family: 'renner_mediummedium', Helvetica, sans-serif;
 }
 
 .guide-book .guidebook-section{
@@ -55,7 +62,9 @@
   flex-direction: row;
 }
 
-.guide-book .guidebook-section .guidebook-section-control{ margin-right: 1.5rem; }
+.guide-book .guidebook-section .guidebook-section-control { 
+  margin-right: 0; 
+}
 
 .guide-book .guidebook-section .guidebook-section-control >  button{
   display: inline-block;
@@ -64,8 +73,8 @@
   margin: 0;
   padding: 0;
   justify-content: space-around;
-  font-size: 1rem;
-  font-weight: bold;
+  font-size: 14px;
+  font-family: 'rennerbold', Helvetica, sans-serif;
   cursor: pointer;
 }
 
@@ -74,17 +83,27 @@
 .guide-book .guidebook-section ol{
   margin: 0;
   padding: 0;
-  padding-left: 1rem;
+  padding-left: 20px;
+  font-size: 14px;
 }
 .guide-book .guidebook-section ol li{  
   margin: 0;
-  margin-bottom: 1.5rem;
+  margin-bottom: 22px;
 }
 
 .guide-book .guidebook-section .guidebook-section-title{
-  font-size: 1.17rem;
-  margin: 0 0 1.5rem 0;
+  font-size: 16px;
+  margin-bottom: 32px;
+  font-family: 'rennerbold', Helvetica, sans-serif;
 }
 
 
 .guide-book button{ outline: none; }
+
+
+
+
+.guidebook-section-content {
+padding: 0;
+
+}

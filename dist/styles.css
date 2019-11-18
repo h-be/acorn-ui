@@ -213,21 +213,30 @@ div.react {
 h1 {
   font-size: 24px;
   line-height: 30px;
+  font-family: 'rennerbold', Helvetica, sans-serif;
+  font-weight: normal;
 }
 
 h2 {
   font-size: 20px;
   line-height: 28px;
+  font-family: 'rennerbold', Helvetica, sans-serif;
+  font-weight: normal;
 }
 
 h3 {
   font-size: 18px;
   line-height: 22px;
+  font-family: 'renner_mediummedium', Helvetica, sans-serif;
+  font-weight: normal;
 }
 
 h4 {
   font-size: 14px;
   line-height: 18px;
+  font-family: 'rennerbook', Helvetica, sans-serif;
+  font-weight: normal;
+  color: #717171;
 }
 
 .popup-title {
@@ -235,7 +244,7 @@ h4 {
   font-family: 'rennerbold';
   color: #717171;
   text-align: center;
-  margin-top: -6px;
+  margin-top: -2px;
 }
 
 /* transform */
@@ -277,7 +286,6 @@ h4 {
   margin-top: 78px;
   padding: 10px 30px;
   background: #00AFA4 0% 0% no-repeat padding-box;
-  box-shadow: 0px 0px 10px #FFFFFF;
   opacity: 1;
   outline: none;
   border: 0;
@@ -465,7 +473,7 @@ h4 {
 .people_picker_search {
   display: flex;
   align-items: center;
-  padding: 0px 20px 5px 20px;
+  padding: 16px 20px 5px 20px;
 }
 
 .people_picker_search input {
