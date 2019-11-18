@@ -14,19 +14,21 @@ function ExpandedViewMode({ goalAddress, goal, onArchiveClick, updateGoal, onClo
 
   return (
     <div className="expanded_view_overlay">
-         <div className="expanded_view_wrapper">
-            <Icon onClick={onClose} name="x_a3a3a3.svg" size="small" className="close_icon" />
-            <ExpandedViewModeHeader />
-            <RightMenu />
-            <ExpandedViewModeContent />
-            <ExpandedViewModeFooter />
-           </div>
+      <div className="expanded_view_wrapper">
+        <Icon onClick={onClose} name="x_a3a3a3.svg" size="small" className="close_icon" />
+        <ExpandedViewModeHeader className="expanded_view_header" />
+        <div className="expanded_view_main">
+          <ExpandedViewModeContent className="expanded_view_content" />
+          <RightMenu className="expanded_view_right_menu" />
+        </div>
+        <ExpandedViewModeFooter className="expanded_view_footer" />
+      </div>
     </div>
   )
 }
 
 ExpandedViewMode.propTypes = {
-    onClose: PropTypes.func,
-  }
+  onClose: PropTypes.func,
+}
 
 export default ExpandedViewMode

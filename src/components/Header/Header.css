@@ -140,16 +140,16 @@
 
 .avatar_container img {
   border-radius: 50%;
-  height: 32px;
-  width: 32px;
+  height: 34px;
+  width: 34px;
 }
 
 .top-right-panel div .avatar_container+span {
   position: absolute;
   width: 16px;
   height: 16px;
-  top: 80%;
-  left: 80%;
+  top: 85%;
+  left: 85%;
   transform: translate(-50%, -50%);
   border-radius: 50%;
 }

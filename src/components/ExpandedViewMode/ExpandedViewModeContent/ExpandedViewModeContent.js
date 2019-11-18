@@ -7,10 +7,12 @@ export default function ExpandedViewModeContent({ goalAddress, goal, onArchiveCl
     return (
         <div className="expanded_view_content">
             <div className="expanded_view_title">Feature Hypothesis Statement</div>
-            <div className="expanded_view_tags"></div>
-            <div className="expanded_view_squirrels"></div>
-            <div className="expanded_view_timeframe"></div>
-            <div className="expanded_view_description"></div>
+            <div className="expanded_view_tags">tags</div>
+            <div className="squirrels_timeframe_row">
+                <div className="expanded_view_squirrels">squirrels</div>
+                <div className="expanded_view_timeframe">timeframe</div>
+            </div>
+            <div className="expanded_view_description">add description here...</div>
             <div className="expanded_view_tabs">
                 <div className="expanded_view_priority"></div>
                 <div className="expanded_view_comments"></div>

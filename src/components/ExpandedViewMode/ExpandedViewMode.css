@@ -10,15 +10,13 @@
 
 .expanded_view_wrapper {
     box-shadow: 0px 0px 6px rgba(173, 157, 157, 0.16);
-    padding: 20px 0px;
     width: 545px;
-    height: 500px;
+    min-height: 500px;
     background: #FFFFFF;
     border-radius: 10px;
-    align-items: center;
     border: 2px solid #FFC400;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -28,14 +26,24 @@
 
   .expanded_view_overlay .expanded_view_wrapper .close_icon {
     position: absolute;
-    top: 30px;
-    right: 30px;
+    top: 20px;
+    right: 18px;
     cursor: pointer;
   }
-  
-  .expanded_view_content {
-    
+
+  .expanded_view_main {
+    display: flex;
+    flex-direction: row;
+}
+
+  .expanded_view_right_menu {
+      display: inline-block;
   }
+
+  .expanded_view_header, .expanded_view_content, .expanded_view_footer {
+    display: inline-block;
+  }
+
   
   .goal_form textarea {
     background-color: transparent;
