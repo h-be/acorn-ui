@@ -1,0 +1,25 @@
+.zoom-options{
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  display: flex;
+}
+
+.zoom-options img, span{
+  display: inline-block;
+}
+
+.zoom-options span {
+  line-height: 60px;
+  font-size: 20px;
+  margin: 0 21px;
+  min-width: 60px;
+  font-family: 'renner_mediummedium', Helvetica, sans-serif;
+}
+
+.zoom-options img.icon {
+  padding: 21px;
+  box-sizing: content-box;
+}
