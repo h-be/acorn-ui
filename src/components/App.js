@@ -7,6 +7,7 @@ import './App.css'
 
 import { updateWhoami } from '../who-am-i/actions'
 import { openExpandedView, closeExpandedView } from '../expanded-view/actions'
+import EmptyState from './EmptyState/EmptyState'
 import GoalForm from './GoalForm'
 import MultiEditBar from './MultiEditBar'
 import HoverOverlay from './HoverOverlay'
@@ -15,6 +16,8 @@ import CreateProfilePage from './CreateProfilePage/CreateProfilePage'
 import ProfileEditForm from './ProfileEditForm/ProfileEditForm'
 import LoadingScreen from './LoadingScreen/LoadingScreen'
 import ExpandedViewMode from './ExpandedViewMode/ExpandedViewMode'
+
+import Options from './Zoom/Options'
 
 function App(props) {
   const {
@@ -28,7 +31,8 @@ function App(props) {
     updateWhoami,
     showExpandedViewMode,
     openExpandedView,
-    closeExpandedView
+    closeExpandedView,
+    showEmptyState
   } = props
   const transform = {
     transform: `matrix(${scale}, 0, 0, ${scale}, ${translate.x}, ${translate.y})`
@@ -47,6 +51,8 @@ function App(props) {
   return (<>
     {agentAddress && <Header whoami={whoami} setShowProfileEditForm={setShowProfileEditForm} />}
 
+    {showEmptyState && <EmptyState />}
+
     {showProfileEditForm &&
       <div className="profile_edit_wrapper">
         <ProfileEditForm
@@ -63,9 +69,9 @@ function App(props) {
     </div>
 
     {showExpandedViewMode && <ExpandedViewMode onClose={closeExpandedView} />}
-
     {agentAddress && !whoami && <CreateProfilePage />}
     {!agentAddress && <LoadingScreen />}
+    <Options/>
   </>)
 }
 
@@ -87,7 +93,8 @@ App.propTypes = {
   }),
   createWhoami: PropTypes.func,
   updateWhoami: PropTypes.func,
-  showExpandedViewMode: PropTypes.bool.isRequired
+  showExpandedViewMode: PropTypes.bool.isRequired,
+  showEmptyState: PropTypes.bool
 }
 
 function mapDispatchToProps(dispatch) {
@@ -114,7 +121,9 @@ function mapStateToProps(state) {
     scale: state.ui.viewport.scale,
     whoami: state.whoami,
     agentAddress: state.agentAddress,
-    showExpandedViewMode: state.ui.expandedView.isOpen
+    showExpandedViewMode: state.ui.expandedView.isOpen,
+    // TODO: make this also based on whether the user has just registered (created their profile)
+    showEmptyState: state.agentAddress && Object.values(state.goals).length === 0
   }
 }
 

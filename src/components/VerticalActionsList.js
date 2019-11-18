@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import Icon from './Icon'
 import PeoplePicker from './PeoplePicker'
 import StatusPicker from './StatusPicker'
+import HierarchyPicker from './HierarchyPicker/HierarchyPicker'
 import StatusIcon from './StatusIcon'
 
 import {
@@ -33,6 +34,16 @@ function VerticalActionsList({ goalAddress, goal, onArchiveClick, updateGoal }) 
     }, goalAddress)
   }
 
+  const updateGoalHierarchy = hierarchy => {
+    updateGoal({
+      content: goal.content,
+      user_hash: goal.user_hash,
+      unix_timestamp: Date.now(),
+      hierarchy,
+      status: goal.status
+    }, goalAddress)
+  }
+
   return (
     <div className='vertical_actions_list'>
       {/* status */}
@@ -47,6 +58,12 @@ function VerticalActionsList({ goalAddress, goal, onArchiveClick, updateGoal }) 
         <span>squirrels</span>
       </div>
       {viewsOpen.squirrels && <PeoplePicker onClose={() => setViews({ ...defaultViews })} />}
+      {/* Hierarchies */}
+      <div className='action_list_item' key='hierarchies' onClick={() => setViews({ ...defaultViews, hierarchy: !viewsOpen.hierarchy })}>
+        <Icon name='hierarchy.png' />
+        <span>Hierarchy</span>
+      </div>
+      {viewsOpen.hierarchy && <HierarchyPicker onClose={() => setViews({ ...defaultViews })} selectedHierarchy={goal.hierarchy} hierarchyClicked={updateGoalHierarchy} />}
       {/* archive */}
       <div className='action_list_item' key='archive' onClick={() => onArchiveClick(goalAddress)}>
         <Icon name='archive_white.svg' />
