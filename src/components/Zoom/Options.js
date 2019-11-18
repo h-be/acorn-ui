@@ -16,13 +16,13 @@ import {
         const zoomIntensity = 0.05
         const zoom = Math.exp(1*zoomIntensity)
        let {width,height} = this.props.screensize
-        this.props.zoomIn(zoom,width/2,height/2)
+        this.props.zoom(zoom,width/2,height/2)
     }
     zoomOut(){
         const zoomIntensity = 0.05
         const zoom = Math.exp(-1*zoomIntensity)
        let {width,height} = this.props.screensize
-        this.props.zoomOut(zoom,width/2,height/2)
+        this.props.zoom(zoom,width/2,height/2)
     }
     render( ){
         return(
@@ -36,10 +36,7 @@ import {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        zoomIn: (zoom,x,y) => {
-        return dispatch(changeScale(zoom,x,y))
-      },
-      zoomOut: (zoom,x,y) => {
+        zoom: (zoom,x,y) => {
         return dispatch(changeScale(zoom,x,y))
       }
     }
