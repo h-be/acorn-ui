@@ -1,5 +1,6 @@
 import React from 'react'
 import { NavItemsGroup } from '../NavItems/NavItems'
+import Icon from '../../Icon'
 
 export default function HowTos(props){
 
@@ -39,10 +40,10 @@ export default function HowTos(props){
 const CreateCard = props => (
   <div className="guidebook-section">
     <div className="guidebook-section-control">
-      <button onClick={props.goBack} type="button">{'<'}</button>
+    <Icon name='back_717171.svg' size='small' onClick={props.goBack} />
     </div>
     <div className="guidebook-section-content">
-      <h3 className="guidebook-section-title">Create a Card</h3>
+      <div className="guidebook-section-title">Create a Card</div>
       <ol>
         <li> hold G on keyboard left click on any empty space on the canvas</li>
         <li> type in a title for the card</li>

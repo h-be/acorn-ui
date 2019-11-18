@@ -35,8 +35,9 @@ function ProfileEditForm({ onSubmit, onClose, agentAddress, whoami, titleText, s
 
   return <div className="profile_edit_form">
     {canClose && <Icon onClick={onClose} name="x_a3a3a3.svg" size="small" className="close_icon" />}
-    <h1>{titleText}</h1>
-    <h2>{subText}</h2>
+    <div className="profile_edit_form_title"><h1>{titleText}</h1>
+    <h4>{subText}</h4>
+    </div>
     <form onSubmit={innerOnSubmit}>
       <div className="row">
         <ValidatingFormInput value={firstName} onChange={setFirstName} label="First Name" placeholder="Harry" />
