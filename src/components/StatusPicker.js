@@ -16,7 +16,7 @@ function StatusPicker({ selectedStatus, statusClicked, onClose }) {
     return (
         <div className='status_picker vertical_action_overlay'>
             <Icon className='vertical_action_close' name='x_a3a3a3.svg' size='small-close' onClick={() => onClose()} />
-            <div className="popup-title">status</div>
+            <div className="popup_title">status</div>
             <div className="status_list">
             {statuses.map(status => (
                 <StatusIcon size='small' status={status} selected={selectedStatus === status} onClick={statusClicked} />

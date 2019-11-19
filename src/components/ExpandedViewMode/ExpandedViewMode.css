@@ -1,0 +1,59 @@
+.expanded_view_overlay {
+    background: rgba(31, 31, 31, 0.4);
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-y: hidden;
+    position: fixed;
+  }
+
+.expanded_view_wrapper {
+    box-shadow: 0px 0px 6px rgba(173, 157, 157, 0.16);
+    width: 545px;
+    min-height: 500px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
+  .expanded_view_overlay .expanded_view_wrapper .close_icon {
+    position: absolute;
+    top: 20px;
+    right: 18px;
+    cursor: pointer;
+  }
+
+  .expanded_view_main {
+    display: flex;
+    flex-direction: row;
+}
+
+  .expanded_view_right_menu {
+      display: inline-block;
+  }
+
+  .expanded_view_header, .expanded_view_content, .expanded_view_footer {
+    display: inline-block;
+  }
+
+  
+  .goal_form textarea {
+    background-color: transparent;
+    border: 0;
+    outline: none;
+    margin: 24px 22px 25px 27px;
+    width: 309px;
+    height: 70px;
+    resize: none;
+    color: #4D4D4D;
+    font-family:'rennerbook', Helvetica, Sans-Serif;
+    font-size: 20px;
+    line-height: 24px;
+  }

@@ -21,6 +21,7 @@ import keyboard from './keyboard/reducer'
 import mouse from './mouse/reducer'
 import screensize from './screensize/reducer'
 import viewport from './viewport/reducer'
+import expandedView from './expanded-view/reducer'
 // import anotherone from './another/path'
 
 // combine reducers from each feature to create the top-level reducer
@@ -38,7 +39,8 @@ export default combineReducers({
     keyboard,
     screensize,
     viewport,
-    mouse
+    mouse,
+    expandedView
   }) // ,
   // anotherone: anotherone
 })

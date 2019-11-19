@@ -66,7 +66,7 @@ function VerticalActionsList({ goalAddress, goal, onArchiveClick, updateGoal }) 
       {viewsOpen.hierarchy && <HierarchyPicker onClose={() => setViews({ ...defaultViews })} selectedHierarchy={goal.hierarchy} hierarchyClicked={updateGoalHierarchy} />}
       {/* archive */}
       <div className='action_list_item' key='archive' onClick={() => onArchiveClick(goalAddress)}>
-        <Icon name='archive.svg' />
+        <Icon name='archive_white.svg' />
         <span>archive</span>
       </div>
     </div>
