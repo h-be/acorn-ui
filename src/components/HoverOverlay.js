@@ -24,7 +24,7 @@ function HoverOverlay(props) {
     const { x, y } = props.position
     return (
         <ul className='hover_overlay' style={{ top: `${y}px`, left: `${x}px` }}>
-            {/* <li onClick={() => onExpandClick(hoveredAddress)}>Expand</li> */}
+            <li onClick={() => onExpandClick(hoveredAddress)}><Icon name='expand.svg' withBackground /></li>
             <li onClick={() => onEditClick(hoveredAddress, goalCoord, goalContent)}><Icon name='quick_edit.svg' withBackground /></li>
         </ul>
     )
@@ -66,9 +66,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        onExpandClick: address => {
-            console.log('expand', address)
-        },
         onEditClick: (address, goalCoord, content) => {
             dispatch(unselectAll())
             dispatch(openGoalForm(goalCoord.x, goalCoord.y, address))

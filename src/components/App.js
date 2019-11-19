@@ -5,15 +5,17 @@ import { connect } from 'react-redux'
 
 import './App.css'
 
+import { updateWhoami } from '../who-am-i/actions'
+import { openExpandedView, closeExpandedView } from '../expanded-view/actions'
 import EmptyState from './EmptyState/EmptyState'
 import GoalForm from './GoalForm'
 import MultiEditBar from './MultiEditBar'
 import HoverOverlay from './HoverOverlay'
-import { updateWhoami } from '../who-am-i/actions'
 import Header from './Header/Header'
 import CreateProfilePage from './CreateProfilePage/CreateProfilePage'
 import ProfileEditForm from './ProfileEditForm/ProfileEditForm'
 import LoadingScreen from './LoadingScreen/LoadingScreen'
+import ExpandedViewMode from './ExpandedViewMode/ExpandedViewMode'
 
 import Options from './Zoom/Options'
 
@@ -27,6 +29,9 @@ function App(props) {
     scale,
     whoami, // .entry and .address
     updateWhoami,
+    showExpandedViewMode,
+    openExpandedView,
+    closeExpandedView,
     showEmptyState
   } = props
   const transform = {
@@ -60,10 +65,10 @@ function App(props) {
     {hasSelection && <MultiEditBar />}
     <div className="transform-container" style={transform}>
       {goalFormIsOpen && <GoalForm />}
-      {hasHover && <HoverOverlay />}
-     
+      {hasHover && <HoverOverlay onExpandClick={openExpandedView} />}
     </div>
-    
+
+    {showExpandedViewMode && <ExpandedViewMode onClose={closeExpandedView} />}
     {agentAddress && !whoami && <CreateProfilePage />}
     {!agentAddress && <LoadingScreen />}
     <Options/>
@@ -88,6 +93,7 @@ App.propTypes = {
   }),
   createWhoami: PropTypes.func,
   updateWhoami: PropTypes.func,
+  showExpandedViewMode: PropTypes.bool.isRequired,
   showEmptyState: PropTypes.bool
 }
 
@@ -95,6 +101,12 @@ function mapDispatchToProps(dispatch) {
   return {
     updateWhoami: (profile, address) => {
       return dispatch(updateWhoami.create({ profile, address }))
+    },
+    openExpandedView: (address) => {
+      return dispatch(openExpandedView(address))
+    },
+    closeExpandedView: () => {
+      return dispatch(closeExpandedView())
     }
   }
 }
@@ -109,8 +121,9 @@ function mapStateToProps(state) {
     scale: state.ui.viewport.scale,
     whoami: state.whoami,
     agentAddress: state.agentAddress,
+    showExpandedViewMode: state.ui.expandedView.isOpen,
     // TODO: make this also based on whether the user has just registered (created their profile)
-    showEmptyState: state.agentAddress && Object.values(state.goals).length === 0,
+    showEmptyState: state.agentAddress && Object.values(state.goals).length === 0
   }
 }
 
