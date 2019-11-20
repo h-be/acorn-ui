@@ -34,6 +34,14 @@ The `canvas` related rendering details can be found under `src/drawing`.
 There is a very limited amount of React code, but what there is can be found in `src/components`. The components are imported
 into `src/index.js` and rendered into a container div in the `body` of the HTML page.
 
+#### Nix option
+
+Use the nix shell to have npm installed and run npm install and start.
+
+```shell
+nix-shell --run acorn-ui
+```
+
 ####  UI Dev Resources
 
 - [redux](https://redux.js.org/introduction/getting-started)
