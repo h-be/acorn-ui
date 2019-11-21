@@ -60,8 +60,8 @@ function VerticalActionsList({ goalAddress, goal, onArchiveClick, updateGoal }) 
       {viewsOpen.squirrels && <PeoplePicker onClose={() => setViews({ ...defaultViews })} />}
       {/* Hierarchies */}
       <div className='action_list_item' key='hierarchies' onClick={() => setViews({ ...defaultViews, hierarchy: !viewsOpen.hierarchy })}>
-        <Icon name='hierarchy.png' />
-        <span>Hierarchy</span>
+        <Icon name='hierarchy_white.svg' />
+        <span>hierarchy</span>
       </div>
       {viewsOpen.hierarchy && <HierarchyPicker onClose={() => setViews({ ...defaultViews })} selectedHierarchy={goal.hierarchy} hierarchyClicked={updateGoalHierarchy} />}
       {/* archive */}
