@@ -15,10 +15,31 @@ function mapDispatchToProps(dispatch) {
   }
 function url(type,data){
   let blob ={}
-  if(type==="json"){
-     blob = new Blob([JSON.stringify(data)],{type:""})
+  if(type==="csv"){
+     const csvRows=[];
+     const agents= Object.keys(data.agents)
+     const goals= Object.keys(data.goals)
+     const edges= Object.keys(data.edges)
+     const goalMembers= Object.keys(data.goalMembers)
+     const loop=(heardes,data)=>{
+     const csvRows=[];
+       
+      csvRows.push(Object.keys(data[heardes[0]]).join(","))
+      for(const index in heardes){
+         csvRows.push(Object.values(data[heardes[index]]))
+      }
+      return csvRows.join("\n")
+     }
+     csvRows.push(loop(agents,data.agents))
+     if(goals.length>0)csvRows.push(loop(goals,data.goals))
+     if(edges.length>0)csvRows.push(loop(edges,data.edges))
+     if(goalMembers.length>0)csvRows.push(loop(goalMembers,data.goalMembers))
+
+     
+     blob = new Blob([csvRows.join("\n")],{type:"text/csv"})
   }else{
-    blob = new Blob([data],{type:"text/csv"})
+    blob = new Blob([JSON.stringify(data)],{type:""})
+   
   }
   const url =window.URL.createObjectURL(blob)
   return url
@@ -26,7 +47,10 @@ function url(type,data){
   function mapStateToProps(state) {
       
     return {
-      data:state
+      data:{agents:state.agents,
+            goals:state.goals,
+            edges:state.edges,
+            goalMembers:state.goalMembers}
       
     }
   }
