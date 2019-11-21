@@ -355,7 +355,7 @@ h4 {
 /* Icon */
 
 .icon {
-  height: 40px;
+  width: 40px;
   box-sizing: border-box;
   padding: 6px;
   cursor: pointer;
@@ -395,6 +395,7 @@ h4 {
   width: 28px;
   height: 28px;
   margin: 0px;
+  margin-top: 2px;
   padding: 0px;
   display: inline-block;
   position: relative;
@@ -402,6 +403,7 @@ h4 {
 
 .icon.header-view-mode {
   height: 24px;
+  width: 24px;
   padding: 1px;
   display: inline-block;
   position: relative;
@@ -412,6 +414,7 @@ h4 {
 
 .icon.header {
   height: 24px;
+  width: 24px;
   padding: 1px;
   display: inline-block;
   position: relative;
