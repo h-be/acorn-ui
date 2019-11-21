@@ -113,7 +113,7 @@
   flex-direction: row;
   align-items: flex-end;
   top: 70px;
-  right: 89px;
+  right: 88px;
   position: absolute;
   font-family: 'quebecregular', Helvetica, Sans-Serif;
   font-weight: normal;
@@ -151,8 +151,8 @@
 /* profile section on header */
 
 .top-right-panel>img, .top-right-panel>div {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   margin: 0px;
   display: inline-block;
   position: relative;
@@ -162,18 +162,23 @@
   margin-right: 10px;
 }
 
+.avatar_container {
+  height: 36px;
+  width: 36px;
+}
+
 .avatar_container img {
   border-radius: 50%;
-  height: 34px;
-  width: 34px;
+  height: 36px;
+  width: 36px;
 }
 
 .top-right-panel div .avatar_container+span {
   position: absolute;
   width: 16px;
   height: 16px;
-  top: 85%;
-  left: 85%;
+  top: 78%;
+  left: 78%;
   transform: translate(-50%, -50%);
   border-radius: 50%;
 }
