@@ -1,0 +1,36 @@
+.priority_wrapper {
+  min-width: 320px;
+  min-width: 415px;
+}
+
+.aggregated_priority {
+  padding: 24px;
+}
+
+.aggregated_priority_title {
+  font-family: 'renner_mediummedium', Helvetica, sans-serif;
+  margin-bottom: 10px;
+}
+
+.aggregated_priority_inputs {
+  margin-bottom: 10px;
+  color: #898989;
+  font-size: 12px;
+}
+
+.priority_item {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.priority_item_icon {
+  margin-right: 10px;
+}
+
+.priority_item_title {
+  width: 80px;
+  font-size: 14px;
+  font-family: 'renner_mediummedium', Helvetica, sans-serif;
+}
