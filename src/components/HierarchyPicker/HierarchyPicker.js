@@ -49,7 +49,7 @@ function HierarchyPicker(props) {
                 cardSelected.length ? 
                   cardSelected.map((card, index) => (
                     <span key={index} style={{position: `fixed`, top: `${card.y - 30}px`, left: `${card.x - 28}px`}}>
-                        hola puto
+                        hola
                     </span>
                   ))
                     :
