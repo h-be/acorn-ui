@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 const ListExport = (props) => {
     return (
-      <a href={url(props.type,props.data)} download={props.download}><p>{props.title}</p></a>
+      <a href={url(props.type,props.data)} download={props.download}>{props.title}</a>
     )
   }
 
@@ -30,7 +30,7 @@ function url(type,data){
       }
       return csvRows.join("\n")
      }
-     csvRows.push(loop(agents,data.agents))
+     if(agents.length>0)csvRows.push(loop(agents,data.agents))
      if(goals.length>0)csvRows.push(loop(goals,data.goals))
      if(edges.length>0)csvRows.push(loop(edges,data.edges))
      if(goalMembers.length>0)csvRows.push(loop(goalMembers,data.goalMembers))
@@ -38,7 +38,7 @@ function url(type,data){
      
      blob = new Blob([csvRows.join("\n")],{type:"text/csv"})
   }else{
-    blob = new Blob([JSON.stringify(data)],{type:""})
+    blob = new Blob([JSON.stringify(data,null,2)],{type:""})
    
   }
   const url =window.URL.createObjectURL(blob)
