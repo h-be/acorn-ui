@@ -5,7 +5,7 @@ import './Header.css'
 import Avatar from '../Avatar/Avatar'
 import Icon from '../Icon'
 import { throws } from 'assert'
-import ListExport from './ListExport'
+import ListExport from '../ListExport/ListExport'
 
 class Header extends React.Component {
 
@@ -21,6 +21,7 @@ class Header extends React.Component {
     this.clickSearch = this.clickSearch.bind(this)
     this.clickExport = this.clickExport.bind(this)
 
+    this.hoverExport = this.hoverExport.bind(this)
 
     this.hover = this.hover.bind(this)
     this.handleStatusEnter = this.handleStatusEnter.bind(this)
@@ -63,16 +64,20 @@ class Header extends React.Component {
   }
   clickProfile(e) {
     this.props.setShowProfileEditForm(true)
-    this.setState({ isProfileOpen: false, isStatusOpen: false, isGuideOpen: false })
+    this.setState({ isProfileOpen: false,isExportOpen:false, isStatusOpen: false, isGuideOpen: false })
   }
   clickAvatar(e) {
-    this.setState({ isProfileOpen: !this.state.isProfileOpen, isStatusOpen: false, isGuideOpen: false })
+    this.setState({ isProfileOpen: !this.state.isProfileOpen,isExportOpen:false, isStatusOpen: false, isGuideOpen: false })
   }
   hover(bool) {
     this.setState({ avatar: bool })
   }
+  hoverExport(bool) {
+    this.setState({ isHoverExport: bool });
+    console.log(bool)
+  }
   clickStatus(e) {
-    this.setState({ isStatusOpen: !this.state.isStatusOpen, isGuideOpen: false, isProfileOpen: false })
+    this.setState({ isStatusOpen: !this.state.isStatusOpen,isExportOpen:false, isGuideOpen: false, isProfileOpen: false })
   }
   clickExport(e) {
     this.setState({ isExportOpen: !this.state.isExportOpen,isStatusOpen:false, isGuideOpen: false, isProfileOpen: false })
@@ -114,7 +119,14 @@ class Header extends React.Component {
           {this.props.whoami && <div className="current-canvas">
             <Icon name="map.svg" className="header-view-mode" />
             <p className="canvas-name">H-BE SoA</p>
-            <Icon name={this.isHoverExport?"export-hover.svg":"export.svg"} size="small" onClick={this.clickExport} />
+           
+            <div onMouseEnter={e => {
+              this.hoverExport(true)
+            }} onMouseLeave={e => {
+              this.hoverExport(false)
+            }}> {this.state.isHoverExport &&<Icon name="export-hover.svg" size="medium" onClick={this.clickExport}/>}
+                {!this.state.isHoverExport &&<Icon name="export.svg" size="medium" onClick={this.clickExport}/>}
+            </div>
           </div>}
         </div>
         {this.props.whoami && <div className="top-right-panel">
@@ -134,6 +146,7 @@ class Header extends React.Component {
           </div>
         </div>}
       </div>
+
       {/* TODO: make this show based on whether the user has just recently created their profile (registered) */}
       {!this.state.isGuideOpen && <div className="guidebook_open_help">
         <div>Click on the Guidebook icon to learn more</div>
@@ -154,7 +167,9 @@ class Header extends React.Component {
         )}
         
       </div>}
-      {this.state.isExportOpen && <div className="profile-wrapper">
+      {!this.state.isExportOpen &&this.state.isHoverExport && <span className="hover-display">Export</span>}
+
+      {this.state.isExportOpen && <div className="export-wrapper">
         {Object.keys(this.state.listaExport).map(key =>
           <ListExport key={key} type={this.state.listaExport[key].type}title={this.state.listaExport[key].title}  download={this.state.listaExport[key].download} />
         )}
