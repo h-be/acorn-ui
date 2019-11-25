@@ -9,7 +9,7 @@ function findAParent(edges, address) {
 function findChilds(edges, address) {
   // highly oversimplified
   const childs = edges.filter(e => e.parent_address === address)
-  return childs 
+  return childs.length>0?childs.map(e=>{return e.child_address}):null 
 }
 function mapGoalToHierarchy(goal, edges) {
   // setup and run a recursive call to find depth/hierarchy in the graph
@@ -29,12 +29,13 @@ function mapGoalToHierarchy(goal, edges) {
 
   checkHierarchy(goal.address)
   // console.log(hierarchy)
-  var parent=findAParent(edges, goal.address)
-
+  const parent=findAParent(edges, goal.address)
+  const childs=findChilds(edges,goal.address)
   return {
     hierarchy,
     goal,
-    parent
+    parent,
+    childs
   }
 }
 function maxHierarchi(withHierarchies){
@@ -45,24 +46,27 @@ function maxHierarchi(withHierarchies){
     return max 
 }
 function checkConflict(coordinates,withHierarchies){
-  const horizontalSpacing = 20
-  let bool=false
-  let totalWidth=goalWidth+horizontalSpacing
-  const max =maxHierarchi(withHierarchies)
-  for (let index = 1; index <=max ; index++) {
-    
+
+  const innerCheckConflict=(coordinates,withHierarchies)=>{
+
+    /*const horizontalSpacing = 20
+    let bool=false
+    let totalWidth=goalWidth+horizontalSpacing
+    const max =maxHierarchi(withHierarchies)
+    for (let index = 1; index <=max ; index++) {
+      
   const  sameTier=withHierarchies.filter((wH) => wH.hierarchy ===index)
   sameTier.forEach( valueBefore=>{
     const addressBefore=valueBefore.goal.address
     const xAux=coordinates[addressBefore].x
     const yAux=coordinates[addressBefore].y
 
-  sameTier.forEach(
-    value=>{  
-      const {address}=value.goal
-      const x=coordinates[address].x
-      const y=coordinates[address].y
-      if(addressBefore===address){
+    sameTier.forEach(
+      value=>{  
+        const {address}=value.goal
+        const x=coordinates[address].x
+        const y=coordinates[address].y
+        if(addressBefore===address){
         
       }else{
         if(yAux===y){
@@ -71,7 +75,6 @@ function checkConflict(coordinates,withHierarchies){
               x:xAux-totalWidth/4,
               y:yAux
             }
-            console.log(address)
             coordinates[address]={
               x:x+totalWidth/4,
               y:yAux
@@ -79,18 +82,20 @@ function checkConflict(coordinates,withHierarchies){
             bool=true
           }
         }
-       
+        
       }
     })})
   }
-  return bool?checkConflict(coordinates,withHierarchies):coordinates
+  return bool?innerCheckConflict(coordinates,withHierarchies):coordinates
+*/}
+  return coordinates
+  return checkConflict(coordinates,withHierarchies)
 }
 
 function mapHierarchyToPosition({ goal, hierarchy,parent }, withHierarchies, screenWidth,coordinates) {
   const verticalOffset = 10
   const verticalSpacing = 100
   const horizontalSpacing = 20
-
   // FIXME: this needs to be related to the display pixel ratio or something
   const RETINA_HACK_HALFSCREEN = 4
 
@@ -134,6 +139,7 @@ export default function layoutFormula(screenWidth, goals, edges) {
     coordinates[address] = coordinate
     
   })
+  console.log("hola")
   coordinates=checkConflict(coordinates,withHierarchies)
   return coordinates
 }
