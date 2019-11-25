@@ -21,7 +21,8 @@ function VerticalActionsList({ goalAddress, goal, onArchiveClick, updateGoal }) 
 
   const defaultViews = {
     status: false,
-    squirrels: false
+    squirrels: false,
+    priority: false
   }
   const [viewsOpen, setViews] = useState(defaultViews)
 

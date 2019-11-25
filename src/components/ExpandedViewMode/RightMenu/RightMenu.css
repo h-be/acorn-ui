@@ -5,7 +5,7 @@
     margin-top: 0.5px;
 }
 
-.expanded_view_right_menu img {
+.expanded_view_right_menu > img {
   margin-top: -1px;
   width: 50px;
   border: 1px solid #e6e6e6;
@@ -15,7 +15,7 @@
 }
 
 
-.expanded_view_right_menu img:hover {
+.expanded_view_right_menu > img:hover, .expanded_view_right_menu > img.active {
   background: #5F65FF;
   width: 58px;
   margin-left: -8px;
@@ -26,6 +26,11 @@
   transition: all .2s;
 }
 
-.right_menu_help:hover {
+.expanded_view_right_menu .people_picker.vertical_action_overlay {
+  top: 207px;
+  right: -261px;
+}
 
+.expanded_view_right_menu .priority_wrapper.vertical_action_overlay {
+  right: -328px;
 }
