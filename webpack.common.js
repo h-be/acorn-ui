@@ -22,7 +22,24 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"]
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              url: (url, resourcePath) => {
+                // resourcePath - path to css file
+    
+                // Don't handle `splash-image.png` urls
+                if (url.includes('splash-image.png')) {
+                  return false;
+                }
+    
+                return true;
+              },
+            }
+          }
+        ]
       }
     ]
   }
