@@ -12,12 +12,11 @@ import GoalForm from './GoalForm'
 import MultiEditBar from './MultiEditBar'
 import HoverOverlay from './HoverOverlay'
 import Header from './Header/Header'
+import Footer from './Footer/Footer'
 import CreateProfilePage from './CreateProfilePage/CreateProfilePage'
 import ProfileEditForm from './ProfileEditForm/ProfileEditForm'
 import LoadingScreen from './LoadingScreen/LoadingScreen'
 import ExpandedViewMode from './ExpandedViewMode/ExpandedViewMode'
-
-import Options from './Zoom/Options'
 
 function App(props) {
   const {
@@ -71,7 +70,7 @@ function App(props) {
     {showExpandedViewMode && <ExpandedViewMode onClose={closeExpandedView} />}
     {agentAddress && !whoami && <CreateProfilePage />}
     {!agentAddress && <LoadingScreen />}
-    {agentAddress && whoami && <Options/>}
+    {agentAddress && whoami && <Footer/>}
   </>)
 }
 

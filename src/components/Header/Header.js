@@ -92,11 +92,11 @@ class Header extends React.Component {
       <div className="header">
         <div className="top-left-panel">
           <div className="logo" >
-            <Icon name="acorn-logo.svg" className="logo" />
+            <Icon name="acorn-logo-stroked.svg" className="logo" />
             <p className="logo-name">acorn</p>
           </div>
           {this.props.whoami && <div className="current-canvas">
-            <Icon name="map.svg" className="header-view-mode" />
+            <Icon name="map.svg" className="view-mode" />
             <p className="canvas-name">H-BE SoA</p>
           </div>}
         </div>
@@ -121,7 +121,7 @@ class Header extends React.Component {
       {!this.state.isGuideOpen && <div className="guidebook_open_help">
         <div>Click on the Guidebook icon to learn more</div>
         <img src="img/arrow_curved.svg" />
-        </div>}
+        </div>} 
       {this.state.isGuideOpen && <div className="instructions_wrapper">
         <GuideBook />
         <Icon className="close_icon" name='x_a3a3a3.svg' size='small' onClick={() => { this.setState({ isGuideOpen: false }) }} />
