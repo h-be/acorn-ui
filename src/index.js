@@ -50,10 +50,17 @@ let store = createStore(acorn, /* preloadedState, */ composeEnhancers(
 
 // dispatch fetch goals, and fetch edges functions to pull in all the existing goals and edges
 // on first render
-store.dispatch(fetchAgents.create({}))
-store.dispatch(fetchEdges.create({}))
-store.dispatch(fetchGoals.create({}))
-store.dispatch(fetchGoalMembers.create({}))
+function fetchChangingData() {
+  store.dispatch(fetchAgents.create({}))
+  store.dispatch(fetchEdges.create({}))
+  store.dispatch(fetchGoals.create({}))
+  store.dispatch(fetchGoalMembers.create({}))
+}
+fetchChangingData()
+// refetch this data every 3 seconds
+setInterval(() => {
+  fetchChangingData()
+}, 3000)
 store.dispatch(whoami.create({}))
 store.dispatch(fetchAgentAddress.create({}))
 /*
