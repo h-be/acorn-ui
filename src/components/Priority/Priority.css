@@ -1,6 +1,6 @@
 .priority_wrapper {
   width: 320px;
-  height: 496px;
+  height: 400px;
 }
 
 .priority_tabs {
@@ -31,7 +31,7 @@
 
 .my_vote {
   padding: 0 24px 0 24px;
-  margin-top: 26.5px;
+  margin-top: 46.5px;
 }
 
 .aggregated_priority_title {
@@ -40,13 +40,12 @@
 }
 
 .aggregated_priority_inputs {
-  margin-bottom: 4px;
+  margin-bottom: 24px;
   color: #898989;
   font-size: 12px;
 }
 
 .priority_item {
-  padding-top: 10px;
   display: flex;
   flex-direction: row;
   align-items: center;
