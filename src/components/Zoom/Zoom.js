@@ -1,11 +1,12 @@
 import React from 'react'
-import './ZoomOptions.css'
+import './Zoom.css'
 import Icon from '../Icon'
 import { connect } from 'react-redux'
 import {
   changeScale
 } from '../../viewport/actions'
-class Options extends React.Component {
+
+class Zoom extends React.Component {
   constructor(props) {
     super(props)
     this.zoomIn = this.zoomIn.bind(this)
@@ -25,7 +26,7 @@ class Options extends React.Component {
   }
   render() {
     return (
-      <div className="zoom-options">
+      <div className="zoom-wrapper">
         <Icon name="minus-line.svg" size='small' withBackground={false} onClick={this.zoomOut} />
         <Icon name="plus-line.svg" size='small' withBackground={false} onClick={this.zoomIn} />
         <span>{parseInt(this.props.scale * 100)}%</span>
@@ -48,4 +49,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Options)
+export default connect(mapStateToProps, mapDispatchToProps)(Zoom)

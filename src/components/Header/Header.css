@@ -19,7 +19,6 @@
   padding-left: 20px;
   background: rgba(255, 255, 255, 0.9) 0% 0% no-repeat padding-box;
   border-radius: 10px;
-  opacity: 0.8;
   display: -webkit-flex;
   /* Safari */
   -webkit-align-items: center;
@@ -41,6 +40,10 @@
   /* Safari 7.0+ */
   display: flex;
   align-items: center;
+}
+
+.current-canvas img {
+  margin-right: 10px;
 }
 
 .header-icon {
