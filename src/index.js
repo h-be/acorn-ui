@@ -26,7 +26,7 @@ import { fetchGoalMembers } from './goal-members/actions'
 import { whoami } from './who-am-i/actions'
 import { fetchAgentAddress } from './agent-address/actions'
 import { setScreenDimensions } from './screensize/actions'
-import App from './components/App'
+import App from './routes/App'
 
 // this url should use the same port set up by the Holochain Conductor
 const websocketUrl = `ws://${DEFAULT_HOLOCHAIN_HOST}:${DEFAULT_HOLOCHAIN_PORT}`
