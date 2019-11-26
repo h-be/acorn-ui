@@ -4,9 +4,7 @@ import './HierarchyPicker.css'
 import Icon from '../Icon'
 import { connect } from 'react-redux'
 import LayoutFomula from '../../drawing/layoutFormula'
-
 function HierarchyPicker(props) {
-    
     const hierarchies = [
         {
             name: 'Leaf',
@@ -37,19 +35,38 @@ function HierarchyPicker(props) {
     let cardSelected
     let hierarchyIcons
     if(props.hashSelections.length){
-        cardSelected = props.hashSelections.map(address => allCoordenates[address])
+        //cardSelected = props.hashSelections.map(address => allCoordenates[address])
+        cardSelected =  props.hashSelections.map(address => {
+            let goalIconToDraw = {}
+            if (allCoordenates[address]){
+                goalIconToDraw.coordenates = allCoordenates[address]
+
+                if( props.goals[address].hierarchy ){
+
+                    hierarchies.forEach(h => {
+                        if(h.name === props.goals[address].hierarchy) {
+                            goalIconToDraw.icon = h.icon
+                        }
+                    })
+                }
+                return goalIconToDraw
+            } 
+        })
     }else{
         cardSelected = allCoordenates[props.hashSelections.goalAddress]
         const hierarchyDefault = hierarchies.filter( f => f.name === props.selectedHierarchy )
         hierarchyIcons = hierarchyDefault[0].icon
     }
+
     return (
         <div className='hierarchies_picker vertical_action_overlay'>
             {    
                 cardSelected.length ? 
                   cardSelected.map((card, index) => (
-                    <span key={index} style={{position: `fixed`, top: `${card.y - 30}px`, left: `${card.x - 28}px`}}>
-                        hola
+                    <span 
+                        key={index} 
+                        style={{position: `fixed`, top: `${card.coordenates.y - 30}px`, left: `${card.coordenates.x - 28}px`}}>
+                        <Icon name={card.icon} />
                     </span>
                   ))
                     :
@@ -107,19 +124,14 @@ function HierarchyOption({selected, onClick, name, icon, description}){
     )    
 }
 
-
-function mapDispatchToProps(dispatch) {
-    return { }
+function mapStateToProps(state) {
+  const goalAddress = { goalAddress: state.ui.goalForm.editAddress } 
+  return {
+    hashSelections: goalAddress.goalAddress ? goalAddress : state.ui.selection.selectedGoals ,
+    screensize: state.ui.screensize.width,
+    goals: state.goals,
+    edges: state.edges,
   }
-  
-  function mapStateToProps(state) {
-    const goalAddress = { goalAddress: state.ui.goalForm.editAddress } 
-    return {
-      hashSelections: goalAddress.goalAddress ? goalAddress : state.ui.selection.selectedGoals ,
-      screensize: state.ui.screensize.width,
-      goals: state.goals,
-      edges: state.edges,
-    }
-  }
+}
 
-export default connect(mapStateToProps,mapDispatchToProps)(HierarchyPicker)
+export default connect(mapStateToProps, () => ({}))(HierarchyPicker)
