@@ -1,13 +1,22 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import PropTypes, { bool } from 'prop-types'
 import './Button.css'
 
-function Button({ text, onClick }) {
-  return <button className="button" onClick={onClick}>{ text }</button>
+function Button({ text, size, color, stroke, onClick }) {
+
+  let classNames = 'button'
+  classNames += ' ' + (size ? size : 'large')
+  classNames += ' ' + (color ? color : 'purple')
+  classNames += ' ' + (stroke ? 'stroke' : '')
+
+  return <button className={classNames} onClick={onClick}>{ text }</button>
 }
 
 Button.propTypes = {
   text: PropTypes.string,
+  size: PropTypes.string,
+  color: PropTypes.string,
+  stroke: PropTypes.bool,
   onClick: PropTypes.func
 }
 
