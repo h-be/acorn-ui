@@ -71,7 +71,7 @@ function App(props) {
     {showExpandedViewMode && <ExpandedViewMode onClose={closeExpandedView} />}
     {agentAddress && !whoami && <CreateProfilePage />}
     {!agentAddress && <LoadingScreen />}
-    <Options/>
+    {agentAddress && whoami && <Options/>}
   </>)
 }
 
