@@ -7,17 +7,17 @@ import './App.css'
 
 import { updateWhoami } from '../who-am-i/actions'
 import { openExpandedView, closeExpandedView } from '../expanded-view/actions'
-import EmptyState from './EmptyState/EmptyState'
-import GoalForm from './GoalForm'
-import MultiEditBar from './MultiEditBar'
-import HoverOverlay from './HoverOverlay'
-import Header from './Header/Header'
-import CreateProfilePage from './CreateProfilePage/CreateProfilePage'
-import ProfileEditForm from './ProfileEditForm/ProfileEditForm'
-import LoadingScreen from './LoadingScreen/LoadingScreen'
-import ExpandedViewMode from './ExpandedViewMode/ExpandedViewMode'
+import EmptyState from '../components/EmptyState/EmptyState'
+import GoalForm from '../components/GoalForm'
+import MultiEditBar from '../components/MultiEditBar'
+import HoverOverlay from '../components/HoverOverlay'
+import Header from '../components/Header/Header'
+import CreateProfilePage from '../components/CreateProfilePage/CreateProfilePage'
+import ProfileEditForm from '../components/ProfileEditForm/ProfileEditForm'
+import LoadingScreen from '../components/LoadingScreen/LoadingScreen'
+import ExpandedViewMode from '../components/ExpandedViewMode/ExpandedViewMode'
 
-import Options from './Zoom/Options'
+import Options from '../components/Zoom/Options'
 
 function App(props) {
   const {
