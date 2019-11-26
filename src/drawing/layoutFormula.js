@@ -1,5 +1,5 @@
 import { goalWidth, goalHeight, cornerRadius } from './dimensions'
-
+import { closeGoalForm } from '../goal-form/actions'
 
 function findAParent(edges, address) {
   // highly oversimplified
@@ -9,7 +9,7 @@ function findAParent(edges, address) {
 function findChilds(edges, address) {
   // highly oversimplified
   const childs = edges.filter(e => e.parent_address === address)
-  return childs 
+  return childs.length > 0 ? childs.map(e => { return e.child_address }) : null
 }
 function mapGoalToHierarchy(goal, edges) {
   // setup and run a recursive call to find depth/hierarchy in the graph
@@ -29,86 +29,97 @@ function mapGoalToHierarchy(goal, edges) {
 
   checkHierarchy(goal.address)
   // console.log(hierarchy)
-  var parent=findAParent(edges, goal.address)
-
+  const parent = findAParent(edges, goal.address)
+  const childs = findChilds(edges, goal.address)
   return {
     hierarchy,
     goal,
-    parent
+    parent,
+    childs
   }
 }
-function maxHierarchi(withHierarchies){
-    let max = 0
-    withHierarchies.forEach(value=>{
-      if(value.hierarchy>max)max=value.hierarchy
-    })
-    return max 
-}
-function checkConflict(coordinates,withHierarchies){
+
+
+function checkConflict(coordinates, withHierarchies) {
   const horizontalSpacing = 20
-  let bool=false
-  let totalWidth=goalWidth+horizontalSpacing
-  const max =maxHierarchi(withHierarchies)
-  for (let index = 1; index <=max ; index++) {
-    
-  const  sameTier=withHierarchies.filter((wH) => wH.hierarchy ===index)
-  sameTier.forEach( valueBefore=>{
-    const addressBefore=valueBefore.goal.address
-    const xAux=coordinates[addressBefore].x
-    const yAux=coordinates[addressBefore].y
+  const totalWidth = goalWidth + horizontalSpacing
 
-  sameTier.forEach(
-    value=>{  
-      const {address}=value.goal
-      const x=coordinates[address].x
-      const y=coordinates[address].y
-      if(addressBefore===address){
-        
-      }else{
-        if(yAux===y){
-          if(xAux<x&&x<xAux+totalWidth||x===xAux){
-            coordinates[addressBefore]={
-              x:xAux-totalWidth/4,
-              y:yAux
-            }
-            console.log(address)
-            coordinates[address]={
-              x:x+totalWidth/4,
-              y:yAux
-            }
-            bool=true
-          }
-        }
-       
-      }
-    })})
+  const moveFamily = (address, delta, childs) => {
+    coordinates[address].x += delta;
+    if (childs) childs.forEach((value) => {
+      moveFamily(value, delta, withHierarchies.find(value2 => { return value2.goal.address === value }).childs)
+
+    })
   }
-  return bool?checkConflict(coordinates,withHierarchies):coordinates
+  const childsConflict = (childs) => {
+    if (childs) {
+      let bool = { bool: false, value: 1 }
+      childs.forEach(
+        address => {
+          Object.keys(coordinates).forEach(
+            value => {
+              if (value !== address &&
+                (coordinates[value].x === coordinates[address].x && coordinates[value].y === coordinates[address].y
+                  || coordinates[value].x < coordinates[address].x && coordinates[address].x < coordinates[value].x + totalWidth && coordinates[value].y === coordinates[address].y)) {
+                bool = { bool: true, value: 1 }
+              } else if (coordinates[address].x < coordinates[value].x && coordinates[value].x < coordinates[address].x + totalWidth && coordinates[value].y === coordinates[address].y) {
+                bool = { bool: true, value: -1 }
+              }
+            }
+          )
+        }
+      )
+      return bool
+    } else {
+      return { bool: false, value: 1 }
+    }
+  }
+  const innerCheckConflict = () => {
+
+    let bool
+    do {
+      bool = false
+      const firstTier = withHierarchies.filter((wH) => wH.hierarchy === 1)
+      firstTier.forEach(wH => {
+        const aux = childsConflict(wH.childs)
+        if (aux.bool === true) {
+
+          moveFamily(wH.goal.address, aux.value * totalWidth / 2, wH.childs)
+          bool = true
+
+        }
+      })
+    } while (bool)
+    return coordinates
+  }
+  return innerCheckConflict()
 }
 
-function mapHierarchyToPosition({ goal, hierarchy,parent }, withHierarchies, screenWidth,coordinates) {
+
+
+function mapHierarchyToPosition({ goal, hierarchy, parent }, withHierarchies, screenWidth, coordinates) {
   const verticalOffset = 10
   const verticalSpacing = 100
   const horizontalSpacing = 20
-
   // FIXME: this needs to be related to the display pixel ratio or something
   const RETINA_HACK_HALFSCREEN = 4
-
   const sameTier = withHierarchies.filter((wH) => wH.hierarchy === hierarchy)
+
   const sameTierBrother = withHierarchies.filter((wH) => wH.parent === parent)
+
   const indexInTierBrother = sameTierBrother.map((wH) => wH.goal.address).indexOf(goal.address)
-  
+
   const indexInTier = sameTier.map((wH) => wH.goal.address).indexOf(goal.address)
   const horizontalHalfScreen = screenWidth / RETINA_HACK_HALFSCREEN
   const halfGoalWidth = goalWidth / 2
   const totalWidth = goalWidth + horizontalSpacing
-  let x=0
-  if(hierarchy===1) {x= horizontalHalfScreen + (indexInTier * totalWidth) - ((sameTier.length - 1) * totalWidth) / 2 - halfGoalWidth}
-  else {x= coordinates[parent].x + (indexInTierBrother * totalWidth) - ((sameTierBrother.length-1)*totalWidth)/2}
-  
+  let x = 0
+  if (hierarchy === 1) { x = horizontalHalfScreen + (indexInTier * totalWidth) - ((sameTier.length - 1) * totalWidth) / 2 - halfGoalWidth }
+  else { x = coordinates[parent].x + (indexInTierBrother * totalWidth) - ((sameTierBrother.length - 1) * totalWidth) / 2 }
+
   // default position is a function of the hierarchical status of the goal
   const y = verticalOffset + hierarchy * (goalHeight + verticalSpacing)
-    return {
+  return {
     address: goal.address,
     coordinate: {
       x,
@@ -126,14 +137,13 @@ export default function layoutFormula(screenWidth, goals, edges) {
 
   // assign hierarchical statuses to things
   const withHierarchies = goalsAsArray.map(g => mapGoalToHierarchy(g, edgesAsArray))
-
   // use positions in the hierarchy to determine coordinates
   let coordinates = {}
   withHierarchies.forEach(wH => {
-    const { address, coordinate } = mapHierarchyToPosition(wH, withHierarchies, screenWidth,coordinates)
+    const { address, coordinate } = mapHierarchyToPosition(wH, withHierarchies, screenWidth, coordinates)
     coordinates[address] = coordinate
-    
+
   })
-  coordinates=checkConflict(coordinates,withHierarchies)
+  coordinates = checkConflict(coordinates, withHierarchies)
   return coordinates
 }
