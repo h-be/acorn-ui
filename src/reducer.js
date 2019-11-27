@@ -22,6 +22,7 @@ import mouse from './mouse/reducer'
 import screensize from './screensize/reducer'
 import viewport from './viewport/reducer'
 import expandedView from './expanded-view/reducer'
+import goalHierachy from './goal-hierachy/reducer'
 // import anotherone from './another/path'
 
 // combine reducers from each feature to create the top-level reducer
@@ -33,6 +34,7 @@ export default combineReducers({
   whoami,
   agentAddress,
   ui: combineReducers({
+    goalHierachy,
     goalForm,
     selection,
     hover,

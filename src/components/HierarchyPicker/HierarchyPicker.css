@@ -5,6 +5,12 @@
   margin-left: 1rem;
 }
 
+.multi_edit_bar_item .hierarchies_picker{
+  left: 0;
+  top: -400px;
+  margin-left: 0;
+}
+
 .hierarchy_option{
   width: 100%;
   margin-bottom: 1rem;
@@ -15,12 +21,24 @@
 
 .hierarchy_option:last-child{ margin-bottom: 0; }
 
-.hierarchy_option button:hover{
-  color: violet;
+.hierarchy_option:hover{
+  color: #00A599;
+}
+.hierarchy_option.active{
+  color: #5F65FF !important;
+}
+.hierarchy_option.active > span{
+  border: 1px solid #5F65FF;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;;
 }
 
 .hierarchy_picker_header{
-  padding:1.5rem 1rem;
+  padding-bottom: 1rem;
   position: relative;
   text-align: center;
   font-size: 1.1rem;
@@ -32,7 +50,8 @@
 
 .hierarchy_picker_header .vertical_action_close{
   position: absolute;
-  right: .5rem;
+  right: 1.5rem;
+  top: 0;
 }
 
 .hierarchy_option_icon_container img{

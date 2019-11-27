@@ -104,7 +104,28 @@ function render(store, canvas) {
     drawOverlay(ctx, 0, 0, state.ui.screensize.width, state.ui.screensize.height)
     ctx.restore()
   }
+  if(state.ui.goalHierachy.render){
+    const allCoordenates = layoutFormula(state.ui.screensize.width,state.goals, state.edges)
+    let cardSelected
+    let hierarchyIcons
+        //cardSelected = props.hashSelections.map(address => allCoordenates[address])
+        cardSelected =  state.ui.selection.selectedGoals.map(address => {
+            let goalIconToDraw = {}
+            if (allCoordenates[address]){
+                goalIconToDraw.coordenates = allCoordenates[address]
 
+                if( state.goals[address].hierarchy ){
+                    state.ui.goalHierachy.hierarchies.forEach(h => {
+                        if(h.name === state.goals[address].hierarchy) {
+                            goalIconToDraw.icon = h.icon
+                        }
+                    })
+                }
+                return goalIconToDraw
+            } 
+        })
+
+  }
   // render each selected goal to the canvas
   selectedGoals.forEach(goal => {
     // use the set of coordinates at the same index
