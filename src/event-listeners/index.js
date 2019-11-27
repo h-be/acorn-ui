@@ -46,8 +46,10 @@ import {
 
 import layoutFormula from '../drawing/layoutFormula'
 
+
 export default function setupEventListeners(store, canvas) {
-  window.addEventListener('resize', event => {
+
+  function windowResize(event) {
     // Get the device pixel ratio, falling back to 1.
     const dpr = window.devicePixelRatio || 1
     // Get the size of the canvas in CSS pixels.
@@ -55,9 +57,9 @@ export default function setupEventListeners(store, canvas) {
     // Give the canvas pixel dimensions of their CSS
     // size * the device pixel ratio.
     store.dispatch(setScreenDimensions(rect.width * dpr, rect.height * dpr))
-  })
+  }
 
-  document.body.addEventListener('keydown', event => {
+  function bodyKeydown(event) {
     let state = store.getState()
     switch (event.code) {
       case 'KeyG':
@@ -93,9 +95,9 @@ export default function setupEventListeners(store, canvas) {
         break
     }
     // console.log(event)
-  })
+  }
 
-  document.body.addEventListener('keyup', event => {
+  function bodyKeyup(event) {
     switch (event.code) {
       case 'KeyG':
         store.dispatch(unsetGKeyDown())
@@ -108,11 +110,9 @@ export default function setupEventListeners(store, canvas) {
         // console.log(event)
         break
     }
-  })
+  }
 
-  // TODO: debounce/throttle this so that it doesn't fire crazy frequently and
-  // kill performance
-  canvas.addEventListener('mousemove', event => {
+  function canvasMousemove(event) {
     const state = store.getState()
     let convertedMouse, goalAddressesToSelect
     const { goals, edges, ui: { viewport: { translate, scale }, mouse: { coordinate: { x, y }, goalsAddresses }, screensize: { width } } } = state
@@ -140,7 +140,7 @@ export default function setupEventListeners(store, canvas) {
     } else if (!goalAddress && state.ui.hover.hoveredGoal) {
       store.dispatch(unhoverGoal())
     }
-  })
+  }
 
   // don't allow this function to be called more than every 200 milliseconds
   const debouncedWheelHandler = _.debounce(event => {
@@ -164,34 +164,13 @@ export default function setupEventListeners(store, canvas) {
       }
     }
   }, 2, { leading: true })
-  canvas.addEventListener('wheel', event => {
+
+  function canvasWheel(event) {
     debouncedWheelHandler(event)
     event.preventDefault()
-  })
+  }
 
-  canvas.addEventListener('mousedown', event => {
-    store.dispatch(setMousedown())
-  })
-  canvas.addEventListener('mouseup', event => {
-    store.dispatch(unsetMousedown())
-  })
-
-
-  canvas.addEventListener('dblclick', event => {
-    const state = store.getState()
-    const { goals, edges, ui: { viewport: { translate, scale }, screensize: { width } } } = state
-    const goalAddress = checkForGoalAtCoordinates(canvas.getContext('2d'), translate, scale, width, goals, edges, event.clientX, event.clientY)
-    if (goalAddress) {
-      let goalCoord = layoutFormula(width, goals, edges)[goalAddress]
-      store.dispatch(unselectAll())
-      store.dispatch(openGoalForm(goalCoord.x, goalCoord.y, goalAddress))
-      store.dispatch(updateContent(goals[goalAddress].content))
-    }
-  })
-
-  // This listener is bound to the canvas only so clicks on other parts of
-  // the UI like the GoalForm won't trigger it.
-  canvas.addEventListener('click', event => {
+  function canvasClick(event) {
     const state = store.getState()
     // goalsAddresses are Goals to be selected
     const { ui: { mouse: { goalsAddresses } } } = state
@@ -246,5 +225,55 @@ export default function setupEventListeners(store, canvas) {
     store.dispatch(unsetCoordinate())
     store.dispatch(unsetGoals())
     store.dispatch(unsetSize())
-  })
+  }
+
+  function canvasMousedown(event) {
+    store.dispatch(setMousedown())
+  }
+
+  function canvasMouseup(event) {
+    store.dispatch(unsetMousedown())
+  }
+
+  function canvasDblclick(event) {
+    const state = store.getState()
+    const { goals, edges, ui: { viewport: { translate, scale }, screensize: { width } } } = state
+    const goalAddress = checkForGoalAtCoordinates(canvas.getContext('2d'), translate, scale, width, goals, edges, event.clientX, event.clientY)
+    if (goalAddress) {
+      let goalCoord = layoutFormula(width, goals, edges)[goalAddress]
+      store.dispatch(unselectAll())
+      store.dispatch(openGoalForm(goalCoord.x, goalCoord.y, goalAddress))
+      store.dispatch(updateContent(goals[goalAddress].content))
+    }
+  }
+
+  window.addEventListener('resize', windowResize)
+  document.body.addEventListener('keydown', bodyKeydown)
+  document.body.addEventListener('keyup', bodyKeyup)
+  // TODO: debounce/throttle this so that it doesn't fire crazy frequently and
+  // kill performance
+  canvas.addEventListener('mousemove', canvasMousemove)
+  canvas.addEventListener('wheel', canvasWheel)
+  canvas.addEventListener('mousedown', canvasMousedown)
+  canvas.addEventListener('mouseup', canvasMouseup)
+  canvas.addEventListener('dblclick', canvasDblclick)
+  // This listener is bound to the canvas only so clicks on other parts of
+  // the UI like the GoalForm won't trigger it.
+  canvas.addEventListener('click', canvasClick)
+
+  return function cleanup() {
+    window.removeEventListener('resize', windowResize)
+    document.body.removeEventListener('keydown', bodyKeydown)
+    document.body.removeEventListener('keyup', bodyKeyup)
+    // TODO: debounce/throttle this so that it doesn't fire crazy frequently and
+    // kill performance
+    canvas.removeEventListener('mousemove', canvasMousemove)
+    canvas.removeEventListener('wheel', canvasWheel)
+    canvas.removeEventListener('mousedown', canvasMousedown)
+    canvas.removeEventListener('mouseup', canvasMouseup)
+    canvas.removeEventListener('dblclick', canvasDblclick)
+    // This listener is bound to the canvas only so clicks on other parts of
+    // the UI like the GoalForm won't trigger it.
+    canvas.removeEventListener('click', canvasClick)
+  }
 }
