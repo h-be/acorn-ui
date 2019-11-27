@@ -1,8 +1,10 @@
 .hierarchies_picker{
-  left: 100%;
-  top: 0px;
+  left: 0;
+  /* top: 100%; */
+  /* bottom: 0; */
   width: 300px;
-  margin-left: 1rem;
+  /* margin-left: 1rem; */
+  position: fixed;
 }
 
 .multi_edit_bar_item .hierarchies_picker{
