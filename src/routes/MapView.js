@@ -3,6 +3,8 @@ import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { connect, useStore } from 'react-redux'
 
+import './MapView.css'
+
 import render from '../drawing'
 
 import setupEventListeners from '../event-listeners'
