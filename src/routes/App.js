@@ -15,7 +15,7 @@ import { updateWhoami } from '../who-am-i/actions'
 import Header from '../components/Header/Header'
 import ProfileEditForm from '../components/ProfileEditForm/ProfileEditForm'
 import LoadingScreen from '../components/LoadingScreen/LoadingScreen'
-import Options from '../components/Zoom/Options'
+import Footer from '../components/Footer/Footer'
 
 import CreateProfilePage from './CreateProfilePage/CreateProfilePage'
 import MapView from './MapView'
@@ -25,8 +25,7 @@ function App(props) {
   const {
     agentAddress,
     whoami, // .entry and .address
-    updateWhoami,
-    canvas
+    updateWhoami
   } = props
   const [showProfileEditForm, setShowProfileEditForm] = useState(false)
 
@@ -51,12 +50,12 @@ function App(props) {
             {...{ canClose, titleText, subText, submitText, agentAddress }} />
         </div>}
       <Switch>
-        <Route path="/board/map" render={() => <MapView />} />
+        <Route path="/board/map" component={MapView} />
         <Route path="/board/priority" component={PriorityView} />
         <Route path="/register" component={CreateProfilePage} />
       </Switch>
       {!agentAddress && <LoadingScreen />}
-      {agentAddress && whoami && <Options />}
+      {agentAddress && whoami && <Footer />}
     </Router>
   )
 }

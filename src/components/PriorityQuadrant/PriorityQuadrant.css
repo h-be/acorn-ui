@@ -1,0 +1,26 @@
+.priority-quadrant {
+  background: white;
+  width: 50%;
+  padding: 20px;
+}
+
+.priority-quadrant-title {
+  text-align: left;
+  font-size: 20px;
+  line-height: 29px;
+  font-family: 'rennerbold', Helvetica, sans-serif;
+  font-weight: normal;
+}
+
+.priority-quadrant-title.urgent-important {
+  color: #FF5D36;
+}
+.priority-quadrant-title.less-urgent-important {
+  color: #00BCAE;
+}
+.priority-quadrant-title.urgent-less-important {
+  color: #FF9C39;
+}
+.priority-quadrant-title.less-urgent-less-important {
+  color: #6600FFF2;
+}

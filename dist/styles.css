@@ -397,7 +397,7 @@ h4 {
   padding: 1px;
   display: inline-block;
   position: relative;
-  margin-top: 3px;
+  right: -1px;
 }
 
 .icon.view-mode {
