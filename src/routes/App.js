@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-  NavLink,
+  Redirect,
   HashRouter as Router,
   Switch,
   Route,
@@ -55,6 +55,7 @@ function App(props) {
         <Route path="/register" component={CreateProfilePage} />
       </Switch>
       {!agentAddress && <LoadingScreen />}
+      {agentAddress && !whoami && <Redirect to="/register" />}
       {agentAddress && whoami && <Footer />}
     </Router>
   )
