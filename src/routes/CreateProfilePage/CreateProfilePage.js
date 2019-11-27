@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createWhoami } from '../../who-am-i/actions'
-import ProfileEditForm from '../ProfileEditForm/ProfileEditForm'
+import ProfileEditForm from '../../components/ProfileEditForm/ProfileEditForm'
 import './CreateProfilePage.css'
 
 function CreateProfilePage({ agentAddress, createWhoami }) {
@@ -21,6 +22,10 @@ function CreateProfilePage({ agentAddress, createWhoami }) {
   </div>
 }
 
+CreateProfilePage.propTypes = {
+  agentAddress: PropTypes.string,
+  createWhoami: PropTypes.func,
+}
 
 function mapDispatchToProps(dispatch) {
   return {

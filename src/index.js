@@ -16,17 +16,14 @@ import { holochainMiddleware } from '@holochain/hc-redux-middleware'
 
 // Local Imports
 import { DEFAULT_HOLOCHAIN_PORT, DEFAULT_HOLOCHAIN_HOST } from './holochainConfig'
-import setupEventListeners from './event-listeners'
 import acorn from './reducer'
-import render from './drawing'
 import { fetchAgents } from './agents/actions'
 import { fetchGoals } from './goals/actions'
 import { fetchEdges } from './edges/actions'
 import { fetchGoalMembers } from './goal-members/actions'
 import { whoami } from './who-am-i/actions'
 import { fetchAgentAddress } from './agent-address/actions'
-import { setScreenDimensions } from './screensize/actions'
-import App from './components/App'
+import App from './routes/App'
 
 // this url should use the same port set up by the Holochain Conductor
 const websocketUrl = `ws://${DEFAULT_HOLOCHAIN_HOST}:${DEFAULT_HOLOCHAIN_PORT}`
@@ -50,10 +47,17 @@ let store = createStore(acorn, /* preloadedState, */ composeEnhancers(
 
 // dispatch fetch goals, and fetch edges functions to pull in all the existing goals and edges
 // on first render
-store.dispatch(fetchAgents.create({}))
-store.dispatch(fetchEdges.create({}))
-store.dispatch(fetchGoals.create({}))
-store.dispatch(fetchGoalMembers.create({}))
+function fetchChangingData() {
+  store.dispatch(fetchAgents.create({}))
+  store.dispatch(fetchEdges.create({}))
+  store.dispatch(fetchGoals.create({}))
+  store.dispatch(fetchGoalMembers.create({}))
+}
+fetchChangingData()
+// refetch this data every 3 seconds
+setInterval(() => {
+  fetchChangingData()
+}, 3000)
 store.dispatch(whoami.create({}))
 store.dispatch(fetchAgentAddress.create({}))
 /*
@@ -62,44 +66,11 @@ store.dispatch(fetchAgentAddress.create({}))
   store.dispatch(action)
 */
 
-/* SETUP THE REACT CONTAINER, WHERE DOM ELEMENTS WILL BE RENDERED */
-const reactContainer = document.createElement('div')
-reactContainer.className = 'react'
-
-
-/* SETUP THE CANVAS SPACE, WHERE MANY VISUAL non-dom ELEMENTS WILL BE RENDERED */
-const canvas = document.createElement('canvas')
-canvas.width = document.body.clientWidth
-canvas.height = document.body.clientHeight
-
-
-document.body.appendChild(canvas)
-document.body.appendChild(reactContainer)
-
-// Get the device pixel ratio, falling back to 1.
-const dpr = window.devicePixelRatio || 1
-// Get the size of the canvas in CSS pixels.
-const rect = canvas.getBoundingClientRect()
-// Give the canvas pixel dimensions of their CSS
-// size * the device pixel ratio.
-store.dispatch(setScreenDimensions(rect.width * dpr, rect.height * dpr))
-
-// attach keyboard and mouse events
-setupEventListeners(store, canvas)
-
-// whenever the STATE in the STORE changes, re-render the state data to the canvas
-store.subscribe(() => {
-  render(store, canvas)
-})
-
-// Do an initial draw of the view
-render(store, canvas)
-
 // By passing the `store` in as a wrapper around our React component
 // we make the state available throughout it
 ReactDOM.render(
   <Provider store={store}>
     <App />
   </Provider>,
-  reactContainer
+  document.getElementById('react')
 )

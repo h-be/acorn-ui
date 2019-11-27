@@ -6,6 +6,7 @@ import Icon from './Icon'
 import PeoplePicker from './PeoplePicker'
 import StatusPicker from './StatusPicker'
 import HierarchyPicker from './HierarchyPicker/HierarchyPicker'
+import Priority from './Priority/Priority'
 import StatusIcon from './StatusIcon'
 
 import {
@@ -20,7 +21,8 @@ function VerticalActionsList({ goalAddress, goal, onArchiveClick, updateGoal }) 
 
   const defaultViews = {
     status: false,
-    squirrels: false
+    squirrels: false,
+    priority: false
   }
   const [viewsOpen, setViews] = useState(defaultViews)
 
@@ -58,12 +60,18 @@ function VerticalActionsList({ goalAddress, goal, onArchiveClick, updateGoal }) 
         <span>squirrels</span>
       </div>
       {viewsOpen.squirrels && <PeoplePicker onClose={() => setViews({ ...defaultViews })} />}
-      {/* Hierarchies */}
+      {/* hierarchy */}
       <div className='action_list_item' key='hierarchies' onClick={() => setViews({ ...defaultViews, hierarchy: !viewsOpen.hierarchy })}>
-        <Icon name='hierarchy.png' />
-        <span>Hierarchy</span>
+        <Icon name='hierarchy_white.svg' />
+        <span>hierarchy</span>
       </div>
       {viewsOpen.hierarchy && <HierarchyPicker onClose={() => setViews({ ...defaultViews })} selectedHierarchy={goal.hierarchy} hierarchyClicked={updateGoalHierarchy} />}
+      {/* priority */}
+      <div className='action_list_item' key='priority' onClick={() => setViews({ ...defaultViews, priority: !viewsOpen.priority })}>
+        <Icon name='priority_white.svg' />
+        <span>priority</span>
+      </div>
+      {viewsOpen.priority && <Priority onClose={() => setViews({ ...defaultViews })} selectedPriority={goal.priority} />}
       {/* archive */}
       <div className='action_list_item' key='archive' onClick={() => onArchiveClick(goalAddress)}>
         <Icon name='archive_white.svg' />
