@@ -368,6 +368,13 @@ h4 {
   cursor: pointer;
 }
 
+.icon.medium {
+  width: 38px;
+  height: 38px;
+  padding: 1px;
+  cursor: pointer;
+}
+
 .icon.small-close {
   width: 14px;
   height: 14px;
