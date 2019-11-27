@@ -16,7 +16,7 @@
 
 .logo {
   padding-right: 20px;
-  padding-left: 20px;
+  padding-left: 12px;
   background: rgba(255, 255, 255, 0.9) 0% 0% no-repeat padding-box;
   border-radius: 10px;
   display: -webkit-flex;
@@ -33,7 +33,6 @@
   padding-left: 20px;
   background: rgba(255, 255, 255, 0.9) 0% 0% no-repeat padding-box;
   border-radius: 10px;
-  opacity: 0.8;
   display: -webkit-flex;
   /* Safari */
   -webkit-align-items: center;
@@ -58,7 +57,7 @@
   text-align: left;
   letter-spacing: 0;
   color: black;
-  margin-top: -10px;
+  margin-top: -13px;
 }
 
 .canvas-name {
