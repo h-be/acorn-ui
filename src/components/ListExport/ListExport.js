@@ -1,10 +1,16 @@
-import React from 'react'
-
+import React,{ useState } from 'react'
 import { connect } from 'react-redux'
+import Popup from './Popup/Popup'
 
 const ListExport = (props) => {
+
+    const [popup,setPopup] = useState(false)
+
     return (
-      <a href={url(props.type,props.data)} download={props.download}>{props.title}</a>
+      <>
+      <Popup active={popup} handleToHide={() => setPopup(false)}/>
+      <a href={url(props.type,props.data)} onClick={()=>{ setPopup(true) }}  download={props.download}>{props.title}</a>
+      </>
     )
   }
 
@@ -42,6 +48,7 @@ function url(type,data){
    
   }
   const url =window.URL.createObjectURL(blob)
+  
   return url
 }
   function mapStateToProps(state) {
