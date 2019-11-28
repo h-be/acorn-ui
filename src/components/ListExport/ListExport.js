@@ -35,7 +35,7 @@ function url(type, data) {
       }
       return csvRows.join("\n");
     };
-    if (agents.length > 0) csvRows.push(loop(agents, data.agents));
+    if (agents.length > 0) csvRows.push(loop("agents", agents, data.agents));
     if (goals.length > 0) csvRows.push("\n" + loop("goals", goals, data.goals));
     if (edges.length > 0) csvRows.push("\n" + loop(edges, data.edges));
     if (goalMembers.length > 0)
