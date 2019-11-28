@@ -42,7 +42,6 @@ class Header extends React.Component {
   }
 
   componentDidMount() {
-    const data ="hola"
     this.changeStatus("green")
     this.setState({
       lista: [
