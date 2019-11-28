@@ -1,34 +1,33 @@
 import React from 'react'
-import './popup.css'
+import './Popup.css'
+import Icon from '../../Icon'
+import Button from '../../Button/Button'
 
-export default function Popup({ active, handleToHide }){
-  return(
+export default function Popup({ active, handleToHide }) {
+  return (
     <div className={'popup ' + (active ? 'active' : '')}>
       <div className='popup-window'>
-      <button onClick={handleToHide} className='btn-close-modal'>
         <Icon name="x.svg" onClick={handleToHide} className="btn-close-modal" />
-          
-      </button>
         <div className="popup-header">
           <span className="popup-logo">
-              <Icon name="export.svg"/>
+            <Icon name="export.svg" />
           </span>
           <span className="popup-title">Exporting</span>
         </div>
         <div className="popup-content">
           <p>
-            You just exported the <b>H-BE SoA</b> canvas a JSON file. 
+            You just exported the <b>H-BE SoA</b> canvas.
             You will be able to find it in your Downloads folder!
           </p>
         </div>
         <div className="popup-footer">
           <div className="check-no-show-again">
             <label htmlFor="">Don't show me again</label>
-            <input type="checkbox"/>
+            <input type="checkbox" />
           </div>
-          <button className="btn-accept">
-            OK
-          </button>
+          <div className="btn-accept">
+            <Button text="OK" onClick={handleToHide} />
+          </div>
         </div>
       </div>
     </div>
