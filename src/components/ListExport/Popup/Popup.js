@@ -1,7 +1,7 @@
 import React from 'react'
 import './popup.css'
 
-export default function Popup({ active, handleToHide },props){
+export default function Popup({ active, handleToHide }){
   return(
     <div className={'popup ' + (active ? 'active' : '')}>
       <div className='popup-window'>
