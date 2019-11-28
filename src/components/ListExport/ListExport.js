@@ -38,7 +38,7 @@ function url(type, data) {
     if (goals.length > 0) csvRows.push("\n" + loop(goals, data.goals));
     if (edges.length > 0) csvRows.push("\n" + loop(edges, data.edges));
     if (goalMembers.length > 0)
-      csvRows.push("\n" + loop(goalMembers, data.goalMembers));
+      csvRows.push("\n" + loop("goalMembers", goalMembers, data.goalMembers));
 
     blob = new Blob([csvRows.join("\n")], {
       type: "text/csv"
