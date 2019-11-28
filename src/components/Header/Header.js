@@ -53,7 +53,7 @@ class Header extends React.Component {
       ],
       avatar: false,
       listaProfile: [{ title: "Profile Settings", click: this.clickProfile }],
-      listaExport: [{ title: "Export s JSON",type:"json", download:"table.json" },
+      listaExport: [{ title: "Export as JSON",type:"json", download:"table.json" },
       { title: "Export as CSV", type:"csv",download:"table.csv" }]
 
     })
