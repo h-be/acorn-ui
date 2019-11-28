@@ -28,6 +28,7 @@ function url(type, data) {
     const loop = (dataset, heardes, data) => {
       const csvRows = [];
 
+      csvRows.push(dataset)
       csvRows.push(Object.keys(data[heardes[0]]).join(","));
       for (const index in heardes) {
         csvRows.push(Object.values(data[heardes[index]]));
