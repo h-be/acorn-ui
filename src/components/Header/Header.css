@@ -1,3 +1,6 @@
+.header-wrapper {
+  position: relative;
+}
 
 .header {
   position: fixed;
