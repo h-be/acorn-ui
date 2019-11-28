@@ -21,9 +21,9 @@
 .popup .btn-close-modal {
   display: block;
   position: absolute;
-  right: 15px;
   width: 16px;
-  top: 15px;
+  right: 20px;
+  top: 20px;
   padding: 0;
   background: none;
   border: none;
@@ -35,8 +35,8 @@
   width: 634px;
   height: 345px;
   box-sizing: border-box;
-  padding: 3rem 4rem;
-  transition: .5s;
+  padding: 64px;
+  transition: .3s;
   background-color: #FFFF;
   border-radius: 10px;
   box-shadow: 0px 0px 6px #00000041;
@@ -45,9 +45,15 @@
   justify-content: space-between;
 }
 
+.popup-header {
+  display: flex;
+  align-items: center;
+}
+
 .popup-title {
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 22px;
+  font-family: 'rennerbold', Helvetica, sans-serif;
+  font-weight: normal;
 }
 
 .popup-logo {
@@ -58,6 +64,8 @@
   letter-spacing: 0;
   line-height: 2;
   height: 55%;
+  margin-left: 50px;
+  color: #4D4D4D;
 }
 
 .popup-footer {
