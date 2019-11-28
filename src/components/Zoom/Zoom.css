@@ -1,0 +1,24 @@
+.zoom-wrapper {
+  display: flex;
+  align-items: center;
+  margin: 0 24px;
+  border-right: 1px solid #D9D9D9;
+}
+
+.zoom-wrapper img, span{
+  display: inline-block;
+}
+
+.zoom-wrapper span {
+  font-size: 16px;
+  font-family: 'renner_mediummedium', Helvetica, sans-serif;
+  font-weight: normal;
+  margin-right: 20px;
+  width: 44px;
+}
+
+.zoom-wrapper img.icon {
+  margin-right: 24px;
+  padding: 4px;
+  box-sizing: content-box;
+}

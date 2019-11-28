@@ -361,6 +361,13 @@ h4 {
   cursor: pointer;
 }
 
+.icon.very-small {
+  width: 17px;
+  height: 17px;
+  padding: 1px;
+  cursor: pointer;
+}
+
 .icon.small {
   width: 20px;
   height: 20px;
@@ -390,25 +397,32 @@ h4 {
   cursor: pointer;
 }
 
-
 .icon.logo {
   width: 28px;
-  height: 28px;
-  margin: 0px;
-  margin-top: 2px;
-  padding: 0px;
+  height: 18px;
+  padding: 1px;
   display: inline-block;
   position: relative;
+  right: -1px;
 }
 
-.icon.header-view-mode {
+.icon.view-mode-small {
+  height: 24px;
+  width: 24px;
+  padding: 4px;
+  display: inline-block;
+  position: relative;
+  margin-top: 2;
+  margin-left: 0;
+}
+
+.icon.view-mode {
   height: 24px;
   width: 24px;
   padding: 1px;
   display: inline-block;
   position: relative;
   margin-top: 0;
-  margin-right: 10px;
   margin-left: 0;
 }
 
