@@ -108,7 +108,7 @@ class Header extends React.Component {
     this.setState({ isStatusHover: false })
   }
   render() {
-    return (<div>
+    return (<div className="header-wrapper">
       <div className="header">
         <div className="top-left-panel">
           <div className="logo" >
