@@ -25,20 +25,21 @@ function url(type, data) {
     const goals = Object.keys(data.goals);
     const edges = Object.keys(data.edges);
     const goalMembers = Object.keys(data.goalMembers);
-    const loop = (heardes, data) => {
+    const loop = (dataset, heardes, data) => {
       const csvRows = [];
 
+      csvRows.push(dataset)
       csvRows.push(Object.keys(data[heardes[0]]).join(","));
       for (const index in heardes) {
         csvRows.push(Object.values(data[heardes[index]]));
       }
       return csvRows.join("\n");
     };
-    if (agents.length > 0) csvRows.push(loop(agents, data.agents));
-    if (goals.length > 0) csvRows.push("\n" + loop(goals, data.goals));
-    if (edges.length > 0) csvRows.push("\n" + loop(edges, data.edges));
+    if (agents.length > 0) csvRows.push(loop("agents", agents, data.agents));
+    if (goals.length > 0) csvRows.push("\n" + loop("goals", goals, data.goals));
+    if (edges.length > 0) csvRows.push("\n" + loop("edges", edges, data.edges));
     if (goalMembers.length > 0)
-      csvRows.push("\n" + loop(goalMembers, data.goalMembers));
+      csvRows.push("\n" + loop("goalMembers", goalMembers, data.goalMembers));
 
     blob = new Blob([csvRows.join("\n")], {
       type: "text/csv"
