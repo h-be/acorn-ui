@@ -25,7 +25,7 @@ function url(type, data) {
     const goals = Object.keys(data.goals);
     const edges = Object.keys(data.edges);
     const goalMembers = Object.keys(data.goalMembers);
-    const loop = (heardes, data) => {
+    const loop = (dataset, heardes, data) => {
       const csvRows = [];
 
       csvRows.push(Object.keys(data[heardes[0]]).join(","));
