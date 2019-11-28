@@ -17,22 +17,25 @@ function PriorityMenuItem({ title, slug }) {
   </NavLink>
 }
 
-function UrgencyImportanceQuadrants() {
-  return <div className="priority-quadrants">
-    <div className="priority-quadrants-row">
-      <PriorityQuadrant title="urgent & important" titleClassname="urgent-important" />
-      <div className="priority-quadrants-divider"></div>
-      <PriorityQuadrant title="less urgent & important" titleClassname="less-urgent-important" />
-    </div>
-    <div className="priority-quadrants-row">
-      <PriorityQuadrant title="urgent & less important" titleClassname="urgent-less-important" />
-      <div className="priority-quadrants-divider"></div>
-      <PriorityQuadrant title="less urgent & less important" titleClassname="less-urgent-less-important" />
+function UrgencyImportanceQuadrants({ goalLists }) {
+  return <div className="priority-quadrants-wrapper">
+    <div className="priority-quadrands-content">
+      <div className="priority-quadrants-row">
+        <PriorityQuadrant title="urgent & important" titleClassname="urgent-important" goals={goalLists[0]} />
+        <div className="priority-quadrants-vertical-divider"></div>
+        <PriorityQuadrant title="less urgent & important" titleClassname="less-urgent-important" goals={goalLists[1]} />
+      </div>
+      <div className="priority-quadrants-horizontal-divider"></div>
+      <div className="priority-quadrants-row">
+        <PriorityQuadrant title="urgent & less important" titleClassname="urgent-less-important" goals={goalLists[2]} />
+        <div className="priority-quadrants-vertical-divider"></div>
+        <PriorityQuadrant title="less urgent & less important" titleClassname="less-urgent-less-important" goals={goalLists[3]} />
+      </div>
     </div>
   </div>
 }
 
-function PriorityView({ goalTree }) {
+function PriorityView({ goalTree, goalLists }) {
 
   const { url } = useRouteMatch()
 
@@ -58,7 +61,7 @@ function PriorityView({ goalTree }) {
       })}
     </div>
     <Switch>
-      <Route exact path={priorityMenuItems[0][1]} component={UrgencyImportanceQuadrants} />
+      <Route exact path={priorityMenuItems[0][1]} render={() => <UrgencyImportanceQuadrants goalLists={goalLists} />} />
     </Switch>
   </div>
 }
@@ -70,8 +73,10 @@ function mapDispatchToProps(dispatch) {
   return {}
 }
 function mapStateToProps(state) {
+  const test = Object.values(state.goals)
   return {
-    goalTree: Object.values(state.goals)
+    goalTree: Object.values(state.goals),
+    goalLists: [test, test, test, test] // TODO: change this
   }
 }
 
