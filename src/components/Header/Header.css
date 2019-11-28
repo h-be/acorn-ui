@@ -1,3 +1,6 @@
+.header-wrapper {
+  position: relative;
+}
 
 .header {
   position: fixed;
@@ -93,7 +96,9 @@
 }
 
 /* guidebook section on header */
-
+.current-canvas div{
+  margin-left: 10px;
+}
 .instructions_wrapper {
   float: right;
   position: relative;
@@ -271,7 +276,45 @@ button.gray img {
   display: flex;
   flex-direction: column;
 }
+.export-wrapper {
+  margin-top: 70px;
+  margin-left: 300px;
+  float: left;
+  border-radius: 14px;
+  background-color: #FFFFFF;
+  padding: 12px 0;
+  box-shadow: 0px 0px 6px #00000029;
+  display: flex;
+  flex-direction: column;
+}
+.export-wrapper a {
+  padding: 10px 25px;
+  color: black;
+  outline: none;
 
+  background: none;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.hover-display{
+  margin-top: 60px;
+  margin-left: 305px;
+  float: left;
+  border-radius: 5px;
+  color: white;
+  background-color: #5F65FF;
+  padding: 6px 6px;
+  box-shadow: 0px 0px 6px #00000029;
+  display: flex;
+  flex-direction: column;
+}
+.export-wrapper a:hover {
+  background: #F4F4F4 none repeat scroll 0% 0%;
+  color: #5F65FF;
+}
 .user-status-wrapper button {
   padding: 0 25px;
   outline: none;
