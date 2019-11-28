@@ -74,7 +74,6 @@ class Header extends React.Component {
   }
   hoverExport(bool) {
     this.setState({ isHoverExport: bool });
-    console.log(bool)
   }
   clickStatus(e) {
     this.setState({ isStatusOpen: !this.state.isStatusOpen,isExportOpen:false, isGuideOpen: false, isProfileOpen: false })
