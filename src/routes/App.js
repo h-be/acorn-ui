@@ -40,6 +40,11 @@ function App(props) {
 
   return (
     <Router>
+      <Switch>
+        <Route path="/board/map" component={MapView} />
+        <Route path="/board/priority" component={PriorityView} />
+        <Route path="/register" component={CreateProfilePage} />
+      </Switch>
       {agentAddress && <Header whoami={whoami} setShowProfileEditForm={setShowProfileEditForm} />}
       {showProfileEditForm &&
         <div className="profile_edit_wrapper">
@@ -49,11 +54,6 @@ function App(props) {
             whoami={whoami ? whoami.entry : null}
             {...{ canClose, titleText, subText, submitText, agentAddress }} />
         </div>}
-      <Switch>
-        <Route path="/board/map" component={MapView} />
-        <Route path="/board/priority" component={PriorityView} />
-        <Route path="/register" component={CreateProfilePage} />
-      </Switch>
       {!agentAddress && <LoadingScreen />}
       {agentAddress && !whoami && <Redirect to="/register" />}
       {agentAddress && whoami && <Footer />}
