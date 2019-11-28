@@ -23,7 +23,7 @@ export default function Popup({ active, handleToHide },props){
         </div>
         <div className="popup-footer">
           <div className="check-no-show-again">
-            <label htmlFor="">Dont't show me again</label>
+            <label htmlFor="">Don't show me again</label>
             <input type="checkbox"/>
           </div>
           <button className="btn-accept">
