@@ -6,11 +6,12 @@ export default function Popup({ active, handleToHide },props){
     <div className={'popup ' + (active ? 'active' : '')}>
       <div className='popup-window'>
       <button onClick={handleToHide} className='btn-close-modal'>
-        <img src="/img/x.svg"/>
+         <Icon name="/img/x.svg" />
+          
       </button>
         <div className="popup-header">
           <span className="popup-logo">
-            <img src="/img/export.svg" />
+              <Icon name="/img/export.svg"/>
           </span>
           <span className="popup-title">Exporting</span>
         </div>
