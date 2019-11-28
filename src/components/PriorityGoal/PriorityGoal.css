@@ -1,0 +1,65 @@
+.priority-quadrant-goal-item {
+  display: flex;
+  flex-direction: column;
+  border-bottom: solid 1px #F2F2F2; 
+  padding: 12px 16px 12px 16px;
+  margin-right: 20px;
+}
+
+
+.priority-quadrant-goal-item:hover {
+  background: #F9F9F9;
+}
+
+.priority-quadrant-goal-title {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 12px;
+  padding-right: 30px;
+  font-family: 'renner_mediummedium', Helvetica, sans-serif;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  color: #4D4D4D;
+}
+
+.priority-quadrant-goal-title img {
+  margin-right: 10px;
+}
+
+.priority-quadrant-goal-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #898989;
+  font-size: 12px;
+  margin-left: 28px;
+  padding-right: 30px;
+}
+
+.priority-quadrant-goal-info img {
+  margin-right: 6px;
+}
+
+.priority-quadrant-goal-info span {
+  margin-right: 10px;
+}
+
+.priority-quadrant-goal-right-menu {
+  margin-top: -50px;
+}
+
+.priority-quadrant-goal-view-mode-icons {
+  display: flex;
+  flex-direction: column;
+  float: right;
+}
+
+.priority-quadrant-goal-view-mode-icons img {
+}
+
+.priority-quadrant-goal-view-mode-icons img:hover {
+  background: white;
+  padding: 4px;
+  border-radius: 5px;
+}
