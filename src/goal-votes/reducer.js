@@ -6,7 +6,12 @@
 */
 import _ from "lodash";
 
-import { addVoteOfGoal, fetchGoalVotes, archiveVoteOfGoal } from "./actions";
+import {
+  addVoteOfGoal,
+  fetchGoalVotes,
+  archiveVoteOfGoal,
+  updateGoalVote
+} from "./actions";
 import { archiveGoal } from "../goals/actions";
 
 const defaultState = {};
@@ -15,6 +20,14 @@ export default function(state = defaultState, action) {
   const { payload, type } = action;
   switch (type) {
     case addVoteOfGoal.success().type:
+      return {
+        ...state,
+        [payload.address]: {
+          ...payload.entry,
+          address: payload.address
+        }
+      };
+    case updateGoalVote.success().type:
       return {
         ...state,
         [payload.address]: {

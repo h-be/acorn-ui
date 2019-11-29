@@ -26,5 +26,10 @@ const fetchGoalVotes = createHolochainZomeCallAsyncAction(
   ZOME_NAME,
   "fetch_goal_votes"
 );
+const updateGoalVote = createHolochainZomeCallAsyncAction(
+  DEVELOPMENT_INSTANCE_NAME,
+  ZOME_NAME,
+  "update_goal_vote"
+);
 
-export { addVoteOfGoal, fetchGoalVotes, archiveVoteOfGoal };
+export { addVoteOfGoal, fetchGoalVotes, archiveVoteOfGoal, updateGoalVote };
