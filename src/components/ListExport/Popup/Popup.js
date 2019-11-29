@@ -1,5 +1,5 @@
 import React from 'react'
-import './Popup.css'
+import './popup.css'
 import Icon from '../../Icon'
 import Button from '../../Button/Button'
 
