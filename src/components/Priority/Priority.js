@@ -101,6 +101,7 @@ function Priority({
   whoami,
   updateGoalVote,
   votes,
+  archiveVoteOfGoal,
 }) {
   const classes = useStyles()
   let averageValues = [0, 0, 0, 0]
@@ -132,12 +133,9 @@ function Priority({
     Effort: 50,
   })
   const [openMyVote, setOpenMyVote] = useState(false)
-  const handleOnChange = (sliderType) => (e, value) => {
+  const handleOnChange = sliderType => (e, value) => {
     if (!openMyVote) return
-    if (
-      values[sliderType] !==
-      value
-    ) {
+    if (values[sliderType] !== value) {
       setValues({
         ...values,
         [sliderType]: value,
@@ -167,34 +165,37 @@ function Priority({
     }
   }, [values])
   const priorityItems = priorityItemVars.map((priorityItem, index) => {
-    return <div key={index} className='priority_item'>
-      <Icon
-        className='priority_item_icon'
-        name={priorityItem.priorityIcon}
-        size='small'
-      />
-      <div className='priority_item_title'>
-        {priorityItem.priorityItemTitle}
+    return (
+      <div key={index} className='priority_item'>
+        <Icon
+          className='priority_item_icon'
+          name={priorityItem.priorityIcon}
+          size='small'
+        />
+        <div className='priority_item_title'>
+          {priorityItem.priorityItemTitle}
+        </div>
+        <Slider
+          onChangeCommitted={handleOnChange(priorityItem.priorityItemTitle)}
+          defaultValue={averageValues[index]}
+          getAriaValueText={valuetext}
+          aria-labelledby='discrete-slider-custom'
+          step={25}
+          disabled={!openMyVote}
+          valueLabelDisplay='auto'
+          marks={index === 0 ? marksWithLabels : marksWithoutLabels}
+          classes={{
+            root: classes.root, // class name, e.g. `classes-nesting-root-x`
+            label: classes.label, // class name, e.g. `classes-nesting-label-x`
+            rail: classes.rail,
+            mark: classes.mark,
+            markLabel: classes.markLabel,
+            offset: classes.offset,
+            track: classes.track,
+          }}
+        />
       </div>
-      <Slider
-        onChangeCommitted={handleOnChange(priorityItem.priorityItemTitle)}
-        defaultValue={averageValues[index]}
-        getAriaValueText={valuetext}
-        aria-labelledby='discrete-slider-custom'
-        step={25}
-        valueLabelDisplay='auto'
-        marks={index === 0 ? marksWithLabels : marksWithoutLabels}
-        classes={{
-          root: classes.root, // class name, e.g. `classes-nesting-root-x`
-          label: classes.label, // class name, e.g. `classes-nesting-label-x`
-          rail: classes.rail,
-          mark: classes.mark,
-          markLabel: classes.markLabel,
-          offset: classes.offset,
-          track: classes.track,
-        }}
-      />
-    </div>
+    )
   })
 
   // aggregated_priority_title
@@ -207,7 +208,13 @@ function Priority({
   } else {
     aggClassName += ' active'
   }
-
+  const handleArchive = () => {
+    setOpenMyVote(false)
+    const vote = votes.find(value => {
+      return value.agent_address === whoami.entry.address
+    })
+    archiveVoteOfGoal(vote.address).then(value => {})
+  }
   return (
     <div className='priority_wrapper vertical_action_overlay'>
       <Icon
@@ -228,7 +235,9 @@ function Priority({
       {/* TODO : Ensure aggregated priority items are display ONLY */}
       {!openMyVote && (
         <div className='aggregated_priority'>
-          <div className='aggregated_priority_inputs'>Based on 5 inputs</div>
+          <div className='aggregated_priority_inputs'>
+            Based on {votes.length} inputs
+          </div>
           {priorityItems}
           <div className='priority_wrapper_button'>
             <Button
@@ -253,7 +262,7 @@ function Priority({
               size='small'
               color='purple'
               text='Remove My Input'
-              onClick={() => setOpenMyVote(false)}
+              onClick={handleArchive}
             />
           </div>
           <div className='my_vote_info priority_wrapper_footer'>
@@ -288,6 +297,9 @@ function mapDispatchToProps(dispatch) {
     },
     updateGoalVote: (goal_vote, address) => {
       return dispatch(updateGoalVote.create({ goal_vote, address }))
+    },
+    archiveVoteOfGoal: address => {
+      return dispatch(archiveVoteOfGoal.create({ address }))
     },
   }
 }
