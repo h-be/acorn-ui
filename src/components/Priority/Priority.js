@@ -182,7 +182,7 @@ function Priority({
       </div>
       <Slider
         key={index}
-        onChange={hadleOnChange}
+        onChange={handleOnChange}
         defaultValue={50}
         getAriaValueText={valuetext}
         aria-labelledby="discrete-slider-custom"
