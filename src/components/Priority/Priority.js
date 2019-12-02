@@ -99,7 +99,6 @@ function Priority({
   onClose,
   createGoalVote,
   whoami,
-  fetchGoalVotes,
   updateGoalVote,
   votes,
 }) {
@@ -133,15 +132,15 @@ function Priority({
     Effort: 50,
   })
   const [openMyVote, setOpenMyVote] = useState(false)
-  const handleOnChange = (e, value) => {
+  const handleOnChange = (sliderType) => (e, value) => {
     if (!openMyVote) return
     if (
-      values[e.target.parentElement.parentElement.children[1].textContent] !==
+      values[sliderType] !==
       value
     ) {
       setValues({
         ...values,
-        [e.target.parentElement.parentElement.children[1].textContent]: value,
+        [sliderType]: value,
       })
     }
   }
@@ -167,8 +166,8 @@ function Priority({
       createGoalVote({ goal_vote }).then(value => {})
     }
   }, [values])
-  const priorityItems = priorityItemVars.map((priorityItem, index) => (
-    <div key={index} className='priority_item'>
+  const priorityItems = priorityItemVars.map((priorityItem, index) => {
+    return <div key={index} className='priority_item'>
       <Icon
         className='priority_item_icon'
         name={priorityItem.priorityIcon}
@@ -178,7 +177,7 @@ function Priority({
         {priorityItem.priorityItemTitle}
       </div>
       <Slider
-        onChangeCommitted={handleOnChange}
+        onChangeCommitted={handleOnChange(priorityItem.priorityItemTitle)}
         defaultValue={averageValues[index]}
         getAriaValueText={valuetext}
         aria-labelledby='discrete-slider-custom'
@@ -196,7 +195,7 @@ function Priority({
         }}
       />
     </div>
-  ))
+  })
 
   // aggregated_priority_title
   // my_vote_title
@@ -289,9 +288,6 @@ function mapDispatchToProps(dispatch) {
     },
     updateGoalVote: (goal_vote, address) => {
       return dispatch(updateGoalVote.create({ goal_vote, address }))
-    },
-    fetchGoalVotes: () => {
-      return dispatch(fetchGoalVotes.create({}))
     },
   }
 }
