@@ -118,7 +118,7 @@ function Priority({
     { priorityIcon: 'impact.svg', priorityItemTitle: 'Impact' },
     { priorityIcon: 'effort.png', priorityItemTitle: 'Effort' },
   ]
-  const [value, setValue] = useState({
+  const [values, setValues] = useState({
     Urgency: 50,
     Importance: 50,
     Impact: 50,
@@ -126,17 +126,18 @@ function Priority({
   })
   const [openMyVote, setOpenMyVote] = useState(false)
   const handleOnChange = (e, value) => {
+    console.log('value', value)
     if (!openMyVote) return
     if (
-      value[e.target.parentElement.parentElement.children[1].textContent] !==
+      values[e.target.parentElement.parentElement.children[1].textContent] !==
       parseInt(e.target.children[0].children[0].children[0].textContent)
     ) {
       console.log(
         'object',
         e.target.children[0].children[0].children[0].textContent
       )
-      setValue({
-        ...value,
+      setValues({
+        ...values,
         [e.target.parentElement.parentElement.children[1]
           .textContent]: parseInt(
           e.target.children[0].children[0].children[0].textContent
@@ -148,10 +149,10 @@ function Priority({
     if (!openMyVote) return
     let goal_vote = {
       goal_address: goalAddress,
-      urgency: value['Urgency'] / 100,
-      importance: value['Importance'] / 100,
-      impact: value['Impact'] / 100,
-      effort: value['Effort'] / 100,
+      urgency: values['Urgency'] / 100,
+      importance: values['Importance'] / 100,
+      impact: values['Impact'] / 100,
+      effort: values['Effort'] / 100,
       agent_address: whoami.entry.address,
       unix_timestamp: Date.now(),
     }
@@ -177,7 +178,7 @@ function Priority({
         console.log('create', value)
       })
     }
-  }, [value])
+  }, [values])
   const priorityItems = priorityItemVars.map((priorityItem, index) => (
     <div key={index} className='priority_item'>
       <Icon
