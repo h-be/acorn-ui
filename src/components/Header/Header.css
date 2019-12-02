@@ -9,6 +9,7 @@
   display: flex;
   justify-content: space-between;
   max-height: 50px;
+  top: 0;
 }
 
 .top-left-panel {
@@ -64,7 +65,7 @@
   text-align: left;
   letter-spacing: 0;
   color: black;
-  margin-top: -13px;
+  margin-top: -12px;
 }
 
 .canvas-name {
@@ -93,6 +94,7 @@
   font-family: 'quebecsemibold', Helvetica, Sans-Serif;
   font-weight: normal;
   font-size: 28px;
+  margin-top: -12px;
 }
 
 .logo h3 {

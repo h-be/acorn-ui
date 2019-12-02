@@ -33,6 +33,8 @@ function ProfileEditForm({ onSubmit, onClose, agentAddress, whoami, titleText, s
 
   const usernameHelp = "Choose something easy for your teammates to use and recall. Avoid space and @."
 
+  const avatarShow = avatarUrl || "img/avatar_placeholder.png"
+
   return <div className="profile_edit_form">
     {canClose && <Icon onClick={onClose} name="x_a3a3a3.svg" size="small" className="close_icon" />}
     <div className="profile_edit_form_title"><h1>{titleText}</h1>
@@ -50,7 +52,7 @@ function ProfileEditForm({ onSubmit, onClose, agentAddress, whoami, titleText, s
       <div className="row">
         <ValidatingFormInput value={avatarUrl} onChange={setAvatarUrl} label="Profile Picture" placeholder="Paste in your profile picture URL here" />
         <div className="profile_edit_form_avatar">
-          <Avatar avatar_url={avatarUrl} large />
+          <Avatar avatar_url={avatarShow} large />
         </div>
       </div>
       <div className="row">
