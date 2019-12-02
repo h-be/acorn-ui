@@ -97,7 +97,6 @@ const marksWithoutLabels = [
     label: '',
   },
 ]
-
 function valuetext(value) {
   return `${value}%`
 }
@@ -175,6 +174,7 @@ function Priority({
   const priorityItems = priorityItemVars.map((priorityItem, index) => (
     <div key={index} className='priority_item'>
       <Icon
+        key={index}
         className='priority_item_icon'
         name={priorityItem.priorityIcon}
         size='small'
