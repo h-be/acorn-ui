@@ -20,7 +20,7 @@ function ExpandedViewMode({ goalAddress, goal, onArchiveClick, updateGoal, onClo
         <Icon onClick={onClose} name="x_a3a3a3.svg" size="small" className="close_icon" />
         <ExpandedViewModeHeader goalAddress={goalAddress} goal={goal} updateGoal={updateGoal} />
         <div className="expanded_view_main">
-          <ExpandedViewModeContent goal={goal} />
+          <ExpandedViewModeContent goalAddress={goalAddress} goal={goal} updateGoal={updateGoal}/>
           <RightMenu />
         </div>
         <ExpandedViewModeFooter />
