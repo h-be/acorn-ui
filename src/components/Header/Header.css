@@ -30,10 +30,8 @@
   align-items: center;
 }
 
-.current-canvas {
+.current-canvas-wrapper {
   margin-left: 5px;
-  padding-right: 20px;
-  padding-left: 20px;
   background: rgba(255, 255, 255, 0.9) 0% 0% no-repeat padding-box;
   border-radius: 10px;
   display: -webkit-flex;
@@ -44,7 +42,13 @@
   align-items: center;
 }
 
-.current-canvas img {
+.current-canvas-content {
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.current-canvas-content img {
   margin-right: 10px;
 }
 
@@ -67,7 +71,21 @@
   font-family: 'quebecregular', Helvetica, Sans-Serif;
   font-weight: normal;
   font-size: 18px;
-  margin-bottom: 23px;
+  margin-bottom: 7px;
+  margin-right: 20px;
+}
+
+.divider-line {
+  border-right: 1px solid #D9D9D9;
+  height: 24px;
+  margin-right: 16px;
+}
+
+.logo p {
+  text-align: left;
+  letter-spacing: 0;
+  color: black;
+  margin-top: -10px;
 }
 
 .logo-name {
@@ -218,7 +236,7 @@
 }
 
 .profile-wrapper {
-  margin-top: 70px;
+  margin-top: 62px;
   margin-right: 10px;
   float: right;
   border-radius: 14px;
@@ -268,7 +286,7 @@ button.gray img {
 }
 
 .user-status-wrapper {
-  margin-top: 70px;
+  margin-top: 62px;
   margin-right: 10px;
   float: right;
   border-radius: 14px;
@@ -279,8 +297,8 @@ button.gray img {
   flex-direction: column;
 }
 .export-wrapper {
-  margin-top: 70px;
-  margin-left: 300px;
+  margin-top: 62px;
+  margin-left: 277px;
   float: left;
   border-radius: 14px;
   background-color: #FFFFFF;
@@ -290,10 +308,12 @@ button.gray img {
   flex-direction: column;
 }
 .export-wrapper a {
-  padding: 10px 25px;
+  padding: 12px 25px;
   color: black;
   outline: none;
-
+  font-family: 'rennerbook', Helvetica, sans-serif;
+  font-weight: normal;
+  font-size: 14px;
   background: none;
   border: none;
   text-decoration: none;
@@ -301,17 +321,23 @@ button.gray img {
   display: flex;
   align-items: center;
 }
-.hover-display{
+
+.export-hover-display {
   margin-top: 60px;
-  margin-left: 305px;
+  margin-left: 321px;
   float: left;
   border-radius: 5px;
   color: white;
   background-color: #5F65FF;
-  padding: 6px 6px;
+  padding: 3px 6px 6px 6px;
   box-shadow: 0px 0px 6px #00000029;
   display: flex;
   flex-direction: column;
+  font-family: 'quebecsemibold', Helvetica, sans-serif;
+  font-weight: normal;
+  font-size: 10px;
+  z-index: 100;
+  
 }
 .export-wrapper a:hover {
   background: #F4F4F4 none repeat scroll 0% 0%;
