@@ -82,6 +82,9 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
+
+  console.log (state.whoami)
+  
   return {
     whoami: state.whoami,
     agentAddress: state.agentAddress,
