@@ -8,6 +8,8 @@ import {
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import IndentedTreeView from '../components/IndentedTreeView/IndentedTreeView'
+
 import './PriorityView.css'
 import PriorityQuadrant from '../components/PriorityQuadrant/PriorityQuadrant'
 
@@ -49,12 +51,7 @@ function PriorityView({ goalTree, goalLists }) {
   ]
 
   return <div className="priority-view-wrapper">
-    <div className="indented-view-wrapper">
-      indented tree view
-      {goalTree.map((goal) => {
-        return <p>{goal.content}</p>
-      })}
-    </div>
+    <IndentedTreeView goalTree={goalTree} />
     <div className="priority-menu-wrapper">
       {priorityMenuItems.map(([menuTitle, menuSlug]) => {
         return <PriorityMenuItem key={menuSlug} title={menuTitle} slug={menuSlug} />
@@ -63,7 +60,7 @@ function PriorityView({ goalTree, goalLists }) {
     <Switch>
       <Route exact path={priorityMenuItems[0][1]} render={() => <UrgencyImportanceQuadrants goalLists={goalLists} />} />
     </Switch>
-  </div>
+  </div >
 }
 
 PriorityView.propTypes = {
