@@ -18,8 +18,6 @@ function Footer() {
           <Icon name="timeline_898989.svg" size="view-mode" />
         </div>
       </div>
-
-
     </div>
   )
 }
