@@ -130,18 +130,11 @@ function Priority({
     if (!openMyVote) return
     if (
       values[e.target.parentElement.parentElement.children[1].textContent] !==
-      parseInt(e.target.children[0].children[0].children[0].textContent)
+      value
     ) {
-      console.log(
-        'object',
-        e.target.children[0].children[0].children[0].textContent
-      )
       setValues({
         ...values,
-        [e.target.parentElement.parentElement.children[1]
-          .textContent]: parseInt(
-          e.target.children[0].children[0].children[0].textContent
-        ),
+        [e.target.parentElement.parentElement.children[1].textContent]: value,
       })
     }
   }
