@@ -23,9 +23,6 @@ const useStyles = makeStyles({
     margin: '10px 20px 10px 20px',
     width: '150px',
   },
-  label: {
-    textTransform: 'capitalize',
-  },
   rail: {
     height: 4,
     borderRadius: 10,
@@ -42,9 +39,6 @@ const useStyles = makeStyles({
     fontSize: '12px',
     fontFamily: '"rennerbook", "Helvetica", "Arial", "sans-serif"',
     lineHeight: '1',
-  },
-  offset: {
-    fontFamily: '"rennerbook", "Helvetica", "Arial", "sans-serif"',
   },
   track: {
     height: 4,
@@ -176,16 +170,14 @@ function Priority({
   const priorityItems = priorityItemVars.map((priorityItem, index) => (
     <div key={index} className='priority_item'>
       <Icon
-        key={index}
         className='priority_item_icon'
         name={priorityItem.priorityIcon}
         size='small'
       />
-      <div key={index} className='priority_item_title'>
+      <div className='priority_item_title'>
         {priorityItem.priorityItemTitle}
       </div>
       <Slider
-        key={index}
         onChangeCommitted={handleOnChange}
         defaultValue={averageValues[index]}
         getAriaValueText={valuetext}
