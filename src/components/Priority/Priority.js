@@ -110,6 +110,21 @@ function Priority({
   votes,
 }) {
   const classes = useStyles()
+  let averageValues = [0, 0, 0, 0]
+  if (votes.length > 0) {
+    votes.forEach(element => {
+      averageValues[0] += element.urgency * 100
+      averageValues[1] += element.importance * 100
+      averageValues[2] += element.impact * 100
+      averageValues[3] += element.effort * 100
+    })
+    averageValues[0] /= votes.length
+    averageValues[1] /= votes.length
+    averageValues[2] /= votes.length
+    averageValues[3] /= votes.length
+  } else {
+    averageValues = [50, 50, 50, 50]
+  }
 
   const priorityItemVars = [
     { priorityIcon: 'urgency.svg', priorityItemTitle: 'Urgency' },
@@ -125,7 +140,6 @@ function Priority({
   })
   const [openMyVote, setOpenMyVote] = useState(false)
   const handleOnChange = (e, value) => {
-    console.log('value', value)
     if (!openMyVote) return
     if (
       values[e.target.parentElement.parentElement.children[1].textContent] !==
@@ -148,27 +162,15 @@ function Priority({
       agent_address: whoami.entry.address,
       unix_timestamp: Date.now(),
     }
-    const addresses = Object.keys(votes)
-      .map(value => {
-        return {
-          address: value,
-          bool: votes[value].goal_address === goalAddress,
-        }
-      })
-      .filter(value => {
-        return value.bool
-      })
 
-    const voteAdrress = addresses.find(v => {
-      return votes[v.address].agent_address === whoami.entry.address
+    const vote = votes.find(value => {
+      return value.agent_address === whoami.entry.address
     })
 
-    if (addresses.length > 0 && voteAdrress !== undefined) {
-      updateGoalVote(goal_vote, voteAdrress.address).then(value => {})
+    if (votes.length > 0 && vote !== undefined) {
+      updateGoalVote(goal_vote, vote.address).then(value => {})
     } else {
-      createGoalVote({ goal_vote }).then(value => {
-        console.log('create', value)
-      })
+      createGoalVote({ goal_vote }).then(value => {})
     }
   }, [values])
   const priorityItems = priorityItemVars.map((priorityItem, index) => (
@@ -184,8 +186,8 @@ function Priority({
       </div>
       <Slider
         key={index}
-        onChange={handleOnChange}
-        defaultValue={50}
+        onChangeCommitted={handleOnChange}
+        defaultValue={averageValues[index]}
         getAriaValueText={valuetext}
         aria-labelledby='discrete-slider-custom'
         step={25}
@@ -277,10 +279,14 @@ Priority.propTypes = {
 }
 
 function mapStateToProps(state) {
+  const goalAddress = state.ui.goalForm.editAddress
+  const votes = Object.values(state.goalVotes).filter(
+    gv => gv.goal_address === goalAddress
+  )
   return {
     whoami: state.whoami,
-    goalAddress: state.ui.goalForm.editAddress,
-    votes: state.goalVotes,
+    goalAddress,
+    votes,
   }
 }
 
