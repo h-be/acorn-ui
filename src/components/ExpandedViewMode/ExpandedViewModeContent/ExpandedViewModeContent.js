@@ -1,10 +1,48 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './ExpandedViewModeContent.css'
 
-export default function ExpandedViewModeContent({ goal }) {
+export default function ExpandedViewModeContent({ goalAddress, goal, updateGoal }) {
+    
+    const [editTitle, setEditTitle] = useState(false)
+    const [content, setContent] = useState('')
+    
+    const updateContent = () => {
+        if(content !== ''){
+            updateGoal({
+              content,
+              user_hash: goal.user_hash,
+              unix_timestamp: Date.now(),
+              hierarchy: goal.hierarchy,
+              status: goal.status
+            }, goalAddress)
+        }
+        setEditTitle(false)
+    }
+
+    const handlekeyPress = ({key}) => {
+        if(key === 'Enter'){
+            updateContent()
+        }
+    }
+
+    const handleOnChange = ({target}) => {
+        setContent(target.value)
+    }
     return (
         <div className="expanded_view_content">
-            <div className="expanded_view_title">{ goal.content }</div>
+            <div className="expanded_view_title" onDoubleClick={()=>{ setEditTitle(true) }}>
+                {
+                    editTitle ?
+                        <input type="text"
+                            type="text"
+                            defaultValue={goal.content}
+                            onBlur={updateContent}
+                            onChange={handleOnChange}
+                            onKeyPress={handlekeyPress}
+                        />
+                    : goal.content
+                }
+            </div>
             <div className="expanded_view_tags">tags</div>
             <div className="squirrels_timeframe_row">
                 <div className="expanded_view_squirrels">squirrels</div>
