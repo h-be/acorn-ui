@@ -37,6 +37,8 @@
   outline: none;
   border: 0;
   resize: none;
+  font-family: 'rennerbook', Helvetica, Sans-Serif;
+  font-size: 16px;
 }
 .expanded_view_squirrels {
   display: inline-block;
