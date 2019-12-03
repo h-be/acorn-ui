@@ -1,4 +1,3 @@
-
 function SelectBox(ctx, x, y, w, h, radius, color, stroke, strokeWidth) {
   const r = x + w
   const b = y + h

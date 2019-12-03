@@ -13,64 +13,64 @@ import {
   SET_GOALS,
   UNSET_GOALS,
   SET_SIZE,
-  UNSET_SIZE
+  UNSET_SIZE,
 } from './actions'
 
 const defaultState = {
   mousedown: false,
   coordinate: {
     x: 0,
-    y: 0
+    y: 0,
   },
   size: {
     w: 0,
-    h: 0
+    h: 0,
   },
-  goalsAddresses: null
+  goalsAddresses: null,
 }
 
-export default function (state = defaultState, action) {
+export default function(state = defaultState, action) {
   const { coordinate, type, goalsAddresses, size } = action
   switch (type) {
     case SET_MOUSEDOWN:
       return {
         ...state,
-        mousedown: true
+        mousedown: true,
       }
     case UNSET_MOUSEDOWN:
       return {
         ...state,
-        mousedown: false
+        mousedown: false,
       }
     case SET_COORDINATE:
       return {
         ...state,
-        coordinate: coordinate
+        coordinate: coordinate,
       }
     case UNSET_COORDINATE:
       return {
         ...state,
-        coordinate: { x: 0, y: 0 }
+        coordinate: { x: 0, y: 0 },
       }
     case SET_GOALS:
       return {
         ...state,
-        goalsAddresses
+        goalsAddresses,
       }
     case UNSET_GOALS:
       return {
         ...state,
-        goalsAddresses: null
+        goalsAddresses: null,
       }
     case SET_SIZE:
       return {
         ...state,
-        size
+        size,
       }
     case UNSET_SIZE:
       return {
         ...state,
-        size: { w: 0, h: 0 }
+        size: { w: 0, h: 0 },
       }
     default:
       return state

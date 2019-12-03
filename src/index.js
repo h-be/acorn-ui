@@ -15,7 +15,10 @@ import { connect } from '@holochain/hc-web-client'
 import { holochainMiddleware } from '@holochain/hc-redux-middleware'
 
 // Local Imports
-import { DEFAULT_HOLOCHAIN_PORT, DEFAULT_HOLOCHAIN_HOST } from './holochainConfig'
+import {
+  DEFAULT_HOLOCHAIN_PORT,
+  DEFAULT_HOLOCHAIN_HOST,
+} from './holochainConfig'
 import acorn from './reducer'
 import { fetchAgents } from './agents/actions'
 import { fetchGoals } from './goals/actions'
@@ -31,7 +34,8 @@ import App from './routes/App'
 const websocketUrl = `ws://${DEFAULT_HOLOCHAIN_HOST}:${DEFAULT_HOLOCHAIN_PORT}`
 // attempts to form a websocket (two way messages) connection to a running
 // Holochain Conductor
-const connectOpts = process.env.NODE_ENV === 'development' ? { url: websocketUrl } : undefined
+const connectOpts =
+  process.env.NODE_ENV === 'development' ? { url: websocketUrl } : undefined
 const hcWc = connect(connectOpts)
 
 // holochainMiddleware takes in the hc-web-client websocket connection
@@ -43,9 +47,10 @@ const middleware = [holochainMiddleware(hcWc)]
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 // acorn is the top-level reducer. the second argument is custom Holochain middleware
-let store = createStore(acorn, /* preloadedState, */ composeEnhancers(
-  applyMiddleware(...middleware)
-))
+let store = createStore(
+  acorn,
+  /* preloadedState, */ composeEnhancers(applyMiddleware(...middleware))
+)
 
 // dispatch fetch goals, and fetch edges functions to pull in all the existing goals and edges
 // on first render
@@ -55,7 +60,6 @@ function fetchChangingData() {
   store.dispatch(fetchGoals.create({}))
   store.dispatch(fetchGoalMembers.create({}))
   store.dispatch(fetchGoalVotes.create({}))
-
 }
 fetchChangingData()
 // refetch this data every 3 seconds

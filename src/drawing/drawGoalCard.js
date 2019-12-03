@@ -10,15 +10,11 @@ import {
   fontSizeInt,
   lineSpacing,
   getGoalHeight,
-  getLinesForParagraphs
+  getLinesForParagraphs,
 } from './dimensions'
 
-import {
-  colors
-} from '../styles'
-import {
-  getOrSetImageForUrl
-} from './imageCache'
+import { colors } from '../styles'
+import { getOrSetImageForUrl } from './imageCache'
 
 function roundRect(ctx, x, y, w, h, radius, color, stroke, strokeWidth) {
   const r = x + w
@@ -45,8 +41,16 @@ function roundRect(ctx, x, y, w, h, radius, color, stroke, strokeWidth) {
 }
 
 // render a goal card
-export default function render(goal, members, { x, y }, isEditing, editText, isSelected, isHovered, ctx) {
-
+export default function render(
+  goal,
+  members,
+  { x, y },
+  isEditing,
+  editText,
+  isSelected,
+  isHovered,
+  ctx
+) {
   // use the editText for measuring,
   // even though it's not getting drawn on the canvas
   const text = isEditing ? editText : goal.content
@@ -69,18 +73,57 @@ export default function render(goal, members, { x, y }, isEditing, editText, isS
   const selectedOutlineWidth = '4'
 
   // background
-  roundRect(ctx, x + borderWidth, y + borderWidth, goalWidth - twiceBorder, goalHeight - twiceBorder, cornerRadius - 1, backgroundColor, false)
+  roundRect(
+    ctx,
+    x + borderWidth,
+    y + borderWidth,
+    goalWidth - twiceBorder,
+    goalHeight - twiceBorder,
+    cornerRadius - 1,
+    backgroundColor,
+    false
+  )
   // border
-  roundRect(ctx, x + halfBorder, y + halfBorder, goalWidth - borderWidth, goalHeight - borderWidth, cornerRadius, borderColor, true, '2')
+  roundRect(
+    ctx,
+    x + halfBorder,
+    y + halfBorder,
+    goalWidth - borderWidth,
+    goalHeight - borderWidth,
+    cornerRadius,
+    borderColor,
+    true,
+    '2'
+  )
 
   // selection outline
   if (isSelected) {
-    let xStart = x - selectedOutlineMargin + 1 - halfBorder - (selectedOutlineWidth / 2)
-    let yStart = y - selectedOutlineMargin + 1 - halfBorder - (selectedOutlineWidth / 2)
-    let w = goalWidth + 2 * (selectedOutlineMargin - 1) + borderWidth + Number(selectedOutlineWidth)
-    let h = goalHeight + 2 * (selectedOutlineMargin - 1) + borderWidth + Number(selectedOutlineWidth)
-    let cr = cornerRadius + (selectedOutlineMargin * 2) + 2
-    roundRect(ctx, xStart, yStart, w, h, cr, selectedColor, true, selectedOutlineWidth)
+    let xStart =
+      x - selectedOutlineMargin + 1 - halfBorder - selectedOutlineWidth / 2
+    let yStart =
+      y - selectedOutlineMargin + 1 - halfBorder - selectedOutlineWidth / 2
+    let w =
+      goalWidth +
+      2 * (selectedOutlineMargin - 1) +
+      borderWidth +
+      Number(selectedOutlineWidth)
+    let h =
+      goalHeight +
+      2 * (selectedOutlineMargin - 1) +
+      borderWidth +
+      Number(selectedOutlineWidth)
+    let cr = cornerRadius + selectedOutlineMargin * 2 + 2
+    roundRect(
+      ctx,
+      xStart,
+      yStart,
+      w,
+      h,
+      cr,
+      selectedColor,
+      true,
+      selectedOutlineWidth
+    )
   }
 
   // render text, if not in edit mode
@@ -95,7 +138,11 @@ export default function render(goal, members, { x, y }, isEditing, editText, isS
   }
 
   members.forEach((member, index) => {
-    const img = getOrSetImageForUrl(member.avatar_url, avatarWidth, avatarHeight)
+    const img = getOrSetImageForUrl(
+      member.avatar_url,
+      avatarWidth,
+      avatarHeight
+    )
     // assume that it will be drawn the next time 'render' is called
     // if it isn't already set
     if (!img) return

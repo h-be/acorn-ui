@@ -15,25 +15,25 @@ const UNSET_SHIFT_KEYDOWN = 'UNSET_SHIFT_KEYDOWN'
 
 function setGKeyDown() {
   return {
-   type: SET_G_KEYDOWN
- }
+    type: SET_G_KEYDOWN,
+  }
 }
 
 function unsetGKeyDown() {
   return {
-   type: UNSET_G_KEYDOWN
- }
+    type: UNSET_G_KEYDOWN,
+  }
 }
 
 function setShiftKeyDown() {
-   return {
-    type: SET_SHIFT_KEYDOWN
+  return {
+    type: SET_SHIFT_KEYDOWN,
   }
 }
 
 function unsetShiftKeyDown() {
-   return {
-    type: UNSET_SHIFT_KEYDOWN
+  return {
+    type: UNSET_SHIFT_KEYDOWN,
   }
 }
 
@@ -45,5 +45,5 @@ export {
   setGKeyDown,
   unsetGKeyDown,
   setShiftKeyDown,
-  unsetShiftKeyDown
+  unsetShiftKeyDown,
 }
