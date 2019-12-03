@@ -22,6 +22,7 @@ function MultiEditBar({ selectedGoals, updateGoal }) {
           user_hash: goal.user_hash,
           unix_timestamp: Date.now(),
           hierarchy: goal.hierarchy,
+          description: '',
           status,
         },
         goal.address
