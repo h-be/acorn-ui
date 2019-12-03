@@ -44,13 +44,7 @@ export default function(state = defaultState, action) {
         };
       });
       // mapped is [ { key: val, address: 'QmAsdFg' }, ...]
-      const newVals = _.keyBy(mapped, "address");
-      // combines pre-existing values of the object with new values from
-      // Holochain fetch
-      return {
-        ...state,
-        ...newVals
-      };
+      return _.keyBy(mapped, "address");
     case archiveVoteOfGoal.success().type:
       return _.pickBy(state, (value, key) => key !== payload);
     case archiveGoal.success().type:
