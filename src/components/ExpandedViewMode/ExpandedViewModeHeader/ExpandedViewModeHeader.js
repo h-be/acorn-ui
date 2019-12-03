@@ -22,6 +22,7 @@ export default function ExpandedViewModeHeader({
         user_hash: goal.user_hash,
         unix_timestamp: Date.now(),
         hierarchy: goal.hierarchy,
+        description: '',
         status,
       },
       goalAddress
