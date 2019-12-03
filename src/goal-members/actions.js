@@ -7,19 +7,24 @@
 
 import { createHolochainZomeCallAsyncAction } from '@holochain/hc-redux-middleware'
 
-import {
-  DEVELOPMENT_INSTANCE_NAME,
-  ZOME_NAME
-} from '../holochainConfig'
+import { DEVELOPMENT_INSTANCE_NAME, ZOME_NAME } from '../holochainConfig'
 
 /* action creator functions */
 
-const addMemberOfGoal = createHolochainZomeCallAsyncAction(DEVELOPMENT_INSTANCE_NAME, ZOME_NAME, 'add_member_of_goal')
-const archiveMemberOfGoal = createHolochainZomeCallAsyncAction(DEVELOPMENT_INSTANCE_NAME, ZOME_NAME, 'archive_member_of_goal')
-const fetchGoalMembers = createHolochainZomeCallAsyncAction(DEVELOPMENT_INSTANCE_NAME, ZOME_NAME, 'fetch_goal_members')
+const addMemberOfGoal = createHolochainZomeCallAsyncAction(
+  DEVELOPMENT_INSTANCE_NAME,
+  ZOME_NAME,
+  'add_member_of_goal'
+)
+const archiveMemberOfGoal = createHolochainZomeCallAsyncAction(
+  DEVELOPMENT_INSTANCE_NAME,
+  ZOME_NAME,
+  'archive_member_of_goal'
+)
+const fetchGoalMembers = createHolochainZomeCallAsyncAction(
+  DEVELOPMENT_INSTANCE_NAME,
+  ZOME_NAME,
+  'fetch_goal_members'
+)
 
-export {
-  addMemberOfGoal,
-  fetchGoalMembers,
-  archiveMemberOfGoal
-}
+export { addMemberOfGoal, fetchGoalMembers, archiveMemberOfGoal }

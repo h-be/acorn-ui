@@ -5,31 +5,31 @@
   that can be taken within that feature.
 */
 
-import { createHolochainZomeCallAsyncAction } from "@holochain/hc-redux-middleware";
+import { createHolochainZomeCallAsyncAction } from '@holochain/hc-redux-middleware'
 
-import { DEVELOPMENT_INSTANCE_NAME, ZOME_NAME } from "../holochainConfig";
+import { DEVELOPMENT_INSTANCE_NAME, ZOME_NAME } from '../holochainConfig'
 
 /* action creator functions */
 
 const addVoteOfGoal = createHolochainZomeCallAsyncAction(
   DEVELOPMENT_INSTANCE_NAME,
   ZOME_NAME,
-  "add_vote_of_goal"
-);
+  'add_vote_of_goal'
+)
 const archiveVoteOfGoal = createHolochainZomeCallAsyncAction(
   DEVELOPMENT_INSTANCE_NAME,
   ZOME_NAME,
-  "archive_vote_of_goal"
-);
+  'archive_vote_of_goal'
+)
 const fetchGoalVotes = createHolochainZomeCallAsyncAction(
   DEVELOPMENT_INSTANCE_NAME,
   ZOME_NAME,
-  "fetch_goal_votes"
-);
+  'fetch_goal_votes'
+)
 const updateGoalVote = createHolochainZomeCallAsyncAction(
   DEVELOPMENT_INSTANCE_NAME,
   ZOME_NAME,
-  "update_goal_vote"
-);
+  'update_goal_vote'
+)
 
-export { addVoteOfGoal, fetchGoalVotes, archiveVoteOfGoal, updateGoalVote };
+export { addVoteOfGoal, fetchGoalVotes, archiveVoteOfGoal, updateGoalVote }

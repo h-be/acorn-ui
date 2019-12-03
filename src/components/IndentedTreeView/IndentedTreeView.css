@@ -1,0 +1,23 @@
+.indented-view-search {
+  display: flex;
+  align-items: center;
+  padding: 5px 8px;
+  border-radius: 10px;
+  background: #ffffff;
+  width: 183px;
+}
+
+.indented-view-search input {
+  font-size: 12px;
+  line-height: 18px;
+  color: #4d4d4d;
+  border: 0;
+  outline: 0;
+  padding: 2px;
+  margin-left: 8px;
+  font-family: 'rennerbook', Helvetica, Sans-Serif;
+}
+
+.indented-view-search input:placeholder {
+  color: #A3A3A3;
+}

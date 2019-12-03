@@ -10,7 +10,7 @@ import { fetchAgents } from './actions'
 
 const defaultState = []
 
-export default function (state = defaultState, action) {
+export default function(state = defaultState, action) {
   const { payload, type } = action
   switch (type) {
     case fetchAgents.success().type:
