@@ -14,19 +14,14 @@ const UNHOVER_GOAL = 'UNHOVER_GOAL'
 function hoverGoal(address) {
   return {
     type: HOVER_GOAL,
-    payload: address
+    payload: address,
   }
 }
 
 function unhoverGoal() {
   return {
-    type: UNHOVER_GOAL
+    type: UNHOVER_GOAL,
   }
 }
 
-export {
-  HOVER_GOAL,
-  UNHOVER_GOAL,
-  hoverGoal,
-  unhoverGoal
-}
+export { HOVER_GOAL, UNHOVER_GOAL, hoverGoal, unhoverGoal }

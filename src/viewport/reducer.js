@@ -5,22 +5,20 @@
   a new state.
 */
 import {
-  coordsPageToCanvas, coordsCanvasToPage
+  coordsPageToCanvas,
+  coordsCanvasToPage,
 } from '../drawing/coordinateSystems'
-import {
-  CHANGE_TRANSLATE,
-  CHANGE_SCALE
-} from './actions'
+import { CHANGE_TRANSLATE, CHANGE_SCALE } from './actions'
 
 const defaultState = {
   translate: {
     x: 0,
-    y: 0
+    y: 0,
   },
-  scale: 1
+  scale: 1,
 }
 
-export default function (state = defaultState, action) {
+export default function(state = defaultState, action) {
   const { payload, type } = action
   switch (type) {
     case CHANGE_TRANSLATE:
@@ -28,8 +26,8 @@ export default function (state = defaultState, action) {
         ...state,
         translate: {
           x: state.translate.x + payload.x,
-          y: state.translate.y + payload.y
-        }
+          y: state.translate.y + payload.y,
+        },
       }
     case CHANGE_SCALE:
       const { zoom, mouseX, mouseY } = payload
@@ -42,8 +40,8 @@ export default function (state = defaultState, action) {
         scale: state.scale * zoom,
         translate: {
           x: mouseX - (mouseX - state.translate.x) * zoom,
-          y: mouseY - (mouseY - state.translate.y) * zoom
-        }
+          y: mouseY - (mouseY - state.translate.y) * zoom,
+        },
       }
     default:
       return state
