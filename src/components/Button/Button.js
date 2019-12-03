@@ -3,13 +3,16 @@ import PropTypes, { bool } from 'prop-types'
 import './Button.css'
 
 function Button({ text, size, color, stroke, onClick }) {
-
   let classNames = 'button'
   classNames += ' ' + (size ? size : 'large')
   classNames += ' ' + (color ? color : 'purple')
   classNames += ' ' + (stroke ? 'stroke' : '')
 
-  return <button className={classNames} onClick={onClick}>{ text }</button>
+  return (
+    <button className={classNames} onClick={onClick}>
+      {text}
+    </button>
+  )
 }
 
 Button.propTypes = {
@@ -17,7 +20,7 @@ Button.propTypes = {
   size: PropTypes.string,
   color: PropTypes.string,
   stroke: PropTypes.bool,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
 }
 
 export default Button

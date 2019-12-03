@@ -16,47 +16,48 @@ export const fontFamily = 'rennerbook'
 
 // line wrapping code from https://stackoverflow.com/questions/2936112/
 function getLines(ctx, text, maxWidth) {
-    const words = text.split(' ')
-    let lines = []
-    let currentLine = words[0]
+  const words = text.split(' ')
+  let lines = []
+  let currentLine = words[0]
 
-    for (let i = 1; i < words.length; i++) {
-        let word = words[i]
-        let width = ctx.measureText(currentLine + ' ' + word).width
-        if (width < maxWidth) {
-            currentLine += ' ' + word
-        } else {
-            lines.push(currentLine)
-            currentLine = word
-        }
+  for (let i = 1; i < words.length; i++) {
+    let word = words[i]
+    let width = ctx.measureText(currentLine + ' ' + word).width
+    if (width < maxWidth) {
+      currentLine += ' ' + word
+    } else {
+      lines.push(currentLine)
+      currentLine = word
     }
-    lines.push(currentLine)
-    return lines
+  }
+  lines.push(currentLine)
+  return lines
 }
 
 export function getLinesForParagraphs(ctx, textWithParagraphs) {
-    // set so that measurements are proper
-    ctx.fillStyle = '#4D4D4D'
-    ctx.font = fontSize + ' ' + fontFamily
-    ctx.textBaseline = 'top'
+  // set so that measurements are proper
+  ctx.fillStyle = '#4D4D4D'
+  ctx.font = fontSize + ' ' + fontFamily
+  ctx.textBaseline = 'top'
 
-    return textWithParagraphs.split("\n")
-        .map(para => getLines(ctx, para, textBoxWidth))
-        .reduce((a, b) => a.concat(b))
+  return textWithParagraphs
+    .split('\n')
+    .map(para => getLines(ctx, para, textBoxWidth))
+    .reduce((a, b) => a.concat(b))
 }
 
 export function getGoalHeight(ctx, goalText) {
+  // get lines after font and font size are set up, since ctx.measureText()
+  // takes font and font size into account
+  const lines = getLinesForParagraphs(ctx, goalText)
 
-    // get lines after font and font size are set up, since ctx.measureText()
-    // takes font and font size into account
-    const lines = getLinesForParagraphs(ctx, goalText)
+  const totalTextHeight = lines.length * (fontSizeInt + lineSpacing)
 
-    const totalTextHeight = lines.length * (fontSizeInt + lineSpacing)
+  // calculate the goalHeight
+  // from the top and bottom margins + the height
+  // of the lines of text
+  const detectedGoalHeight =
+    textBoxMarginTop * 2 + totalTextHeight + avatarHeight + avatarSpace * 2
 
-    // calculate the goalHeight
-    // from the top and bottom margins + the height
-    // of the lines of text
-    const detectedGoalHeight = (textBoxMarginTop * 2) + totalTextHeight + avatarHeight + (avatarSpace * 2)
-
-    return Math.max(detectedGoalHeight, goalHeight)
+  return Math.max(detectedGoalHeight, goalHeight)
 }

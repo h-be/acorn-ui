@@ -27,11 +27,15 @@ function mapGoalToHierarchy(goal, edges) {
 
   return {
     hierarchy,
-    goal
+    goal,
   }
 }
 
-function mapHierarchyToPosition({ goal, hierarchy }, withHierarchies, screenWidth) {
+function mapHierarchyToPosition(
+  { goal, hierarchy },
+  withHierarchies,
+  screenWidth
+) {
   const verticalOffset = 10
   const verticalSpacing = 100
   const horizontalSpacing = 20
@@ -39,13 +43,17 @@ function mapHierarchyToPosition({ goal, hierarchy }, withHierarchies, screenWidt
   // FIXME: this needs to be related to the display pixel ratio or something
   const RETINA_HACK_HALFSCREEN = 4
 
-  const sameTier = withHierarchies.filter((wH) => wH.hierarchy === hierarchy)
-  const indexInTier = sameTier.map((wH) => wH.goal.address).indexOf(goal.address)
+  const sameTier = withHierarchies.filter(wH => wH.hierarchy === hierarchy)
+  const indexInTier = sameTier.map(wH => wH.goal.address).indexOf(goal.address)
 
   const horizontalHalfScreen = screenWidth / RETINA_HACK_HALFSCREEN
   const halfGoalWidth = goalWidth / 2
   const totalWidth = goalWidth + horizontalSpacing
-  const x = horizontalHalfScreen + (indexInTier * totalWidth) - ((sameTier.length - 1) * totalWidth) / 2 - halfGoalWidth
+  const x =
+    horizontalHalfScreen +
+    indexInTier * totalWidth -
+    ((sameTier.length - 1) * totalWidth) / 2 -
+    halfGoalWidth
 
   // default position is a function of the hierarchical status of the goal
   const y = verticalOffset + hierarchy * (goalHeight + verticalSpacing)
@@ -54,8 +62,8 @@ function mapHierarchyToPosition({ goal, hierarchy }, withHierarchies, screenWidt
     address: goal.address,
     coordinate: {
       x,
-      y
-    }
+      y,
+    },
   }
 }
 
@@ -67,12 +75,18 @@ export default function layoutFormula(screenWidth, goals, edges) {
   const edgesAsArray = edgeAddressesArray.map(address => edges[address])
 
   // assign hierarchical statuses to things
-  const withHierarchies = goalsAsArray.map(g => mapGoalToHierarchy(g, edgesAsArray))
+  const withHierarchies = goalsAsArray.map(g =>
+    mapGoalToHierarchy(g, edgesAsArray)
+  )
 
   // use positions in the hierarchy to determine coordinates
   const coordinates = {}
   withHierarchies.forEach(wH => {
-    const { address, coordinate } = mapHierarchyToPosition(wH, withHierarchies, screenWidth)
+    const { address, coordinate } = mapHierarchyToPosition(
+      wH,
+      withHierarchies,
+      screenWidth
+    )
     coordinates[address] = coordinate
   })
   return coordinates

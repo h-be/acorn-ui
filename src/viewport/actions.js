@@ -16,8 +16,8 @@ function changeTranslate(x, y) {
     type: CHANGE_TRANSLATE,
     payload: {
       x,
-      y
-    }
+      y,
+    },
   }
 }
 
@@ -27,14 +27,9 @@ function changeScale(zoom, mouseX, mouseY) {
     payload: {
       zoom,
       mouseX,
-      mouseY
-    }
+      mouseY,
+    },
   }
 }
 
-export {
-  CHANGE_TRANSLATE,
-  CHANGE_SCALE,
-  changeTranslate,
-  changeScale
-}
+export { CHANGE_TRANSLATE, CHANGE_SCALE, changeTranslate, changeScale }

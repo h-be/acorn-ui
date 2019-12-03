@@ -1,22 +1,18 @@
 import _ from 'lodash'
 
 import { coordsPageToCanvas } from '../drawing/coordinateSystems'
-import { checkForGoalAtCoordinates, checkForGoalAtCoordinatesInBox } from '../drawing/eventDetection'
+import {
+  checkForGoalAtCoordinates,
+  checkForGoalAtCoordinatesInBox,
+} from '../drawing/eventDetection'
 
-import {
-  selectGoal,
-  unselectGoal,
-  unselectAll
-} from '../selection/actions'
-import {
-  hoverGoal,
-  unhoverGoal
-} from '../hover/actions'
+import { selectGoal, unselectGoal, unselectAll } from '../selection/actions'
+import { hoverGoal, unhoverGoal } from '../hover/actions'
 import {
   setGKeyDown,
   unsetGKeyDown,
   setShiftKeyDown,
-  unsetShiftKeyDown
+  unsetShiftKeyDown,
 } from '../keyboard/actions'
 import {
   setMousedown,
@@ -26,29 +22,20 @@ import {
   unsetGoals,
   setGoals,
   setSize,
-  unsetSize
+  unsetSize,
 } from '../mouse/actions'
 import {
   openGoalForm,
   closeGoalForm,
-  updateContent
+  updateContent,
 } from '../goal-form/actions'
-import {
-  archiveGoal
-} from '../goals/actions'
-import {
-  setScreenDimensions
-} from '../screensize/actions'
-import {
-  changeTranslate,
-  changeScale
-} from '../viewport/actions'
+import { archiveGoal } from '../goals/actions'
+import { setScreenDimensions } from '../screensize/actions'
+import { changeTranslate, changeScale } from '../viewport/actions'
 
 import layoutFormula from '../drawing/layoutFormula'
 
-
 export default function setupEventListeners(store, canvas) {
-
   function windowResize(event) {
     // Get the device pixel ratio, falling back to 1.
     const dpr = window.devicePixelRatio || 1
@@ -115,26 +102,58 @@ export default function setupEventListeners(store, canvas) {
   function canvasMousemove(event) {
     const state = store.getState()
     let convertedMouse, goalAddressesToSelect
-    const { goals, edges, ui: { viewport: { translate, scale }, mouse: { coordinate: { x, y }, goalsAddresses }, screensize: { width } } } = state
+    const {
+      goals,
+      edges,
+      ui: {
+        viewport: { translate, scale },
+        mouse: {
+          coordinate: { x, y },
+          goalsAddresses,
+        },
+        screensize: { width },
+      },
+    } = state
     if (state.ui.mouse.mousedown) {
       if (event.shiftKey) {
-        convertedMouse = coordsPageToCanvas({
-          x: event.clientX,
-          y: event.clientY
-        }, translate, scale)
+        convertedMouse = coordsPageToCanvas(
+          {
+            x: event.clientX,
+            y: event.clientY,
+          },
+          translate,
+          scale
+        )
 
         if (!goalsAddresses) {
           store.dispatch(setCoordinate(convertedMouse))
         }
-        store.dispatch(setSize({ w: convertedMouse.x - x, h: convertedMouse.y - y }))
-        goalAddressesToSelect = checkForGoalAtCoordinatesInBox(width, goals, edges, convertedMouse, { x, y })
+        store.dispatch(
+          setSize({ w: convertedMouse.x - x, h: convertedMouse.y - y })
+        )
+        goalAddressesToSelect = checkForGoalAtCoordinatesInBox(
+          width,
+          goals,
+          edges,
+          convertedMouse,
+          { x, y }
+        )
         store.dispatch(setGoals(goalAddressesToSelect))
       } else {
         store.dispatch(changeTranslate(event.movementX, event.movementY))
       }
       return
     }
-    const goalAddress = checkForGoalAtCoordinates(canvas.getContext('2d'), translate, scale, width, goals, edges, event.clientX, event.clientY)
+    const goalAddress = checkForGoalAtCoordinates(
+      canvas.getContext('2d'),
+      translate,
+      scale,
+      width,
+      goals,
+      edges,
+      event.clientX,
+      event.clientY
+    )
     if (goalAddress && state.ui.hover.hoveredGoal !== goalAddress) {
       store.dispatch(hoverGoal(goalAddress))
     } else if (!goalAddress && state.ui.hover.hoveredGoal) {
@@ -143,27 +162,31 @@ export default function setupEventListeners(store, canvas) {
   }
 
   // don't allow this function to be called more than every 200 milliseconds
-  const debouncedWheelHandler = _.debounce(event => {
-    const state = store.getState()
-    if (!state.ui.goalForm.isOpen) {
-      // from https://medium.com/@auchenberg/detecting-multi-touch-trackpad-gestures-in-javascript-a2505babb10e
-      // and https://stackoverflow.com/questions/2916081/zoom-in-on-a-point-using-scale-and-translate
-      if (event.ctrlKey) {
-        // Normalize wheel to +1 or -1.
-        const wheel = event.deltaY < 0 ? 1 : -1
-        const zoomIntensity = 0.05
-        // Compute zoom factor.
-        const zoom = Math.exp(wheel * zoomIntensity)
-        const mouseX = event.clientX
-        const mouseY = event.clientY
-        store.dispatch(changeScale(zoom, mouseX, mouseY))
-      } else {
-        // invert the pattern so that it uses new mac style
-        // of panning
-        store.dispatch(changeTranslate(-1 * event.deltaX, -1 * event.deltaY))
+  const debouncedWheelHandler = _.debounce(
+    event => {
+      const state = store.getState()
+      if (!state.ui.goalForm.isOpen) {
+        // from https://medium.com/@auchenberg/detecting-multi-touch-trackpad-gestures-in-javascript-a2505babb10e
+        // and https://stackoverflow.com/questions/2916081/zoom-in-on-a-point-using-scale-and-translate
+        if (event.ctrlKey) {
+          // Normalize wheel to +1 or -1.
+          const wheel = event.deltaY < 0 ? 1 : -1
+          const zoomIntensity = 0.05
+          // Compute zoom factor.
+          const zoom = Math.exp(wheel * zoomIntensity)
+          const mouseX = event.clientX
+          const mouseY = event.clientY
+          store.dispatch(changeScale(zoom, mouseX, mouseY))
+        } else {
+          // invert the pattern so that it uses new mac style
+          // of panning
+          store.dispatch(changeTranslate(-1 * event.deltaX, -1 * event.deltaY))
+        }
       }
-    }
-  }, 2, { leading: true })
+    },
+    2,
+    { leading: true }
+  )
 
   function canvasWheel(event) {
     debouncedWheelHandler(event)
@@ -173,7 +196,11 @@ export default function setupEventListeners(store, canvas) {
   function canvasClick(event) {
     const state = store.getState()
     // goalsAddresses are Goals to be selected
-    const { ui: { mouse: { goalsAddresses } } } = state
+    const {
+      ui: {
+        mouse: { goalsAddresses },
+      },
+    } = state
 
     // if the GoalForm is open, any click on the
     // canvas should close it
@@ -188,21 +215,42 @@ export default function setupEventListeners(store, canvas) {
         // use first
         parentAddress = state.ui.selection.selectedGoals[0]
       }
-      const calcedPoint = coordsPageToCanvas({
-        x: event.clientX,
-        y: event.clientY
-      }, state.ui.viewport.translate, state.ui.viewport.scale)
-      store.dispatch(openGoalForm(calcedPoint.x, calcedPoint.y, null, parentAddress))
+      const calcedPoint = coordsPageToCanvas(
+        {
+          x: event.clientX,
+          y: event.clientY,
+        },
+        state.ui.viewport.translate,
+        state.ui.viewport.scale
+      )
+      store.dispatch(
+        openGoalForm(calcedPoint.x, calcedPoint.y, null, parentAddress)
+      )
     }
     // finishing a drag box selection action
     else if (goalsAddresses) {
-      goalsAddresses.forEach(value => (store.dispatch(selectGoal(value))))
-    }
-    else {
+      goalsAddresses.forEach(value => store.dispatch(selectGoal(value)))
+    } else {
       // check for node in clicked area
       // select it if so
-      const { goals, edges, ui: { viewport: { translate, scale }, screensize: { width } } } = state
-      const clickedAddress = checkForGoalAtCoordinates(canvas.getContext('2d'), translate, scale, width, goals, edges, event.clientX, event.clientY)
+      const {
+        goals,
+        edges,
+        ui: {
+          viewport: { translate, scale },
+          screensize: { width },
+        },
+      } = state
+      const clickedAddress = checkForGoalAtCoordinates(
+        canvas.getContext('2d'),
+        translate,
+        scale,
+        width,
+        goals,
+        edges,
+        event.clientX,
+        event.clientY
+      )
       if (clickedAddress) {
         // if the shift key is being use, do an 'additive' select
         // where you add the Goal to the list of selected
@@ -210,7 +258,10 @@ export default function setupEventListeners(store, canvas) {
           store.dispatch(unselectAll())
         }
         // if using shift, and Goal is already selected, unselect it
-        if (event.shiftKey && state.ui.selection.selectedGoals.indexOf(clickedAddress) > -1) {
+        if (
+          event.shiftKey &&
+          state.ui.selection.selectedGoals.indexOf(clickedAddress) > -1
+        ) {
           store.dispatch(unselectGoal(clickedAddress))
         } else {
           store.dispatch(selectGoal(clickedAddress))
@@ -237,8 +288,24 @@ export default function setupEventListeners(store, canvas) {
 
   function canvasDblclick(event) {
     const state = store.getState()
-    const { goals, edges, ui: { viewport: { translate, scale }, screensize: { width } } } = state
-    const goalAddress = checkForGoalAtCoordinates(canvas.getContext('2d'), translate, scale, width, goals, edges, event.clientX, event.clientY)
+    const {
+      goals,
+      edges,
+      ui: {
+        viewport: { translate, scale },
+        screensize: { width },
+      },
+    } = state
+    const goalAddress = checkForGoalAtCoordinates(
+      canvas.getContext('2d'),
+      translate,
+      scale,
+      width,
+      goals,
+      edges,
+      event.clientX,
+      event.clientY
+    )
     if (goalAddress) {
       let goalCoord = layoutFormula(width, goals, edges)[goalAddress]
       store.dispatch(unselectAll())
