@@ -6,12 +6,16 @@
 */
 import _ from 'lodash'
 
-import { addMemberOfGoal, fetchGoalMembers, archiveMemberOfGoal } from './actions'
+import {
+  addMemberOfGoal,
+  fetchGoalMembers,
+  archiveMemberOfGoal,
+} from './actions'
 import { archiveGoal } from '../goals/actions'
 
 const defaultState = {}
 
-export default function (state = defaultState, action) {
+export default function(state = defaultState, action) {
   const { payload, type } = action
   switch (type) {
     case addMemberOfGoal.success().type:
@@ -19,15 +23,15 @@ export default function (state = defaultState, action) {
         ...state,
         [payload.address]: {
           ...payload.entry,
-          address: payload.address
-        }
+          address: payload.address,
+        },
       }
     case fetchGoalMembers.success().type:
       // payload is [ { entry: { key: val }, address: 'QmAsdFg' }, ... ]
       const mapped = payload.map(r => {
         return {
           ...r.entry,
-          address: r.address
+          address: r.address,
         }
       })
       // mapped is [ { key: val, address: 'QmAsdFg' }, ...]
@@ -36,14 +40,17 @@ export default function (state = defaultState, action) {
       // Holochain fetch
       return {
         ...state,
-        ...newVals
+        ...newVals,
       }
     case archiveMemberOfGoal.success().type:
       return _.pickBy(state, (value, key) => key !== payload)
     case archiveGoal.success().type:
       // filter out the Goalmembers whose addresses are listed as having been
       // archived on account of having archived the Goal it relates to
-      return _.pickBy(state, (value, key) => payload.archived_goal_members.indexOf(key) === -1)
+      return _.pickBy(
+        state,
+        (value, key) => payload.archived_goal_members.indexOf(key) === -1
+      )
     default:
       return state
   }

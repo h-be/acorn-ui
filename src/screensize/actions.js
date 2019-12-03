@@ -15,12 +15,9 @@ function setScreenDimensions(width, height) {
     type: SET_SCREEN_DIMENSIONS,
     payload: {
       width,
-      height
-    }
+      height,
+    },
   }
 }
 
-export {
-  SET_SCREEN_DIMENSIONS,
-  setScreenDimensions
-}
+export { SET_SCREEN_DIMENSIONS, setScreenDimensions }

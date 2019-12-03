@@ -42,7 +42,7 @@ export default combineReducers({
     screensize,
     viewport,
     mouse,
-    expandedView
-  }) // ,
+    expandedView,
+  }), // ,
   // anotherone: anotherone
 })

@@ -7,21 +7,26 @@
 
 import { createHolochainZomeCallAsyncAction } from '@holochain/hc-redux-middleware'
 
-import {
-  DEVELOPMENT_INSTANCE_NAME,
-  ZOME_NAME
-} from '../holochainConfig'
+import { DEVELOPMENT_INSTANCE_NAME, ZOME_NAME } from '../holochainConfig'
 
 /* action creator functions */
 
-const whoami = createHolochainZomeCallAsyncAction(DEVELOPMENT_INSTANCE_NAME, ZOME_NAME, 'whoami')
+const whoami = createHolochainZomeCallAsyncAction(
+  DEVELOPMENT_INSTANCE_NAME,
+  ZOME_NAME,
+  'whoami'
+)
 
-const createWhoami = createHolochainZomeCallAsyncAction(DEVELOPMENT_INSTANCE_NAME, ZOME_NAME, 'create_whoami')
+const createWhoami = createHolochainZomeCallAsyncAction(
+  DEVELOPMENT_INSTANCE_NAME,
+  ZOME_NAME,
+  'create_whoami'
+)
 
-const updateWhoami = createHolochainZomeCallAsyncAction(DEVELOPMENT_INSTANCE_NAME, ZOME_NAME, 'update_whoami')
+const updateWhoami = createHolochainZomeCallAsyncAction(
+  DEVELOPMENT_INSTANCE_NAME,
+  ZOME_NAME,
+  'update_whoami'
+)
 
-export {
-  whoami,
-  createWhoami,
-  updateWhoami
-}
+export { whoami, createWhoami, updateWhoami }
