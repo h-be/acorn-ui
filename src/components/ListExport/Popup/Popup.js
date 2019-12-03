@@ -1,7 +1,7 @@
-import React from 'react'
-import './Popup.css'
-import Icon from '../../Icon'
-import Button from '../../Button/Button'
+import React from "react";
+import "./popup.css";
+import Icon from "../../Icon";
+import Button from "../../Button/Button";
 
 export default function Popup({ active, handleToHide }) {
   return (
@@ -16,8 +16,8 @@ export default function Popup({ active, handleToHide }) {
         </div>
         <div className="popup-content">
           <p>
-            You just exported the <b>H-BE SoA</b> canvas.
-            You will be able to find it in your Downloads folder!
+            You just exported the <b>H-BE SoA</b> canvas. You will be able to
+            find it in your Downloads folder!
           </p>
         </div>
         <div className="popup-footer">
@@ -32,5 +32,5 @@ export default function Popup({ active, handleToHide }) {
         </div>
       </div>
     </div>
-  )
+  );
 }

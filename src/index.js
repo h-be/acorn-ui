@@ -21,6 +21,8 @@ import { fetchAgents } from './agents/actions'
 import { fetchGoals } from './goals/actions'
 import { fetchEdges } from './edges/actions'
 import { fetchGoalMembers } from './goal-members/actions'
+
+import { fetchGoalVotes } from './goal-votes/actions'
 import { whoami } from './who-am-i/actions'
 import { fetchAgentAddress } from './agent-address/actions'
 import App from './routes/App'
@@ -52,6 +54,8 @@ function fetchChangingData() {
   store.dispatch(fetchEdges.create({}))
   store.dispatch(fetchGoals.create({}))
   store.dispatch(fetchGoalMembers.create({}))
+  store.dispatch(fetchGoalVotes.create({}))
+
 }
 fetchChangingData()
 // refetch this data every 3 seconds
