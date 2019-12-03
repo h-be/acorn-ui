@@ -14,28 +14,28 @@ const UPDATE_CONTENT = 'UPDATE_CONTENT'
 
 // parentAddress is optional
 function openGoalForm(x, y, editAddress, parentAddress) {
-   return {
+  return {
     type: OPEN_GOAL_FORM,
     payload: {
       editAddress,
       x,
       y,
-      parentAddress
-    }
+      parentAddress,
+    },
   }
 }
 
 function closeGoalForm() {
-   return {
-    type: CLOSE_GOAL_FORM
+  return {
+    type: CLOSE_GOAL_FORM,
   }
 }
 
 function updateContent(content) {
   return {
-   type: UPDATE_CONTENT,
-   payload: content
- }
+    type: UPDATE_CONTENT,
+    payload: content,
+  }
 }
 
 export {
@@ -44,5 +44,5 @@ export {
   UPDATE_CONTENT,
   openGoalForm,
   closeGoalForm,
-  updateContent
+  updateContent,
 }

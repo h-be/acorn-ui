@@ -1,11 +1,10 @@
 import React from 'react'
 
 export function NavItemsGroup(props) {
-  return(
+  return (
     <nav>
-      { 
-        props.items &&
-        props.items.map((ni,i)=>(
+      {props.items &&
+        props.items.map((ni, i) => (
           <NavItem
             key={i}
             id={i}
@@ -16,63 +15,61 @@ export function NavItemsGroup(props) {
             className={ni.className}
             selectSection={props.selectSection}
           />
-        ))
-      }
-    </nav> 
+        ))}
+    </nav>
   )
 }
 
-
-export class NavItem extends React.Component{
-  
-  constructor(props){
+export class NavItem extends React.Component {
+  constructor(props) {
     super(props)
-    this.state ={
+    this.state = {
       expand: false,
     }
     this.handleExpand = this.handleExpand.bind(this)
   }
-  
 
-  handleExpand(){
+  handleExpand() {
     this.setState({
-      expand: this.state.expand ? false : true
+      expand: this.state.expand ? false : true,
     })
   }
 
-  render(){
+  render() {
     const expand = this.state.expand ? 'active' : ''
-    return(
+    return (
       <section>
-      {
-        this.props.submenu 
-        ?
+        {this.props.submenu ? (
           <>
-          <button 
-            className={`nav-item ${this.props.className || ''}`}
-            onClick={this.handleExpand}>
-            {this.props.title}
+            <button
+              className={`nav-item ${this.props.className || ''}`}
+              onClick={this.handleExpand}>
+              {this.props.title}
             </button>
-          <div className={`sidebar-submenu ${expand}`}>
-            <ul>
-            {
-              this.props.submenu.map((ni,i)=>(
-                <li key={i}>
-                  {/* <NavLink to={ni.url}><span>-</span> {ni.title}</NavLink> */}
-                  <button type="button" onClick={()=>{this.props.selectSection(ni)}}>{ni.title}</button>
-                </li>
-              ))
-            }
-            </ul>     
-          </div>
+            <div className={`sidebar-submenu ${expand}`}>
+              <ul>
+                {this.props.submenu.map((ni, i) => (
+                  <li key={i}>
+                    {/* <NavLink to={ni.url}><span>-</span> {ni.title}</NavLink> */}
+                    <button
+                      type='button'
+                      onClick={() => {
+                        this.props.selectSection(ni)
+                      }}>
+                      {ni.title}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </>
-        :
-        // <NavLink className={`nav-item ${this.props.className || ''}`} to={this.props.url ? this.props.url : '/' }>
-        //   {this.props.icon && <img src={this.props.icon} alt=""/> }
-        //   {this.props.title && this.props.title}
-        // </NavLink>
-        <>{ this.props.title} </>
-      }
+        ) : (
+          // <NavLink className={`nav-item ${this.props.className || ''}`} to={this.props.url ? this.props.url : '/' }>
+          //   {this.props.icon && <img src={this.props.icon} alt=""/> }
+          //   {this.props.title && this.props.title}
+          // </NavLink>
+          <>{this.props.title} </>
+        )}
       </section>
     )
   }

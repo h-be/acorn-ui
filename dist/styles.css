@@ -403,7 +403,8 @@ h4 {
   padding: 1px;
   display: inline-block;
   position: relative;
-  right: -1px;
+  right: -2px;
+  top: 1px;
 }
 
 .icon.view-mode-small {
