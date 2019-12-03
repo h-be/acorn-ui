@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import Icon from './Icon'
+import Icon from './Icon/Icon'
 import { addMemberOfGoal, archiveMemberOfGoal } from '../goal-members/actions'
 import Avatar from './Avatar/Avatar'
 

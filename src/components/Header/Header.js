@@ -3,7 +3,7 @@ import onClickOutside from 'react-onclickoutside'
 import GuideBook from '../GuideBook/GuideBook'
 import './Header.css'
 import Avatar from '../Avatar/Avatar'
-import Icon from '../Icon'
+import Icon from '../Icon/Icon'
 import { throws } from 'assert'
 import ListExport from '../ListExport/ListExport'
 

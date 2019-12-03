@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import PeoplePicker from '../../PeoplePicker'
 import Priority from '../../Priority/Priority'
 
-import Icon from '../../Icon'
+import Icon from '../../Icon/Icon'
 
 export default function RightMenu({
   goalAddress,
