@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import './HierarchyPicker.css'
-import Icon from '../Icon'
+import Icon from '../Icon/Icon'
 
 export default function HierarchyPicker({
   selectedStatus,

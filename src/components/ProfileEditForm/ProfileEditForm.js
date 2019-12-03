@@ -4,7 +4,7 @@ import './ProfileEditForm.css'
 import Button from '../Button/Button'
 import ValidatingFormInput from '../ValidatingFormInput/ValidatingFormInput'
 import Avatar from '../Avatar/Avatar'
-import Icon from '../Icon'
+import Icon from '../Icon/Icon'
 
 function ProfileEditForm({
   onSubmit,

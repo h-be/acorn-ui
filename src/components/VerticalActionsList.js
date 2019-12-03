@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import Icon from './Icon'
+import Icon from './Icon/Icon'
 import PeoplePicker from './PeoplePicker'
 import StatusPicker from './StatusPicker'
 import HierarchyPicker from './HierarchyPicker/HierarchyPicker'
