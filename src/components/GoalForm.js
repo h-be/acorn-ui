@@ -49,8 +49,8 @@ class GoalForm extends Component {
     }
   }
 
-  hadleBlur(event){
-    if(!this.props.editAddress){
+  hadleBlur(event) {
+    if (!this.props.editAddress) {
       event.preventDefault()
       this.handleSubmit()
     }
@@ -64,8 +64,8 @@ class GoalForm extends Component {
       event.preventDefault()
     }
 
-    if(!this.props.content || this.props.content === ''){
-      return 
+    if (!this.props.content || this.props.content === '') {
+      return
     }
 
     // depending on editAddress, this
@@ -85,22 +85,30 @@ class GoalForm extends Component {
     // dispatch the action to create a goal
     // with the contents from the form
     // inserted into it
-    this.props.createGoal({
-      content: this.props.content,
-      user_hash: 'Boop',
-      unix_timestamp: Date.now(),
-      hierarchy: 'Branch',
-      status: 'Uncertain',
-    }, this.props.parentAddress)
+    this.props.createGoal(
+      {
+        content: this.props.content,
+        user_hash: 'Boop',
+        unix_timestamp: Date.now(),
+        hierarchy: 'Branch',
+        status: 'Uncertain',
+        description: '',
+      },
+      this.props.parentAddress
+    )
   }
   updateGoal() {
-    this.props.updateGoal({
-      content: this.props.content,
-      user_hash: 'Boop',
-      unix_timestamp: Date.now(),
-      hierarchy: 'Branch',
-      status: this.props.status
-    }, this.props.editAddress)
+    this.props.updateGoal(
+      {
+        content: this.props.content,
+        user_hash: 'Boop',
+        unix_timestamp: Date.now(),
+        hierarchy: 'Branch',
+        status: this.props.status,
+        description: '',
+      },
+      this.props.editAddress
+    )
   }
 
   /*
@@ -118,21 +126,29 @@ class GoalForm extends Component {
 
     // optionally render the form dependent on whether the `isOpen` prop
     // is true, else render nothing
-    return (<div className='goal_form_wrapper' style={{ position: 'absolute', top: `${yLoc}px`, left: `${xLoc}px` }}>
-      <form className={'goal_form'} onSubmit={this.handleSubmit}>
-        <TextareaAutosize
-          placeholder='Add a title...'
-          value={content}
-          onChange={this.handleChange}
-          onKeyDown={this.handleKeyDown}
-          autoFocus
-          onFocus={this.handleFocus}
-          onBlur={this.hadleBlur}
-        />
-        {editAddress && <button type='submit' className='goal_form_save'>Save</button>}
-      </form>
-      {editAddress && <VerticalActionsList />}
-    </div>)
+    return (
+      <div
+        className='goal_form_wrapper'
+        style={{ position: 'absolute', top: `${yLoc}px`, left: `${xLoc}px` }}>
+        <form className={'goal_form'} onSubmit={this.handleSubmit}>
+          <TextareaAutosize
+            placeholder='Add a title...'
+            value={content}
+            onChange={this.handleChange}
+            onKeyDown={this.handleKeyDown}
+            autoFocus
+            onFocus={this.handleFocus}
+            onBlur={this.hadleBlur}
+          />
+          {editAddress && (
+            <button type='submit' className='goal_form_save'>
+              Save
+            </button>
+          )}
+        </form>
+        {editAddress && <VerticalActionsList />}
+      </div>
+    )
   }
 }
 
@@ -150,7 +166,7 @@ GoalForm.propTypes = {
   createGoal: PropTypes.func.isRequired,
   updateGoal: PropTypes.func.isRequired,
   createEdge: PropTypes.func.isRequired,
-  closeGoalForm: PropTypes.func.isRequired
+  closeGoalForm: PropTypes.func.isRequired,
 }
 
 // https://react-redux.js.org/using-react-redux/connect-mapstate
@@ -160,7 +176,13 @@ GoalForm.propTypes = {
 function mapStateToProps(state) {
   // all the state for this component is store under state->ui->goalForm
   const { parentAddress, editAddress, content, xLoc, yLoc } = state.ui.goalForm
-  const { goals, edges, ui: { screensize: { width } } } = state
+  const {
+    goals,
+    edges,
+    ui: {
+      screensize: { width },
+    },
+  } = state
   let goalCoord
   if (editAddress) {
     goalCoord = layoutFormula(width, goals, edges)[editAddress]
@@ -173,7 +195,7 @@ function mapStateToProps(state) {
     content,
     status: editAddress ? state.goals[editAddress].status : 'Uncertain', // use Uncertain as a default
     xLoc: editAddress ? goalCoord.x : xLoc,
-    yLoc: editAddress ? goalCoord.y : yLoc
+    yLoc: editAddress ? goalCoord.y : yLoc,
   }
 }
 
@@ -182,21 +204,21 @@ function mapStateToProps(state) {
 // action dispatchers for redux action types
 function mapDispatchToProps(dispatch) {
   return {
-    updateContent: (content) => {
+    updateContent: content => {
       dispatch(updateContent(content))
     },
     createGoal: (goal, maybe_parent_address) => {
-      return dispatch(createGoal.create({ goal , maybe_parent_address}))
+      return dispatch(createGoal.create({ goal, maybe_parent_address }))
     },
     updateGoal: (goal, address) => {
       return dispatch(updateGoal.create({ goal, address }))
     },
-    createEdge: (edge) => {
+    createEdge: edge => {
       return dispatch(createEdge.create({ edge }))
     },
     closeGoalForm: () => {
       dispatch(closeGoalForm())
-    }
+    },
   }
 }
 
