@@ -132,7 +132,32 @@ function Priority({
     Impact: 50,
     Effort: 50,
   })
+  const [valuesSlider, setValuesSlider] = useState({
+    0: 50,
+    1: 50,
+    2: 50,
+    3: 50,
+  })
   const [openMyVote, setOpenMyVote] = useState(false)
+  const handleOnChangeSlider = sliderType => (e, value) => {
+    if (!openMyVote) return
+    switch (sliderType) {
+      case 'Urgency':
+        setValuesSlider({ ...valuesSlider, 0: value })
+        break
+      case 'Importance':
+        setValuesSlider({ ...valuesSlider, 1: value })
+        break
+      case 'Impact':
+        setValuesSlider({ ...valuesSlider, 2: value })
+        break
+      case 'Effort':
+        setValuesSlider({ ...valuesSlider, 3: value })
+        break
+      default:
+        break
+    }
+  }
   const handleOnChange = sliderType => (e, value) => {
     if (!openMyVote) return
     if (values[sliderType] !== value) {
@@ -142,8 +167,10 @@ function Priority({
       })
     }
   }
+
   useEffect(() => {
     if (!openMyVote) return
+
     let goal_vote = {
       goal_address: goalAddress,
       urgency: values['Urgency'] / 100,
@@ -164,6 +191,7 @@ function Priority({
       createGoalVote({ goal_vote }).then(value => {})
     }
   }, [values])
+
   const priorityItems = priorityItemVars.map((priorityItem, index) => {
     return (
       <div key={index} className='priority_item'>
@@ -176,12 +204,13 @@ function Priority({
           {priorityItem.priorityItemTitle}
         </div>
         <Slider
+          onChange={handleOnChangeSlider(priorityItem.priorityItemTitle)}
           onChangeCommitted={handleOnChange(priorityItem.priorityItemTitle)}
-          defaultValue={averageValues[index]}
+          defaultValue={50}
+          value={!openMyVote ? averageValues[index] : valuesSlider[index]}
           getAriaValueText={valuetext}
           aria-labelledby='discrete-slider-custom'
           step={25}
-          disabled={!openMyVote}
           valueLabelDisplay='auto'
           marks={index === 0 ? marksWithLabels : marksWithoutLabels}
           classes={{
