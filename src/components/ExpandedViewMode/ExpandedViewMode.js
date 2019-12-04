@@ -33,7 +33,7 @@ function ExpandedViewMode({
           updateGoal={updateGoal}
         />
         <div className='expanded_view_main'>
-          <ExpandedViewModeContent goal={goal} />
+          <ExpandedViewModeContent goalAddress={goalAddress} updateGoal={updateGoal} goal={goal} />
           <RightMenu />
         </div>
         <ExpandedViewModeFooter />
