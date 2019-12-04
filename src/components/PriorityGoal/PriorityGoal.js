@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 import Avatar from '../Avatar/Avatar'
 import Icon from '../Icon'
 
-function PriorityGoal({ goal }) {
+function PriorityG../Icon/Iconoal }) {
   console.log(goal)
   return (
     <div className='priority-quadrant-goal-item'>

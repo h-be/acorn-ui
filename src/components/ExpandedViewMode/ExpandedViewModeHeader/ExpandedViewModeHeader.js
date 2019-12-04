@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './ExpandedViewModeHeader.css'
 
-import Icon from '../../Icon'
+import Icon from '../../Icon/Icon'
 import StatusPicker from '../../StatusPicker'
 import StatusIcon from '../../StatusIcon'
 

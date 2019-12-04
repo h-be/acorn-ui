@@ -1,6 +1,6 @@
 import React from 'react'
 import './popup.css'
-import Icon from '../../Icon'
+import Icon from '../../Icon/Icon'
 import Button from '../../Button/Button'
 
 export default function Popup({ active, handleToHide }) {
