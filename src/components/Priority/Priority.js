@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import './Priority.css'
-import Icon from '../Icon'
+import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
 import { connect } from 'react-redux'
 

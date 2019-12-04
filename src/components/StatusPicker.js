@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import StatusIcon from './StatusIcon'
-import Icon from './Icon'
+import Icon from './Icon/Icon'
 
 function StatusPicker({ selectedStatus, statusClicked, onClose }) {
   const statuses = ['Uncertain', 'Incomplete', 'Complete', 'InReview']

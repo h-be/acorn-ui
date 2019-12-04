@@ -10,6 +10,14 @@
   padding: 12px 0px;
 }
 
+.bottom-right-panel-not-map {
+  box-shadow: 0px 0px 6px #00000038;
+}
+
+.view-mode-icons {
+  margin-left: 24px;
+}
+
 .view-mode-icons img {
   margin-right: 24px;
 }

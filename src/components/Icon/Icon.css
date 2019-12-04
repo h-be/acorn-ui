@@ -1,0 +1,105 @@
+/* Icon */
+
+.icon {
+  width: 40px;
+  box-sizing: border-box;
+  padding: 6px;
+  cursor: pointer;
+}
+
+.icon.very-small {
+  width: 17px;
+  height: 17px;
+  padding: 1px;
+  cursor: pointer;
+}
+
+.icon.small {
+  width: 20px;
+  height: 20px;
+  padding: 1px;
+  cursor: pointer;
+}
+
+.icon.small-close {
+  width: 14px;
+  height: 14px;
+  padding: 0px;
+  cursor: pointer;
+}
+
+.icon.medium {
+  width: 32px;
+  height: 32px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.icon.medium-expanded-view {
+  height: 26px;
+  padding: 1px;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+.icon.logo {
+  width: 28px;
+  height: 18px;
+  padding: 1px;
+  display: inline-block;
+  position: relative;
+  right: -2px;
+  top: 1px;
+}
+
+.icon.view-mode-small {
+  height: 24px;
+  width: 24px;
+  padding: 4px;
+  display: inline-block;
+  position: relative;
+  margin-top: 2;
+  margin-left: 0;
+  box-sizing: border-box;
+}
+
+.icon.view-mode {
+  height: 24px;
+  width: 24px;
+  padding: 2px;
+  display: inline-block;
+  position: relative;
+  margin-top: 0;
+  margin-left: 0;
+  box-sizing: border-box;
+}
+
+.icon.header {
+  height: 24px;
+  width: 24px;
+  padding: 1px;
+  display: inline-block;
+  position: relative;
+  margin-top: 0;
+  margin-right: 20px;
+  margin-left: 0;
+}
+
+.icon.user-status {
+  width: 18px;
+  height: 18px;
+  padding: 0px;
+  cursor: pointer;
+}
+
+.icon.with_background {
+  background-color: rgba(44, 44, 44, 0.51);
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.icon.with_background:hover {
+  background-color: rgba(44, 44, 44, 0.75);
+  padding: 8px;
+}
