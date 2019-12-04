@@ -36,7 +36,7 @@ export default function ExpandedViewModeContent({
     }
   }
 
-  const handleOnChangeTittle = ({ target }) => {
+  const handleOnChangeTitle = ({ target }) => {
     setContent(target.value)
   }
   const handleOnChangeDescription = ({ target }) => {
