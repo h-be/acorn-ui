@@ -36,8 +36,11 @@ export default function ExpandedViewModeContent({
     }
   }
 
-  const handleOnChange = ({ target }) => {
-    editTitle ? setContent(target.value) : setDescription(target.value)
+  const handleOnChangeTittle = ({ target }) => {
+    setContent(target.value)
+  }
+  const handleOnChangeDescription = ({ target }) => {
+    setDescription(target.value)
   }
   return (
     <div className='expanded_view_content'>
@@ -52,7 +55,7 @@ export default function ExpandedViewModeContent({
             defaultValue={goal.content}
             onBlur={updateContent}
             onChange={handleOnChange}
-            onKeyPress={handlekeyPress}
+            onKeyPress={handleOnChangeTittle}
           />
         ) : (
           goal.content
@@ -73,7 +76,7 @@ export default function ExpandedViewModeContent({
             type='text'
             defaultValue={description}
             onBlur={updateContent}
-            onChange={handleOnChange}
+            onChange={handleOnChangeDescription}
           />
         ) : description === '' ? (
           'add description here...'
