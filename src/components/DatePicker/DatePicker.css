@@ -1,0 +1,25 @@
+.date_picker_wrapper {
+border-radius: 10px;
+background: #FFFFFF;
+box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+padding: 20px 0px;
+width: 300px;
+position: absolute;
+}
+
+.date_picker_close {
+  cursor: pointer;
+  top: 20px;
+  right: 20px;
+  height: 14px;
+}
+
+.date_picker_content {
+  padding: 0 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.MuiInputBase-input {
+  color: purple;
+}
