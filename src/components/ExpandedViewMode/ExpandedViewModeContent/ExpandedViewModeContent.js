@@ -1,6 +1,8 @@
 import React from 'react'
 import './ExpandedViewModeContent.css'
 
+import DatePicker from '../../DatePicker/DatePicker'
+
 export default function ExpandedViewModeContent({ goal }) {
   return (
     <div className='expanded_view_content'>
@@ -9,6 +11,7 @@ export default function ExpandedViewModeContent({ goal }) {
       <div className='squirrels_timeframe_row'>
         <div className='expanded_view_squirrels'>squirrels</div>
         <div className='expanded_view_timeframe'>timeframe</div>
+        <DatePicker />
       </div>
       <div className='expanded_view_description'>add description here...</div>
       <div className='expanded_view_tabs'>
