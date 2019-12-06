@@ -50,9 +50,10 @@ export default function ExpandedViewModeContent({
         {editTitle ? (
           <input
             type='text'
-            defaultValue={goal.content}
+            autoFocus
+            defaultValue={content}
             onBlur={updateContent}
-            onChange={handleOnChange}
+            onChange={handleOnChangeTitle}
             onKeyPress={handleOnChangeTitle}
           />
         ) : (
