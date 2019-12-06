@@ -1,19 +1,14 @@
-.hierarchies_picker{
-  left: 0;
-  /* top: 100%; */
-  /* bottom: 0; */
+.hierarchies_picker {
   width: 300px;
-  /* margin-left: 1rem; */
-  position: fixed;
 }
 
-.multi_edit_bar_item .hierarchies_picker{
+.multi_edit_bar_item .hierarchies_picker {
   left: 0;
   top: -400px;
   margin-left: 0;
 }
 
-.hierarchy_option{
+.hierarchy_option {
   width: 100%;
   margin-bottom: 1rem;
   display: flex;
@@ -21,51 +16,58 @@
   cursor: pointer;
 }
 
-.hierarchy_option:last-child{ margin-bottom: 0; }
+.hierarchy_option:last-child {
+  margin-bottom: 0;
+}
 
-.hierarchy_option:hover{
-  color: #00A599;
+.hierarchy_option:hover {
+  color: #00a599;
 }
-.hierarchy_option.active{
-  color: #5F65FF !important;
+.hierarchy_option.active {
+  color: #5f65ff !important;
 }
-.hierarchy_option.active > span{
-  border: 1px solid #5F65FF;
+.hierarchy_option.active > span {
+  border: 1px solid #5f65ff;
   width: 17px;
   height: 17px;
   border-radius: 50%;
   display: flex;
   align-items: center;
-  justify-content: center;;
+  justify-content: center;
 }
 
-.hierarchy_picker_header{
+.hierarchy_picker_header {
   padding-bottom: 1rem;
   position: relative;
   text-align: center;
   font-size: 1.1rem;
 }
 
-.hierarchy_content_wrapper{
+.hierarchy_content_wrapper {
   padding: 0 1rem;
 }
 
-.hierarchy_picker_header .vertical_action_close{
+.hierarchy_picker_header .vertical_action_close {
   position: absolute;
   right: 1.5rem;
   top: 0;
 }
 
-.hierarchy_option_icon_container img{
+.hierarchy_option_icon_container img {
   width: 30px;
   height: 30px;
   margin-right: 1rem;
 }
 
-.hierarchy_option_content{
+.hierarchy_option_content {
   flex-grow: 1;
 }
 
-.hierarchy_option_content > span{ display: block; width: 100%; }
+.hierarchy_option_content > span {
+  display: block;
+  width: 100%;
+}
 
-.gray-text{ color: #A3A3A3 }
+.gray-text {
+  color: #a3a3a3;
+}
