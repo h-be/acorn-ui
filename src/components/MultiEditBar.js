@@ -4,8 +4,10 @@ import { connect } from 'react-redux'
 
 import StatusPicker from './StatusPicker'
 import StatusIcon from './StatusIcon'
+import Icon from './Icon/Icon'
 
 import { updateGoal } from '../goals/actions'
+import HierarchyPicker from './HierarchyPicker/HierarchyPicker'
 
 function MultiEditBar({ selectedGoals, updateGoal }) {
   const defaultViews = {
@@ -14,16 +16,12 @@ function MultiEditBar({ selectedGoals, updateGoal }) {
   }
   const [viewsOpen, setViews] = useState(defaultViews)
 
-  const updateGoalsStatuses = status => {
+  const updateGoals = key => val => {
     selectedGoals.forEach(goal => {
       updateGoal(
         {
-          content: goal.content,
-          user_hash: goal.user_hash,
-          unix_timestamp: Date.now(),
-          hierarchy: goal.hierarchy,
-          description: '',
-          status,
+          ...goal,
+          [key]: val,
         },
         goal.address
       )
@@ -43,7 +41,20 @@ function MultiEditBar({ selectedGoals, updateGoal }) {
           status={selectedGoals[0].status}
         />
         {viewsOpen.status && (
-          <StatusPicker statusClicked={updateGoalsStatuses} />
+          <StatusPicker statusClicked={updateGoals('status')} />
+        )}
+      </div>
+      <div
+        className='multi_edit_bar_item'
+        onClick={() =>
+          setViews({ ...defaultViews, hierarchy: !viewsOpen.hierarchy })
+        }>
+        <Icon name='hierarchy_5F65FF.png' size='medium' />
+        {viewsOpen.hierarchy && (
+          <HierarchyPicker
+            selectedHierarchy={selectedGoals[0].hierarchy}
+            hierarchyClicked={updateGoals('hierarchy')}
+          />
         )}
       </div>
     </div>
