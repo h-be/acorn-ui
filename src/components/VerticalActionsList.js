@@ -95,7 +95,6 @@ function VerticalActionsList({
       {viewsOpen.priority && (
         <Priority
           onClose={() => setViews({ ...defaultViews })}
-          selectedPriority={goal.priority}
         />
       )}
       {/* archive */}

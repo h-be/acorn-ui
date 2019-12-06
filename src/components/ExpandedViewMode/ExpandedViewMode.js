@@ -14,7 +14,6 @@ import ExpandedViewModeFooter from './ExpandedViewModeFooter/ExpandedViewModeFoo
 function ExpandedViewMode({
   goalAddress,
   goal,
-  onArchiveClick,
   updateGoal,
   onClose,
 }) {
@@ -33,8 +32,16 @@ function ExpandedViewMode({
           updateGoal={updateGoal}
         />
         <div className='expanded_view_main'>
-          <ExpandedViewModeContent goalAddress={goalAddress} updateGoal={updateGoal} goal={goal} />
-          <RightMenu />
+          <ExpandedViewModeContent
+            goalAddress={goalAddress}
+            updateGoal={updateGoal}
+            goal={goal}
+          />
+          <RightMenu
+            goalAddress={goalAddress}
+            goal={goal}
+            updateGoal={updateGoal}
+          />
         </div>
         <ExpandedViewModeFooter />
       </div>
@@ -44,6 +51,7 @@ function ExpandedViewMode({
 
 ExpandedViewMode.propTypes = {
   onClose: PropTypes.func,
+  goalAddress: PropTypes.string.isRequired,
   goal: PropTypes.shape({
     content: PropTypes.string.isRequired,
     user_hash: PropTypes.string.isRequired,
