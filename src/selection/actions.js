@@ -15,20 +15,20 @@ const UNSELECT_ALL = 'UNSELECT_ALL'
 function selectGoal(address) {
   return {
     type: SELECT_GOAL,
-    payload: address
+    payload: address,
   }
 }
 
 function unselectGoal(address) {
   return {
     type: UNSELECT_GOAL,
-    payload: address
+    payload: address,
   }
 }
 
 function unselectAll() {
   return {
-    type: UNSELECT_ALL
+    type: UNSELECT_ALL,
   }
 }
 
@@ -38,5 +38,5 @@ export {
   UNSELECT_GOAL,
   selectGoal,
   unselectAll,
-  unselectGoal
+  unselectGoal,
 }

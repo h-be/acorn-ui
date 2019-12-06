@@ -11,20 +11,25 @@ import { DEVELOPMENT_INSTANCE_NAME, ZOME_NAME } from '../holochainConfig'
 
 /* action creator functions */
 
-const addMemberOfGoal = createHolochainZomeCallAsyncAction(
+const addVoteOfGoal = createHolochainZomeCallAsyncAction(
   DEVELOPMENT_INSTANCE_NAME,
   ZOME_NAME,
-  'add_member_of_goal'
+  'add_vote_of_goal'
 )
-const archiveMemberOfGoal = createHolochainZomeCallAsyncAction(
+const archiveVoteOfGoal = createHolochainZomeCallAsyncAction(
   DEVELOPMENT_INSTANCE_NAME,
   ZOME_NAME,
-  'archive_member_of_goal'
+  'archive_vote_of_goal'
 )
-const fetchGoalMembers = createHolochainZomeCallAsyncAction(
+const fetchGoalVotes = createHolochainZomeCallAsyncAction(
   DEVELOPMENT_INSTANCE_NAME,
   ZOME_NAME,
-  'fetch_goal_members'
+  'fetch_goal_votes'
+)
+const updateGoalVote = createHolochainZomeCallAsyncAction(
+  DEVELOPMENT_INSTANCE_NAME,
+  ZOME_NAME,
+  'update_goal_vote'
 )
 
-export { addMemberOfGoal, fetchGoalMembers, archiveMemberOfGoal }
+export { addVoteOfGoal, fetchGoalVotes, archiveVoteOfGoal, updateGoalVote }

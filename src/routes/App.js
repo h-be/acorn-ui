@@ -1,12 +1,6 @@
-
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import {
-  Redirect,
-  HashRouter as Router,
-  Switch,
-  Route,
-} from 'react-router-dom'
+import { Redirect, HashRouter as Router, Switch, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import './App.css'
@@ -25,11 +19,11 @@ function App(props) {
   const {
     agentAddress,
     whoami, // .entry and .address
-    updateWhoami
+    updateWhoami,
   } = props
   const [showProfileEditForm, setShowProfileEditForm] = useState(false)
 
-  const onProfileSubmit = (profile) => {
+  const onProfileSubmit = profile => {
     updateWhoami(profile, whoami.address)
     setShowProfileEditForm(false)
   }
@@ -41,21 +35,28 @@ function App(props) {
   return (
     <Router>
       <Switch>
-        <Route path="/board/map" component={MapView} />
-        <Route path="/board/priority" component={PriorityView} />
-        <Route path="/register" component={CreateProfilePage} />
+        <Route path='/board/map' component={MapView} />
+        <Route path='/board/priority' component={PriorityView} />
+        <Route path='/register' component={CreateProfilePage} />
       </Switch>
-      {agentAddress && <Header whoami={whoami} setShowProfileEditForm={setShowProfileEditForm} />}
-      {showProfileEditForm &&
-        <div className="profile_edit_wrapper">
+      {agentAddress && (
+        <Header
+          whoami={whoami}
+          setShowProfileEditForm={setShowProfileEditForm}
+        />
+      )}
+      {showProfileEditForm && (
+        <div className='profile_edit_wrapper'>
           <ProfileEditForm
             onSubmit={onProfileSubmit}
             onClose={() => setShowProfileEditForm(false)}
             whoami={whoami ? whoami.entry : null}
-            {...{ canClose, titleText, subText, submitText, agentAddress }} />
-        </div>}
+            {...{ canClose, titleText, subText, submitText, agentAddress }}
+          />
+        </div>
+      )}
       {!agentAddress && <LoadingScreen />}
-      {agentAddress && !whoami && <Redirect to="/register" />}
+      {agentAddress && !whoami && <Redirect to='/register' />}
       {agentAddress && whoami && <Footer />}
     </Router>
   )
@@ -68,9 +69,9 @@ App.propTypes = {
     last_name: PropTypes.string,
     handle: PropTypes.string,
     avatar_url: PropTypes.string,
-    address: PropTypes.string
+    address: PropTypes.string,
   }),
-  updateWhoami: PropTypes.func
+  updateWhoami: PropTypes.func,
 }
 
 function mapDispatchToProps(dispatch) {

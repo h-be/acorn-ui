@@ -7,9 +7,10 @@
 import _ from 'lodash'
 
 import {
-  addMemberOfGoal,
-  fetchGoalMembers,
-  archiveMemberOfGoal,
+  addVoteOfGoal,
+  fetchGoalVotes,
+  archiveVoteOfGoal,
+  updateGoalVote,
 } from './actions'
 import { archiveGoal } from '../goals/actions'
 
@@ -18,7 +19,7 @@ const defaultState = {}
 export default function(state = defaultState, action) {
   const { payload, type } = action
   switch (type) {
-    case addMemberOfGoal.success().type:
+    case addVoteOfGoal.success().type:
       return {
         ...state,
         [payload.address]: {
@@ -26,7 +27,15 @@ export default function(state = defaultState, action) {
           address: payload.address,
         },
       }
-    case fetchGoalMembers.success().type:
+    case updateGoalVote.success().type:
+      return {
+        ...state,
+        [payload.address]: {
+          ...payload.entry,
+          address: payload.address,
+        },
+      }
+    case fetchGoalVotes.success().type:
       // payload is [ { entry: { key: val }, address: 'QmAsdFg' }, ... ]
       const mapped = payload.map(r => {
         return {
@@ -35,21 +44,15 @@ export default function(state = defaultState, action) {
         }
       })
       // mapped is [ { key: val, address: 'QmAsdFg' }, ...]
-      const newVals = _.keyBy(mapped, 'address')
-      // combines pre-existing values of the object with new values from
-      // Holochain fetch
-      return {
-        ...state,
-        ...newVals,
-      }
-    case archiveMemberOfGoal.success().type:
+      return _.keyBy(mapped, 'address')
+    case archiveVoteOfGoal.success().type:
       return _.pickBy(state, (value, key) => key !== payload)
     case archiveGoal.success().type:
       // filter out the Goalmembers whose addresses are listed as having been
       // archived on account of having archived the Goal it relates to
       return _.pickBy(
         state,
-        (value, key) => payload.archived_goal_members.indexOf(key) === -1
+        (value, key) => payload.archived_goal_votes.indexOf(key) === -1
       )
     default:
       return state

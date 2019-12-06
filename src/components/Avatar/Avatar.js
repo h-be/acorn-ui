@@ -2,14 +2,24 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './Avatar.css'
 
-function Avatar({ avatar_url, highlighted, small, medium, large, clickable, onClick }) {
+function Avatar({
+  avatar_url,
+  highlighted,
+  small,
+  medium,
+  large,
+  clickable,
+  onClick,
+}) {
   let classes = ['avatar']
   if (highlighted) classes.push('highlighted')
   if (small) classes.push('small')
   else if (medium) classes.push('medium')
   else if (large) classes.push('large')
   if (clickable) classes.push('clickable')
-  return <img src={avatar_url} className={classes.join(' ')} onClick={onClick} />
+  return (
+    <img src={avatar_url} className={classes.join(' ')} onClick={onClick} />
+  )
 }
 
 Avatar.propTypes = {
@@ -19,7 +29,7 @@ Avatar.propTypes = {
   medium: PropTypes.bool,
   large: PropTypes.bool,
   clickable: PropTypes.bool,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
 }
 
 export default Avatar

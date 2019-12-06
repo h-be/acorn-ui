@@ -1,10 +1,8 @@
 import React from 'react'
 import './Zoom.css'
-import Icon from '../Icon'
+import Icon from '../Icon/Icon'
 import { connect } from 'react-redux'
-import {
-  changeScale
-} from '../../viewport/actions'
+import { changeScale } from '../../viewport/actions'
 
 class Zoom extends React.Component {
   constructor(props) {
@@ -26,9 +24,19 @@ class Zoom extends React.Component {
   }
   render() {
     return (
-      <div className="zoom-wrapper">
-        <Icon name="minus-line.svg" size='small' withBackground={false} onClick={this.zoomOut} />
-        <Icon name="plus-line.svg" size='small' withBackground={false} onClick={this.zoomIn} />
+      <div className='zoom-wrapper'>
+        <Icon
+          name='minus-line.svg'
+          size='small'
+          withBackground={false}
+          onClick={this.zoomOut}
+        />
+        <Icon
+          name='plus-line.svg'
+          size='small'
+          withBackground={false}
+          onClick={this.zoomIn}
+        />
         <span>{parseInt(this.props.scale * 100)}%</span>
       </div>
     )
@@ -38,14 +46,14 @@ function mapDispatchToProps(dispatch) {
   return {
     zoom: (zoom, x, y) => {
       return dispatch(changeScale(zoom, x, y))
-    }
+    },
   }
 }
 
 function mapStateToProps(state) {
   return {
     screensize: state.ui.screensize,
-    scale: state.ui.viewport.scale
+    scale: state.ui.viewport.scale,
   }
 }
 

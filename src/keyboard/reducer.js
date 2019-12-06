@@ -9,12 +9,12 @@ import {
   SET_G_KEYDOWN,
   UNSET_G_KEYDOWN,
   SET_SHIFT_KEYDOWN,
-  UNSET_SHIFT_KEYDOWN
+  UNSET_SHIFT_KEYDOWN,
 } from './actions'
 
 const defaultState = {
   shiftKeyDown: false,
-  gKeyDown: false
+  gKeyDown: false,
 }
 
 export default function(state = defaultState, action) {
@@ -23,22 +23,22 @@ export default function(state = defaultState, action) {
     case SET_G_KEYDOWN:
       return {
         ...state,
-        gKeyDown: true
+        gKeyDown: true,
       }
     case UNSET_G_KEYDOWN:
       return {
         ...state,
-        gKeyDown: false
+        gKeyDown: false,
       }
     case SET_SHIFT_KEYDOWN:
       return {
         ...state,
-        shiftKeyDown: true
+        shiftKeyDown: true,
       }
     case UNSET_SHIFT_KEYDOWN:
       return {
         ...state,
-        shiftKeyDown: false
+        shiftKeyDown: false,
       }
     default:
       return state
