@@ -8,6 +8,8 @@ export default function ExpandedViewModeContent({
   goal,
   updateGoal,
 }) {
+
+  const [editTimeframe, setEditTimeframe] = useState(false)
   const [editDescription, setEditDescription] = useState(false)
   const [editTitle, setEditTitle] = useState(false)
 
@@ -30,12 +32,6 @@ export default function ExpandedViewModeContent({
     }
     setEditTitle(false)
     setEditDescription(false)
-  }
-
-  const handlekeyPress = ({ key }) => {
-    if (key === 'Enter') {
-      updateContent()
-    }
   }
 
   const handleOnChangeTitle = ({ target }) => {
@@ -67,8 +63,8 @@ export default function ExpandedViewModeContent({
       <div className='squirrels_timeframe_row'>
         <div className='expanded_view_squirrels'>squirrels</div>
         <div className='timeframe-wrapper'>
-          <div className='expanded_view_timeframe'>timeframe</div>
-          <DatePicker />
+          <div className='expanded_view_timeframe' onClick={() => setEditTimeframe(!editTimeframe)}>timeframe</div>
+          {editTimeframe && <DatePicker onClose={() => setEditTimeframe(false)}/>}
         </div>
       </div>
       <div
