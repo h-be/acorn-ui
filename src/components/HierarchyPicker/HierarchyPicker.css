@@ -2,12 +2,6 @@
   width: 300px;
 }
 
-.multi_edit_bar_item .hierarchies_picker {
-  left: 0;
-  top: -400px;
-  margin-left: 0;
-}
-
 .hierarchy_option {
   width: 100%;
   margin-bottom: 1rem;
@@ -36,21 +30,8 @@
   justify-content: center;
 }
 
-.hierarchy_picker_header {
-  padding-bottom: 1rem;
-  position: relative;
-  text-align: center;
-  font-size: 1.1rem;
-}
-
 .hierarchy_content_wrapper {
   padding: 0 1rem;
-}
-
-.hierarchy_picker_header .vertical_action_close {
-  position: absolute;
-  right: 1.5rem;
-  top: 0;
 }
 
 .hierarchy_option_icon_container img {
