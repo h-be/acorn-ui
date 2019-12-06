@@ -239,14 +239,6 @@ h4 {
   color: #717171;
 }
 
-.popup_title {
-  font-size: 16px;
-  font-family: 'rennerbold';
-  color: #717171;
-  text-align: center;
-  margin-top: -2px;
-}
-
 /* transform */
 
 .transform-container {
@@ -329,8 +321,9 @@ h4 {
   align-items: center;
 }
 
-.multi_edit_bar .status_picker {
-  top: -60px;
+.multi_edit_bar .picker-popup {
+  bottom: 62px;
+  top: unset;
 }
 
 /* HoverOverlay */
@@ -408,7 +401,7 @@ h4 {
 .people_picker_search {
   display: flex;
   align-items: center;
-  padding: 16px 20px 5px 20px;
+  padding: 0 20px 5px 20px;
 }
 
 .people_picker_search input {
@@ -479,7 +472,7 @@ h4 {
 /* StatusPicker */
 
 .status_list {
-  padding: 20px 20px 0 20px;
+  padding: 0 20px;
   display: flex;
   flex-direction: row;
 }
@@ -519,17 +512,6 @@ h4 {
 
 .status_color.has_status {
   box-shadow: 0 0 0 4px #FFF, 0 0 0 6px #5F65FF;
-}
-
-/* vertical_action_overlay */
-
-.vertical_action_overlay {
-  position: absolute;
-  border-radius: 10px;
-  background: #FFFFFF;
-  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
-  padding: 20px 0px;
-  top: 0;
 }
 
 /* Tooltips */

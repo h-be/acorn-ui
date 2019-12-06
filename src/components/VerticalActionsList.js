@@ -12,6 +12,15 @@ import StatusIcon from './StatusIcon'
 import { archiveGoal, updateGoal } from '../goals/actions'
 import { closeGoalForm } from '../goal-form/actions'
 
+function VerticalActionListItem({ onClick, label, icon }) {
+  return (
+    <div className='action_list_item' onClick={onClick}>
+      {icon}
+      <span>{label}</span>
+    </div>
+  )
+}
+
 function VerticalActionsList({
   goalAddress,
   goal,
@@ -22,94 +31,67 @@ function VerticalActionsList({
     status: false,
     squirrels: false,
     priority: false,
+    hierarchy: false,
   }
   const [viewsOpen, setViews] = useState(defaultViews)
 
-  const updateGoalStatus = status => {
+  const innerUpdateGoal = key => val => {
     updateGoal(
       {
-        content: goal.content,
-        user_hash: goal.user_hash,
-        unix_timestamp: Date.now(),
-        hierarchy: goal.hierarchy,
-        status,
+        ...goal,
+        [key]: val,
       },
       goalAddress
     )
   }
 
-  const updateGoalHierarchy = hierarchy => {
-    updateGoal(
-      {
-        content: goal.content,
-        user_hash: goal.user_hash,
-        unix_timestamp: Date.now(),
-        hierarchy,
-        status: goal.status,
-      },
-      goalAddress
-    )
+  const toggleView = (key) => {
+    setViews({ ...defaultViews, [key]: !viewsOpen[key] })
   }
 
   return (
     <div className='vertical_actions_list'>
       {/* status */}
-      <div
-        className='action_list_item'
-        key='status'
-        onClick={() =>
-          setViews({ ...defaultViews, status: !viewsOpen.status })
-        }>
-        <StatusIcon size='small' status={goal.status} hideTooltip />
-        <span>status</span>
-      </div>
+      <VerticalActionListItem
+        label='status'
+        icon={<StatusIcon size='small' status={goal.status} hideTooltip />}
+        onClick={() => toggleView('status')}
+      />
       {viewsOpen.status && (
         <StatusPicker
           selectedStatus={goal.status}
-          statusClicked={updateGoalStatus}
+          statusClicked={innerUpdateGoal('status')}
           onClose={() => setViews({ ...defaultViews })}
         />
       )}
       {/* squirrels */}
-      <div
-        className='action_list_item'
-        key='squirrels'
-        onClick={() =>
-          setViews({ ...defaultViews, squirrels: !viewsOpen.squirrels })
-        }>
-        <Icon name='squirrel_white.svg' />
-        <span>squirrels</span>
-      </div>
+      <VerticalActionListItem
+        label='squirrels'
+        icon={<Icon name='squirrel_white.svg' />}
+        onClick={() => toggleView('squirrels')}
+      />
       {viewsOpen.squirrels && (
         <PeoplePicker onClose={() => setViews({ ...defaultViews })} />
       )}
       {/* hierarchy */}
-      <div
-        className='action_list_item'
-        key='hierarchies'
-        onClick={() =>
-          setViews({ ...defaultViews, hierarchy: !viewsOpen.hierarchy })
-        }>
-        <Icon name='hierarchy_white.svg' />
-        <span>hierarchy</span>
-      </div>
+      <VerticalActionListItem
+        label='hierarchy'
+        icon={<Icon name='hierarchy_white.svg' />}
+        onClick={() => toggleView('hierarchy')}
+      />
       {viewsOpen.hierarchy && (
         <HierarchyPicker
           onClose={() => setViews({ ...defaultViews })}
           selectedHierarchy={goal.hierarchy}
-          hierarchyClicked={updateGoalHierarchy}
+          hierarchyClicked={innerUpdateGoal('hierarchy')}
         />
       )}
       {/* priority */}
-      <div
-        className='action_list_item'
-        key='priority'
-        onClick={() =>
-          setViews({ ...defaultViews, priority: !viewsOpen.priority })
-        }>
-        <Icon name='priority_white.svg' />
-        <span>priority</span>
-      </div>
+      <VerticalActionListItem
+        label='priority'
+        icon={<Icon name='priority_white.svg' />}
+        onClick={() => toggleView('priority')}
+      />
       {viewsOpen.priority && (
         <Priority
           onClose={() => setViews({ ...defaultViews })}
@@ -117,13 +99,11 @@ function VerticalActionsList({
         />
       )}
       {/* archive */}
-      <div
-        className='action_list_item'
-        key='archive'
-        onClick={() => onArchiveClick(goalAddress)}>
-        <Icon name='archive_white.svg' />
-        <span>archive</span>
-      </div>
+      <VerticalActionListItem
+        label='archive'
+        icon={<Icon name='archive_white.svg' />}
+        onClick={() => onArchiveClick(goalAddress)}
+      />
     </div>
   )
 }
