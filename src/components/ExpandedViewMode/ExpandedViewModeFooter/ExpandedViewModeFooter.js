@@ -1,7 +1,7 @@
 import React from 'react'
 import './ExpandedViewModeFooter.css'
 
-import Icon from '../../Icon'
+import Icon from '../../Icon/Icon'
 
 export default function ExpandedViewModeFooter({
   goalAddress,

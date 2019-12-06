@@ -26,11 +26,11 @@
   transition: all .2s;
 }
 
-.expanded_view_right_menu .people_picker.vertical_action_overlay {
+.expanded_view_right_menu .people_picker.picker-popup {
   top: 207px;
   right: -261px;
 }
 
-.expanded_view_right_menu .priority_wrapper.vertical_action_overlay {
+.expanded_view_right_menu .priority_wrapper.picker-popup {
   right: -328px;
 }
