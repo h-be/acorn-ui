@@ -37,7 +37,7 @@ nix-shell --run acorn-ui
 - [redux](https://redux.js.org/introduction/getting-started)
 - [react](https://reactjs.org/docs/getting-started.html)
 - [react-redux](https://react-redux.js.org/introduction/quick-start)
-- [react-router](https://reacttraining.com/react-router/)
+- [react-router](https://reacttraining.com/react-router/web/guides/quick-start)
 - [canvas](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API)
 - [redux + canvas](https://medium.com/@peterxjang/a-functional-canvas-approach-with-redux-ce59a369241b)
 - [webpack](https://webpack.js.org/guides/getting-started/)
