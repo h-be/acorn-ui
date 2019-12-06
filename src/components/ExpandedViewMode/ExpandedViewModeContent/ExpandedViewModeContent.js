@@ -63,11 +63,12 @@ export default function ExpandedViewModeContent({
       <div className='expanded_view_tags'>tags</div>
       <div className='squirrels_timeframe_row'>
         <div className='expanded_view_squirrels'>squirrels</div>
-        <div className='timeframe-wrapper'>
-          <div className='expanded_view_timeframe' onClick={() => setEditTimeframe(!editTimeframe)}>timeframe</div>
-          {editTimeframe && <DatePicker onClose={() => setEditTimeframe(false)}/>}
+          <div className='timeframe_wrapper'>
+           <div>timeframe</div>
+            <div className='expanded_view_timeframe_display' onClick={() => setEditTimeframe(!editTimeframe)}>Feb 12, 2019 - Feb 20, 2019</div>
+            {editTimeframe && <DatePicker onClose={() => setEditTimeframe(false)}/>}
+          </div>
         </div>
-      </div>
       <div
         className='expanded_view_description'
         onClick={() => {

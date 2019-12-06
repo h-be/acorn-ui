@@ -74,7 +74,7 @@ width: 320px;
   display: flex;
   align-items: center;
   margin: 0;
-  font-family: 'renner_mediummedium';
+  font-family: 'renner_mediummedium', Helvetica, sans-serif;
   font-size: 11px;
   padding: 0;
   color: #00BEB0;
@@ -99,7 +99,7 @@ width: 320px;
 }
 
 .DateRangePickerInput__withBorder {
-  height: 380px;
+  height: 373px;
 }
 
 .DateRangePicker_picker {
@@ -141,11 +141,23 @@ width: 320px;
   padding-bottom: 42px;
 }
 
+.DayPicker_weekHeader {
+  font-family: 'rennerbook', Helvetica, sans-serif;
+  font-weight: normal;
+}
+
 .CalendarMonth_table {
   margin-top: 7px;
+}
+
+.CalendarDay__selected {
+  background: #00A599;
+}
+
+.CalendarDay__selected_span {
+  background: #00E0CF;
 }
 
 .DayPickerKeyboardShortcuts_show__bottomRight {
   display: none;
 }
-

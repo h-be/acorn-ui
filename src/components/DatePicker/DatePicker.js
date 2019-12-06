@@ -48,9 +48,4 @@ function DatePicker({ onClose }) {
   )
 }
 
-DatePicker.propTypes = {
-  startDatePlaceholderText: PropTypes.string,
-  endDatePlaceholderText: PropTypes.string,
-}
-
 export default DatePicker
