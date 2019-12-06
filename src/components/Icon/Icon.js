@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import './Icon.css'
 
 function Icon({ name, withBackground, size, className, onClick = () => {} }) {
   console.log(size)
