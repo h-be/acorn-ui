@@ -10,8 +10,10 @@ export default function ExpandedViewModeContent({ goal }) {
       <div className='expanded_view_tags'>tags</div>
       <div className='squirrels_timeframe_row'>
         <div className='expanded_view_squirrels'>squirrels</div>
-        <div className='expanded_view_timeframe'>timeframe</div>
-        <DatePicker />
+        <div className='timeframe-wrapper'>
+          <div className='expanded_view_timeframe'>timeframe</div>
+          <DatePicker />
+        </div>
       </div>
       <div className='expanded_view_description'>add description here...</div>
       <div className='expanded_view_tabs'>
