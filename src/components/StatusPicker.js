@@ -2,20 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import StatusIcon from './StatusIcon'
-import Icon from './Icon/Icon'
+import PickerTemplate from './PickerTemplate/PickerTemplate'
 
 function StatusPicker({ selectedStatus, statusClicked, onClose }) {
   const statuses = ['Uncertain', 'Incomplete', 'Complete', 'InReview']
 
   return (
-    <div className='status_picker vertical_action_overlay'>
-      <Icon
-        className='vertical_action_close'
-        name='x_a3a3a3.svg'
-        size='small-close'
-        onClick={() => onClose()}
-      />
-      <div className='popup_title'>status</div>
+    <PickerTemplate
+      className='status_picker'
+      heading='status'
+      onClose={onClose}>
       <div className='status_list'>
         {statuses.map(status => (
           <StatusIcon
@@ -26,7 +22,7 @@ function StatusPicker({ selectedStatus, statusClicked, onClose }) {
           />
         ))}
       </div>
-    </div>
+      </PickerTemplate>
   )
 }
 

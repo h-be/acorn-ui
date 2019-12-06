@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import Icon from './Icon/Icon'
+import PickerTemplate from './PickerTemplate/PickerTemplate'
 import { addMemberOfGoal, archiveMemberOfGoal } from '../goal-members/actions'
 import Avatar from './Avatar/Avatar'
 
@@ -16,14 +17,10 @@ function PeoplePicker({
   const [filterText, setFilterText] = useState('')
 
   return (
-    <div className='people_picker vertical_action_overlay'>
-      <Icon
-        className='vertical_action_close'
-        name='x_a3a3a3.svg'
-        size='small-close'
-        onClick={() => onClose()}
-      />
-      <div className='popup_title'>squirrels</div>
+    <PickerTemplate
+      className='people_picker'
+      heading='squirrels'
+      onClose={onClose}>
       <div className='people_picker_search'>
         <Icon name='search.svg' size='small' />
         <input
@@ -96,7 +93,7 @@ function PeoplePicker({
             )
           })}
       </ul>
-    </div>
+    </PickerTemplate>
   )
 }
 

@@ -21,7 +21,7 @@ function MultiEditBar({ selectedGoals, updateGoal }) {
       updateGoal(
         {
           ...goal,
-          [key]: val
+          [key]: val,
         },
         goal.address
       )
@@ -29,38 +29,35 @@ function MultiEditBar({ selectedGoals, updateGoal }) {
   }
 
   return (
-    <>
-      {viewsOpen.hierarchy && (
-        <HierarchyPicker
-          selectedHierarchy={selectedGoals[0].hierarchy}
-          hierarchyClicked={updateGoals('hierarchy')}
+    <div className='multi_edit_bar'>
+      <div
+        className='multi_edit_bar_item'
+        onClick={() =>
+          setViews({ ...defaultViews, status: !viewsOpen.status })
+        }>
+        <StatusIcon
+          size='medium'
+          hideTooltip
+          status={selectedGoals[0].status}
         />
-      )}
-
-      <div className='multi_edit_bar'>
-        <div
-          className='multi_edit_bar_item'
-          onClick={() =>
-            setViews({ ...defaultViews, status: !viewsOpen.status })
-          }>
-          <StatusIcon
-            size='medium'
-            hideTooltip
-            status={selectedGoals[0].status}
-          />
-          {viewsOpen.status && (
-            <StatusPicker statusClicked={updateGoals('status')} />
-          )}
-        </div>
-        <div
-          className='multi_edit_bar_item'
-          onClick={() =>
-            setViews({ ...defaultViews, hierarchy: !viewsOpen.hierarchy })
-          }>
-          <Icon name='hierarchy_5F65FF.png' size='medium' />
-        </div>
+        {viewsOpen.status && (
+          <StatusPicker statusClicked={updateGoals('status')} />
+        )}
       </div>
-    </>
+      <div
+        className='multi_edit_bar_item'
+        onClick={() =>
+          setViews({ ...defaultViews, hierarchy: !viewsOpen.hierarchy })
+        }>
+        <Icon name='hierarchy_5F65FF.png' size='medium' />
+        {viewsOpen.hierarchy && (
+          <HierarchyPicker
+            selectedHierarchy={selectedGoals[0].hierarchy}
+            hierarchyClicked={updateGoals('hierarchy')}
+          />
+        )}
+      </div>
+    </div>
   )
 }
 

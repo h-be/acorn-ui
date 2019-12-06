@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import './Priority.css'
 import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
+import PickerTemplate from '../PickerTemplate/PickerTemplate'
 import { connect } from 'react-redux'
 
 import Slider from '@material-ui/core/Slider'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   addVoteOfGoal,
-  fetchGoalVotes,
   archiveVoteOfGoal,
   updateGoalVote,
 } from '../../goal-votes/actions'
@@ -245,14 +245,10 @@ function Priority({
     archiveVoteOfGoal(vote.address).then(value => {})
   }
   return (
-    <div className='priority_wrapper vertical_action_overlay'>
-      <Icon
-        className='vertical_action_close'
-        name='x_a3a3a3.svg'
-        size='small-close'
-        onClick={() => onClose()}
-      />
-      <div className='popup_title'>priority</div>
+    <PickerTemplate
+      className='priority_wrapper'
+      heading='priority'
+      onClose={onClose}>
       <div className='priority_tabs'>
         <div className={aggClassName} onClick={() => setOpenMyVote(false)}>
           Aggregated Priority
@@ -299,7 +295,7 @@ function Priority({
           </div>
         </div>
       )}
-    </div>
+    </PickerTemplate>
   )
 }
 
