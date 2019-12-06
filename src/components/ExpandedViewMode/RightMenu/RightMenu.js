@@ -4,6 +4,7 @@ import './RightMenu.css'
 import PropTypes from 'prop-types'
 
 import PeoplePicker from '../../PeoplePicker'
+import DatePicker from '../../DatePicker/DatePicker'
 import Priority from '../../Priority/Priority'
 
 import Icon from '../../Icon/Icon'
@@ -18,15 +19,17 @@ export default function RightMenu({
   const defaultViews = {
     squirrels: false,
     priority: false,
+    timeframe: false,
   }
   const [viewsOpen, setViews] = useState(defaultViews)
 
   const rightMenuPriorityClass = viewsOpen.priority ? 'active' : ''
   const rightMenuSquirrelsClass = viewsOpen.squirrels ? 'active' : ''
+  const rightMenuTimeframeClass = viewsOpen.timeframe ? 'active' : ''
 
   return (
     <div className='expanded_view_right_menu'>
-      <Icon name='help_4d4d4d.svg' className='right_menu_help' />
+      
       {/* priority */}
       <Icon
         name='priority_4d4d4d.svg'
@@ -52,7 +55,20 @@ export default function RightMenu({
       {viewsOpen.squirrels && (
         <PeoplePicker onClose={() => setViews({ ...defaultViews })} />
       )}
-      <Icon name='calendar_4d4d4d.svg' className='right_menu_calendar' />
+      {/* timeframe */}
+      <Icon
+        name='calendar_4d4d4d.svg'
+        className={rightMenuTimeframeClass}
+        key='timeframe'
+        onClick={() =>
+          setViews({ ...defaultViews, timeframe: !viewsOpen.timeframe })
+        }
+      />
+      {viewsOpen.timeframe && (
+        <DatePicker onClose={() => setViews({ ...defaultViews })} />
+      )}
+
+      <Icon name='help_4d4d4d.svg' className='right_menu_help' /> 
       <Icon name='link_4d4d4d.svg' className='right_menu_link' />
       <Icon name='archive_4d4d4d.svg' className='right_menu_archive' />
       <Icon name='share_4d4d4d.svg' className='right_menu_share' />
