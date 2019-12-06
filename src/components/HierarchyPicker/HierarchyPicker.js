@@ -2,9 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './HierarchyPicker.css'
 import PickerTemplate from '../PickerTemplate/PickerTemplate'
-import { connect } from 'react-redux'
 
-function HierarchyPicker({ selectedHierarchy, hierarchyClicked, onClose }) {
+export default function HierarchyPicker({ selectedHierarchy, hierarchyClicked, onClose }) {
   const hierarchies = [
     {
       name: 'Leaf',
@@ -90,18 +89,3 @@ function HierarchyOption({ selected, onClick, name, icon, description }) {
     </div>
   )
 }
-
-function mapStateToProps(state) {
-  const goalAddress = { goalAddress: state.ui.goalForm.editAddress }
-  return {
-    hashSelections: goalAddress.goalAddress
-      ? goalAddress
-      : state.ui.selection.selectedGoals,
-    screensize: state.ui.screensize.width,
-    goals: state.goals,
-    edges: state.edges,
-    viewport: state.ui.viewport,
-  }
-}
-
-export default connect(mapStateToProps, () => ({}))(HierarchyPicker)
