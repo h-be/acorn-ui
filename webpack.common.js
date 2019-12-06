@@ -5,11 +5,11 @@ module.exports = {
   },
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
   },
   devServer: {
-    host:'0.0.0.0',
-    disableHostCheck:true
+    host: '0.0.0.0',
+    disableHostCheck: true,
   },
   module: {
     rules: [
@@ -17,30 +17,30 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
-        }
+          loader: 'babel-loader',
+        },
       },
       {
         test: /\.css$/,
         use: [
-          "style-loader",
+          'style-loader',
           {
-            loader: "css-loader",
+            loader: 'css-loader',
             options: {
               url: (url, resourcePath) => {
                 // resourcePath - path to css file
-    
+
                 // Don't handle `splash-image.png` urls
                 if (url.includes('splash-image.png')) {
-                  return false;
+                  return false
                 }
-    
-                return true;
+
+                return true
               },
-            }
-          }
-        ]
-      }
-    ]
-  }
+            },
+          },
+        ],
+      },
+    ],
+  },
 }

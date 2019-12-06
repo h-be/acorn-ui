@@ -3,14 +3,12 @@ import onClickOutside from 'react-onclickoutside'
 import GuideBook from '../GuideBook/GuideBook'
 import './Header.css'
 import Avatar from '../Avatar/Avatar'
-import Icon from '../Icon'
+import Icon from '../Icon/Icon'
 import { throws } from 'assert'
 import ListExport from '../ListExport/ListExport'
 
 class Header extends React.Component {
-
   constructor(props) {
-
     super(props)
     this.handleClickOutside = this.handleClickOutside.bind(this)
     this.clickAvatar = this.clickAvatar.bind(this)
@@ -36,69 +34,108 @@ class Header extends React.Component {
       avatar: false,
       isExportOpen: false,
       listaProfile: {},
-      listaExport: {}
-
+      listaExport: {},
     }
   }
 
   componentDidMount() {
-    this.changeStatus("green")
+    this.changeStatus('green')
     this.setState({
       lista: [
-        { color: "green", img: "checkmark-circle.svg", title: "Online" },
-        { color: "yellow", img: "user-status-away.svg", title: "Away" },
-        { color: "gray", img: "user-status-offline.svg", title: "Offline" },
-
+        { color: 'green', img: 'checkmark-circle.svg', title: 'Online' },
+        { color: 'yellow', img: 'user-status-away.svg', title: 'Away' },
+        { color: 'gray', img: 'user-status-offline.svg', title: 'Offline' },
       ],
       avatar: false,
-      listaProfile: [{ title: "Profile Settings", click: this.clickProfile }],
-      listaExport: [{ title: "Export as JSON", type: "json", download: "table.json" },
-      { title: "Export as CSV", type: "csv", download: "table.csv" }]
-
+      listaProfile: [{ title: 'Profile Settings', click: this.clickProfile }],
+      listaExport: [
+        { title: 'Export as JSON', type: 'json', download: 'table.json' },
+        { title: 'Export as CSV', type: 'csv', download: 'table.csv' },
+      ],
     })
   }
 
   handleClickOutside(e) {
-    this.setState({ isProfileOpen: false, isExportOpen: false, isStatusOpen: false, isGuideOpen: false })
+    this.setState({
+      isProfileOpen: false,
+      isExportOpen: false,
+      isStatusOpen: false,
+      isGuideOpen: false,
+    })
   }
   clickProfile(e) {
     this.props.setShowProfileEditForm(true)
-    this.setState({ isProfileOpen: false, isExportOpen: false, isStatusOpen: false, isGuideOpen: false })
+    this.setState({
+      isProfileOpen: false,
+      isExportOpen: false,
+      isStatusOpen: false,
+      isGuideOpen: false,
+    })
   }
   clickAvatar(e) {
-    this.setState({ isProfileOpen: !this.state.isProfileOpen, isExportOpen: false, isStatusOpen: false, isGuideOpen: false })
+    this.setState({
+      isProfileOpen: !this.state.isProfileOpen,
+      isExportOpen: false,
+      isStatusOpen: false,
+      isGuideOpen: false,
+    })
   }
   hover(bool) {
     this.setState({ avatar: bool })
   }
   hoverExport(bool) {
-    this.setState({ isHoverExport: bool });
+    this.setState({ isHoverExport: bool })
   }
   clickStatus(e) {
-    this.setState({ isStatusOpen: !this.state.isStatusOpen, isExportOpen: false, isGuideOpen: false, isProfileOpen: false })
+    this.setState({
+      isStatusOpen: !this.state.isStatusOpen,
+      isExportOpen: false,
+      isGuideOpen: false,
+      isProfileOpen: false,
+    })
   }
   clickExport(e) {
-    this.setState({ isExportOpen: !this.state.isExportOpen, isStatusOpen: false, isGuideOpen: false, isProfileOpen: false })
+    this.setState({
+      isExportOpen: !this.state.isExportOpen,
+      isStatusOpen: false,
+      isGuideOpen: false,
+      isProfileOpen: false,
+    })
   }
-  clickSearch(e) {
-
-  }
+  clickSearch(e) {}
   changeStatus(status) {
     switch (status) {
-      case "green": this.setState({ online: { color: "green", img: "checkmark-circle.svg" } });
-        break;
-      case "yellow": this.setState({ online: { color: "yellow", img: "user-status-away.svg" } });
-        break;
-      case "gray": this.setState({ online: { color: "gray", img: "user-status-offline.svg" } });
-        break;
-      default: console.error("no definido");
-        break;
-
+      case 'green':
+        this.setState({
+          online: { color: 'green', img: 'checkmark-circle.svg' },
+        })
+        break
+      case 'yellow':
+        this.setState({
+          online: { color: 'yellow', img: 'user-status-away.svg' },
+        })
+        break
+      case 'gray':
+        this.setState({
+          online: { color: 'gray', img: 'user-status-offline.svg' },
+        })
+        break
+      default:
+        console.error('no definido')
+        break
     }
-    this.setState({ isProfileOpen: false, isStatusOpen: false, isGuideOpen: false })
+    this.setState({
+      isProfileOpen: false,
+      isStatusOpen: false,
+      isGuideOpen: false,
+    })
   }
   clickBook(e) {
-    this.setState({ isGuideOpen: !this.state.isGuideOpen, isStatusOpen: false, isProfileOpen: false })
+    this.setState({
+      isGuideOpen: !this.state.isGuideOpen,
+      isStatusOpen: false,
+      isProfileOpen: false,
+    })
   }
   handleStatusEnter() {
     this.setState({ isStatusHover: true })
@@ -107,86 +144,176 @@ class Header extends React.Component {
     this.setState({ isStatusHover: false })
   }
   render() {
-    return (<div className="header-wrapper">
-      <div className="header">
-        <div className="top-left-panel">
-          <div className="logo" >
-            <Icon name="acorn-logo-stroked.svg" className="logo" />
-            <p className="logo-name">acorn</p>
+    return (
+      <div className='header-wrapper'>
+        <div className='header'>
+          <div className='top-left-panel'>
+            <div className='logo'>
+              <Icon name='acorn-logo-stroked.svg' className='logo' />
+              <p className='logo-name'>acorn</p>
+            </div>
+            {this.props.whoami && (
+              <div className='current-canvas-wrapper'>
+                <div className='current-canvas-content'>
+                  <Icon name='map.svg' className='view-mode' />
+                  <div className='canvas-name'>H-BE SoA</div>
+                  <div className='divider-line'></div>
+                  <div
+                    onMouseEnter={e => {
+                      this.hoverExport(true)
+                    }}
+                    onMouseLeave={e => {
+                      this.hoverExport(false)
+                    }}>
+                    {' '}
+                    {this.state.isHoverExport && (
+                      <Icon
+                        name='export-hover.svg'
+                        size='header'
+                        onClick={this.clickExport}
+                      />
+                    )}
+                    {!this.state.isHoverExport && (
+                      <Icon
+                        name='export.svg'
+                        size='header'
+                        onClick={this.clickExport}
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
-          {this.props.whoami && <div className="current-canvas-wrapper">
-            <div className="current-canvas-content">
-              <Icon name="map.svg" className="view-mode" />
-              <div className="canvas-name">H-BE SoA</div>
-              <div className="divider-line"></div>
-              <div onMouseEnter={e => {
-                this.hoverExport(true)
-              }} onMouseLeave={e => {
-                this.hoverExport(false)
-              }}> {this.state.isHoverExport && <Icon name="export-hover.svg" size="header" onClick={this.clickExport} />}
-                {!this.state.isHoverExport && <Icon name="export.svg" size="header" onClick={this.clickExport} />}
+          {this.props.whoami && (
+            <div className='top-right-panel'>
+              {/* <Icon name="search-line.svg" onClick={this.clickSearch}/> */}
+              <Icon
+                name='guidebook.svg'
+                onClick={this.clickBook}
+                className='header'
+              />
+              <div className={this.state.online.color}>
+                <div
+                  className='avatar_container'
+                  onMouseEnter={e => {
+                    this.hover(true)
+                  }}
+                  onMouseLeave={e => {
+                    this.hover(false)
+                  }}>
+                  <Avatar
+                    avatar_url={this.props.whoami.entry.avatar_url}
+                    highlighted={this.state.isProfileOpen || this.state.avatar}
+                    clickable
+                    onClick={this.clickAvatar}
+                  />
+                </div>
+
+                <span
+                  onMouseEnter={this.handleStatusEnter}
+                  onMouseLeave={this.handleStatusLeave}>
+                  {!this.state.isStatusOpen && !this.state.isStatusHover && (
+                    <Icon
+                      name={this.state.online.img}
+                      onClick={this.clickStatus}
+                      className='user-status'
+                    />
+                  )}
+                  {(this.state.isStatusOpen || this.state.isStatusHover) && (
+                    <Icon
+                      name='user-status-hover.svg'
+                      onClick={this.clickStatus}
+                      className='user-status'
+                    />
+                  )}
+                </span>
               </div>
             </div>
-          </div>}
+          )}
         </div>
-        {this.props.whoami && <div className="top-right-panel">
-          {/* <Icon name="search-line.svg" onClick={this.clickSearch}/> */}
-          <Icon name="guidebook.svg" onClick={this.clickBook} className="header" />
-          <div className={this.state.online.color}>
-            <div className="avatar_container" onMouseEnter={e => {
-              this.hover(true)
-            }} onMouseLeave={e => {
-              this.hover(false)
-            }}><Avatar avatar_url={this.props.whoami.entry.avatar_url} highlighted={this.state.isProfileOpen || this.state.avatar} clickable onClick={this.clickAvatar} /></div>
 
-            <span onMouseEnter={this.handleStatusEnter} onMouseLeave={this.handleStatusLeave}>
-              {!this.state.isStatusOpen && !this.state.isStatusHover && <Icon name={this.state.online.img} onClick={this.clickStatus} className="user-status" />}
-              {(this.state.isStatusOpen || this.state.isStatusHover) && <Icon name="user-status-hover.svg" onClick={this.clickStatus} className="user-status" />}
-            </span>
+        {/* TODO: make this show based on whether the user has just recently created their profile (registered) */}
+        {!this.state.isGuideOpen && (
+          <div className='guidebook_open_help'>
+            <div>Click on the Guidebook icon to learn more</div>
+            <img src='img/arrow_curved.svg' />
           </div>
-        </div>}
+        )}
+        {this.state.isGuideOpen && (
+          <div className='instructions_wrapper'>
+            <GuideBook />
+            <Icon
+              className='close_icon'
+              name='x_a3a3a3.svg'
+              size='small'
+              onClick={() => {
+                this.setState({ isGuideOpen: false })
+              }}
+            />
+          </div>
+        )}
+        {this.state.isProfileOpen && (
+          <div className='profile-wrapper'>
+            {Object.keys(this.state.listaProfile).map(key => (
+              <ListProfile
+                key={key}
+                title={this.state.listaProfile[key].title}
+                click={this.state.listaProfile[key].click}
+              />
+            ))}
+          </div>
+        )}
+        {this.state.isStatusOpen && (
+          <div className='user-status-wrapper'>
+            {Object.keys(this.state.lista).map(key => (
+              <ListStatus
+                key={key}
+                img={this.state.lista[key].img}
+                color={this.state.lista[key].color}
+                title={this.state.lista[key].title}
+                changeStatus={this.changeStatus}
+              />
+            ))}
+          </div>
+        )}
+        {!this.state.isExportOpen && this.state.isHoverExport && (
+          <span className='export-hover-display'>Export</span>
+        )}
+
+        {this.state.isExportOpen && (
+          <div className='export-wrapper'>
+            {Object.keys(this.state.listaExport).map(key => (
+              <ListExport
+                key={key}
+                type={this.state.listaExport[key].type}
+                title={this.state.listaExport[key].title}
+                download={this.state.listaExport[key].download}
+              />
+            ))}
+          </div>
+        )}
       </div>
-
-      {/* TODO: make this show based on whether the user has just recently created their profile (registered) */}
-      {!this.state.isGuideOpen && <div className="guidebook_open_help">
-        <div>Click on the Guidebook icon to learn more</div>
-        <img src="img/arrow_curved.svg" />
-        </div>} 
-      {this.state.isGuideOpen && <div className="instructions_wrapper">
-        <GuideBook />
-        <Icon className="close_icon" name='x_a3a3a3.svg' size='small' onClick={() => { this.setState({ isGuideOpen: false }) }} />
-      </div>}
-      {this.state.isProfileOpen && <div className="profile-wrapper">
-        {Object.keys(this.state.listaProfile).map(key =>
-          <ListProfile key={key} title={this.state.listaProfile[key].title} click={this.state.listaProfile[key].click} />
-        )}
-      </div>}
-      {this.state.isStatusOpen && <div className="user-status-wrapper">
-        {Object.keys(this.state.lista).map(key =>
-          <ListStatus key={key} img={this.state.lista[key].img} color={this.state.lista[key].color} title={this.state.lista[key].title} changeStatus={this.changeStatus} />
-        )}
-
-      </div>}
-      {!this.state.isExportOpen && this.state.isHoverExport && <span className="export-hover-display">Export</span>}
-
-      {this.state.isExportOpen && <div className="export-wrapper">
-        {Object.keys(this.state.listaExport).map(key =>
-          <ListExport key={key} type={this.state.listaExport[key].type} title={this.state.listaExport[key].title} download={this.state.listaExport[key].download} />
-        )}
-      </div>}
-    </div>)
+    )
   }
 }
-const ListStatus = (props) => {
+const ListStatus = props => {
   return (
-    <button className={props.color + " btn"} onClick={color => {
-      props.changeStatus(props.color)
-    }}><Icon name={props.img} className="user-status" /><p>{props.title}</p></button>
+    <button
+      className={props.color + ' btn'}
+      onClick={color => {
+        props.changeStatus(props.color)
+      }}>
+      <Icon name={props.img} className='user-status' />
+      <p>{props.title}</p>
+    </button>
   )
 }
-const ListProfile = (props) => {
+const ListProfile = props => {
   return (
-    <button onClick={props.click}><p>{props.title}</p></button>
+    <button onClick={props.click}>
+      <p>{props.title}</p>
+    </button>
   )
 }
 

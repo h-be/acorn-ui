@@ -10,7 +10,7 @@ import { whoami, createWhoami, updateWhoami } from './actions'
 
 const defaultState = null
 
-export default function (state = defaultState, action) {
+export default function(state = defaultState, action) {
   const { payload, type } = action
   switch (type) {
     case whoami.success().type:

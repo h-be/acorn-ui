@@ -1,7 +1,7 @@
 .zoom-wrapper {
   display: flex;
   align-items: center;
-  margin: 0 24px;
+  margin: 0 0 0 24px;
   border-right: 1px solid #D9D9D9;
 }
 
@@ -19,6 +19,5 @@
 
 .zoom-wrapper img.icon {
   margin-right: 24px;
-  padding: 4px;
-  box-sizing: content-box;
+  box-sizing: border-box;
 }

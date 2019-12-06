@@ -5,15 +5,9 @@
   a new state.
 */
 
-import {
-  OPEN_GOAL_FORM,
-  CLOSE_GOAL_FORM,
-  UPDATE_CONTENT
-} from './actions'
+import { OPEN_GOAL_FORM, CLOSE_GOAL_FORM, UPDATE_CONTENT } from './actions'
 
-import {
-  archiveGoal
-} from '../goals/actions'
+import { archiveGoal } from '../goals/actions'
 
 const defaultState = {
   editAddress: null,
@@ -21,7 +15,7 @@ const defaultState = {
   content: '',
   isOpen: false,
   xLoc: 0,
-  yLoc: 0
+  yLoc: 0,
 }
 
 export default function(state = defaultState, action) {
@@ -30,7 +24,7 @@ export default function(state = defaultState, action) {
     case UPDATE_CONTENT:
       return {
         ...state,
-        content: payload
+        content: payload,
       }
     case OPEN_GOAL_FORM:
       return {
@@ -39,7 +33,7 @@ export default function(state = defaultState, action) {
         xLoc: payload.x,
         yLoc: payload.y,
         parentAddress: payload.parentAddress,
-        editAddress: payload.editAddress
+        editAddress: payload.editAddress,
       }
     case CLOSE_GOAL_FORM:
     case archiveGoal.success().type:
@@ -48,7 +42,7 @@ export default function(state = defaultState, action) {
         isOpen: false,
         content: '',
         parentAddress: null,
-        editAddress: null
+        editAddress: null,
       }
     default:
       return state

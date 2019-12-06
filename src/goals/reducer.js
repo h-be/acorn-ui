@@ -10,7 +10,7 @@ import { createGoal, fetchGoals, archiveGoal, updateGoal } from './actions'
 
 const defaultState = {}
 
-export default function (state = defaultState, action) {
+export default function(state = defaultState, action) {
   const { payload, type } = action
   switch (type) {
     case createGoal.success().type:
@@ -18,23 +18,23 @@ export default function (state = defaultState, action) {
         ...state,
         [payload.goal.address]: {
           ...payload.goal.entry,
-          address: payload.goal.address
-        }
+          address: payload.goal.address,
+        },
       }
     case updateGoal.success().type:
       return {
         ...state,
         [payload.address]: {
           ...payload.entry,
-          address: payload.address
-        }
+          address: payload.address,
+        },
       }
     case fetchGoals.success().type:
       // payload is [ { goal: { key: val }, address: 'asdfy' }, ... ]
       const mapped = payload.map(r => {
         return {
           ...r.entry,
-          address: r.address
+          address: r.address,
         }
       })
       // mapped is [ { key: val, address: 'asdfy' }, ...]
@@ -43,7 +43,7 @@ export default function (state = defaultState, action) {
       // Holochain fetch
       return {
         ...state,
-        ...newVals
+        ...newVals,
       }
     case archiveGoal.success().type:
       // return the state without any goals whose address matches

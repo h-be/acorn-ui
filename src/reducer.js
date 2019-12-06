@@ -22,6 +22,7 @@ import mouse from './mouse/reducer'
 import screensize from './screensize/reducer'
 import viewport from './viewport/reducer'
 import expandedView from './expanded-view/reducer'
+import goalVotes from './goal-votes/reducer'
 // import anotherone from './another/path'
 
 // combine reducers from each feature to create the top-level reducer
@@ -30,6 +31,7 @@ export default combineReducers({
   goals, // goals: goals,
   edges, // edges: edges,
   goalMembers,
+  goalVotes,
   whoami,
   agentAddress,
   ui: combineReducers({
@@ -40,7 +42,7 @@ export default combineReducers({
     screensize,
     viewport,
     mouse,
-    expandedView
-  }) // ,
+    expandedView,
+  }), // ,
   // anotherone: anotherone
 })

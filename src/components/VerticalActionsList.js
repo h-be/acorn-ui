@@ -2,78 +2,125 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import Icon from './Icon'
+import Icon from './Icon/Icon'
 import PeoplePicker from './PeoplePicker'
 import StatusPicker from './StatusPicker'
 import HierarchyPicker from './HierarchyPicker/HierarchyPicker'
 import Priority from './Priority/Priority'
 import StatusIcon from './StatusIcon'
 
-import {
-  archiveGoal,
-  updateGoal
-} from '../goals/actions'
-import {
-  closeGoalForm
-} from '../goal-form/actions'
+import { archiveGoal, updateGoal } from '../goals/actions'
+import { closeGoalForm } from '../goal-form/actions'
 
-function VerticalActionsList({ goalAddress, goal, onArchiveClick, updateGoal }) {
-
+function VerticalActionsList({
+  goalAddress,
+  goal,
+  onArchiveClick,
+  updateGoal,
+}) {
   const defaultViews = {
     status: false,
     squirrels: false,
-    priority: false
+    priority: false,
   }
   const [viewsOpen, setViews] = useState(defaultViews)
 
-  const updateGoalStatus = (status) => {
-    updateGoal({
-      content: goal.content,
-      user_hash: goal.user_hash,
-      unix_timestamp: Date.now(),
-      hierarchy: goal.hierarchy,
-      status
-    }, goalAddress)
+  const updateGoalStatus = status => {
+    updateGoal(
+      {
+        content: goal.content,
+        user_hash: goal.user_hash,
+        unix_timestamp: Date.now(),
+        hierarchy: goal.hierarchy,
+        status,
+      },
+      goalAddress
+    )
   }
 
   const updateGoalHierarchy = hierarchy => {
-    updateGoal({
-      content: goal.content,
-      user_hash: goal.user_hash,
-      unix_timestamp: Date.now(),
-      hierarchy,
-      status: goal.status
-    }, goalAddress)
+    updateGoal(
+      {
+        content: goal.content,
+        user_hash: goal.user_hash,
+        unix_timestamp: Date.now(),
+        hierarchy,
+        status: goal.status,
+      },
+      goalAddress
+    )
   }
 
   return (
     <div className='vertical_actions_list'>
       {/* status */}
-      <div className='action_list_item' key='status' onClick={() => setViews({ ...defaultViews, status: !viewsOpen.status })}>
+      <div
+        className='action_list_item'
+        key='status'
+        onClick={() =>
+          setViews({ ...defaultViews, status: !viewsOpen.status })
+        }>
         <StatusIcon size='small' status={goal.status} hideTooltip />
         <span>status</span>
       </div>
-      {viewsOpen.status && <StatusPicker selectedStatus={goal.status} statusClicked={updateGoalStatus} onClose={() => setViews({ ...defaultViews })} />}
+      {viewsOpen.status && (
+        <StatusPicker
+          selectedStatus={goal.status}
+          statusClicked={updateGoalStatus}
+          onClose={() => setViews({ ...defaultViews })}
+        />
+      )}
       {/* squirrels */}
-      <div className='action_list_item' key='squirrels' onClick={() => setViews({ ...defaultViews, squirrels: !viewsOpen.squirrels })}>
+      <div
+        className='action_list_item'
+        key='squirrels'
+        onClick={() =>
+          setViews({ ...defaultViews, squirrels: !viewsOpen.squirrels })
+        }>
         <Icon name='squirrel_white.svg' />
         <span>squirrels</span>
       </div>
-      {viewsOpen.squirrels && <PeoplePicker onClose={() => setViews({ ...defaultViews })} />}
+      {viewsOpen.squirrels && (
+        <PeoplePicker onClose={() => setViews({ ...defaultViews })} />
+      )}
       {/* hierarchy */}
-      <div className='action_list_item' key='hierarchies' onClick={() => setViews({ ...defaultViews, hierarchy: !viewsOpen.hierarchy })}>
+      <div
+        className='action_list_item'
+        key='hierarchies'
+        onClick={() =>
+          setViews({ ...defaultViews, hierarchy: !viewsOpen.hierarchy })
+        }>
         <Icon name='hierarchy_white.svg' />
         <span>Hierarchy</span>
       </div>
-      {viewsOpen.hierarchy && <HierarchyPicker onClose={() => setViews({ ...defaultViews })} selectedHierarchy={goal.hierarchy} hierarchyClicked={updateGoalHierarchy} />}
+      {viewsOpen.hierarchy && (
+        <HierarchyPicker
+          onClose={() => setViews({ ...defaultViews })}
+          selectedHierarchy={goal.hierarchy}
+          hierarchyClicked={updateGoalHierarchy}
+        />
+      )}
       {/* priority */}
-      <div className='action_list_item' key='priority' onClick={() => setViews({ ...defaultViews, priority: !viewsOpen.priority })}>
+      <div
+        className='action_list_item'
+        key='priority'
+        onClick={() =>
+          setViews({ ...defaultViews, priority: !viewsOpen.priority })
+        }>
         <Icon name='priority_white.svg' />
         <span>priority</span>
       </div>
-      {viewsOpen.priority && <Priority onClose={() => setViews({ ...defaultViews })} selectedPriority={goal.priority} />}
+      {viewsOpen.priority && (
+        <Priority
+          onClose={() => setViews({ ...defaultViews })}
+          selectedPriority={goal.priority}
+        />
+      )}
       {/* archive */}
-      <div className='action_list_item' key='archive' onClick={() => onArchiveClick(goalAddress)}>
+      <div
+        className='action_list_item'
+        key='archive'
+        onClick={() => onArchiveClick(goalAddress)}>
         <Icon name='archive_white.svg' />
         <span>archive</span>
       </div>
@@ -88,28 +135,28 @@ VerticalActionsList.propTypes = {
     user_hash: PropTypes.string.isRequired,
     unix_timestamp: PropTypes.number.isRequired,
     hierarchy: PropTypes.string.isRequired,
-    status: PropTypes.string.isRequired
+    status: PropTypes.string.isRequired,
   }).isRequired,
   onArchiveClick: PropTypes.func.isRequired,
-  updateGoal: PropTypes.func.isRequired
+  updateGoal: PropTypes.func.isRequired,
 }
 
 function mapStateToProps(state) {
   const goalAddress = state.ui.goalForm.editAddress
   return {
     goalAddress,
-    goal: state.goals[goalAddress]
+    goal: state.goals[goalAddress],
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    onArchiveClick: (address) => {
+    onArchiveClick: address => {
       return dispatch(archiveGoal.create({ address }))
     },
     updateGoal: (goal, address) => {
       return dispatch(updateGoal.create({ address, goal }))
-    }
+    },
   }
 }
 
