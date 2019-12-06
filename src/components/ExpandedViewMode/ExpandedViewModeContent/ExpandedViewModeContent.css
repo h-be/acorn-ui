@@ -51,7 +51,11 @@
 }
 
 .timeframe-wrapper {
-  position: realtive;
+  position: relative;
+}
+
+.timeframe-wrapper .picker-popup {
+  top: 25px;
 }
 
 
