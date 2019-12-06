@@ -3,8 +3,9 @@ border-radius: 10px;
 background: #FFFFFF;
 box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
 padding: 20px 0px;
-width: 300px;
 position: absolute;
+height: 390px;
+width: 320px;
 }
 
 .date_picker_close {
@@ -15,11 +16,136 @@ position: absolute;
 }
 
 .date_picker_content {
-  padding: 0 10px;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: row;
+  margin-top: 16px;
+  align-items: center;
+}
+
+/*DateRangePicker Styling Overrrides */
+
+.DateRangePickerInput {
+  background-color: transparent;
+}
+
+.DateRangePickerInput__withBorder {
+  border: none;
   display: flex;
   flex-direction: row;
 }
 
-.MuiInputBase-input {
-  color: purple;
+.DateInput {
+  width: 100px;
+  background: transparent;
 }
+
+.DateInput_input {
+  font-size: 14px;
+  border: 1px solid #F2F2F2;
+  border-radius: 10px;
+  padding: 5px 4px 4px 10px;
+  width: 95%;
+  font-family: 'rennerbook', Helvetica, sans-serif;
+  font-weight: normal;
+}
+
+.DateRangePickerInput_arrow {
+  display: inline-block;
+  vertical-align: middle;
+  color:#484848;
+  margin-left: 8px;
+}
+
+.DateRangePickerInput_arrow_svg {
+  margin: 8px;
+  box-sizing: border-box;
+  height: 20px;
+  width: 40px;
+  padding: 2px;
+}
+
+.clear_button {
+  outline: none;
+  background: none;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  font-family: 'renner_mediummedium';
+  font-size: 11px;
+  padding: 0;
+  color: #00BEB0;
+}
+
+.clear_button:hover {
+  color: #5F65FF;
+}
+
+.DateRangePickerInput_clearDates {
+  right: -36px;
+  width: 65px;
+  top: unset;
+  right: unset;
+  left: 0;
+  bottom: 0;
+  margin: 0 10px 0 0;
+}
+
+.DateRangePickerInput__showClearDates {
+  padding-right: 0;
+}
+
+.DateRangePickerInput__withBorder {
+  height: 380px;
+}
+
+.DateRangePicker_picker {
+  background-color: transparent;
+  margin-left: -19px;
+  margin-top: -25px;
+}
+
+.DayPicker__withBorder {
+  box-shadow: none;
+}
+
+.DateInput_fangStroke {
+  display: none;
+}
+
+.DayPicker_transitionContainer {
+  max-width: 300px;
+}
+
+.DayPickerNavigation_leftButton__horizontalDefault {
+  left: 20px;
+  border: none;
+}
+
+.DayPickerNavigation_rightButton__horizontalDefault {
+  right: 20px;
+  border: none;
+}
+
+.DayPicker__horizontal {
+  background: transparent;
+}
+
+.CalendarMonth_caption {
+  font-size: 14px;
+  font-family: 'renner_mediummedium', Helvetica, sans-serif;
+  font-weight: normal;
+  padding-bottom: 42px;
+}
+
+.CalendarMonth_table {
+  margin-top: 7px;
+}
+
+.DayPickerKeyboardShortcuts_show__bottomRight {
+  display: none;
+}
+

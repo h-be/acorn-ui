@@ -30,6 +30,10 @@
     width: 50%;
 }
 
+.timeframe-wrapper {
+  position: realtive;
+}
+
 
 .expanded_view_description {
     border: 1px solid #F2F2F2;
