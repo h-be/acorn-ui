@@ -3,7 +3,7 @@ import './PriorityGoal.css'
 import { NavLink } from 'react-router-dom'
 
 import Avatar from '../Avatar/Avatar'
-import Icon from '../Icon'
+import Icon from '../Icon/Icon'
 
 function PriorityGoal({ goal }) {
   console.log(goal)

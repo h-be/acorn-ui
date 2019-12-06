@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import './ExpandedViewMode.css'
-import Icon from '../Icon'
+import Icon from '../Icon/Icon'
 
 import { updateGoal } from '../../goals/actions'
 
@@ -33,7 +33,7 @@ function ExpandedViewMode({
           updateGoal={updateGoal}
         />
         <div className='expanded_view_main'>
-          <ExpandedViewModeContent goal={goal} />
+          <ExpandedViewModeContent goalAddress={goalAddress} updateGoal={updateGoal} goal={goal} />
           <RightMenu />
         </div>
         <ExpandedViewModeFooter />

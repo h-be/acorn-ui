@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import Icon from './Icon'
+import Icon from './Icon/Icon'
 
 import layoutFormula from '../drawing/layoutFormula'
 import { coordsCanvasToPage } from '../drawing/coordinateSystems'
