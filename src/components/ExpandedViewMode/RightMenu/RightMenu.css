@@ -11,7 +11,7 @@
   border: 1px solid #e6e6e6;
   border-right: none;
   padding: 12px;
-  height: 50px;
+  height: 46px;
 }
 
 
@@ -27,10 +27,14 @@
 }
 
 .expanded_view_right_menu .people_picker.picker-popup {
-  top: 207px;
+  top: 103px;
   right: -261px;
 }
 
 .expanded_view_right_menu .priority_wrapper.picker-popup {
+  right: -328px;
+}
+
+.expanded_view_right_menu .date_picker_wrapper.picker-popup {
   right: -328px;
 }

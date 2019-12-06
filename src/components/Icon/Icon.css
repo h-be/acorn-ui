@@ -51,6 +51,7 @@
   position: relative;
   right: -2px;
   top: 1px;
+  background: transparent;
 }
 
 .icon.view-mode-small {

@@ -24,7 +24,8 @@
 
 
 .expanded_view_header .picker-popup {
-  margin-top: 36px;
+  margin-top: 54px;
+  z-index: 2;
 }
 
 .expanded_view_header .vertical_action_close {
