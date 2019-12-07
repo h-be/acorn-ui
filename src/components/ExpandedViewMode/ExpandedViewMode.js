@@ -11,12 +11,7 @@ import RightMenu from './RightMenu/RightMenu'
 import ExpandedViewModeContent from './ExpandedViewModeContent/ExpandedViewModeContent'
 import ExpandedViewModeFooter from './ExpandedViewModeFooter/ExpandedViewModeFooter'
 
-function ExpandedViewMode({
-  goalAddress,
-  goal,
-  updateGoal,
-  onClose,
-}) {
+function ExpandedViewMode({ goalAddress, goal, updateGoal, onClose, squirrels }) {
   return (
     <div className='expanded_view_overlay'>
       <div className={`expanded_view_wrapper border_${goal.status}`}>
@@ -36,6 +31,7 @@ function ExpandedViewMode({
             goalAddress={goalAddress}
             updateGoal={updateGoal}
             goal={goal}
+            squirrels={squirrels}
           />
           <RightMenu
             goalAddress={goalAddress}
@@ -63,9 +59,16 @@ ExpandedViewMode.propTypes = {
 }
 
 function mapStateToProps(state) {
+  const goal = state.goals[state.ui.expandedView.goalAddress]
+  const squirrels = Object.keys(state.goalMembers)
+    .map(address => state.goalMembers[address])
+    .filter(goalMember => goalMember.goal_address === goal.address)
+    .map(goalMember => state.agents[goalMember.agent_address])
+
   return {
     goalAddress: state.ui.expandedView.goalAddress,
-    goal: state.goals[state.ui.expandedView.goalAddress],
+    goal,
+    squirrels,
   }
 }
 
