@@ -116,7 +116,9 @@ PeoplePicker.propTypes = {
 }
 
 function mapStateToProps(state) {
-  const goalAddress = state.ui.goalForm.editAddress
+  const goalAddress = state.ui.goalForm.isOpen
+    ? state.ui.goalForm.editAddress
+    : state.ui.expandedView.goalAddress
   const membersOfGoal = Object.keys(state.goalMembers)
     .map(address => state.goalMembers[address])
     .filter(goalMember => goalMember.goal_address === goalAddress)
