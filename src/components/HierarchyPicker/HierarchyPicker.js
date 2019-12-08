@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './HierarchyPicker.css'
 import PickerTemplate from '../PickerTemplate/PickerTemplate'
+import Icon from '../Icon/Icon'
 
 export default function HierarchyPicker({ selectedHierarchy, hierarchyClicked, onClose }) {
   const hierarchies = [
@@ -71,7 +72,7 @@ function HierarchyOption({ selected, onClick, name, icon, description }) {
         onClick(name)
       }}>
       <div className='hierarchy_option_icon_container'>
-        {icon && <img src={`img/${icon}`} />}
+        {icon && <Icon name={icon} />}
       </div>
       <div className='hierarchy_option_content'>
         <span>{name}</span>
