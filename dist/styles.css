@@ -382,7 +382,7 @@ h4 {
   border: 1px solid #5f65ff;
 }
 
-.action_list_item img {
+.action_list_item .icon {
   margin-right: 5px;
 }
 

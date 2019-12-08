@@ -5,7 +5,7 @@
     flex-direction: row;
 }
 
-.expanded_view_header img{
+.expanded_view_header .icon{
   margin-right: 16px;
   height: 22;
 }
