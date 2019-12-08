@@ -38,6 +38,7 @@ function App(props) {
         <Route path='/board/map' component={MapView} />
         <Route path='/board/priority' component={PriorityView} />
         <Route path='/register' component={CreateProfilePage} />
+        <Route path='/' render={() => <Redirect to='/board/map' />} />
       </Switch>
       {agentAddress && (
         <Header
