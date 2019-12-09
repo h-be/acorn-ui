@@ -1,10 +1,10 @@
 import React from 'react'
+import { Switch, Route } from 'react-router-dom'
 import onClickOutside from 'react-onclickoutside'
 import GuideBook from '../GuideBook/GuideBook'
 import './Header.css'
 import Avatar from '../Avatar/Avatar'
 import Icon from '../Icon/Icon'
-import { throws } from 'assert'
 import ListExport from '../ListExport/ListExport'
 
 class Header extends React.Component {
@@ -153,7 +153,26 @@ class Header extends React.Component {
             {this.props.whoami && (
               <div className='current-canvas-wrapper'>
                 <div className='current-canvas-content'>
-                  <Icon name='map.svg' className='view-mode grey' />
+                  <Switch>
+                    <Route
+                      path='/board/map'
+                      render={() => (
+                        <Icon
+                          name='map.svg'
+                          className='view-mode grey not-hoverable'
+                        />
+                      )}
+                    />
+                    <Route
+                      path='/board/priority'
+                      render={() => (
+                        <Icon
+                          name='priority_898989.svg'
+                          className='view-mode grey not-hoverable'
+                        />
+                      )}
+                    />
+                  </Switch>
                   <div className='canvas-name'>H-BE SoA</div>
                   <div className='divider-line'></div>
                   <Icon

@@ -13,7 +13,7 @@ function Icon({ name, withBackground, size, className, onClick = () => {} }) {
         className='inner-icon'
         style={{
           maskImage: `url(img/${name})`,
-          webkitMaskImage: `url(img/${name})`,
+          WebkitMaskImage: `url(img/${name})`,
         }}></div>
     </div>
   )

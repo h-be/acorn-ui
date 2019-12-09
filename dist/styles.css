@@ -208,6 +208,12 @@ div.react {
 
 }
 
+/* features in development */
+
+.feature-in-development {
+  opacity: 0.1;
+}
+
 /* headers */
 
 h1 {
