@@ -44,7 +44,8 @@
 }
 
 .current-canvas-content {
-  margin-left: 20px;
+  margin-left: 16px;
+  margin-right: 8px;
   display: flex;
   align-items: center;
 }
@@ -156,9 +157,7 @@
 }
 
 
-
-
-.instructions_wrapper .close_icon {
+.instructions_wrapper .small-close {
   position: absolute;
   top: 40px;
   right: 40px;
@@ -176,14 +175,6 @@
 }
 
 /* profile section on header */
-
-.top-right-panel>.icon, .top-right-panel>div {
-  width: 36px;
-  height: 36px;
-  margin: 0px;
-  display: inline-block;
-  position: relative;
-}
 
 .top-right-panel icon {
   margin-right: 10px;
@@ -204,8 +195,8 @@
   position: absolute;
   width: 16px;
   height: 16px;
-  top: 78%;
-  left: 78%;
+  right: 22px;
+  bottom: -2px;
   transform: translate(-50%, -50%);
   border-radius: 50%;
 }

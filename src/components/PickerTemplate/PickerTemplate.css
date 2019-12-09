@@ -8,6 +8,13 @@
   z-index: 1;
 }
 
+.picker-popup .small-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
 .picker-popup-heading {
   font-size: 16px;
   font-family: 'rennerbold';

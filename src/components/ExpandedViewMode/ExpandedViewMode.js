@@ -18,8 +18,8 @@ function ExpandedViewMode({ goalAddress, goal, updateGoal, onClose, squirrels })
         <Icon
           onClick={onClose}
           name='x_a3a3a3.svg'
-          size='small'
-          className='close_icon'
+          size='small-close'
+          className='grey'
         />
         <ExpandedViewModeHeader
           goalAddress={goalAddress}

@@ -18,13 +18,13 @@ function Footer() {
       <div className={bottomRightPanelClassName} >
         {mapPage && <Zoom />}
         <div className='view-mode-icons'>
-          <NavLink to='/board/map'>
-            <Icon name='map_5f65ff.svg' size='view-mode' />
+          <NavLink to='/board/map' activeClassName='view-mode-active'>
+            <Icon name='map.svg' size='view-mode' className='grey' />
           </NavLink>
-          <NavLink to='/board/priority'>
-            <Icon name='priority_898989.svg' size='view-mode' />
+          <NavLink to='/board/priority' activeClassName='view-mode-active'>
+            <Icon name='priority_898989.svg' size='view-mode' className='grey' />
           </NavLink>
-          <Icon name='timeline_898989.svg' size='view-mode' />
+          {/* <Icon name='timeline_898989.svg' className='grey' size='view-mode' /> */}
         </div>
       </div>
     </div>

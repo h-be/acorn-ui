@@ -196,7 +196,7 @@ function Priority({
     return (
       <div key={index} className='priority_item'>
         <Icon
-          className='priority_item_icon'
+          className='priority_item_icon not-hoverable'
           name={priorityItem.priorityIcon}
           size='small'
         />

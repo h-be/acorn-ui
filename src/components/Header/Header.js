@@ -19,14 +19,11 @@ class Header extends React.Component {
     this.clickSearch = this.clickSearch.bind(this)
     this.clickExport = this.clickExport.bind(this)
 
-    this.hoverExport = this.hoverExport.bind(this)
-
     this.hover = this.hover.bind(this)
     this.handleStatusEnter = this.handleStatusEnter.bind(this)
     this.handleStatusLeave = this.handleStatusLeave.bind(this)
     this.state = {
       isGuideOpen: false,
-      isHoverExport: false,
       online: {},
       isStatusHover: false,
       isStatusOpen: false,
@@ -83,9 +80,7 @@ class Header extends React.Component {
   hover(bool) {
     this.setState({ avatar: bool })
   }
-  hoverExport(bool) {
-    this.setState({ isHoverExport: bool })
-  }
+
   clickStatus(e) {
     this.setState({
       isStatusOpen: !this.state.isStatusOpen,
@@ -149,38 +144,24 @@ class Header extends React.Component {
         <div className='header'>
           <div className='top-left-panel'>
             <div className='logo'>
-              <Icon name='acorn-logo-stroked.svg' className='logo' />
+              <Icon
+                name='acorn-logo-stroked.svg'
+                className='logo not-hoverable'
+              />
               <p className='logo-name'>acorn</p>
             </div>
             {this.props.whoami && (
               <div className='current-canvas-wrapper'>
                 <div className='current-canvas-content'>
-                  <Icon name='map.svg' className='view-mode' />
+                  <Icon name='map.svg' className='view-mode grey' />
                   <div className='canvas-name'>H-BE SoA</div>
                   <div className='divider-line'></div>
-                  <div
-                    onMouseEnter={e => {
-                      this.hoverExport(true)
-                    }}
-                    onMouseLeave={e => {
-                      this.hoverExport(false)
-                    }}>
-                    {' '}
-                    {this.state.isHoverExport && (
-                      <Icon
-                        name='export-hover.svg'
-                        size='header'
-                        onClick={this.clickExport}
-                      />
-                    )}
-                    {!this.state.isHoverExport && (
-                      <Icon
-                        name='export.svg'
-                        size='header'
-                        onClick={this.clickExport}
-                      />
-                    )}
-                  </div>
+                  <Icon
+                    name='export.svg'
+                    size='header'
+                    className={this.state.isExportOpen ? 'purple' : ''}
+                    onClick={this.clickExport}
+                  />
                 </div>
               </div>
             )}
@@ -191,7 +172,7 @@ class Header extends React.Component {
               <Icon
                 name='guidebook.svg'
                 onClick={this.clickBook}
-                className='header'
+                size='header'
               />
               <div className={this.state.online.color}>
                 <div
@@ -217,14 +198,14 @@ class Header extends React.Component {
                     <Icon
                       name={this.state.online.img}
                       onClick={this.clickStatus}
-                      className='user-status'
+                      className='user-status white'
                     />
                   )}
                   {(this.state.isStatusOpen || this.state.isStatusHover) && (
                     <Icon
                       name='user-status-hover.svg'
                       onClick={this.clickStatus}
-                      className='user-status'
+                      className='user-status white not-hoverable'
                     />
                   )}
                 </span>
@@ -244,9 +225,9 @@ class Header extends React.Component {
           <div className='instructions_wrapper'>
             <GuideBook />
             <Icon
-              className='close_icon'
               name='x_a3a3a3.svg'
-              size='small'
+              size='small-close'
+              className='grey'
               onClick={() => {
                 this.setState({ isGuideOpen: false })
               }}
@@ -304,7 +285,7 @@ const ListStatus = props => {
       onClick={color => {
         props.changeStatus(props.color)
       }}>
-      <Icon name={props.img} className='user-status' />
+      <Icon name={props.img} className='user-status white not-hoverable' />
       <p>{props.title}</p>
     </button>
   )
