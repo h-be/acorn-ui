@@ -4,7 +4,7 @@ import './Priority.css'
 import Icon from '../Icon'
 import Button from '../Button/Button'
 import { connect } from 'react-redux'
-
+import moment from 'moment'
 import Slider from '@material-ui/core/Slider'
 import { makeStyles } from '@material-ui/core/styles'
 import {
@@ -178,7 +178,7 @@ function Priority({
       impact: values['Impact'] / 100,
       effort: values['Effort'] / 100,
       agent_address: whoami.entry.address,
-      unix_timestamp: Date.now(),
+      unix_timestamp: moment().unix(),
     }
 
     const vote = votes.find(value => {

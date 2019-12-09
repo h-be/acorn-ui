@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import Icon from './Icon'
 import { addMemberOfGoal, archiveMemberOfGoal } from '../goal-members/actions'
 import Avatar from './Avatar/Avatar'
-
+import moment from 'moment'
 function PeoplePicker({
   people,
   goalAddress,
@@ -147,7 +147,7 @@ function mapDispatchToProps(dispatch) {
           goal_member: {
             goal_address,
             agent_address,
-            unix_timestamp: Date.now(),
+            unix_timestamp: moment().unix(),
           },
         })
       )

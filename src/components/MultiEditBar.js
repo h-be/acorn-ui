@@ -6,6 +6,7 @@ import StatusPicker from './StatusPicker'
 import StatusIcon from './StatusIcon'
 
 import { updateGoal } from '../goals/actions'
+import moment from 'moment'
 
 function MultiEditBar({ selectedGoals, updateGoal }) {
   const defaultViews = {
@@ -20,7 +21,7 @@ function MultiEditBar({ selectedGoals, updateGoal }) {
         {
           content: goal.content,
           user_hash: goal.user_hash,
-          unix_timestamp: Date.now(),
+          unix_timestamp: moment().unix(),
           hierarchy: goal.hierarchy,
           description: '',
           status,

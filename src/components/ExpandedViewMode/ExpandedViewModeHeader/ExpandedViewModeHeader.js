@@ -4,7 +4,7 @@ import './ExpandedViewModeHeader.css'
 import Icon from '../../Icon'
 import StatusPicker from '../../StatusPicker'
 import StatusIcon from '../../StatusIcon'
-
+import moment from 'moment'
 export default function ExpandedViewModeHeader({
   goalAddress,
   goal,
@@ -20,7 +20,7 @@ export default function ExpandedViewModeHeader({
       {
         content: goal.content,
         user_hash: goal.user_hash,
-        unix_timestamp: Date.now(),
+        unix_timestamp: moment().unix(),
         hierarchy: goal.hierarchy,
         description: '',
         status,

@@ -30,7 +30,7 @@ function VerticalActionsList({
       {
         content: goal.content,
         user_hash: goal.user_hash,
-        unix_timestamp: Date.now(),
+        unix_timestamp: moment().unix(),
         hierarchy: goal.hierarchy,
         status,
       },
@@ -43,7 +43,7 @@ function VerticalActionsList({
       {
         content: goal.content,
         user_hash: goal.user_hash,
-        unix_timestamp: Date.now(),
+        unix_timestamp: moment().unix(),
         hierarchy,
         status: goal.status,
       },
@@ -133,7 +133,7 @@ VerticalActionsList.propTypes = {
   goal: PropTypes.shape({
     content: PropTypes.string.isRequired,
     user_hash: PropTypes.string.isRequired,
-    unix_timestamp: PropTypes.number.isRequired,
+    timestamp_created: PropTypes.number.isRequired,
     hierarchy: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
   }).isRequired,

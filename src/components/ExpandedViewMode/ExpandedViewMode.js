@@ -17,6 +17,7 @@ function ExpandedViewMode({
   onArchiveClick,
   updateGoal,
   onClose,
+  creater,
 }) {
   return (
     <div className='expanded_view_overlay'>
@@ -33,10 +34,14 @@ function ExpandedViewMode({
           updateGoal={updateGoal}
         />
         <div className='expanded_view_main'>
-          <ExpandedViewModeContent goalAddress={goalAddress} updateGoal={updateGoal} goal={goal} />
+          <ExpandedViewModeContent
+            goalAddress={goalAddress}
+            updateGoal={updateGoal}
+            goal={goal}
+          />
           <RightMenu />
         </div>
-        <ExpandedViewModeFooter />
+        <ExpandedViewModeFooter goal={goal} creater={creater} />
       </div>
     </div>
   )
@@ -47,7 +52,7 @@ ExpandedViewMode.propTypes = {
   goal: PropTypes.shape({
     content: PropTypes.string.isRequired,
     user_hash: PropTypes.string.isRequired,
-    unix_timestamp: PropTypes.number.isRequired,
+    timestamp_created: PropTypes.number.isRequired,
     hierarchy: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
   }).isRequired,
@@ -55,9 +60,16 @@ ExpandedViewMode.propTypes = {
 }
 
 function mapStateToProps(state) {
+  const goal = state.goals[state.ui.expandedView.goalAddress]
+  let creater = null
+  Object.keys(state.agents).forEach(value => {
+    if (state.agents[value].address === goal.user_hash)
+      creater = state.agents[value]
+  })
   return {
     goalAddress: state.ui.expandedView.goalAddress,
-    goal: state.goals[state.ui.expandedView.goalAddress],
+    goal,
+    creater,
   }
 }
 

@@ -7,7 +7,7 @@ import { createGoal, updateGoal } from '../goals/actions'
 import { createEdge } from '../edges/actions'
 import { closeGoalForm, updateContent } from '../goal-form/actions'
 import layoutFormula from '../drawing/layoutFormula'
-
+import moment from 'moment'
 import VerticalActionsList from './VerticalActionsList'
 
 // a React Component is defined as a class that extends the basic
@@ -88,8 +88,8 @@ class GoalForm extends Component {
     this.props.createGoal(
       {
         content: this.props.content,
-        user_hash: 'Boop',
-        unix_timestamp: Date.now(),
+        user_hash: this.props.whoami.entry.address,
+        timestamp_created: moment().unix(),
         hierarchy: 'Branch',
         status: 'Uncertain',
         description: '',
@@ -102,7 +102,7 @@ class GoalForm extends Component {
       {
         content: this.props.content,
         user_hash: 'Boop',
-        unix_timestamp: Date.now(),
+        timestamp_created: moment().unix(),
         hierarchy: 'Branch',
         status: this.props.status,
         description: '',
@@ -190,6 +190,7 @@ function mapStateToProps(state) {
   // the name of the expected proptypes is the same
   // as the name of the properties as stored in state
   return {
+    whoami: state.whoami,
     editAddress,
     parentAddress,
     content,
