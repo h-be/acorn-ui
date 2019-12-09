@@ -6,7 +6,6 @@ import Avatar from '../Avatar/Avatar'
 import Icon from '../Icon/Icon'
 
 function PriorityGoal({ goal }) {
-  console.log(goal)
   return (
     <div className='priority-quadrant-goal-item'>
       <div className='priority-quadrant-goal-title'>
@@ -15,9 +14,10 @@ function PriorityGoal({ goal }) {
       </div>
       <div className='priority-quadrant-goal-info'>
         <Icon name='calendar_898989.svg' size='very-small' />
+        {/* TODO: make this a dynamic value */}
         <span>Aug 14 - Aug 20</span>
-        <Icon name='profile.png' size='small' />
-        <Avatar />
+        {/* TODO: make this a dynamic value */}
+        <Avatar avatar_url={'img/profile.png'} small />
       </div>
       <div className='priority-quadrant-goal-right-menu'>
         <div className='priority-quadrant-goal-view-mode-icons'>

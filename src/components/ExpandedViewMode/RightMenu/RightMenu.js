@@ -66,12 +66,12 @@ export default function RightMenu({ goalAddress, goal, updateGoal }) {
         <DatePicker onClose={() => setViews({ ...defaultViews })} />
       )}
 
-      <Icon name='tag_4d4d4d.svg' className='right_menu_tag' />
-      <Icon name='help_4d4d4d.svg' className='right_menu_help' />
-      <Icon name='link_4d4d4d.svg' className='right_menu_link' />
-      <Icon name='archive_4d4d4d.svg' className='right_menu_archive' />
-      <Icon name='share_4d4d4d.svg' className='right_menu_share' />
-      <Icon name='github_4d4d4d.svg' className='right_menu_github' />
+      <Icon name='tag_4d4d4d.svg' className='right_menu_tag feature-in-development' />
+      <Icon name='help_4d4d4d.svg' className='right_menu_help feature-in-development' />
+      <Icon name='link_4d4d4d.svg' className='right_menu_link feature-in-development' />
+      <Icon name='archive_4d4d4d.svg' className='right_menu_archive feature-in-development' />
+      <Icon name='share_4d4d4d.svg' className='right_menu_share feature-in-development' />
+      <Icon name='github_4d4d4d.svg' className='right_menu_github feature-in-development' />
     </div>
   )
 }

@@ -4,13 +4,18 @@ import './Icon.css'
 
 function Icon({ name, withBackground, size, className, onClick = () => {} }) {
   return (
-    <img
+    <div
       className={`${
         withBackground ? 'with_background' : ''
       } icon ${size} ${className}`}
-      src={`img/${name}`}
-      onClick={onClick}
-    />
+      onClick={onClick}>
+      <div
+        className='inner-icon'
+        style={{
+          maskImage: `url(img/${name})`,
+          WebkitMaskImage: `url(img/${name})`,
+        }}></div>
+    </div>
   )
 }
 
