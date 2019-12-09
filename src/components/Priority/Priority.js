@@ -304,7 +304,9 @@ Priority.propTypes = {
 }
 
 function mapStateToProps(state) {
-  const goalAddress = state.ui.goalForm.editAddress
+  const goalAddress = state.ui.goalForm.isOpen
+    ? state.ui.goalForm.editAddress
+    : state.ui.expandedView.goalAddress
   const votes = Object.values(state.goalVotes).filter(
     gv => gv.goal_address === goalAddress
   )
