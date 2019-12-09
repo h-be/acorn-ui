@@ -1,13 +1,12 @@
 /* Icon */
 
 .icon {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   box-sizing: border-box;
   padding: 6px;
   cursor: pointer;
 }
-
 .inner-icon {
   /* default: black */
   background-color: #000000;
@@ -18,13 +17,26 @@
   height: 100%;
 }
 
+.icon:not(.not-hoverable):hover .inner-icon {
+  background-color: #5F65FF;
+}
+
 .icon.grey .inner-icon {
-  background-color: #333333;
+  background-color: #898989;
+}
+
+.icon.light-grey .inner-icon {
+  background-color: #D1D1D1;
+}
+
+.icon.purple .inner-icon {
+  background-color: #5F65FF;
 }
 
 .icon.white .inner-icon {
   background-color: #FFFFFF;
 }
+
 
 .icon.very-small {
   width: 17px;
@@ -41,9 +53,9 @@
 }
 
 .icon.small-close {
-  width: 14px;
-  height: 14px;
-  padding: 0px;
+  width: 16px;
+  height: 16px;
+  padding: 2px;
   cursor: pointer;
 }
 
@@ -69,7 +81,7 @@
   display: inline-block;
   position: relative;
   right: -2px;
-  top: 1px;
+  top: 2px;
   background: transparent;
 }
 

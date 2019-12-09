@@ -67,13 +67,13 @@
   top: 60px;
 }
 
-.expanded_view_squirrels_wrapper .icon {
-  margin-right: 6px;
-}
-
 .expanded_view_squirrels_content {
   display: flex;
   flex-direction: row;
+}
+
+.expanded_view_squirrels_content .avatar.medium.clickable {
+  margin-right: 6px;
 }
 
 .add_squirrel_plus_icon {

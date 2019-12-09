@@ -36,7 +36,7 @@ function MultiEditBar({ selectedGoals, updateGoal }) {
           setViews({ ...defaultViews, status: !viewsOpen.status })
         }>
         <StatusIcon
-          size='medium'
+          size='small'
           hideTooltip
           status={selectedGoals[0].status}
         />
@@ -49,7 +49,7 @@ function MultiEditBar({ selectedGoals, updateGoal }) {
         onClick={() =>
           setViews({ ...defaultViews, hierarchy: !viewsOpen.hierarchy })
         }>
-        <Icon name='hierarchy_5F65FF.png' size='medium' />
+        <Icon name='hierarchy.svg' size='medium' className='grey' />
         {viewsOpen.hierarchy && (
           <HierarchyPicker
             selectedHierarchy={selectedGoals[0].hierarchy}

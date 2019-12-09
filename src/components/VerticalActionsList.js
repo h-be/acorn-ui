@@ -58,22 +58,22 @@ function VerticalActionsList({
       />
       <VerticalActionListItem
         label='squirrels'
-        icon={<Icon name='squirrel_white.svg' />}
+        icon={<Icon name='squirrel_white.svg' className='white not-hoverable' />}
         onClick={() => toggleView('squirrels')}
       />
       <VerticalActionListItem
         label='hierarchy'
-        icon={<Icon name='hierarchy_white.svg' />}
+        icon={<Icon name='hierarchy_white.svg' className='white not-hoverable' />}
         onClick={() => toggleView('hierarchy')}
       />
       <VerticalActionListItem
         label='priority'
-        icon={<Icon name='priority_white.svg' />}
+        icon={<Icon name='priority_white.svg' className='white not-hoverable' />}
         onClick={() => toggleView('priority')}
       />
       <VerticalActionListItem
         label='archive'
-        icon={<Icon name='archive_white.svg' />}
+        icon={<Icon name='archive_white.svg' className='white not-hoverable' />}
         onClick={() => onArchiveClick(goalAddress)}
       />
       {viewsOpen.status && (

@@ -1,3 +1,8 @@
+.expanded_view_right_menu > .icon:hover .inner-icon,
+.expanded_view_right_menu > .icon.active .inner-icon {
+  background-color: #ffffff;
+}
+
 .expanded_view_right_menu {
     background: #ffffff;
     display: flex;
