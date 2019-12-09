@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './ExpandedViewModeContent.css'
-
+import moment from 'moment'
 export default function ExpandedViewModeContent({
   goalAddress,
   goal,
@@ -18,7 +18,7 @@ export default function ExpandedViewModeContent({
         {
           content,
           user_hash: goal.user_hash,
-          unix_timestamp: Date.now(),
+          timestamp_created: moment().unix(),
           hierarchy: goal.hierarchy,
           status: goal.status,
           description,
@@ -54,7 +54,7 @@ export default function ExpandedViewModeContent({
             type='text'
             defaultValue={goal.content}
             onBlur={updateContent}
-            onChange={handleOnChangeTittle}
+            onChange={handleOnChangeTitle}
             onKeyPress={handlekeyPress}
           />
         ) : (
