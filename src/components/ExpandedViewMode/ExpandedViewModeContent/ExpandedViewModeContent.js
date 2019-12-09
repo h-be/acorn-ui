@@ -54,8 +54,8 @@ export default function ExpandedViewModeContent({
             type='text'
             defaultValue={goal.content}
             onBlur={updateContent}
-            onChange={handleOnChange}
-            onKeyPress={handleOnChangeTittle}
+            onChange={handleOnChangeTittle}
+            onKeyPress={handlekeyPress}
           />
         ) : (
           goal.content
