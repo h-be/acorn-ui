@@ -22,7 +22,7 @@ function PeoplePicker({
       heading='squirrels'
       onClose={onClose}>
       <div className='people_picker_search'>
-        <Icon name='search.svg' size='small' />
+        <Icon name='search.svg' size='small' className='not-hoverable' />
         <input
           type='text'
           onChange={e => setFilterText(e.target.value)}
@@ -79,7 +79,7 @@ function PeoplePicker({
                   <Icon
                     name='radio_button.svg'
                     size='small'
-                    className='radio_button'
+                    className='light-grey radio_button'
                   />
                 )}
                 {person.is_member && (
@@ -87,6 +87,7 @@ function PeoplePicker({
                     name='radio_button_checked.svg'
                     size='small'
                     className='radio_button'
+                    className='purple radio_button'
                   />
                 )}
               </li>

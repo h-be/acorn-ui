@@ -196,7 +196,7 @@ function Priority({
     return (
       <div key={index} className='priority_item'>
         <Icon
-          className='priority_item_icon'
+          className='priority_item_icon not-hoverable'
           name={priorityItem.priorityIcon}
           size='small'
         />
@@ -304,7 +304,9 @@ Priority.propTypes = {
 }
 
 function mapStateToProps(state) {
-  const goalAddress = state.ui.goalForm.editAddress
+  const goalAddress = state.ui.goalForm.isOpen
+    ? state.ui.goalForm.editAddress
+    : state.ui.expandedView.goalAddress
   const votes = Object.values(state.goalVotes).filter(
     gv => gv.goal_address === goalAddress
   )

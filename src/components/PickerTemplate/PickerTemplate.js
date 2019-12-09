@@ -10,6 +10,7 @@ export default function PickerTemplate({ className, children, heading, onClose }
         className='vertical_action_close'
         name='x_a3a3a3.svg'
         size='small-close'
+        className='grey'
         onClick={() => onClose()}
       />
       <div className='picker-popup-heading'>{heading}</div>

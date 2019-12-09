@@ -18,6 +18,10 @@
   margin-left: 24px;
 }
 
-.view-mode-icons img {
+.view-mode-icons .icon {
   margin-right: 24px;
+}
+
+.view-mode-active .icon .inner-icon {
+  background-color: #5F65FF;
 }

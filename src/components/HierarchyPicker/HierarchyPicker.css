@@ -34,7 +34,7 @@
   padding: 0 1rem;
 }
 
-.hierarchy_option_icon_container img {
+.hierarchy_option_icon_container .icon {
   width: 30px;
   height: 30px;
   margin-right: 1rem;

@@ -208,6 +208,12 @@ div.react {
 
 }
 
+/* features in development */
+
+.feature-in-development {
+  opacity: 0.1;
+}
+
 /* headers */
 
 h1 {
@@ -333,7 +339,7 @@ h4 {
   display: flex;
   flex-direction: row;
   list-style: none;
-  margin: 0 0 0 -92px; /* (40:width * 2) + 6:between-margin + 6:edge-margin */
+  margin: 0 0 0 -85px; /* (36:width * 2) + 6:between-margin + 6:edge-margin */
   padding: 0;
 }
 
@@ -382,8 +388,11 @@ h4 {
   border: 1px solid #5f65ff;
 }
 
-.action_list_item img {
+.action_list_item .icon {
   margin-right: 5px;
+}
+.action_list_item .icon.not-hoverable .inner-icon:hover {
+  background-color: #FFFFFF;
 }
 
 /* PeoplePicker */
@@ -489,6 +498,7 @@ h4 {
   height: 26px;
   margin: 6px 12px 6px 6px;
   border-radius: 14px;
+  cursor: pointer;
 }
 
 .status_color_medium {

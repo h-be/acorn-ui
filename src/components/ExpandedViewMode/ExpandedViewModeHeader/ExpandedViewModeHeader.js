@@ -50,17 +50,17 @@ export default function ExpandedViewModeHeader({
       )}
       <Icon
         name='lock_closed_4d4d4d.svg'
-        className='edibility_permission'
+        className='edibility_permission feature-in-development'
         size='medium-expanded-view'
       />
       <Icon
         name='eye_4d4d4d.svg'
-        className='visiblity'
+        className='visiblity feature-in-development'
         size='medium-expanded-view'
       />
       <Icon
         name='notification_4d4d4d.svg'
-        className='follow'
+        className='follow feature-in-development'
         size='medium-expanded-view'
       />
     </div>
