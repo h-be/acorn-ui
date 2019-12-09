@@ -15,7 +15,7 @@ export default function ExpandedViewModeContent({
   updateGoal,
   squirrels,
 }) {
-  // you can use these as values for 
+  // you can use these as values for
   // testing/ development, instead of `squirrels`
   const testSquirrels = [
     { avatar_url: 'img/profile.png' },
@@ -82,15 +82,17 @@ export default function ExpandedViewModeContent({
                 />
               )
             })}
-            <Icon
-              className='add_squirrel_plus_icon'
-              name='plus-line.svg'
-              size='medium'
-              onClick={() => setEditSquirrels(!editSquirrels)}
-            />
-            {editSquirrels && (
-              <PeoplePicker onClose={() => setEditSquirrels(false)} />
-            )}
+            <div className='expanded_view_squirrels_add_wrapper'>
+              <Icon
+                className='add_squirrel_plus_icon'
+                name='plus-line.svg'
+                size='medium'
+                onClick={() => setEditSquirrels(!editSquirrels)}
+              />
+              {editSquirrels && (
+                <PeoplePicker onClose={() => setEditSquirrels(false)} />
+              )}
+            </div>
           </div>
         </div>
         <div className='timeframe_wrapper'>
