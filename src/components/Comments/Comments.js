@@ -21,7 +21,7 @@ function Comment(props) {
       <div>
         <div className='info'>
           <span>{props.name}</span>
-          <span>
+          <span className='date'>
             {moment
               .unix(props.unix)
               .tz('America/Caracas')
@@ -35,15 +35,18 @@ function Comment(props) {
 }
 function Comments(props) {
   const inputRef = React.createRef()
+
   const buttonClick = e => {
-    props
-      .addCommentOfGoal({
-        goal_address: props.goalAddress,
-        content: inputRef.current.value,
-        agent_address: props.avatarAddress,
-        unix_timestamp: moment().unix(),
-      })
-      .then(value => console.log(value))
+    if (inputRef.current.value === '') {
+      return
+    }
+    props.addCommentOfGoal({
+      goal_address: props.goalAddress,
+      content: inputRef.current.value,
+      agent_address: props.avatarAddress,
+      unix_timestamp: moment().unix(),
+    })
+    inputRef.current.value = ''
   }
   // props
   //   .addCommentOfGoal({
@@ -59,26 +62,37 @@ function Comments(props) {
         <div className='avatar_comment_container'>
           <Avatar avatar_url={props.avatarUrl} />
         </div>
-        <input type='text' ref={inputRef} />
-        <Button text='Save' color='green' size='small' onClick={buttonClick} />
+        <div>
+          <input className='input_comment' type='text' ref={inputRef} />
+          <Button
+            text='Save'
+            color='green'
+            size='small'
+            onClick={buttonClick}
+          />
+        </div>
       </div>
-      {Object.keys(props.comments).map(key =>
-        props.comments[key].goal_address === props.goalAddress ? (
-          <Comment
-            key={key}
-            avatarUrl={
-              props.agents[props.comments[key].agent_address].avatar_url
-            }
-            name={`${props.agents[props.comments[key].agent_address].first_name}
+      <div className='scroll'>
+        {Object.keys(props.comments).map(key =>
+          props.comments[key].goal_address === props.goalAddress ? (
+            <Comment
+              key={key}
+              avatarUrl={
+                props.agents[props.comments[key].agent_address].avatar_url
+              }
+              name={`${
+                props.agents[props.comments[key].agent_address].first_name
+              }
                    ${
                      props.agents[props.comments[key].agent_address].last_name
                    }`}
-            unix={props.comments[key].unix_timestamp}
-            agentAddress={props.comments[key].agent_address}
-            content={props.comments[key].content}
-          />
-        ) : null
-      )}
+              unix={props.comments[key].unix_timestamp}
+              agentAddress={props.comments[key].agent_address}
+              content={props.comments[key].content}
+            />
+          ) : null
+        )}
+      </div>
     </div>
   )
 }
