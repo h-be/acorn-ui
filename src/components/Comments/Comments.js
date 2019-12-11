@@ -10,6 +10,7 @@ import moment from 'moment'
 import Icon from '../Icon'
 import './Comments.css'
 import Avatar from '../Avatar/Avatar'
+import Button from '../Button/Button'
 function Comment(props) {
   return (
     <div className='comment'>
@@ -19,13 +20,13 @@ function Comment(props) {
       </div>
       <div>
         <div className='info'>
-          <p>{props.name}</p>
-          <p>
+          <span>{props.name}</span>
+          <span>
             {moment
               .unix(props.unix)
               .tz('America/Caracas')
               .format('Do,hh:mm a')}
-          </p>
+          </span>
         </div>
         <span>{props.content}</span>
       </div>
@@ -33,6 +34,17 @@ function Comment(props) {
   )
 }
 function Comments(props) {
+  const inputRef = React.createRef()
+  const buttonClick = e => {
+    props
+      .addCommentOfGoal({
+        goal_address: props.goalAddress,
+        content: inputRef.current.value,
+        agent_address: props.avatarAddress,
+        unix_timestamp: moment().unix(),
+      })
+      .then(value => console.log(value))
+  }
   // props
   //   .addCommentOfGoal({
   //     goal_address: props.goalAddress,
@@ -43,6 +55,13 @@ function Comments(props) {
   //   .then(value => console.log(value))
   return (
     <div className='comments'>
+      <div>
+        <div className='avatar_comment_container'>
+          <Avatar avatar_url={props.avatarUrl} />
+        </div>
+        <input type='text' ref={inputRef} />
+        <Button text='Save' color='green' size='small' onClick={buttonClick} />
+      </div>
       {Object.keys(props.comments).map(key =>
         props.comments[key].goal_address === props.goalAddress ? (
           <Comment
@@ -50,7 +69,10 @@ function Comments(props) {
             avatarUrl={
               props.agents[props.comments[key].agent_address].avatar_url
             }
-            name={props.agents[props.comments[key].agent_address].first_name}
+            name={`${props.agents[props.comments[key].agent_address].first_name}
+                   ${
+                     props.agents[props.comments[key].agent_address].last_name
+                   }`}
             unix={props.comments[key].unix_timestamp}
             agentAddress={props.comments[key].agent_address}
             content={props.comments[key].content}
@@ -65,6 +87,8 @@ function mapStateToProps(state) {
     comments: state.goalComments,
     goalAddress: state.ui.expandedView.goalAddress,
     avatarAddress: state.whoami.entry.address,
+    avatarUrl: state.whoami.entry.avatar_url,
+
     agents: state.agents,
   }
 }
