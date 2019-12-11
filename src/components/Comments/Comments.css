@@ -1,0 +1,28 @@
+.comments {
+  position: absolute;
+  top: 277px;
+  left: 36px;
+}
+.comment {
+  width: 250px;
+  display: flex;
+  flex-wrap: nowrap;
+}
+.comment > div:last-child {
+  display: flex;
+  flex-direction: column;
+}
+.info {
+  width: 70%;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.avatar_comment_container {
+  display: inline-block;
+}
+.avatar_comment_container img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}

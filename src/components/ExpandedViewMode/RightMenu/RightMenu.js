@@ -7,6 +7,7 @@ import PeoplePicker from '../../PeoplePicker'
 import Priority from '../../Priority/Priority'
 
 import Icon from '../../Icon'
+import Comments from '../../Comments/Comments'
 
 export default function RightMenu({
   goalAddress,
@@ -18,15 +19,26 @@ export default function RightMenu({
   const defaultViews = {
     squirrels: false,
     priority: false,
+    help: false,
   }
   const [viewsOpen, setViews] = useState(defaultViews)
 
   const rightMenuPriorityClass = viewsOpen.priority ? 'active' : ''
+  const rightMenuHelpClass = viewsOpen.help ? 'active' : ''
+
   const rightMenuSquirrelsClass = viewsOpen.squirrels ? 'active' : ''
 
   return (
     <div className='expanded_view_right_menu'>
-      <Icon name='help_4d4d4d.svg' className='right_menu_help' />
+      <Icon
+        name='help_4d4d4d.svg'
+        key='help'
+        className={rightMenuHelpClass}
+        onClick={() => setViews({ ...defaultViews, help: !viewsOpen.help })}
+      />
+      {viewsOpen.help && (
+        <Comments onClose={() => setViews({ ...defaultViews })} />
+      )}
       {/* priority */}
       <Icon
         name='priority_4d4d4d.svg'
