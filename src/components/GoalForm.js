@@ -101,7 +101,7 @@ class GoalForm extends Component {
     this.props.updateGoal(
       {
         content: this.props.content,
-        user_hash: 'Boop',
+        user_hash: this.props.whoami.entry.address,
         timestamp_created: moment().unix(),
         hierarchy: 'Branch',
         status: this.props.status,

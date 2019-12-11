@@ -24,6 +24,7 @@ import { fetchAgents } from './agents/actions'
 import { fetchGoals } from './goals/actions'
 import { fetchEdges } from './edges/actions'
 import { fetchGoalMembers } from './goal-members/actions'
+import { fetchGoalComments } from './goal-comments/actions'
 
 import { fetchGoalVotes } from './goal-votes/actions'
 import { whoami } from './who-am-i/actions'
@@ -60,6 +61,7 @@ function fetchChangingData() {
   store.dispatch(fetchGoals.create({}))
   store.dispatch(fetchGoalMembers.create({}))
   store.dispatch(fetchGoalVotes.create({}))
+  store.dispatch(fetchGoalComments.create({}))
 }
 fetchChangingData()
 // refetch this data every 3 seconds
