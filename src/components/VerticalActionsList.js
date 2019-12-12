@@ -13,7 +13,7 @@ import { archiveGoal, updateGoal } from '../goals/actions'
 import { closeGoalForm } from '../goal-form/actions'
 import AlertPopupTemplate from './AlertPopupTemplate/AlertPopupTemplate'
 
-function VerticalActionListItem({ onClick, label, icon }) {
+function VerticalActionListItem({ onClick, label, icon, }) {
   return (
     <div className='action_list_item' onClick={onClick}>
       {icon}
@@ -49,6 +49,10 @@ function VerticalActionsList({
   const toggleView = key => {
     setViews({ ...defaultViews, [key]: !viewsOpen[key] })
   }
+
+  const archiveMessagePartOne = 'You’re about to archive the card "'
+
+  const archiveMessagePartTwo = '" .You will be able to see this card in the archive view mode in the future. Proceed?'
 
   return (
     <div className='vertical_actions_list'>
@@ -106,7 +110,8 @@ function VerticalActionsList({
           onClose={() => setViews({ ...defaultViews })}
           className='archive_popup'
           heading='Archiving'
-          content='You’re about to archive the card “Feature Hypothesis Statement”. You will be able to see this card in the archive view mode in the future. Proceed?'
+          // TODO : make the archiving message dynamic, showing the title(s) of the card(s) selected for archiving //
+          content={archiveMessagePartOne, archiveMessagePartTwo}
           popupIcon='archive.svg'
           primaryButton='Yes, Archive'
           altButton='Nevermind'
