@@ -1,14 +1,11 @@
 import React from 'react'
+import moment from 'moment-timezone'
 import './ExpandedViewModeFooter.css'
 
-import Icon from '../../Icon'
-import moment from 'moment-timezone'
+import Icon from '../../Icon/Icon'
+
 export default function ExpandedViewModeFooter({
-  goalAddress,
   goal,
-  onArchiveClick,
-  updateGoal,
-  onClose,
   creater,
 }) {
   return (

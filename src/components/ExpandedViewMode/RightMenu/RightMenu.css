@@ -1,3 +1,8 @@
+.expanded_view_right_menu > .icon:hover .inner-icon,
+.expanded_view_right_menu > .icon.active .inner-icon {
+  background-color: #ffffff;
+}
+
 .expanded_view_right_menu {
     background: #ffffff;
     display: flex;
@@ -5,17 +10,17 @@
     margin-top: 0.5px;
 }
 
-.expanded_view_right_menu > img {
+.expanded_view_right_menu > .icon {
   margin-top: -1px;
   width: 50px;
   border: 1px solid #e6e6e6;
   border-right: none;
   padding: 12px;
-  height: 50px;
+  height: 46px;
 }
 
 
-.expanded_view_right_menu > img:hover, .expanded_view_right_menu > img.active {
+.expanded_view_right_menu > .icon:hover, .expanded_view_right_menu > .icon.active {
   background: #5F65FF;
   width: 58px;
   margin-left: -8px;
@@ -26,11 +31,15 @@
   transition: all .2s;
 }
 
-.expanded_view_right_menu .people_picker.vertical_action_overlay {
-  top: 207px;
+.expanded_view_right_menu .people_picker.picker-popup {
+  top: 103px;
   right: -261px;
 }
 
-.expanded_view_right_menu .priority_wrapper.vertical_action_overlay {
+.expanded_view_right_menu .priority_wrapper.picker-popup {
+  right: -328px;
+}
+
+.expanded_view_right_menu .date_picker_wrapper.picker-popup {
   right: -328px;
 }

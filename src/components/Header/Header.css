@@ -44,12 +44,13 @@
 }
 
 .current-canvas-content {
-  margin-left: 20px;
+  margin-left: 16px;
+  margin-right: 8px;
   display: flex;
   align-items: center;
 }
 
-.current-canvas-content img {
+.current-canvas-content .icon {
   margin-right: 10px;
 }
 
@@ -112,7 +113,7 @@
   align-items: center;
 }
 
-.stop-right-panel div img {
+.stop-right-panel div .icon {
   width: 100%;
   display: block;
 }
@@ -149,16 +150,14 @@
   z-index: -1;
 }
 
-.guidebook_open_help img {
+.guidebook_open_help .icon {
   max-width: 70px;
   padding-bottom: 5px;
   padding-left: 10px;
 }
 
 
-
-
-.instructions_wrapper .close_icon {
+.instructions_wrapper .small-close {
   position: absolute;
   top: 40px;
   right: 40px;
@@ -176,14 +175,6 @@
 }
 
 /* profile section on header */
-
-.top-right-panel>img, .top-right-panel>div {
-  width: 36px;
-  height: 36px;
-  margin: 0px;
-  display: inline-block;
-  position: relative;
-}
 
 .top-right-panel icon {
   margin-right: 10px;
@@ -204,8 +195,8 @@
   position: absolute;
   width: 16px;
   height: 16px;
-  top: 78%;
-  left: 78%;
+  right: 22px;
+  bottom: -2px;
   transform: translate(-50%, -50%);
   border-radius: 50%;
 }
@@ -221,7 +212,7 @@
   color: #5F65FF;
 }
 
-.profile-wrapper button img {
+.profile-wrapper button .icon {
   border-radius: 50%;
   height: 16px;
   width: 16px;
@@ -271,19 +262,19 @@
   background-color: #D1D1D1;
 }
 
-button.green img {
+button.green .icon {
   background-color: #00D0C0;
 }
 
-button.purple img {
+button.purple .icon {
   background-color: #5F65FF;
 }
 
-button.yellow img {
+button.yellow .icon {
   background-color: #FFC400;
 }
 
-button.gray img {
+button.gray .icon {
   background-color: #D1D1D1;
 }
 
@@ -356,7 +347,7 @@ button.gray img {
   align-items: center;
 }
 
-.user-status-wrapper button img {
+.user-status-wrapper button .icon {
   border-radius: 50%;
   height: 16px;
   width: 16px;
