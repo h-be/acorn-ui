@@ -85,7 +85,7 @@ export default function ExpandedViewModeContent({
             <div className='expanded_view_squirrels_add_wrapper'>
               <Icon
                 className='add_squirrel_plus_icon'
-                name='plus-line.svg'
+                name='plus.svg'
                 size='medium'
                 onClick={() => setEditSquirrels(!editSquirrels)}
               />

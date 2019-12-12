@@ -11,6 +11,7 @@ import StatusIcon from './StatusIcon'
 
 import { archiveGoal, updateGoal } from '../goals/actions'
 import { closeGoalForm } from '../goal-form/actions'
+import AlertPopupTemplate from './AlertPopupTemplate/AlertPopupTemplate'
 
 function VerticalActionListItem({ onClick, label, icon }) {
   return (
@@ -58,23 +59,27 @@ function VerticalActionsList({
       />
       <VerticalActionListItem
         label='squirrels'
-        icon={<Icon name='squirrel_white.svg' className='white not-hoverable' />}
+        icon={<Icon name='squirrel.svg' className='white not-hoverable' />}
         onClick={() => toggleView('squirrels')}
       />
       <VerticalActionListItem
         label='hierarchy'
-        icon={<Icon name='hierarchy_white.svg' className='white not-hoverable' />}
+        icon={
+          <Icon name='hierarchy_white.svg' className='white not-hoverable' />
+        }
         onClick={() => toggleView('hierarchy')}
       />
       <VerticalActionListItem
         label='priority'
-        icon={<Icon name='priority_white.svg' className='white not-hoverable' />}
+        icon={
+          <Icon name='priority_white.svg' className='white not-hoverable' />
+        }
         onClick={() => toggleView('priority')}
       />
       <VerticalActionListItem
         label='archive'
         icon={<Icon name='archive_white.svg' className='white not-hoverable' />}
-        onClick={() => onArchiveClick(goalAddress)}
+        onClick={() => toggleView('archive')}
       />
       {viewsOpen.status && (
         <StatusPicker
@@ -95,6 +100,20 @@ function VerticalActionsList({
       )}
       {viewsOpen.priority && (
         <Priority onClose={() => setViews({ ...defaultViews })} />
+      )}
+      {viewsOpen.archive && (
+        <AlertPopupTemplate
+          onClose={() => setViews({ ...defaultViews })}
+          className='archive_popup'
+          heading='Archiving'
+          content='You’re about to archive the card “Feature Hypothesis Statement”. You will be able to see this card in the archive view mode in the future. Proceed?'
+          popupIcon='archive.svg'
+          primaryButton='Yes, Archive'
+          altButton='Nevermind'
+          primaryButtonAction={() => onArchiveClick(goalAddress)}
+          altButtonAction={() =>
+            setViews({ ...defaultViews })
+          }></AlertPopupTemplate>
       )}
     </div>
   )
