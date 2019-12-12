@@ -7,7 +7,6 @@ import {
   updateGoalComment,
 } from '../../goal-comments/actions'
 import moment from 'moment'
-import Icon from '../Icon'
 import './Comments.css'
 import Avatar from '../Avatar/Avatar'
 import Button from '../Button/Button'

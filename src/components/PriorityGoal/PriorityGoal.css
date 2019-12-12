@@ -23,7 +23,7 @@
   color: #4D4D4D;
 }
 
-.priority-quadrant-goal-title img {
+.priority-quadrant-goal-title .icon {
   margin-right: 10px;
 }
 
@@ -37,7 +37,7 @@
   padding-right: 30px;
 }
 
-.priority-quadrant-goal-info img {
+.priority-quadrant-goal-info .icon {
   margin-right: 6px;
 }
 
@@ -55,10 +55,10 @@
   float: right;
 }
 
-.priority-quadrant-goal-view-mode-icons img {
+.priority-quadrant-goal-view-mode-icons .icon {
 }
 
-.priority-quadrant-goal-view-mode-icons img:hover {
+.priority-quadrant-goal-view-mode-icons .icon:hover {
   background: white;
   padding: 4px;
   border-radius: 5px;

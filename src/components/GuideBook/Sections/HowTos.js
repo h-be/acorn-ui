@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavItemsGroup } from '../NavItems/NavItems'
-import Icon from '../../Icon'
+import Icon from '../../Icon/Icon'
 
 export default function HowTos(props) {
   const navItems = [

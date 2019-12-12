@@ -23,10 +23,10 @@
     transform: translate(-50%, -50%);
   }
 
-  .expanded_view_overlay .expanded_view_wrapper .close_icon {
+  .expanded_view_overlay .expanded_view_wrapper .small-close {
     position: absolute;
-    top: 20px;
-    right: 18px;
+    top: 22px;
+    right: 22px;
     cursor: pointer;
   }
 

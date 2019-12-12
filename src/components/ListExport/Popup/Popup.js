@@ -1,6 +1,6 @@
 import React from 'react'
 import './popup.css'
-import Icon from '../../Icon'
+import Icon from '../../Icon/Icon'
 import Button from '../../Button/Button'
 
 export default function Popup({ active, handleToHide }) {
@@ -10,7 +10,7 @@ export default function Popup({ active, handleToHide }) {
         <Icon
           name='x_a3a3a3.svg'
           onClick={handleToHide}
-          className='btn-close-modal'
+          className='btn-close-modal grey'
         />
         <div className='popup-header'>
           <span className='popup-logo'>
