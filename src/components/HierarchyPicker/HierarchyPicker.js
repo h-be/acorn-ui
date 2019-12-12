@@ -4,7 +4,11 @@ import './HierarchyPicker.css'
 import PickerTemplate from '../PickerTemplate/PickerTemplate'
 import Icon from '../Icon/Icon'
 
-export default function HierarchyPicker({ selectedHierarchy, hierarchyClicked, onClose }) {
+export default function HierarchyPicker({
+  selectedHierarchy,
+  hierarchyClicked,
+  onClose,
+}) {
   const hierarchies = [
     {
       name: 'Leaf',
@@ -28,12 +32,13 @@ export default function HierarchyPicker({ selectedHierarchy, hierarchyClicked, o
     },
     {
       name: 'No Hierarchy',
+      icon: 'question-mark.svg',
     },
   ]
 
   return (
     <PickerTemplate
-      className='hierarchies_picker'
+      className='hierarchy_picker'
       heading='hierarchy'
       onClose={onClose}>
       <div className='hierarchy_content_wrapper'>
@@ -47,9 +52,9 @@ export default function HierarchyPicker({ selectedHierarchy, hierarchyClicked, o
             onClick={hierarchy => hierarchyClicked(hierarchy)}
           />
         ))}
-        <p className='gray-text'>
+        <p className='hierarchy_wrapper_footer'>
           Not sure how to set the hierarchy for this card? Read more on our{' '}
-          <a className='gray-text' href='#'>
+          <a href='#'>
             Guidebook.
           </a>
         </p>
@@ -66,27 +71,39 @@ HierarchyPicker.propTypes = {
 
 function HierarchyOption({ selected, onClick, name, icon, description }) {
   return (
-    <div
-      className={`hierarchy_option ${selected ? 'active' : ''}`}
+    <li
+      className={`hierarchy_option_item ${selected ? 'active' : ''}`}
       onClick={() => {
         onClick(name)
       }}>
-      <div className='hierarchy_option_icon_container'>
-        {icon && <Icon name={icon} className='light-grey' />}
-      </div>
-      <div className='hierarchy_option_content'>
-        <span>{name}</span>
-        {description && (
-          <span>
-            <small className='gray-text'>{description}</small>
-          </span>
+      <div className='hierarchy_option_container'>
+        <div className='hierarchy_option_icon'>
+          {icon && <Icon name={icon} className='light-grey' size='medium' />}
+        </div>
+        <div className='hierarchy_option_content'>
+          <span className='hierarchy_option_name'>{name}</span>
+          {description && (
+            <span>
+              <div className='hierarchy_description'>{description}</div>
+            </span>
+          )}
+        </div>
+        {!selected && (
+          <Icon
+            name='radio_button.svg'
+            size='small'
+            className='light-grey radio_button not-hoverable'
+          />
         )}
-      </div>
-      <span>
         {selected && (
-          <img src='img/check-mark-line.svg' alt='check' width='50%' />
+          <Icon
+            name='radio_button_checked.svg'
+            size='small'
+            className='radio_button'
+            className='purple radio_button'
+          />
         )}
-      </span>
-    </div>
+      </div>
+    </li>
   )
 }
