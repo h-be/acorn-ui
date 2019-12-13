@@ -13,6 +13,8 @@ import {
   unsetGKeyDown,
   setShiftKeyDown,
   unsetShiftKeyDown,
+  setCtrlKeyDown,
+  unsetCtrlKeyDown,
 } from '../keyboard/actions'
 import {
   setMousedown,
@@ -29,11 +31,13 @@ import {
   closeGoalForm,
   updateContent,
 } from '../goal-form/actions'
-import { archiveGoal } from '../goals/actions'
+import { archiveGoal, createGoal } from '../goals/actions'
 import { setScreenDimensions } from '../screensize/actions'
 import { changeTranslate, changeScale } from '../viewport/actions'
 
 import layoutFormula from '../drawing/layoutFormula'
+import { setGoalClone } from '../goal_clone/actions'
+import moment from 'moment'
 
 export default function setupEventListeners(store, canvas) {
   function windowResize(event) {
@@ -48,6 +52,7 @@ export default function setupEventListeners(store, canvas) {
 
   function bodyKeydown(event) {
     let state = store.getState()
+    console.log(state.ui.goalClone)
     switch (event.code) {
       case 'KeyG':
         // only dispatch SET_G_KEYDOWN if it's not already down
@@ -77,6 +82,34 @@ export default function setupEventListeners(store, canvas) {
           // prevent the browser from navigating back to the last page
           event.preventDefault()
         }
+      case 'ControlLeft':
+        store.dispatch(setCtrlKeyDown())
+        break
+      case 'KeyC':
+        if (state.ui.keyboard.ctrlKeyDown) {
+          if (state.ui.selection.selectedGoals.length) {
+            // use first
+            store.dispatch(setGoalClone(state.ui.selection.selectedGoals))
+          }
+        }
+        break
+      case 'KeyV':
+        if (state.ui.keyboard.ctrlKeyDown) {
+          if (state.ui.goalClone.goals.length) {
+            state.ui.goalClone.goals.forEach(value => {
+              store.dispatch(
+                createGoal.create({
+                  goal: {
+                    ...state.goals[value],
+                    timestamp_created: moment().unix(),
+                  },
+                  maybe_parent_address: null,
+                })
+              )
+            })
+          }
+        }
+        break
       default:
         // console.log(event)
         break
@@ -92,6 +125,9 @@ export default function setupEventListeners(store, canvas) {
       case 'ShiftLeft':
       case 'ShiftRight':
         store.dispatch(unsetShiftKeyDown())
+        break
+      case 'ControlLeft':
+        store.dispatch(unsetCtrlKeyDown())
         break
       default:
         // console.log(event)
