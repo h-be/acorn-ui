@@ -41,7 +41,6 @@ function ExpandedViewMode({
             goal={goal}
           />
           <RightMenu
-            squirrels={squirrels}
             goalAddress={goalAddress}
             goal={goal}
             updateGoal={updateGoal}
