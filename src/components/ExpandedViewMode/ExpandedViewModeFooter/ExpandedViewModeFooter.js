@@ -1,15 +1,10 @@
 import React from 'react'
+import moment from 'moment-timezone'
 import './ExpandedViewModeFooter.css'
 
 import Icon from '../../Icon/Icon'
 
-export default function ExpandedViewModeFooter({
-  goalAddress,
-  goal,
-  onArchiveClick,
-  updateGoal,
-  onClose,
-}) {
+export default function ExpandedViewModeFooter({ goal, creator }) {
   return (
     <div className='expanded_view_footer'>
       <div className='footer_children_info'>
@@ -21,7 +16,9 @@ export default function ExpandedViewModeFooter({
         </div>
       </div>
       <div className='footer_card_info'>
-        Created by Pegah Vaezi | Aug 7, 2019 | 12:33pm EDT
+        {`Created by ${creator.first_name} ${creator.last_name}  ${moment
+          .unix(goal.timestamp_created)
+          .format('| MMMM Do, YYYY | h:mma')}`}
       </div>
     </div>
   )

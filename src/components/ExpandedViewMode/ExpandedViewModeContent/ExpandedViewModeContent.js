@@ -3,6 +3,7 @@ import Avatar from '../../Avatar/Avatar'
 import Icon from '../../Icon/Icon'
 
 import './ExpandedViewModeContent.css'
+import moment from 'moment'
 
 import TextareaAutosize from 'react-textarea-autosize'
 
@@ -37,7 +38,7 @@ export default function ExpandedViewModeContent({
         {
           content,
           user_hash: goal.user_hash,
-          unix_timestamp: Date.now(),
+          timestamp_created: moment().unix(),
           hierarchy: goal.hierarchy,
           status: goal.status,
           description,

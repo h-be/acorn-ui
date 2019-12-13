@@ -39,6 +39,7 @@ function VerticalActionsList({
     updateGoal(
       {
         ...goal,
+        unix_timestamp: moment().unix(),
         [key]: val,
       },
       goalAddress
@@ -105,7 +106,7 @@ VerticalActionsList.propTypes = {
   goal: PropTypes.shape({
     content: PropTypes.string.isRequired,
     user_hash: PropTypes.string.isRequired,
-    unix_timestamp: PropTypes.number.isRequired,
+    timestamp_created: PropTypes.number.isRequired,
     hierarchy: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
   }).isRequired,
