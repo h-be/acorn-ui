@@ -16,7 +16,7 @@ function ExpandedViewMode({
   goal,
   updateGoal,
   onClose,
-  creater,
+  creator,
   squirrels,
 }) {
   return (
@@ -47,7 +47,7 @@ function ExpandedViewMode({
             updateGoal={updateGoal}
           />
         </div>
-        <ExpandedViewModeFooter goal={goal} creater={creater} />
+        <ExpandedViewModeFooter goal={goal} creator={creator} />
       </div>
     </div>
   )
@@ -72,14 +72,14 @@ function mapStateToProps(state) {
     .map(address => state.goalMembers[address])
     .filter(goalMember => goalMember.goal_address === goal.address)
     .map(goalMember => state.agents[goalMember.agent_address])
-  let creater = null
+  let creator = null
   Object.keys(state.agents).forEach(value => {
     if (state.agents[value].address === goal.user_hash)
-      creater = state.agents[value]
+      creator = state.agents[value]
   })
   return {
     goalAddress: state.ui.expandedView.goalAddress,
-    creater,
+    creator,
     goal,
     squirrels,
   }
