@@ -24,6 +24,7 @@ import viewport from './viewport/reducer'
 import expandedView from './expanded-view/reducer'
 import goalVotes from './goal-votes/reducer'
 import goalComments from './goal-comments/reducer'
+import goalClone from './goal_clone/reducer'
 
 // import anotherone from './another/path'
 
@@ -46,6 +47,7 @@ export default combineReducers({
     viewport,
     mouse,
     expandedView,
+    goalClone,
   }), // ,
   // anotherone: anotherone
 })
