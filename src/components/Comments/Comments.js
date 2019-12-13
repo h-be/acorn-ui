@@ -22,7 +22,6 @@ function Comment(props) {
           <span className='date'>
             {moment
               .unix(props.unix)
-              .tz('America/Caracas')
               .format('Do,hh:mm a')}
           </span>
         </div>
