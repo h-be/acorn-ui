@@ -4,10 +4,7 @@ import './ExpandedViewModeFooter.css'
 
 import Icon from '../../Icon/Icon'
 
-export default function ExpandedViewModeFooter({
-  goal,
-  creater,
-}) {
+export default function ExpandedViewModeFooter({ goal, creator }) {
   return (
     <div className='expanded_view_footer'>
       <div className='footer_children_info'>
@@ -19,7 +16,7 @@ export default function ExpandedViewModeFooter({
         </div>
       </div>
       <div className='footer_card_info'>
-        {`Created by ${creater.first_name} ${creater.last_name}  ${moment
+        {`Created by ${creator.first_name} ${creator.last_name}  ${moment
           .unix(goal.timestamp_created)
           .format('| MMMM Do, YYYY | h:mma')}`}
       </div>
