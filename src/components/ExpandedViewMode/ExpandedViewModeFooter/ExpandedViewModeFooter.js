@@ -21,7 +21,6 @@ export default function ExpandedViewModeFooter({
       <div className='footer_card_info'>
         {`Created by ${creater.first_name} ${creater.last_name}  ${moment
           .unix(goal.timestamp_created)
-          .tz('America/Caracas')
           .format('| MMMM Do, YYYY | h:mma')}`}
       </div>
     </div>
