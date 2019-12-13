@@ -13,7 +13,6 @@ import Button from '../Button/Button'
 function Comment(props) {
   return (
     <div className='comment'>
-      {console.log(props.avatarUrl)}
       <div className='avatar_comment_container'>
         <Avatar avatar_url={props.avatarUrl} />{' '}
       </div>
