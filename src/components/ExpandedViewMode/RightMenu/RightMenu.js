@@ -5,17 +5,21 @@ import PeoplePicker from '../../PeoplePicker'
 import DatePicker from '../../DatePicker/DatePicker'
 import Priority from '../../Priority/Priority'
 
+import Comments from '../../Comments/Comments'
 import Icon from '../../Icon/Icon'
 
 export default function RightMenu({ goalAddress, goal, updateGoal }) {
   const defaultViews = {
     squirrels: false,
     priority: false,
+    help: false,
     timeframe: false,
   }
   const [viewsOpen, setViews] = useState(defaultViews)
 
   const rightMenuPriorityClass = viewsOpen.priority ? 'active' : ''
+  const rightMenuHelpClass = viewsOpen.help ? 'active' : ''
+
   const rightMenuSquirrelsClass = viewsOpen.squirrels ? 'active' : ''
   const rightMenuTimeframeClass = viewsOpen.timeframe ? 'active' : ''
 
@@ -35,6 +39,15 @@ export default function RightMenu({ goalAddress, goal, updateGoal }) {
 
   return (
     <div className='expanded_view_right_menu'>
+      <Icon
+        name='help_4d4d4d.svg'
+        key='help'
+        className={rightMenuHelpClass}
+        onClick={() => setViews({ ...defaultViews, help: !viewsOpen.help })}
+      />
+      {viewsOpen.help && (
+        <Comments onClose={() => setViews({ ...defaultViews })} />
+      )}
       {/* priority */}
       <Icon
         name='priority_4d4d4d.svg'

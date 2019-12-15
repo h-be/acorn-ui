@@ -11,7 +11,14 @@ import RightMenu from './RightMenu/RightMenu'
 import ExpandedViewModeContent from './ExpandedViewModeContent/ExpandedViewModeContent'
 import ExpandedViewModeFooter from './ExpandedViewModeFooter/ExpandedViewModeFooter'
 
-function ExpandedViewMode({ goalAddress, goal, updateGoal, onClose, squirrels }) {
+function ExpandedViewMode({
+  goalAddress,
+  goal,
+  updateGoal,
+  onClose,
+  creator,
+  squirrels,
+}) {
   return (
     <div className='expanded_view_overlay'>
       <div className={`expanded_view_wrapper border_${goal.status}`}>
@@ -28,10 +35,10 @@ function ExpandedViewMode({ goalAddress, goal, updateGoal, onClose, squirrels })
         />
         <div className='expanded_view_main'>
           <ExpandedViewModeContent
+            squirrels={squirrels}
             goalAddress={goalAddress}
             updateGoal={updateGoal}
             goal={goal}
-            squirrels={squirrels}
           />
           <RightMenu
             goalAddress={goalAddress}
@@ -39,7 +46,7 @@ function ExpandedViewMode({ goalAddress, goal, updateGoal, onClose, squirrels })
             updateGoal={updateGoal}
           />
         </div>
-        <ExpandedViewModeFooter />
+        <ExpandedViewModeFooter goal={goal} creator={creator} />
       </div>
     </div>
   )
@@ -51,7 +58,7 @@ ExpandedViewMode.propTypes = {
   goal: PropTypes.shape({
     content: PropTypes.string.isRequired,
     user_hash: PropTypes.string.isRequired,
-    unix_timestamp: PropTypes.number.isRequired,
+    timestamp_created: PropTypes.number.isRequired,
     hierarchy: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
   }).isRequired,
@@ -64,9 +71,14 @@ function mapStateToProps(state) {
     .map(address => state.goalMembers[address])
     .filter(goalMember => goalMember.goal_address === goal.address)
     .map(goalMember => state.agents[goalMember.agent_address])
-
+  let creator = null
+  Object.keys(state.agents).forEach(value => {
+    if (state.agents[value].address === goal.user_hash)
+      creator = state.agents[value]
+  })
   return {
     goalAddress: state.ui.expandedView.goalAddress,
+    creator,
     goal,
     squirrels,
   }
