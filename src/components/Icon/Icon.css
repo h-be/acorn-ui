@@ -21,6 +21,10 @@
   background-color: #5F65FF;
 }
 
+.icon.not-hoverable {
+  cursor: default;
+}
+
 .icon.grey .inner-icon {
   background-color: #898989;
 }
@@ -35,6 +39,7 @@
 
 .icon.white .inner-icon {
   background-color: #FFFFFF;
+  cursor: pointer;
 }
 
 

@@ -26,13 +26,13 @@ class Zoom extends React.Component {
     return (
       <div className='zoom-wrapper'>
         <Icon
-          name='minus-line.svg'
+          name='minus.svg'
           size='small'
           withBackground={false}
           onClick={this.zoomOut}
         />
         <Icon
-          name='plus-line.svg'
+          name='plus.svg'
           size='small'
           withBackground={false}
           onClick={this.zoomIn}
