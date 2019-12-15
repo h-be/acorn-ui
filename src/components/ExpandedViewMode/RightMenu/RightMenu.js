@@ -60,7 +60,7 @@ export default function RightMenu({ goalAddress, goal, updateGoal }) {
       )}
       {/* squirrels */}
       <Icon
-        name='squirrel_4d4d4d.svg'
+        name='squirrel.svg'
         className={rightMenuSquirrelsClass}
         key='squirrels'
         onClick={() => toggleView('squirrels')}
