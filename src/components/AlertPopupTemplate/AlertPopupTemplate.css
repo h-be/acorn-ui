@@ -35,7 +35,7 @@
   cursor: pointer;
 }
 
-.alert-popup-iconANDheading {
+.alert-popup-header {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -49,10 +49,21 @@
 
 .popup-icon {
   margin-right: 10px;
+  cursor: default;
 }
 
 .popup-content {
   color: #4D4D4D;
+}
+
+.dont-show-again-option {
+  cursor: pointer;
+  font-size: 14px;
+  color: #4D4D4D;
+}
+
+.dont-show-again-option label {
+  cursor: pointer;
 }
 
 .buttons-wrapper {
