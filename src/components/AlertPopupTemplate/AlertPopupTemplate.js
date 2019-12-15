@@ -25,9 +25,9 @@ export default function AlertPopupTemplate({
           className='grey'
           onClick={() => onClose()}
         />
-        <div className='alert-popup-iconANDheading'>
+        <div className='alert-popup-header'>
           <span className='popup-icon'>
-            <Icon name={popupIcon} />
+            <Icon name={popupIcon} className='not-hoverable'/>
           </span>
           <div className='alert-popup-heading'>{heading}</div>
         </div>
@@ -35,9 +35,9 @@ export default function AlertPopupTemplate({
           <p>{content}</p>
         </div>
         <div className='popup-footer'>
-          <div className='check-no-show-again'>
-            <input type='checkbox' />
-            <label htmlFor=''>Don't show me again</label>
+          <div className='dont-show-again-option'>
+            <input type='checkbox' id='checkbox-dont-show-again' />
+            <label htmlFor='checkbox-dont-show-again'>Don't show me again</label>
           </div>
           <div className='buttons-wrapper'>
             <div className='btn-stroked'>
