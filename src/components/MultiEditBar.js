@@ -7,6 +7,7 @@ import StatusIcon from './StatusIcon'
 import Icon from './Icon/Icon'
 
 import { updateGoal } from '../goals/actions'
+import moment from 'moment'
 import HierarchyPicker from './HierarchyPicker/HierarchyPicker'
 
 function MultiEditBar({ selectedGoals, updateGoal }) {
@@ -21,6 +22,7 @@ function MultiEditBar({ selectedGoals, updateGoal }) {
       updateGoal(
         {
           ...goal,
+          unix_timestamp: moment().unix(),
           [key]: val,
         },
         goal.address
