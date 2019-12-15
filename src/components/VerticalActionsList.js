@@ -50,9 +50,11 @@ function VerticalActionsList({
     setViews({ ...defaultViews, [key]: !viewsOpen[key] })
   }
 
-  const archiveMessagePartOne = 'You’re about to archive the card "'
-
-  const archiveMessagePartTwo = '" .You will be able to see this card in the archive view mode in the future. Proceed?'
+  const archiveContent = <div>
+    You’re about to archive the card "
+    <b>{ goal.content }</b>
+    ". You will be able to see this card in the archive view mode in the future. Proceed?
+  </div>
 
   return (
     <div className='vertical_actions_list'>
@@ -110,15 +112,14 @@ function VerticalActionsList({
           onClose={() => setViews({ ...defaultViews })}
           className='archive_popup'
           heading='Archiving'
-          // TODO : make the archiving message dynamic, showing the title(s) of the card(s) selected for archiving //
-          content={archiveMessagePartOne, archiveMessagePartTwo}
-          popupIcon='archive.svg'
+          content={archiveContent}
+          popupIcon='archive_4d4d4d.svg'
           primaryButton='Yes, Archive'
           altButton='Nevermind'
           primaryButtonAction={() => onArchiveClick(goalAddress)}
           altButtonAction={() =>
             setViews({ ...defaultViews })
-          }></AlertPopupTemplate>
+          } />
       )}
     </div>
   )
