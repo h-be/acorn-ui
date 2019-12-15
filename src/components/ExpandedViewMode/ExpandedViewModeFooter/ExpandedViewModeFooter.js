@@ -1,5 +1,5 @@
 import React from 'react'
-import moment from 'moment-timezone'
+import moment from 'moment'
 import './ExpandedViewModeFooter.css'
 
 import Icon from '../../Icon/Icon'
