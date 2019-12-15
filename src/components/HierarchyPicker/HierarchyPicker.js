@@ -99,7 +99,6 @@ function HierarchyOption({ selected, onClick, name, icon, description }) {
           <Icon
             name='radio_button_checked.svg'
             size='small'
-            className='radio_button'
             className='purple radio_button'
           />
         )}
