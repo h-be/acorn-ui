@@ -3,6 +3,8 @@
   width: 496px;
 }
 
+/* title */
+
 .expanded_view_title {
   margin-bottom: 20px;
   font-size: 22px;
@@ -31,17 +33,13 @@
   resize: none;
 }
 
+/* tags */
+
 .expanded_view_tags {
   padding-bottom: 20px;
 }
 
-.squirrels_timeframe_row {
-  display: flex;
-  flex-direction: row;
-  color: #717171;
-  padding-bottom: 20px;
-  font-size: 14px;
-}
+/* description */
 
 .expanded_view_description textarea {
   width: 100%;
@@ -55,8 +53,25 @@
   font-size: 14px;
 }
 
+.expanded_view_description {
+  border: 1px solid #f2f2f2;
+  border-radius: 10px;
+  padding: 15px;
+  color: #a3a3a3;
+}
+
+/* squirrels & timeframe wrapper */
+
 .expanded_view_squirrels_title, .expanded_view_timeframe_title {
   margin-bottom: 8px;
+}
+
+.squirrels_timeframe_row {
+  display: flex;
+  flex-direction: row;
+  color: #717171;
+  padding-bottom: 20px;
+  font-size: 14px;
 }
 
 /* squirrels section */
@@ -79,21 +94,18 @@
   margin-right: 6px;
 }
 
-.expanded_view_squirrels_content .avatar.medium.clickable:hover {
+.icon.medium.add_squirrel_plus_icon {
+  padding: 8px;
+}
+
+.expanded_view_squirrels_content .avatar.medium.clickable:hover, 
+.icon.medium.add_squirrel_plus_icon:hover {
   box-shadow: 0 0 0 2px #5F65FF;
 }
 
 .add_squirrel_plus_icon {
   background: #F4F4F4;
   border-radius: 50%;
-}
-
-.icon.medium.add_squirrel_plus_icon {
-  padding: 8px;
-}
-
-.icon.medium.add_squirrel_plus_icon:hover {
-  box-shadow: 0 0 0 2px #5F65FF;
 }
 
 /* squirrelInfoPopup */
@@ -145,8 +157,7 @@
   color: #5F65FF;
 }
 
-
-/* timeframe section */
+/* timeframe */
 
 .expanded_view_timeframe_display {
   background: #F2F2F2;
@@ -166,11 +177,4 @@
 
 .timeframe_wrapper .picker-popup {
   top: 60px;
-}
-
-.expanded_view_description {
-  border: 1px solid #f2f2f2;
-  border-radius: 10px;
-  padding: 15px;
-  color: #a3a3a3;
 }
