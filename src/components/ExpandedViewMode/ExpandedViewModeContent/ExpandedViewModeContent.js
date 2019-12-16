@@ -13,10 +13,6 @@ import DatePicker from '../../DatePicker/DatePicker'
 import PeoplePicker from '../../PeoplePicker'
 
 function SquirrelInfoPopup({ squirrel, onClose }) {
-  if (!squirrel) {
-    return null
-  }
-
   const ref = useRef()
   useOnClickOutside(ref, onClose)
 
@@ -114,10 +110,12 @@ export default function ExpandedViewModeContent({
                 />
               )
             })}
-            <SquirrelInfoPopup
-              onClose={() => setSquirrelInfoPopup(null)}
-              squirrel={squirrelInfoPopup}
-            />
+            {squirrelInfoPopup && (
+              <SquirrelInfoPopup
+                onClose={() => setSquirrelInfoPopup(null)}
+                squirrel={squirrelInfoPopup}
+              />
+            )}
             <div className='expanded_view_squirrels_add_wrapper'>
               <Icon
                 className='add_squirrel_plus_icon'
