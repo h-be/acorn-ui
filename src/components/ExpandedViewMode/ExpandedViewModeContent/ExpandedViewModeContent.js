@@ -56,11 +56,9 @@ export default function ExpandedViewModeContent({
     if (content !== '' && description !== '') {
       updateGoal(
         {
+          ...goal,
+          timestamp_updated: moment().unix(),
           content,
-          user_hash: goal.user_hash,
-          timestamp_created: moment().unix(),
-          hierarchy: goal.hierarchy,
-          status: goal.status,
           description,
         },
         goalAddress
@@ -70,12 +68,29 @@ export default function ExpandedViewModeContent({
     setEditDescription(false)
   }
 
+  const updateTimeframe = (start, end) => {
+    updateGoal(
+      {
+        ...goal,
+        timestamp_updated: moment().unix(),
+        time_frame: {
+          from_date: start,
+          to_date: end
+        }
+      },
+      goalAddress
+    )
+  }
+
   const handleOnChangeTitle = ({ target }) => {
     setContent(target.value)
   }
   const handleOnChangeDescription = ({ target }) => {
     setDescription(target.value)
   }
+
+  const fromDate = goal.time_frame ? moment.unix(goal.time_frame.from_date) : null
+  const toDate = goal.time_frame ? moment.unix(goal.time_frame.to_date) : null
 
   return (
     <div className='expanded_view_content'>
@@ -134,10 +149,14 @@ export default function ExpandedViewModeContent({
           <div
             className='expanded_view_timeframe_display'
             onClick={() => setEditTimeframe(!editTimeframe)}>
-            Feb 12, 2019 - Feb 20, 2019
+            {fromDate && fromDate.format('MMM Do, YYYY')}{toDate && ' - '}{toDate && toDate.format('MMM Do, YYYY')}
+            {!fromDate && !toDate && 'not set'}
           </div>
           {editTimeframe && (
-            <DatePicker onClose={() => setEditTimeframe(false)} />
+            <DatePicker onClose={() => setEditTimeframe(false)}
+              onSet={updateTimeframe}
+              fromDate={fromDate}
+              toDate={toDate} />
           )}
         </div>
       </div>
