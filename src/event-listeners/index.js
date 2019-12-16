@@ -113,9 +113,9 @@ export default function setupEventListeners(store, canvas) {
                     maybe_parent_address: null,
                   })
                 )
-                .then(valor => {
-                  let newGoalAddress = valor.goal.address
-
+                .then(value => {
+                  let newGoalAddress = value.goal.address
+                  store.dispatch(selectGoal(value.goal.address))
                   members.map(member => {
                     store.dispatch(
                       addMemberOfGoal.create({
