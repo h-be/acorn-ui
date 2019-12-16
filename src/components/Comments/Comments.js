@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import {
   addCommentOfGoal,
@@ -7,63 +7,63 @@ import {
   updateGoalComment,
 } from '../../goal-comments/actions'
 import moment from 'moment'
-import Icon from '../Icon'
 import './Comments.css'
 import Avatar from '../Avatar/Avatar'
 import Button from '../Button/Button'
-function Comment(props) {
+function Comment({ comment, agent }) {
   return (
     <div className='comment'>
-      {console.log(props.avatarUrl)}
       <div className='avatar_comment_container'>
-        <Avatar avatar_url={props.avatarUrl} />{' '}
+        <Avatar avatar_url={agent.avatar_url} />{' '}
       </div>
       <div>
         <div className='info'>
-          <span>{props.name}</span>
+          <span>{agent.first_name + ' ' + agent.last_name}</span>
           <span className='date'>
-            {moment
-              .unix(props.unix)
-              .tz('America/Caracas')
-              .format('Do,hh:mm a')}
+            {moment.unix(comment.unix_timestamp).format('Do,hh:mm a')}
           </span>
         </div>
-        <span>{props.content}</span>
+        <span>{comment.content}</span>
       </div>
     </div>
   )
 }
-function Comments(props) {
-  const inputRef = React.createRef()
+function Comments({
+  goalAddress,
+  avatarUrl,
+  agents,
+  comments,
+  addCommentOfGoal,
+  avatarAddress,
+}) {
+  const [value, setValue] = useState('')
 
   const buttonClick = e => {
-    if (inputRef.current.value === '') {
+    if (value === '') {
       return
     }
-    props.addCommentOfGoal({
-      goal_address: props.goalAddress,
-      content: inputRef.current.value,
-      agent_address: props.avatarAddress,
+    addCommentOfGoal({
+      goal_address: goalAddress,
+      content: value,
+      agent_address: avatarAddress,
       unix_timestamp: moment().unix(),
     })
-    inputRef.current.value = ''
+    setValue('')
   }
-  // props
-  //   .addCommentOfGoal({
-  //     goal_address: props.goalAddress,
-  //     content: 'String',
-  //     agent_address: props.avatarAddress,
-  //     unix_timestamp: moment().unix(),
-  //   })
-  //   .then(value => console.log(value))
+
   return (
     <div className='comments'>
       <div>
         <div className='avatar_comment_container'>
-          <Avatar avatar_url={props.avatarUrl} />
+          <Avatar avatar_url={avatarUrl} />
         </div>
         <div>
-          <input className='input_comment' type='text' ref={inputRef} />
+          <input
+            className='input_comment'
+            type='text'
+            value={value}
+            onChange={e => setValue(e.target.value)}
+          />
           <Button
             text='Save'
             color='green'
@@ -73,22 +73,12 @@ function Comments(props) {
         </div>
       </div>
       <div className='scroll'>
-        {Object.keys(props.comments).map(key =>
-          props.comments[key].goal_address === props.goalAddress ? (
+        {Object.keys(comments).map(key =>
+          comments[key].goal_address === goalAddress ? (
             <Comment
               key={key}
-              avatarUrl={
-                props.agents[props.comments[key].agent_address].avatar_url
-              }
-              name={`${
-                props.agents[props.comments[key].agent_address].first_name
-              }
-                   ${
-                     props.agents[props.comments[key].agent_address].last_name
-                   }`}
-              unix={props.comments[key].unix_timestamp}
-              agentAddress={props.comments[key].agent_address}
-              content={props.comments[key].content}
+              comment={comments[key]}
+              agent={agents[comments[key].agent_address]}
             />
           ) : null
         )}
@@ -111,9 +101,7 @@ function mapDispatchToProps(dispatch) {
     addCommentOfGoal: goal_comment => {
       return dispatch(addCommentOfGoal.create({ goal_comment }))
     },
-    fetchGoalComments: () => {
-      return dispatch(fetchGoalComments.create({}))
-    },
+
     archiveCommentOfGoal: address => {
       return dispatch(archiveCommentOfGoal.create({ address }))
     },

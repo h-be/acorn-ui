@@ -1,25 +1,20 @@
 import React, { useState } from 'react'
-import { connect } from 'react-redux'
+import moment from 'moment'
 import './RightMenu.css'
-import PropTypes from 'prop-types'
 
 import PeoplePicker from '../../PeoplePicker'
+import DatePicker from '../../DatePicker/DatePicker'
 import Priority from '../../Priority/Priority'
 
-import Icon from '../../Icon'
 import Comments from '../../Comments/Comments'
+import Icon from '../../Icon/Icon'
 
-export default function RightMenu({
-  goalAddress,
-  goal,
-  onArchiveClick,
-  updateGoal,
-  onClose,
-}) {
+export default function RightMenu({ goalAddress, goal, updateGoal }) {
   const defaultViews = {
     squirrels: false,
     priority: false,
     help: false,
+    timeframe: false,
   }
   const [viewsOpen, setViews] = useState(defaultViews)
 
@@ -27,6 +22,28 @@ export default function RightMenu({
   const rightMenuHelpClass = viewsOpen.help ? 'active' : ''
 
   const rightMenuSquirrelsClass = viewsOpen.squirrels ? 'active' : ''
+  const rightMenuTimeframeClass = viewsOpen.timeframe ? 'active' : ''
+
+  const toggleView = key => {
+    setViews({ ...defaultViews, [key]: !viewsOpen[key] })
+  }
+
+  const updateTimeframe = (start, end) => {
+    updateGoal(
+      {
+        ...goal,
+        timestamp_updated: moment().unix(),
+        time_frame: {
+          from_date: start,
+          to_date: end
+        }
+      },
+      goalAddress
+    )
+  }
+
+  const fromDate = goal.time_frame ? moment.unix(goal.time_frame.from_date) : null
+  const toDate = goal.time_frame ? moment.unix(goal.time_frame.to_date) : null
 
   return (
     <div className='expanded_view_right_menu'>
@@ -44,35 +61,41 @@ export default function RightMenu({
         name='priority_4d4d4d.svg'
         className={rightMenuPriorityClass}
         key='priority'
-        onClick={() =>
-          setViews({ ...defaultViews, priority: !viewsOpen.priority })
-        }
+        onClick={() => toggleView('priority')}
       />
       {viewsOpen.priority && (
         <Priority onClose={() => setViews({ ...defaultViews })} />
       )}
-      <Icon name='tag_4d4d4d.svg' className='right_menu_tag' />
       {/* squirrels */}
       <Icon
-        name='squirrel_4d4d4d.svg'
+        name='squirrel.svg'
         className={rightMenuSquirrelsClass}
         key='squirrels'
-        onClick={() =>
-          setViews({ ...defaultViews, squirrels: !viewsOpen.squirrels })
-        }
+        onClick={() => toggleView('squirrels')}
       />
       {viewsOpen.squirrels && (
         <PeoplePicker onClose={() => setViews({ ...defaultViews })} />
       )}
-      <Icon name='calendar_4d4d4d.svg' className='right_menu_calendar' />
-      <Icon name='link_4d4d4d.svg' className='right_menu_link' />
-      <Icon name='archive_4d4d4d.svg' className='right_menu_archive' />
-      <Icon name='share_4d4d4d.svg' className='right_menu_share' />
-      <Icon name='github_4d4d4d.svg' className='right_menu_github' />
+      {/* timeframe */}
+      <Icon
+        name='calendar_4d4d4d.svg'
+        className={rightMenuTimeframeClass}
+        key='timeframe'
+        onClick={() => toggleView('timeframe')}
+      />
+      {viewsOpen.timeframe && (
+        <DatePicker onClose={() => setViews({ ...defaultViews })}
+          onSet={updateTimeframe}
+          fromDate={fromDate}
+          toDate={toDate} />
+      )}
+
+      <Icon name='tag_4d4d4d.svg' className='right_menu_tag feature-in-development' />
+      <Icon name='help_4d4d4d.svg' className='right_menu_help feature-in-development' />
+      <Icon name='link_4d4d4d.svg' className='right_menu_link feature-in-development' />
+      <Icon name='archive_4d4d4d.svg' className='right_menu_archive feature-in-development' />
+      <Icon name='share_4d4d4d.svg' className='right_menu_share feature-in-development' />
+      <Icon name='github_4d4d4d.svg' className='right_menu_github feature-in-development' />
     </div>
   )
-}
-
-RightMenu.propTypes = {
-  onClose: PropTypes.func.isRequired,
 }
