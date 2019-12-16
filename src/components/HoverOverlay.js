@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import Icon from './Icon'
+import Icon from './Icon/Icon'
 
 import layoutFormula from '../drawing/layoutFormula'
 import { coordsCanvasToPage } from '../drawing/coordinateSystems'
@@ -22,10 +22,10 @@ function HoverOverlay(props) {
   return (
     <ul className='hover_overlay' style={{ top: `${y}px`, left: `${x}px` }}>
       <li onClick={() => onExpandClick(hoveredAddress)}>
-        <Icon name='expand.svg' withBackground />
+        <Icon name='expand.svg' className='white not-hoverable' withBackground />
       </li>
       <li onClick={() => onEditClick(hoveredAddress, goalCoord, goalContent)}>
-        <Icon name='quick_edit.svg' withBackground />
+        <Icon name='quick_edit.svg' className='white not-hoverable' withBackground />
       </li>
     </ul>
   )

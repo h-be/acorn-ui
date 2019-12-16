@@ -5,7 +5,7 @@
     flex-direction: row;
 }
 
-.expanded_view_header img{
+.expanded_view_header .icon{
   margin-right: 16px;
   height: 22;
 }
@@ -23,8 +23,9 @@
 
 
 
-.expanded_view_header .vertical_action_overlay {
-  margin-top: 36px;
+.expanded_view_header .picker-popup {
+  margin-top: 54px;
+  z-index: 2;
 }
 
 .expanded_view_header .vertical_action_close {

@@ -1,16 +1,15 @@
 .priority_wrapper {
-  width: 320px;
-  height: 400px;
+  width: 300px;
 }
 
 .priority_tabs {
   padding: 0 24px 0 24px;
   display: flex;
   flex-direction: row;
-  margin-top: 30px;
   margin-bottom: 10px;
   justify-content: space-around;
   border-bottom: 1px solid #E8E8E8;
+  font-size: 14px;
 }
 
 .priority_tab {
@@ -65,6 +64,7 @@
 .priority_wrapper_button {
   padding: 16px 40px;
   text-align: center;  
+  margin-bottom: 4px;
 }
 
 .priority_wrapper_footer {
@@ -73,13 +73,14 @@
   color: #898989;
   font-size: 12px;
   align-items: center;
-  padding-top: 8px;
+  height: 20px;
 }
 
-.priority_wrapper_footer img {
+.priority_wrapper_footer .icon {
   margin-right: 4px;
 }
 
 .my_vote_info {
-float: right;
+  float: right;
+  height: 20px;
 }

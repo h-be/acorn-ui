@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import Icon from './Icon'
+import Icon from './Icon/Icon'
+import PickerTemplate from './PickerTemplate/PickerTemplate'
 import { addMemberOfGoal, archiveMemberOfGoal } from '../goal-members/actions'
 import Avatar from './Avatar/Avatar'
 import moment from 'moment'
@@ -16,16 +17,12 @@ function PeoplePicker({
   const [filterText, setFilterText] = useState('')
 
   return (
-    <div className='people_picker vertical_action_overlay'>
-      <Icon
-        className='vertical_action_close'
-        name='x_a3a3a3.svg'
-        size='small-close'
-        onClick={() => onClose()}
-      />
-      <div className='popup_title'>squirrels</div>
+    <PickerTemplate
+      className='people_picker'
+      heading='squirrels'
+      onClose={onClose}>
       <div className='people_picker_search'>
-        <Icon name='search.svg' size='small' />
+        <Icon name='search.svg' size='small' className='not-hoverable' />
         <input
           type='text'
           onChange={e => setFilterText(e.target.value)}
@@ -82,7 +79,7 @@ function PeoplePicker({
                   <Icon
                     name='radio_button.svg'
                     size='small'
-                    className='radio_button'
+                    className='light-grey radio_button'
                   />
                 )}
                 {person.is_member && (
@@ -90,13 +87,14 @@ function PeoplePicker({
                     name='radio_button_checked.svg'
                     size='small'
                     className='radio_button'
+                    className='purple radio_button'
                   />
                 )}
               </li>
             )
           })}
       </ul>
-    </div>
+    </PickerTemplate>
   )
 }
 
@@ -119,7 +117,9 @@ PeoplePicker.propTypes = {
 }
 
 function mapStateToProps(state) {
-  const goalAddress = state.ui.goalForm.editAddress
+  const goalAddress = state.ui.goalForm.isOpen
+    ? state.ui.goalForm.editAddress
+    : state.ui.expandedView.goalAddress
   const membersOfGoal = Object.keys(state.goalMembers)
     .map(address => state.goalMembers[address])
     .filter(goalMember => goalMember.goal_address === goalAddress)

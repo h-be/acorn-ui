@@ -4,7 +4,7 @@ import './ProfileEditForm.css'
 import Button from '../Button/Button'
 import ValidatingFormInput from '../ValidatingFormInput/ValidatingFormInput'
 import Avatar from '../Avatar/Avatar'
-import Icon from '../Icon'
+import Icon from '../Icon/Icon'
 
 function ProfileEditForm({
   onSubmit,
@@ -51,8 +51,8 @@ function ProfileEditForm({
         <Icon
           onClick={onClose}
           name='x_a3a3a3.svg'
-          size='small'
-          className='close_icon'
+          size='small-close'
+          className='grey'
         />
       )}
       <div className='profile_edit_form_title'>

@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import './ExpandedViewMode.css'
-import Icon from '../Icon'
+import Icon from '../Icon/Icon'
 
 import { updateGoal } from '../../goals/actions'
 
@@ -14,10 +14,10 @@ import ExpandedViewModeFooter from './ExpandedViewModeFooter/ExpandedViewModeFoo
 function ExpandedViewMode({
   goalAddress,
   goal,
-  onArchiveClick,
   updateGoal,
   onClose,
-  creater,
+  creator,
+  squirrels,
 }) {
   return (
     <div className='expanded_view_overlay'>
@@ -25,8 +25,8 @@ function ExpandedViewMode({
         <Icon
           onClick={onClose}
           name='x_a3a3a3.svg'
-          size='small'
-          className='close_icon'
+          size='small-close'
+          className='grey'
         />
         <ExpandedViewModeHeader
           goalAddress={goalAddress}
@@ -35,13 +35,18 @@ function ExpandedViewMode({
         />
         <div className='expanded_view_main'>
           <ExpandedViewModeContent
+            squirrels={squirrels}
             goalAddress={goalAddress}
             updateGoal={updateGoal}
             goal={goal}
           />
-          <RightMenu />
+          <RightMenu
+            goalAddress={goalAddress}
+            goal={goal}
+            updateGoal={updateGoal}
+          />
         </div>
-        <ExpandedViewModeFooter goal={goal} creater={creater} />
+        <ExpandedViewModeFooter goal={goal} creator={creator} />
       </div>
     </div>
   )
@@ -49,6 +54,7 @@ function ExpandedViewMode({
 
 ExpandedViewMode.propTypes = {
   onClose: PropTypes.func,
+  goalAddress: PropTypes.string.isRequired,
   goal: PropTypes.shape({
     content: PropTypes.string.isRequired,
     user_hash: PropTypes.string.isRequired,
@@ -61,15 +67,20 @@ ExpandedViewMode.propTypes = {
 
 function mapStateToProps(state) {
   const goal = state.goals[state.ui.expandedView.goalAddress]
-  let creater = null
+  const squirrels = Object.keys(state.goalMembers)
+    .map(address => state.goalMembers[address])
+    .filter(goalMember => goalMember.goal_address === goal.address)
+    .map(goalMember => state.agents[goalMember.agent_address])
+  let creator = null
   Object.keys(state.agents).forEach(value => {
     if (state.agents[value].address === goal.user_hash)
-      creater = state.agents[value]
+      creator = state.agents[value]
   })
   return {
     goalAddress: state.ui.expandedView.goalAddress,
+    creator,
     goal,
-    creater,
+    squirrels,
   }
 }
 
