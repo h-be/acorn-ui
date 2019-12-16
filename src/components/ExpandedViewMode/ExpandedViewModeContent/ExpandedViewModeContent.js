@@ -10,6 +10,13 @@ import TextareaAutosize from 'react-textarea-autosize'
 import DatePicker from '../../DatePicker/DatePicker'
 import PeoplePicker from '../../PeoplePicker'
 
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import Priority from '../ExpandedViewModeContent/Priority/Priority'
+import Comments from '../ExpandedViewModeContent/comments/Comments'
+import ActivityHistory from '../ExpandedViewModeContent/activity history/ActivityHistory'
+import Attachments from '../ExpandedViewModeContent/attachments/Attachments'
+import NavBar from './NavBar/NavBar'
+
 export default function ExpandedViewModeContent({
   goalAddress,
   goal,
@@ -24,6 +31,7 @@ export default function ExpandedViewModeContent({
     { avatar_url: 'img/profile.png' },
   ]
 
+  const [activeTab, setActiveTab] = useState('comments')
   const [editSquirrels, setEditSquirrels] = useState(false)
   const [editTimeframe, setEditTimeframe] = useState(false)
   const [editDescription, setEditDescription] = useState(false)
@@ -108,7 +116,6 @@ export default function ExpandedViewModeContent({
           )}
         </div>
       </div>
-
       <div className='expanded_view_description'>
         <TextareaAutosize
           placeholder='add description here'
@@ -117,12 +124,27 @@ export default function ExpandedViewModeContent({
           onChange={handleOnChangeDescription}
         />
       </div>
+      <NavBar activeTab={activeTab} onChange={newTab => setActiveTab(newTab)} />
 
       <div className='expanded_view_tabs'>
-        <div className='expanded_view_priority'></div>
-        <div className='expanded_view_comments'></div>
-        <div className='expanded_view_acitivity_history'></div>
-        <div className='expanded_view_attachments'></div>
+        {activeTab === 'priority' && (
+          <div className='expanded_view_priority'>
+            {/* TODO: replace this with real priority section */}
+            priority
+          </div>
+        )}
+        {activeTab === 'comments' && (
+          <div className='expanded_view_comments'>
+            {/* TODO: replace this with real comments section */}
+            comments
+          </div>
+        )}
+        {activeTab === 'activity history' && (
+          <div className='expanded_view_activity_history'>activity history</div>
+        )}
+        {activeTab === 'attachments' && (
+          <div className='expanded_view_attachments'>attachments</div>
+        )}
       </div>
     </div>
   )

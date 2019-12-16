@@ -10,7 +10,7 @@ import ExpandedViewModeHeader from './ExpandedViewModeHeader/ExpandedViewModeHea
 import RightMenu from './RightMenu/RightMenu'
 import ExpandedViewModeContent from './ExpandedViewModeContent/ExpandedViewModeContent'
 import ExpandedViewModeFooter from './ExpandedViewModeFooter/ExpandedViewModeFooter'
-
+import NavBar from './ExpandedViewModeContent/NavBar/NavBar'
 function ExpandedViewMode({
   goalAddress,
   goal,
@@ -40,6 +40,7 @@ function ExpandedViewMode({
             updateGoal={updateGoal}
             goal={goal}
           />
+
           <RightMenu
             goalAddress={goalAddress}
             goal={goal}
