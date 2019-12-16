@@ -75,7 +75,7 @@ function ProfileEditForm({
             placeholder='Potter'
           />
         </div>
-        <div className='row halfSize'>
+        <div className='row'>
           <ValidatingFormInput
             value={handle}
             onChange={setHandle}
