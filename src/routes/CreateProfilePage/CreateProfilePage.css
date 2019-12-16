@@ -20,3 +20,19 @@
   background-size: cover;
   width: 50%;
 }
+
+@media only screen and (max-height: 800px) {
+
+  .validating_form_input {
+    margin-bottom: 22px;
+  }
+
+  .profile_edit_form_title {
+    margin-bottom: 46px;
+  }
+
+  .profile_edit_form h4 {
+    line-height: 0px;
+  }
+
+}
