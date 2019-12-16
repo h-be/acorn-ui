@@ -15,7 +15,8 @@ import PeoplePicker from '../../PeoplePicker'
 function SquirrelInfoPopup({ squirrel, onClose }) {
   const ref = useRef()
   useOnClickOutside(ref, onClose)
-
+// TODO : connect "squirrel-info-popup-name" div to the member's profile page
+// TODO : connect "remove from goal" button to holochain
   return (
     <div className='squirrel-info-popup-wrapper' ref={ref}>
       <div className='squirrel-info-popup-nameANDhandle'>
@@ -24,7 +25,7 @@ function SquirrelInfoPopup({ squirrel, onClose }) {
         </div>
         <div className='squirrel-info-popup-handle'>{squirrel.handle}</div>
       </div>
-      <div className='remove-squirrel-btn'>remove from card</div>
+      <div className='remove-squirrel-btn'>remove from goal</div>
     </div>
   )
 }
