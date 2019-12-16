@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
+import { connect } from 'react-redux'
+import useOnClickOutside from 'use-onclickoutside'
 import Avatar from '../../Avatar/Avatar'
 import Icon from '../../Icon/Icon'
 
@@ -17,6 +19,24 @@ import ActivityHistory from '../ExpandedViewModeContent/activity history/Activit
 import Attachments from '../ExpandedViewModeContent/attachments/Attachments'
 import NavBar from './NavBar/NavBar'
 
+function SquirrelInfoPopup({ squirrel, onClose }) {
+  const ref = useRef()
+  useOnClickOutside(ref, onClose)
+// TODO : connect "squirrel-info-popup-name" div to the member's profile page
+// TODO : connect "remove from goal" button to holochain
+  return (
+    <div className='squirrel-info-popup-wrapper' ref={ref}>
+      <div className='squirrel-info-popup-nameANDhandle'>
+        <div className='squirrel-info-popup-name'>
+          {squirrel.first_name} {squirrel.last_name}
+        </div>
+        <div className='squirrel-info-popup-handle'>{squirrel.handle}</div>
+      </div>
+      <div className='remove-squirrel-btn'>remove from goal</div>
+    </div>
+  )
+}
+
 export default function ExpandedViewModeContent({
   goalAddress,
   goal,
@@ -33,6 +53,7 @@ export default function ExpandedViewModeContent({
 
   const [activeTab, setActiveTab] = useState('comments')
   const [editSquirrels, setEditSquirrels] = useState(false)
+  const [squirrelInfoPopup, setSquirrelInfoPopup] = useState(null)
   const [editTimeframe, setEditTimeframe] = useState(false)
   const [editDescription, setEditDescription] = useState(false)
   const [editTitle, setEditTitle] = useState(false)
@@ -44,11 +65,9 @@ export default function ExpandedViewModeContent({
     if (content !== '' && description !== '') {
       updateGoal(
         {
+          ...goal,
+          timestamp_updated: moment().unix(),
           content,
-          user_hash: goal.user_hash,
-          timestamp_created: moment().unix(),
-          hierarchy: goal.hierarchy,
-          status: goal.status,
           description,
         },
         goalAddress
@@ -58,12 +77,29 @@ export default function ExpandedViewModeContent({
     setEditDescription(false)
   }
 
+  const updateTimeframe = (start, end) => {
+    updateGoal(
+      {
+        ...goal,
+        timestamp_updated: moment().unix(),
+        time_frame: {
+          from_date: start,
+          to_date: end
+        }
+      },
+      goalAddress
+    )
+  }
+
   const handleOnChangeTitle = ({ target }) => {
     setContent(target.value)
   }
   const handleOnChangeDescription = ({ target }) => {
     setDescription(target.value)
   }
+
+  const fromDate = goal.time_frame ? moment.unix(goal.time_frame.from_date) : null
+  const toDate = goal.time_frame ? moment.unix(goal.time_frame.to_date) : null
 
   return (
     <div className='expanded_view_content'>
@@ -82,19 +118,32 @@ export default function ExpandedViewModeContent({
           <div className='expanded_view_squirrels_title'>squirrels</div>
           <div className='expanded_view_squirrels_content'>
             {squirrels.map((squirrel, index) => {
+              const highlighted = squirrelInfoPopup
+                ? squirrelInfoPopup.address === squirrel.address
+                : false
               return (
                 <Avatar
                   key={index}
                   avatar_url={squirrel.avatar_url}
                   medium
                   clickable
+                  onClick={() =>
+                    setSquirrelInfoPopup(squirrelInfoPopup ? null : squirrel)
+                  }
+                  highlighted={highlighted}
                 />
               )
             })}
+            {squirrelInfoPopup && (
+              <SquirrelInfoPopup
+                onClose={() => setSquirrelInfoPopup(null)}
+                squirrel={squirrelInfoPopup}
+              />
+            )}
             <div className='expanded_view_squirrels_add_wrapper'>
               <Icon
                 className='add_squirrel_plus_icon'
-                name='plus-line.svg'
+                name='plus.svg'
                 size='medium'
                 onClick={() => setEditSquirrels(!editSquirrels)}
               />
@@ -109,10 +158,14 @@ export default function ExpandedViewModeContent({
           <div
             className='expanded_view_timeframe_display'
             onClick={() => setEditTimeframe(!editTimeframe)}>
-            Feb 12, 2019 - Feb 20, 2019
+            {fromDate && fromDate.format('MMM Do, YYYY')}{toDate && ' - '}{toDate && toDate.format('MMM Do, YYYY')}
+            {!fromDate && !toDate && 'not set'}
           </div>
           {editTimeframe && (
-            <DatePicker onClose={() => setEditTimeframe(false)} />
+            <DatePicker onClose={() => setEditTimeframe(false)}
+              onSet={updateTimeframe}
+              fromDate={fromDate}
+              toDate={toDate} />
           )}
         </div>
       </div>

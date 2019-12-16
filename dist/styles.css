@@ -281,7 +281,7 @@ h4 {
 }
 
 .goal_form_save {
-  margin-top: 78px;
+  margin-top: 75px;
   padding: 10px 30px;
   background: #00AFA4 0% 0% no-repeat padding-box;
   opacity: 1;
@@ -355,7 +355,7 @@ h4 {
 /* VerticalActionsList */
 
 .vertical_actions_list {
-  margin-left: 14px;
+  margin-left: 10px;
 }
 
 .vertical_action_close {
@@ -367,9 +367,9 @@ h4 {
 }
 
 .action_list_item {
-  background-color: rgba(106, 106, 106, 0.9);
-  border: 1px solid rgba(106, 106, 106, 0.9);
-  border-radius: 10px;
+  background-color: rgba(134, 134, 134, 0.95);
+  border: 1px solid rgba(134, 134, 134, 0.95);
+  border-radius: 16px;
   font-family: 'renner_mediummedium', Helvetica, Sans-Serif;
   padding: 5px 25px 5px 15px;
   outline: 0;
@@ -381,6 +381,7 @@ h4 {
   align-items: center;
   cursor: pointer;
   letter-spacing: 0.5px;
+  transition: .1s all;
 }
 
 .action_list_item:hover {
