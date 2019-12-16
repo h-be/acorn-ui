@@ -7,6 +7,8 @@ import PickerTemplate from './PickerTemplate/PickerTemplate'
 import { addMemberOfGoal, archiveMemberOfGoal } from '../goal-members/actions'
 import Avatar from './Avatar/Avatar'
 import moment from 'moment'
+
+
 function PeoplePicker({
   people,
   goalAddress,
@@ -70,10 +72,10 @@ function PeoplePicker({
                 onClick={onClick}>
                 <Avatar avatar_url={person.avatar_url} medium />
                 <div className='person_nameANDhandle'>
-                  <span className='person_name'>
-                    {person.first_name} {person.last_name}
-                  </span>
-                  <div className='person_handle'>{person.handle}</div>
+                <span className='person_name'>
+                {person.first_name} {person.last_name}
+                </span>
+                <div className='person_handle'>{person.handle}</div>
                 </div>
                 {!person.is_member && (
                   <Icon
@@ -86,7 +88,6 @@ function PeoplePicker({
                   <Icon
                     name='radio_button_checked.svg'
                     size='small'
-                    className='radio_button'
                     className='purple radio_button'
                   />
                 )}
