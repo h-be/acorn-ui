@@ -20,7 +20,8 @@
   transition: all .3s;
   margin: 0;
   color: #222222;
-  font-family: 'rennerbold', Helvetica, sans-serif;
+  font-family: 'renner_mediummedium', Helvetica, sans-serif;
+  font-weight: normal;
   box-sizing: border-box;
   height: 50px;
   font-size: 14px;

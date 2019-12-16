@@ -1,6 +1,7 @@
 .button {
   border-radius: 25px;
   background: #6600FF;
+  border: 1px solid #6600FF;
   color: #FFFFFF;
   outline: none;
   border: none;
@@ -9,10 +10,12 @@
   padding: 16px 45px;
   cursor: pointer;
   font-family: 'renner_mediummedium', Helvetica, sans-serif;
+  transition: .2s all;
 }
 
 .button:hover {
   background: #7C24FF;
+  border: 1px solid #7C24FF;
 }
 
 .clear_button {
@@ -25,7 +28,6 @@
   align-items: center;
   margin: 0;
   font-family: 'renner_mediummedium';
-  color: ;
   font-size: 11px;
   padding: 0;
   color: #00BEB0;
@@ -60,7 +62,7 @@
   border: none;
   font-size: 13px;
   line-height: 16px;
-  padding: 8px 32px;
+  padding: 8px 26px;
 }
 
 .button.medium {
@@ -69,7 +71,7 @@
   border: none;
   font-size: 14px;
   line-height: 18px;
-  padding: 11px 40px;
+  padding: 11px 28px;
 }
 
 .button.large {
@@ -78,5 +80,17 @@
   border: none;
   font-size: 16px;
   line-height: 19px;
-  padding: 13px 40px;
+  padding: 13px 32px;
+}
+
+.button.stroke {
+  background: transparent;
+  border: 1px solid black;
+  color: black;
+}
+
+.button.stroke:hover {
+  background: transparent;
+  border: 1px solid #7C24FF;
+  color: #7C24FF;
 }

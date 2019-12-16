@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import moment from 'moment'
 import './RightMenu.css'
 
 import PeoplePicker from '../../PeoplePicker'
@@ -23,19 +24,26 @@ export default function RightMenu({ goalAddress, goal, updateGoal }) {
   const rightMenuSquirrelsClass = viewsOpen.squirrels ? 'active' : ''
   const rightMenuTimeframeClass = viewsOpen.timeframe ? 'active' : ''
 
-  const innerUpdateGoal = key => val => {
+  const toggleView = key => {
+    setViews({ ...defaultViews, [key]: !viewsOpen[key] })
+  }
+
+  const updateTimeframe = (start, end) => {
     updateGoal(
       {
         ...goal,
-        [key]: val,
+        timestamp_updated: moment().unix(),
+        time_frame: {
+          from_date: start,
+          to_date: end
+        }
       },
       goalAddress
     )
   }
 
-  const toggleView = key => {
-    setViews({ ...defaultViews, [key]: !viewsOpen[key] })
-  }
+  const fromDate = goal.time_frame ? moment.unix(goal.time_frame.from_date) : null
+  const toDate = goal.time_frame ? moment.unix(goal.time_frame.to_date) : null
 
   return (
     <div className='expanded_view_right_menu'>
@@ -60,7 +68,7 @@ export default function RightMenu({ goalAddress, goal, updateGoal }) {
       )}
       {/* squirrels */}
       <Icon
-        name='squirrel_4d4d4d.svg'
+        name='squirrel.svg'
         className={rightMenuSquirrelsClass}
         key='squirrels'
         onClick={() => toggleView('squirrels')}
@@ -76,7 +84,10 @@ export default function RightMenu({ goalAddress, goal, updateGoal }) {
         onClick={() => toggleView('timeframe')}
       />
       {viewsOpen.timeframe && (
-        <DatePicker onClose={() => setViews({ ...defaultViews })} />
+        <DatePicker onClose={() => setViews({ ...defaultViews })}
+          onSet={updateTimeframe}
+          fromDate={fromDate}
+          toDate={toDate} />
       )}
 
       <Icon name='tag_4d4d4d.svg' className='right_menu_tag feature-in-development' />

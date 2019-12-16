@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState, useEffect } from 'react'
+import moment from 'moment'
 
 import PickerTemplate from '../PickerTemplate/PickerTemplate'
 import 'react-dates'
@@ -10,12 +10,18 @@ import 'react-dates/initialize'
 
 import './DatePicker.css'
 
-function DatePicker({ onClose }) {
+function DatePicker({ fromDate, toDate, onClose, onSet }) {
   const [dates, setDates] = useState({
-    startDate: null,
-    endDate: null,
+    fromDate,
+    toDate,
   })
   const [focusedInput, setFocusedInput] = useState(START_DATE)
+
+  useEffect(() => {
+    if (dates.fromDate && dates.toDate) {
+      onSet(dates.fromDate.unix(), dates.toDate.unix())
+    }
+  }, [dates])
 
   return (
     <PickerTemplate
@@ -30,16 +36,17 @@ function DatePicker({ onClose }) {
           showClearDates
           keepOpenOnDateSelect
           customCloseIcon={<button className='clear_button'>clear all</button>}
-          startDate={dates.startDate} // momentPropTypes.momentObj or null,
-          startDateId='your_unique_start_date_id' // PropTypes.string.isRequired,
-          endDate={dates.endDate} // momentPropTypes.momentObj or null,
-          endDateId='your_unique_end_date_id' // PropTypes.string.isRequired,
+          startDate={dates.fromDate} // momentPropTypes.momentObj or null,
+          startDateId='your_unique_start_date_id'
+          endDate={dates.toDate} // momentPropTypes.momentObj or null,
+          endDateId='your_unique_end_date_id'
           onDatesChange={({ startDate, endDate }) =>
-            setDates({ startDate, endDate })
-          } // PropTypes.func.isRequired,
-          focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+            setDates({ fromDate: startDate, toDate: endDate })
+          }
+          focusedInput={focusedInput}
           onFocusChange={focusedInput => {
-            if (!focusedInput) return // doesn't update the focusedInput if it is trying to close the DRP
+             // doesn't update the focusedInput if it is trying to close the DRP
+            if (!focusedInput) return
             setFocusedInput(focusedInput)
           }}
         />
