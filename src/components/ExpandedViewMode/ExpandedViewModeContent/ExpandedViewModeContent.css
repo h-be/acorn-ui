@@ -58,6 +58,7 @@
   border-radius: 10px;
   padding: 15px;
   color: #a3a3a3;
+  margin-bottom: 14px;
 }
 
 /* squirrels & timeframe wrapper */
@@ -163,7 +164,7 @@
   background: #F2F2F2;
   border-radius: 10px;
   padding: 9px 12px;
-  font-size: 13px;
+  font-size: 12px;
   font-family: 'renner_mediummedium', Helvetica, Sans-Serif;
   cursor: pointer;
 }
