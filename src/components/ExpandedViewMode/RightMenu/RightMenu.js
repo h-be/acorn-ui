@@ -6,7 +6,6 @@ import PeoplePicker from '../../PeoplePicker'
 import DatePicker from '../../DatePicker/DatePicker'
 import Priority from '../../Priority/Priority'
 
-import Comments from '../../Comments/Comments'
 import Icon from '../../Icon/Icon'
 
 export default function RightMenu({ goalAddress, goal, updateGoal }) {
@@ -35,14 +34,16 @@ export default function RightMenu({ goalAddress, goal, updateGoal }) {
         timestamp_updated: moment().unix(),
         time_frame: {
           from_date: start,
-          to_date: end
-        }
+          to_date: end,
+        },
       },
       goalAddress
     )
   }
 
-  const fromDate = goal.time_frame ? moment.unix(goal.time_frame.from_date) : null
+  const fromDate = goal.time_frame
+    ? moment.unix(goal.time_frame.from_date)
+    : null
   const toDate = goal.time_frame ? moment.unix(goal.time_frame.to_date) : null
 
   return (
@@ -75,18 +76,38 @@ export default function RightMenu({ goalAddress, goal, updateGoal }) {
         onClick={() => toggleView('timeframe')}
       />
       {viewsOpen.timeframe && (
-        <DatePicker onClose={() => setViews({ ...defaultViews })}
+        <DatePicker
+          onClose={() => setViews({ ...defaultViews })}
           onSet={updateTimeframe}
           fromDate={fromDate}
-          toDate={toDate} />
+          toDate={toDate}
+        />
       )}
 
-      <Icon name='tag_4d4d4d.svg' className='right_menu_tag feature-in-development' />
-      <Icon name='help_4d4d4d.svg' className='right_menu_help feature-in-development' />
-      <Icon name='link_4d4d4d.svg' className='right_menu_link feature-in-development' />
-      <Icon name='archive_4d4d4d.svg' className='right_menu_archive feature-in-development' />
-      <Icon name='share_4d4d4d.svg' className='right_menu_share feature-in-development' />
-      <Icon name='github_4d4d4d.svg' className='right_menu_github feature-in-development' />
+      <Icon
+        name='tag_4d4d4d.svg'
+        className='right_menu_tag feature-in-development'
+      />
+      <Icon
+        name='help_4d4d4d.svg'
+        className='right_menu_help feature-in-development'
+      />
+      <Icon
+        name='link_4d4d4d.svg'
+        className='right_menu_link feature-in-development'
+      />
+      <Icon
+        name='archive_4d4d4d.svg'
+        className='right_menu_archive feature-in-development'
+      />
+      <Icon
+        name='share_4d4d4d.svg'
+        className='right_menu_share feature-in-development'
+      />
+      <Icon
+        name='github_4d4d4d.svg'
+        className='right_menu_github feature-in-development'
+      />
     </div>
   )
 }
