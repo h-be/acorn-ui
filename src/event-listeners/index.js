@@ -36,7 +36,7 @@ import { setScreenDimensions } from '../screensize/actions'
 import { changeTranslate, changeScale } from '../viewport/actions'
 
 import layoutFormula from '../drawing/layoutFormula'
-import { setGoalClone } from '../goal_clone/actions'
+import { setGoalClone } from '../goal-clone/actions'
 
 import cloneGoals from './cloneGoals'
 
