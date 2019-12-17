@@ -82,12 +82,12 @@
 .icon.logo {
   width: 28px;
   height: 18px;
-  padding: 1px;
+  padding: 1.25px;
   display: inline-block;
   position: relative;
   right: -2px;
-  top: 2px;
   background: transparent;
+  cursor: default;
 }
 
 .icon.view-mode-small {
