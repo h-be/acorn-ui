@@ -7,6 +7,7 @@ import PickerTemplate from './PickerTemplate/PickerTemplate'
 import { addMemberOfGoal, archiveMemberOfGoal } from '../goal-members/actions'
 import Avatar from './Avatar/Avatar'
 import moment from 'moment'
+
 function PeoplePicker({
   people,
   goalAddress,
@@ -86,7 +87,6 @@ function PeoplePicker({
                   <Icon
                     name='radio_button_checked.svg'
                     size='small'
-                    className='radio_button'
                     className='purple radio_button'
                   />
                 )}
