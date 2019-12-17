@@ -13,6 +13,8 @@ import {
   unsetGKeyDown,
   setShiftKeyDown,
   unsetShiftKeyDown,
+  setCtrlKeyDown,
+  unsetCtrlKeyDown,
 } from '../keyboard/actions'
 import {
   setMousedown,
@@ -34,6 +36,9 @@ import { setScreenDimensions } from '../screensize/actions'
 import { changeTranslate, changeScale } from '../viewport/actions'
 
 import layoutFormula from '../drawing/layoutFormula'
+import { setGoalClone } from '../goal_clone/actions'
+
+import cloneGoals from './cloneGoals'
 
 export default function setupEventListeners(store, canvas) {
   function windowResize(event) {
@@ -77,6 +82,30 @@ export default function setupEventListeners(store, canvas) {
           // prevent the browser from navigating back to the last page
           event.preventDefault()
         }
+      case 'ControlLeft':
+      case 'ControlRight':
+        store.dispatch(setCtrlKeyDown())
+        break
+      case 'KeyC':
+        if (state.ui.keyboard.ctrlKeyDown) {
+          if (state.ui.selection.selectedGoals.length) {
+            // use first
+            store.dispatch(setGoalClone(state.ui.selection.selectedGoals))
+          }
+        }
+        break
+      case 'KeyV':
+        if (state.ui.keyboard.ctrlKeyDown) {
+          if (state.ui.goalClone.goals.length) {
+            cloneGoals(
+              store,
+              state.ui.goalClone.goals,
+              state.goalMembers,
+              state.goals
+            )
+          }
+        }
+        break
       default:
         // console.log(event)
         break
@@ -92,6 +121,10 @@ export default function setupEventListeners(store, canvas) {
       case 'ShiftLeft':
       case 'ShiftRight':
         store.dispatch(unsetShiftKeyDown())
+        break
+      case 'ControlLeft':
+      case 'ControlRight':
+        store.dispatch(unsetCtrlKeyDown())
         break
       default:
         // console.log(event)
