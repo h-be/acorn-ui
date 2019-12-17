@@ -10,6 +10,7 @@ import moment from 'moment'
 import './Comments.css'
 import Avatar from '../Avatar/Avatar'
 import Button from '../Button/Button'
+
 function Comment({ comment, agent }) {
   return (
     <div className='comment'>
@@ -28,6 +29,7 @@ function Comment({ comment, agent }) {
     </div>
   )
 }
+
 function Comments({
   goalAddress,
   avatarUrl,
@@ -73,26 +75,26 @@ function Comments({
         </div>
       </div>
       <div className='scroll'>
-        {Object.keys(comments).map(key =>
-          comments[key].goal_address === goalAddress ? (
-            <Comment
-              key={key}
-              comment={comments[key]}
-              agent={agents[comments[key].agent_address]}
-            />
-          ) : null
-        )}
+        {Object.keys(comments).map(key => (
+          <Comment
+            key={key}
+            comment={comments[key]}
+            agent={agents[comments[key].agent_address]}
+          />
+        ))}
       </div>
     </div>
   )
 }
 function mapStateToProps(state) {
+  const goalAddress = state.ui.expandedView.goalAddress
   return {
-    comments: state.goalComments,
-    goalAddress: state.ui.expandedView.goalAddress,
+    comments: Object.values(state.goalComments).filter(
+      goalComment => goalComment.goal_address === goalAddress
+    ),
+    goalAddress,
     avatarAddress: state.whoami.entry.address,
     avatarUrl: state.whoami.entry.avatar_url,
-
     agents: state.agents,
   }
 }
