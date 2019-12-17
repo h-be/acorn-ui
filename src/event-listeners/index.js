@@ -149,6 +149,7 @@ export default function setupEventListeners(store, canvas) {
         store.dispatch(unsetShiftKeyDown())
         break
       case 'ControlLeft':
+      case 'ControlRight':
         store.dispatch(unsetCtrlKeyDown())
         break
       default:
