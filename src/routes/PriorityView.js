@@ -1,6 +1,5 @@
 import React from 'react'
 import { NavLink, useRouteMatch, Switch, Route } from 'react-router-dom'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import IndentedTreeView from '../components/IndentedTreeView/IndentedTreeView'
@@ -56,7 +55,7 @@ function UrgencyImportanceQuadrants({ goalLists }) {
   )
 }
 
-function PriorityView({ goalTree, goalLists }) {
+function PriorityView({ goalTrees, goalLists }) {
   const { url } = useRouteMatch()
 
   const priorityMenuItems = [
@@ -70,7 +69,7 @@ function PriorityView({ goalTree, goalLists }) {
 
   return (
     <div className='priority-view-wrapper'>
-      <IndentedTreeView goalTree={goalTree} />
+      <IndentedTreeView goalTrees={goalTrees} />
       <div className='priority-menu-wrapper'>
         {priorityMenuItems.map(([menuTitle, menuSlug]) => {
           return (
@@ -93,15 +92,39 @@ function PriorityView({ goalTree, goalLists }) {
   )
 }
 
-PriorityView.propTypes = {}
 function mapDispatchToProps(dispatch) {
   return {}
 }
+
 function mapStateToProps(state) {
-  const test = Object.values(state.goals)
+  const allGoals = Object.values(state.goals)
+
+  // CONSTRUCT TREES FOR THE INDENTED NAV TREE VIEW
+  const edges = Object.values(state.edges)
+  const allGoalAddresses = allGoals.map(goal => goal.address)
+  // find the Goal objects without parent Goals
+  // since they will sit at the top level
+  const noParentsAddresses = allGoalAddresses.filter(goalAddress => {
+    return !edges.find(edge => edge.child_address === goalAddress)
+  })
+  // recursively calls itself
+  // so that it constructs the full sub-tree for each root Goal
+  function getGoal(goalAddress) {
+    return {
+      ...state.goals[goalAddress],
+      children: edges
+        // find the edges indicating the children of this goal
+        .filter(edge => edge.parent_address === goalAddress)
+        // actually nest the children Goals, recurse
+        .map(edge => getGoal(edge.child_address)),
+    }
+  }
+  // start with the root Goals, and recurse down to their children
+  const goalTrees = noParentsAddresses.map(getGoal)
+
   return {
-    goalTree: Object.values(state.goals),
-    goalLists: [test, test, test, test], // TODO: change this
+    goalTrees,
+    goalLists: [allGoals, allGoals, allGoals, allGoals], // TODO: change this
   }
 }
 
