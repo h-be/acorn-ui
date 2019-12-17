@@ -83,6 +83,7 @@ export default function setupEventListeners(store, canvas) {
           event.preventDefault()
         }
       case 'ControlLeft':
+      case 'ControlRight':
         store.dispatch(setCtrlKeyDown())
         break
       case 'KeyC':
