@@ -40,6 +40,7 @@ function ExpandedViewMode({
             updateGoal={updateGoal}
             goal={goal}
           />
+
           <RightMenu
             goalAddress={goalAddress}
             goal={goal}
