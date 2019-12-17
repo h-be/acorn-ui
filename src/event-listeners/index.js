@@ -31,15 +31,14 @@ import {
   closeGoalForm,
   updateContent,
 } from '../goal-form/actions'
-import { archiveGoal, createGoal } from '../goals/actions'
+import { archiveGoal } from '../goals/actions'
 import { setScreenDimensions } from '../screensize/actions'
 import { changeTranslate, changeScale } from '../viewport/actions'
 
 import layoutFormula from '../drawing/layoutFormula'
 import { setGoalClone } from '../goal_clone/actions'
-import moment from 'moment'
-import { addMemberOfGoal } from '../goal-members/actions'
-import cloneGoals from '../components/cloneGoals'
+
+import cloneGoals from './cloneGoals'
 
 export default function setupEventListeners(store, canvas) {
   function windowResize(event) {

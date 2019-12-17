@@ -1,5 +1,5 @@
-import { createGoal } from '../goals/actions'
 import { selectGoal } from '../selection/actions'
+import { createGoal } from '../goals/actions'
 import { addMemberOfGoal } from '../goal-members/actions'
 import moment from 'moment'
 
