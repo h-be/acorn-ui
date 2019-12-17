@@ -1,7 +1,5 @@
 import React from 'react'
 
-const Priority = () => {
+export default function Priority() {
   return <h1>Prioridades</h1>
 }
-
-export default Priority

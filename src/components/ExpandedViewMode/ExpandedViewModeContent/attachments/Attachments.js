@@ -1,7 +1,5 @@
 import React from 'react'
 
-const Attachments = () => {
+export default function Attachments() {
   return <h1>Attachments</h1>
 }
-
-export default Attachments

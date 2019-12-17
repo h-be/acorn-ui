@@ -12,12 +12,11 @@ import TextareaAutosize from 'react-textarea-autosize'
 import DatePicker from '../../DatePicker/DatePicker'
 import PeoplePicker from '../../PeoplePicker'
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import Priority from '../ExpandedViewModeContent/Priority/Priority'
-import Comments from '../ExpandedViewModeContent/comments/Comments'
-import ActivityHistory from '../ExpandedViewModeContent/activity history/ActivityHistory'
-import Attachments from '../ExpandedViewModeContent/attachments/Attachments'
-import NavBar from './NavBar/NavBar'
+import Priority from './Priority/Priority'
+import Comments from '../../Comments/Comments'
+import ActivityHistory from './ActivityHistory/ActivityHistory'
+import Attachments from './Attachments/Attachments'
+import ExpandedViewNavBar from './ExpandedViewNavBar/ExpandedViewNavBar'
 
 function SquirrelInfoPopup({ squirrel, onClose }) {
   const ref = useRef()
@@ -158,7 +157,7 @@ export default function ExpandedViewModeContent({
           <div
             className='expanded_view_timeframe_display'
             onClick={() => setEditTimeframe(!editTimeframe)}>
-            {fromDate && fromDate.format('MMM Do, YYYY')}{toDate && ' - '}{toDate && toDate.format('MMM Do, YYYY')}
+            {fromDate && fromDate.format('MMM D, YYYY')}{toDate && ' - '}{toDate && toDate.format('MMM D, YYYY')}
             {!fromDate && !toDate && 'not set'}
           </div>
           {editTimeframe && (
@@ -177,26 +176,20 @@ export default function ExpandedViewModeContent({
           onChange={handleOnChangeDescription}
         />
       </div>
-      <NavBar activeTab={activeTab} onChange={newTab => setActiveTab(newTab)} />
+      <ExpandedViewNavBar activeTab={activeTab} onChange={newTab => setActiveTab(newTab)} />
 
       <div className='expanded_view_tabs'>
         {activeTab === 'priority' && (
-          <div className='expanded_view_priority'>
-            {/* TODO: replace this with real priority section */}
-            priority
-          </div>
+          <Priority />
         )}
         {activeTab === 'comments' && (
-          <div className='expanded_view_comments'>
-            {/* TODO: replace this with real comments section */}
-            comments
-          </div>
+          <Comments />
         )}
         {activeTab === 'activity history' && (
-          <div className='expanded_view_activity_history'>activity history</div>
+          <ActivityHistory />
         )}
         {activeTab === 'attachments' && (
-          <div className='expanded_view_attachments'>attachments</div>
+          <Attachments />
         )}
       </div>
     </div>
