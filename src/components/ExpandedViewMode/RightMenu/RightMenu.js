@@ -47,15 +47,6 @@ export default function RightMenu({ goalAddress, goal, updateGoal }) {
 
   return (
     <div className='expanded_view_right_menu'>
-      <Icon
-        name='help_4d4d4d.svg'
-        key='help'
-        className={rightMenuHelpClass}
-        onClick={() => setViews({ ...defaultViews, help: !viewsOpen.help })}
-      />
-      {viewsOpen.help && (
-        <Comments onClose={() => setViews({ ...defaultViews })} />
-      )}
       {/* priority */}
       <Icon
         name='priority_4d4d4d.svg'
