@@ -39,6 +39,7 @@ import layoutFormula from '../drawing/layoutFormula'
 import { setGoalClone } from '../goal_clone/actions'
 import moment from 'moment'
 import { addMemberOfGoal } from '../goal-members/actions'
+import cloneGoals from '../components/cloneGoals'
 
 export default function setupEventListeners(store, canvas) {
   function windowResize(event) {
@@ -97,39 +98,12 @@ export default function setupEventListeners(store, canvas) {
       case 'KeyV':
         if (state.ui.keyboard.ctrlKeyDown) {
           if (state.ui.goalClone.goals.length) {
-            state.ui.goalClone.goals.forEach(value => {
-              let members = []
-              Object.values(state.goalMembers).map(_value => {
-                _value.goal_address === value ? members.push(_value) : null
-              })
-
-              store
-                .dispatch(
-                  createGoal.create({
-                    goal: {
-                      ...state.goals[value],
-                      timestamp_created: moment().unix(),
-                    },
-                    maybe_parent_address: null,
-                  })
-                )
-                .then(value => {
-                  let newGoalAddress = value.goal.address
-                  store.dispatch(selectGoal(value.goal.address))
-                  members.map(member => {
-                    store.dispatch(
-                      addMemberOfGoal.create({
-                        goal_member: {
-                          goal_address: newGoalAddress,
-                          agent_address: member.agent_address,
-                          user_edit_hash: member.user_edit_hash,
-                          unix_timestamp: moment().unix(),
-                        },
-                      })
-                    )
-                  })
-                })
-            })
+            cloneGoals(
+              store,
+              state.ui.goalClone.goals,
+              state.goalMembers,
+              state.goals
+            )
           }
         }
         break
