@@ -53,7 +53,6 @@ export default function setupEventListeners(store, canvas) {
 
   function bodyKeydown(event) {
     let state = store.getState()
-    console.log(state.ui.goalClone)
     switch (event.code) {
       case 'KeyG':
         // only dispatch SET_G_KEYDOWN if it's not already down
@@ -84,6 +83,7 @@ export default function setupEventListeners(store, canvas) {
           event.preventDefault()
         }
       case 'ControlLeft':
+      case 'ControlRight':
         store.dispatch(setCtrlKeyDown())
         break
       case 'KeyC':
@@ -150,6 +150,7 @@ export default function setupEventListeners(store, canvas) {
         store.dispatch(unsetShiftKeyDown())
         break
       case 'ControlLeft':
+      case 'ControlRight':
         store.dispatch(unsetCtrlKeyDown())
         break
       default:
