@@ -1,4 +1,5 @@
 import React from 'react'
+import moment from 'moment'
 import './PriorityGoal.css'
 import { NavLink } from 'react-router-dom'
 
@@ -6,6 +7,11 @@ import Avatar from '../Avatar/Avatar'
 import Icon from '../Icon/Icon'
 
 function PriorityGoal({ goal }) {
+  const fromDate = goal.time_frame
+    ? moment.unix(goal.time_frame.from_date)
+    : null
+  const toDate = goal.time_frame ? moment.unix(goal.time_frame.to_date) : null
+
   return (
     <div className='priority-quadrant-goal-item'>
       <div className='priority-quadrant-goal-title'>
@@ -13,11 +19,19 @@ function PriorityGoal({ goal }) {
         {goal.content}
       </div>
       <div className='priority-quadrant-goal-info'>
-        <Icon name='calendar_898989.svg' size='very-small' />
-        {/* TODO: make this a dynamic value */}
-        <span>Aug 14 - Aug 20</span>
-        {/* TODO: make this a dynamic value */}
-        <Avatar avatar_url={'img/profile.png'} small />
+        {goal.time_frame && (
+          <>
+            <Icon name='calendar_898989.svg' size='very-small' />
+            {fromDate && fromDate.format('MMM D, YYYY')}
+            {toDate && ' - '}
+            {toDate && toDate.format('MMM D, YYYY')}
+          </>
+        )}
+        {goal.members.length
+          ? goal.members.map((goalMember, index) => (
+              <Avatar key={index} avatar_url={goalMember.avatar_url} small />
+            ))
+          : null}
       </div>
       <div className='priority-quadrant-goal-right-menu'>
         <div className='priority-quadrant-goal-view-mode-icons'>

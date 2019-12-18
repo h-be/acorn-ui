@@ -57,15 +57,15 @@ function Quadrants({ topLeft, topRight, bottomLeft, bottomRight }) {
 
 function UrgencyImportanceQuadrants({ goalLists }) {
   const topLeft = {
-    title: 'urgent & important',
+    title: 'more urgent & more important',
     goals: goalLists[0],
   }
   const topRight = {
-    title: 'less urgent & important',
+    title: 'more urgent & less important',
     goals: goalLists[1],
   }
   const bottomLeft = {
-    title: 'urgent & less important',
+    title: 'less urgent & more important',
     goals: goalLists[2],
   }
   const bottomRight = {
@@ -242,7 +242,16 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  const allGoals = Object.values(state.goals)
+  // modify so that all goals have their related goal members
+  const allGoals = Object.values(state.goals).map(goal => {
+    const members = Object.values(state.goalMembers)
+      .filter(gm => gm.goal_address === goal.address)
+      .map(gm => state.agents[gm.agent_address])
+    return {
+      ...goal,
+      members,
+    }
+  })
 
   // CONSTRUCT TREES FOR THE INDENTED NAV TREE VIEW
   const edges = Object.values(state.edges)
