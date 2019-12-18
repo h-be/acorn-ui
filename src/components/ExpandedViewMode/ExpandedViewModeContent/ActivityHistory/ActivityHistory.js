@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
 import './ActivityHistory.css'
+import { fetchGoalHistory } from '../../../../goal-history/actions'
+import { connect } from 'react-redux'
+
 class ActivityHistory extends Component {
   render() {
+    this.props.fetchGoalHistory({
+      address: this.props.goalAddress,
+    })
+    console.log('props.state', this.props.state)
     return (
       <div className='history'>
         <img src='#' className='historyPic' alt='user Pic' />
@@ -23,4 +30,22 @@ class ActivityHistory extends Component {
   }
 }
 
-export default ActivityHistory
+function mapStateToProps(state) {
+  const goalAddress = state.ui.expandedView.goalAddress
+  return {
+    goalAddress,
+    avatarAddress: state.whoami.entry.address,
+    avatarUrl: state.whoami.entry.avatar_url,
+    agents: state.agents,
+    state: state,
+  }
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchGoalHistory: address => {
+      return dispatch(fetchGoalHistory.create( address ))
+    },
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ActivityHistory)

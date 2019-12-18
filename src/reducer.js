@@ -25,6 +25,7 @@ import expandedView from './expanded-view/reducer'
 import goalVotes from './goal-votes/reducer'
 import goalComments from './goal-comments/reducer'
 import goalClone from './goal-clone/reducer'
+import goalHistory from './goal-history/reducer'
 
 // import anotherone from './another/path'
 
@@ -48,6 +49,7 @@ export default combineReducers({
     mouse,
     expandedView,
     goalClone,
+    goalHistory,
   }), // ,
   // anotherone: anotherone
 })
