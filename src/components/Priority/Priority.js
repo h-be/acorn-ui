@@ -94,16 +94,56 @@ const marksWithoutLabels = [
 function valuetext(value) {
   return `${value}%`
 }
-function Priority({
-  goalAddress,
-  onClose,
-  createGoalVote,
-  whoami,
-  updateGoalVote,
-  votes,
-  archiveVoteOfGoal,
+
+const priorityItems = [
+  { icon: 'importance.svg', title: 'Importance' },
+  { icon: 'urgency.svg', title: 'Urgency' },
+  { icon: 'impact.svg', title: 'Impact' },
+  { icon: 'effort.png', title: 'Effort' },
+]
+
+function PrioritySlider({
+  icon,
+  title,
+  withLabels,
+  value,
+  onChange = () => {},
+  onChangeCommitted = () => {},
 }) {
   const classes = useStyles()
+  return (
+    <div className='priority_item'>
+      <Icon
+        className='priority_item_icon not-hoverable'
+        name={icon}
+        size='small'
+      />
+      <div className='priority_item_title'>{title}</div>
+      <Slider
+        onChange={onChange}
+        onChangeCommitted={onChangeCommitted}
+        defaultValue={50}
+        value={value}
+        getAriaValueText={valuetext}
+        aria-labelledby='discrete-slider-custom'
+        step={25}
+        valueLabelDisplay='auto'
+        marks={withLabels ? marksWithLabels : marksWithoutLabels}
+        classes={{
+          root: classes.root, // class name, e.g. `classes-nesting-root-x`
+          label: classes.label, // class name, e.g. `classes-nesting-label-x`
+          rail: classes.rail,
+          mark: classes.mark,
+          markLabel: classes.markLabel,
+          offset: classes.offset,
+          track: classes.track,
+        }}
+      />
+    </div>
+  )
+}
+
+function Aggregated({ votes }) {
   let averageValues = [0, 0, 0, 0]
   if (votes.length > 0) {
     votes.forEach(element => {
@@ -120,129 +160,107 @@ function Priority({
     averageValues = [50, 50, 50, 50]
   }
 
-  const priorityItemVars = [
-    { priorityIcon: 'urgency.svg', priorityItemTitle: 'Urgency' },
-    { priorityIcon: 'importance.svg', priorityItemTitle: 'Importance' },
-    { priorityIcon: 'impact.svg', priorityItemTitle: 'Impact' },
-    { priorityIcon: 'effort.png', priorityItemTitle: 'Effort' },
-  ]
-  const [values, setValues] = useState({
-    Urgency: 50,
-    Importance: 50,
-    Impact: 50,
-    Effort: 50,
+  return priorityItems.map(({ icon, title }, index) => {
+    return (
+      <PrioritySlider
+        icon={icon}
+        title={title}
+        withLabels={index !== 0}
+        value={averageValues[index]}
+      />
+    )
   })
-  const [valuesSlider, setValuesSlider] = useState({
-    0: 50,
-    1: 50,
-    2: 50,
-    3: 50,
+}
+
+function WeighIn({ myVote, onUpdate }) {
+  myVote = myVote || {
+    urgency: 0.5,
+    importance: 0.5,
+    impact: 0.5,
+    effort: 0.5,
+  }
+  const [values, setValues] = useState(myVote)
+  const indexToKey = {
+    0: 'urgency',
+    1: 'importance',
+    2: 'impact',
+    3: 'effort',
+  }
+  return priorityItems.map(({ icon, title }, index) => {
+    const key = indexToKey[index]
+    return (
+      <PrioritySlider
+        icon={icon}
+        title={title}
+        withLabels={index !== 0}
+        value={values[key] * 100}
+        onChange={(e, value) => setValues({ ...values, [key]: value / 100 })}
+        onChangeCommitted={() => onUpdate(values)}
+      />
+    )
   })
+}
+
+function Priority({
+  goalAddress,
+  onClose,
+  createGoalVote,
+  whoami,
+  updateGoalVote,
+  votes,
+  archiveVoteOfGoal,
+}) {
   const [openMyVote, setOpenMyVote] = useState(false)
-  const handleOnChangeSlider = sliderType => (e, value) => {
-    if (!openMyVote) return
-    switch (sliderType) {
-      case 'Urgency':
-        setValuesSlider({ ...valuesSlider, 0: value })
-        break
-      case 'Importance':
-        setValuesSlider({ ...valuesSlider, 1: value })
-        break
-      case 'Impact':
-        setValuesSlider({ ...valuesSlider, 2: value })
-        break
-      case 'Effort':
-        setValuesSlider({ ...valuesSlider, 3: value })
-        break
-      default:
-        break
-    }
-  }
-  const handleOnChange = sliderType => (e, value) => {
-    if (!openMyVote) return
-    if (values[sliderType] !== value) {
-      setValues({
-        ...values,
-        [sliderType]: value,
-      })
-    }
-  }
 
-  useEffect(() => {
-    if (!openMyVote) return
-
-    let goal_vote = {
+  const myVote = votes.find(value => {
+    return value.agent_address === whoami.entry.address
+  })
+  const onUpdateVote = vote => {
+    const goal_vote = {
+      ...vote,
       goal_address: goalAddress,
-      urgency: values['Urgency'] / 100,
-      importance: values['Importance'] / 100,
-      impact: values['Impact'] / 100,
-      effort: values['Effort'] / 100,
       agent_address: whoami.entry.address,
       unix_timestamp: moment().unix(),
     }
-
-    const vote = votes.find(value => {
-      return value.agent_address === whoami.entry.address
+    updateGoalVote(goal_vote, vote.address)
+  }
+  const handleWeighIn = () => {
+    createGoalVote({
+      goal_vote: {
+        urgency: 0.5,
+        importance: 0.5,
+        impact: 0.5,
+        effort: 0.5,
+        goal_address: goalAddress,
+        agent_address: whoami.entry.address,
+        unix_timestamp: moment().unix(),
+      },
+    }).then(() => {
+      setOpenMyVote(true)
     })
-
-    if (votes.length > 0 && vote !== undefined) {
-      updateGoalVote(goal_vote, vote.address).then(value => {})
-    } else {
-      createGoalVote({ goal_vote }).then(value => {})
-    }
-  }, [values])
-
-  const priorityItems = priorityItemVars.map((priorityItem, index) => {
-    return (
-      <div key={index} className='priority_item'>
-        <Icon
-          className='priority_item_icon not-hoverable'
-          name={priorityItem.priorityIcon}
-          size='small'
-        />
-        <div className='priority_item_title'>
-          {priorityItem.priorityItemTitle}
-        </div>
-        <Slider
-          onChange={handleOnChangeSlider(priorityItem.priorityItemTitle)}
-          onChangeCommitted={handleOnChange(priorityItem.priorityItemTitle)}
-          defaultValue={50}
-          value={!openMyVote ? averageValues[index] : valuesSlider[index]}
-          getAriaValueText={valuetext}
-          aria-labelledby='discrete-slider-custom'
-          step={25}
-          valueLabelDisplay='auto'
-          marks={index === 0 ? marksWithLabels : marksWithoutLabels}
-          classes={{
-            root: classes.root, // class name, e.g. `classes-nesting-root-x`
-            label: classes.label, // class name, e.g. `classes-nesting-label-x`
-            rail: classes.rail,
-            mark: classes.mark,
-            markLabel: classes.markLabel,
-            offset: classes.offset,
-            track: classes.track,
-          }}
-        />
-      </div>
-    )
-  })
+  }
 
   // aggregated_priority_title
   // my_vote_title
   const priorityTabClassname = 'priority_tab'
   let aggClassName = priorityTabClassname
   let myVoteClassName = priorityTabClassname
+  if (!myVote) {
+    myVoteClassName += ' disabled'
+  }
   if (openMyVote) {
     myVoteClassName += ' active'
   } else {
     aggClassName += ' active'
   }
   const handleArchive = () => {
-    setOpenMyVote(false)
     const vote = votes.find(value => {
       return value.agent_address === whoami.entry.address
     })
-    archiveVoteOfGoal(vote.address).then(value => {})
+    if (!vote) return
+    archiveVoteOfGoal(vote.address).then(() => {
+      setOpenMyVote(false)
+    })
   }
   return (
     <PickerTemplate
@@ -253,23 +271,25 @@ function Priority({
         <div className={aggClassName} onClick={() => setOpenMyVote(false)}>
           Aggregated Priority
         </div>
-        <div className={myVoteClassName} onClick={() => setOpenMyVote(true)}>
+        <div
+          className={myVoteClassName}
+          onClick={() => myVote && setOpenMyVote(true)}>
           My Vote
         </div>
       </div>
-      {/* TODO : Ensure aggregated priority items are display ONLY */}
+      {/* Aggregated Priority */}
       {!openMyVote && (
         <div className='aggregated_priority'>
           <div className='aggregated_priority_inputs'>
             Based on {votes.length} inputs
           </div>
-          {priorityItems}
+          <Aggregated votes={votes} />
           <div className='priority_wrapper_button'>
             <Button
               size='small'
               color='purple'
               text='Weigh In'
-              onClick={() => setOpenMyVote(true)}
+              onClick={handleWeighIn}
             />
           </div>
           <div className='priority_wrapper_footer'>
@@ -279,9 +299,10 @@ function Priority({
         </div>
       )}
 
+      {/* Weigh In / Vote */}
       {openMyVote && (
         <div className='my_vote'>
-          {priorityItems}
+          <WeighIn myVote={myVote} onUpdate={onUpdateVote} />
           <div className='priority_wrapper_button'>
             <Button
               size='small'
