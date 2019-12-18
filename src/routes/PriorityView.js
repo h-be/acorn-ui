@@ -119,7 +119,7 @@ function PriorityView({ goalTrees, allGoals, goalVotes }) {
       'importance'
     )
   }
-  // urgency x importance
+  // impact x effort
   else if (useRouteMatch({ path: priorityMenuItems[1][1], exact: true })) {
     goalLists = getSortedAveragesGoalLists(
       allGoals,
