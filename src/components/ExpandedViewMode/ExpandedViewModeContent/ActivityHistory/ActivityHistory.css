@@ -1,0 +1,25 @@
+.history {
+  padding: 10px;
+  margin: 20px 30px;
+  color: rgb(0, 0, 0);
+}
+
+.history {
+  display: flex;
+}
+.historyPic {
+  max-width: 45px;
+  max-height: 45px;
+}
+.historyHeader {
+  display: flex;
+  align-items: center;
+}
+.historyBody {
+  max-width: 580px;
+  overflow-wrap: break-word;
+}
+
+.historyDate {
+  color: #787878;
+}

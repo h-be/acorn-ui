@@ -21,8 +21,8 @@ import ExpandedViewNavBar from './ExpandedViewNavBar/ExpandedViewNavBar'
 function SquirrelInfoPopup({ squirrel, onClose }) {
   const ref = useRef()
   useOnClickOutside(ref, onClose)
-// TODO : connect "squirrel-info-popup-name" div to the member's profile page
-// TODO : connect "remove from goal" button to holochain
+  // TODO : connect "squirrel-info-popup-name" div to the member's profile page
+  // TODO : connect "remove from goal" button to holochain
   return (
     <div className='squirrel-info-popup-wrapper' ref={ref}>
       <div className='squirrel-info-popup-nameANDhandle'>
@@ -83,8 +83,8 @@ export default function ExpandedViewModeContent({
         timestamp_updated: moment().unix(),
         time_frame: {
           from_date: start,
-          to_date: end
-        }
+          to_date: end,
+        },
       },
       goalAddress
     )
@@ -97,7 +97,9 @@ export default function ExpandedViewModeContent({
     setDescription(target.value)
   }
 
-  const fromDate = goal.time_frame ? moment.unix(goal.time_frame.from_date) : null
+  const fromDate = goal.time_frame
+    ? moment.unix(goal.time_frame.from_date)
+    : null
   const toDate = goal.time_frame ? moment.unix(goal.time_frame.to_date) : null
 
   return (
@@ -157,14 +159,18 @@ export default function ExpandedViewModeContent({
           <div
             className='expanded_view_timeframe_display'
             onClick={() => setEditTimeframe(!editTimeframe)}>
-            {fromDate && fromDate.format('MMM D, YYYY')}{toDate && ' - '}{toDate && toDate.format('MMM D, YYYY')}
+            {fromDate && fromDate.format('MMM D, YYYY')}
+            {toDate && ' - '}
+            {toDate && toDate.format('MMM D, YYYY')}
             {!fromDate && !toDate && 'not set'}
           </div>
           {editTimeframe && (
-            <DatePicker onClose={() => setEditTimeframe(false)}
+            <DatePicker
+              onClose={() => setEditTimeframe(false)}
               onSet={updateTimeframe}
               fromDate={fromDate}
-              toDate={toDate} />
+              toDate={toDate}
+            />
           )}
         </div>
       </div>
@@ -176,21 +182,16 @@ export default function ExpandedViewModeContent({
           onChange={handleOnChangeDescription}
         />
       </div>
-      <ExpandedViewNavBar activeTab={activeTab} onChange={newTab => setActiveTab(newTab)} />
+      <ExpandedViewNavBar
+        activeTab={activeTab}
+        onChange={newTab => setActiveTab(newTab)}
+      />
 
       <div className='expanded_view_tabs'>
-        {activeTab === 'priority' && (
-          <Priority />
-        )}
-        {activeTab === 'comments' && (
-          <Comments />
-        )}
-        {activeTab === 'activity history' && (
-          <ActivityHistory />
-        )}
-        {activeTab === 'attachments' && (
-          <Attachments />
-        )}
+        {activeTab === 'priority' && <Priority />}
+        {activeTab === 'comments' && <Comments />}
+        {activeTab === 'activity history' && <ActivityHistory />}
+        {activeTab === 'attachments' && <Attachments />}
       </div>
     </div>
   )
