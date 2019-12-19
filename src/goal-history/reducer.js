@@ -10,11 +10,7 @@ export default function(state = defaultState, action) {
     case fetchGoalHistory.success().type:
       return {
         ...state,
-        [payload.address]: {
-          entries: payload.entries,
-          members: payload.members,
-          address: payload.address,
-        },
+        [payload.address]: payload,
       }
     default:
       return state
