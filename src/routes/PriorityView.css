@@ -48,7 +48,7 @@
   margin-left: 210px;
 }
 
-.priority-quadrands-content {
+.priority-quadrants-content {
   display: flex;
   flex-direction: column;
   margin-top: 20px;
@@ -59,6 +59,15 @@
   display: flex;
   flex-direction: row;
   height: calc(50% - 40px);
+}
+
+.priority-wrapper-full-height {
+  height: calc(100% - 120px);
+  margin-left: 210px;
+}
+
+.priority-quadrants-row .priority-quadrant {
+  width: 50%;
 }
 
 .priority-quadrants-vertical-divider {
