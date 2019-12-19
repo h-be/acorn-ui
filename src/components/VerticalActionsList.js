@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import moment from 'moment'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
@@ -13,7 +14,7 @@ import { archiveGoal, updateGoal } from '../goals/actions'
 import { closeGoalForm } from '../goal-form/actions'
 import AlertPopupTemplate from './AlertPopupTemplate/AlertPopupTemplate'
 
-function VerticalActionListItem({ onClick, label, icon, }) {
+function VerticalActionListItem({ onClick, label, icon }) {
   return (
     <div className='action_list_item' onClick={onClick}>
       {icon}
@@ -40,7 +41,7 @@ function VerticalActionsList({
     updateGoal(
       {
         ...goal,
-        unix_timestamp: moment().unix(),
+        timestamp_updated: moment().unix(),
         [key]: val,
       },
       goalAddress
@@ -51,11 +52,13 @@ function VerticalActionsList({
     setViews({ ...defaultViews, [key]: !viewsOpen[key] })
   }
 
-  const archiveContent = <div>
-    You’re about to archive the card "
-    <b>{ goal.content }</b>
-    ". You will be able to see this card in the archive view mode in the future. Proceed?
-  </div>
+  const archiveContent = (
+    <div>
+      You’re about to archive the card "<b>{goal.content}</b>
+      ". You will be able to see this card in the archive view mode in the
+      future. Proceed?
+    </div>
+  )
 
   return (
     <div className='vertical_actions_list'>
@@ -118,9 +121,8 @@ function VerticalActionsList({
           primaryButton='Yes, Archive'
           altButton='Nevermind'
           primaryButtonAction={() => onArchiveClick(goalAddress)}
-          altButtonAction={() =>
-            setViews({ ...defaultViews })
-          } />
+          altButtonAction={() => setViews({ ...defaultViews })}
+        />
       )}
     </div>
   )
