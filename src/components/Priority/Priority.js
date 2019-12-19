@@ -165,7 +165,7 @@ function Aggregated({ votes }) {
       <PrioritySlider
         icon={icon}
         title={title}
-        withLabels={index !== 0}
+        withLabels={index === 0}
         value={averageValues[index]}
       />
     )

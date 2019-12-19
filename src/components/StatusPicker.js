@@ -13,8 +13,9 @@ function StatusPicker({ selectedStatus, statusClicked, onClose }) {
       heading='status'
       onClose={onClose}>
       <div className='status_list'>
-        {statuses.map(status => (
+        {statuses.map((status, index) => (
           <StatusIcon
+            key={index}
             size='small'
             status={status}
             selected={selectedStatus === status}
@@ -22,7 +23,7 @@ function StatusPicker({ selectedStatus, statusClicked, onClose }) {
           />
         ))}
       </div>
-      </PickerTemplate>
+    </PickerTemplate>
   )
 }
 
