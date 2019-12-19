@@ -22,7 +22,7 @@ function MultiEditBar({ selectedGoals, updateGoal }) {
       updateGoal(
         {
           ...goal,
-          unix_timestamp: moment().unix(),
+          timestamp_updated: moment().unix(),
           [key]: val,
         },
         goal.address
@@ -37,11 +37,7 @@ function MultiEditBar({ selectedGoals, updateGoal }) {
         onClick={() =>
           setViews({ ...defaultViews, status: !viewsOpen.status })
         }>
-        <StatusIcon
-          size='small'
-          hideTooltip
-          status={selectedGoals[0].status}
-        />
+        <StatusIcon size='small' hideTooltip status={selectedGoals[0].status} />
         {viewsOpen.status && (
           <StatusPicker statusClicked={updateGoals('status')} />
         )}
@@ -68,7 +64,8 @@ MultiEditBar.propTypes = {
     PropTypes.shape({
       content: PropTypes.string.isRequired,
       user_hash: PropTypes.string.isRequired,
-      unix_timestamp: PropTypes.number.isRequired,
+      timestamp_created: PropTypes.number.isRequired,
+      timestamp_updated: PropTypes.number.isRequired,
       hierarchy: PropTypes.string.isRequired,
       status: PropTypes.string.isRequired,
       address: PropTypes.string,
