@@ -5,7 +5,7 @@
   border-radius: 10px;
   background: #ffffff;
   width: 183px;
-  margin: 15px 15px 0 15px;
+  margin: 15px;
 }
 
 .indented-view-search input {
@@ -30,9 +30,9 @@
 }
 
 .indented-view-goal {
-  margin-top: 30px;
+  margin-top: 8px;
   font-family: 'renner_mediummedium', Helvetica, sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 17px;
   color: #4d4d4d;
 }
@@ -44,7 +44,16 @@
 }
 
 .indented-view-goal-content {
-  margin-left: 10px;
+  margin-left: 6px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 10px;
+  flex: 1;
+}
+
+.indented-view-goal-content:hover {
+  color: #00A599;
+  background: #F9F9F9;
 }
 
 .indented-view-nested-goal {

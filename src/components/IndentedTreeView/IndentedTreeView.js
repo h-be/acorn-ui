@@ -14,8 +14,8 @@ function NestedTreeGoal({ goal, level }) {
     <div className='indented-view-goal'>
       <div className='indented-view-goal-item'>
         <Icon
-          name={expanded ? 'line-angle-up.svg' : 'line-angle-down.svg'}
-          size='small'
+          name={expanded ? 'line-angle-down.svg' : 'line-angle-right.svg'}
+          size='very-small'
           className='grey'
           onClick={() => setExpanded(!expanded)}
         />
