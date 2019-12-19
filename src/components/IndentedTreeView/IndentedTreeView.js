@@ -3,7 +3,55 @@ import Icon from '../Icon/Icon'
 
 import './IndentedTreeView.css'
 
-export default function IndentedTreeView({ goalTree }) {
+// Recursive because we don't know
+// how deep the nesting goes
+function NestedTreeGoal({ goal, level }) {
+  level = level || 1
+  // set expanded open by default only if
+  // at the first or second level
+  const [expanded, setExpanded] = useState(level < 3)
+  return (
+    <div className='indented-view-goal'>
+      <div className='indented-view-goal-item'>
+        <Icon
+          name={expanded ? 'line-angle-down.svg' : 'line-angle-right.svg'}
+          size='very-small'
+          className='grey'
+          onClick={() => setExpanded(!expanded)}
+        />
+        <div className='indented-view-goal-content'>{goal.content}</div>
+      </div>
+      {expanded && goal.children
+        ? goal.children.map((childGoal, index) => (
+            <div className='indented-view-nested-goal' key={index}>
+              <NestedTreeGoal goal={childGoal} level={level + 1} />
+            </div>
+          ))
+        : null}
+    </div>
+  )
+}
+
+const testGoalTrees = [
+  {
+    content: 'gg',
+    children: [
+      {
+        content: 'tt',
+        children: [
+          {
+            content: 'test',
+          },
+        ],
+      },
+      {
+        content: 'xx',
+      },
+    ],
+  },
+]
+
+export default function IndentedTreeView({ goalTrees }) {
   const [filterText, setFilterText] = useState('')
 
   return (
@@ -27,9 +75,14 @@ export default function IndentedTreeView({ goalTree }) {
           </button>
         )}
       </div>
-      {goalTree.map(goal => {
-        return <p>{goal.content}</p>
-      })}
+      <div className='indented-view-goals'>
+        {/* {testGoalTrees.map(goal => (
+          <NestedTreeGoal goal={goal} />
+        ))} */}
+        {goalTrees.map((goal, index) => (
+          <NestedTreeGoal goal={goal} key={index} />
+        ))}
+      </div>
     </div>
   )
 }

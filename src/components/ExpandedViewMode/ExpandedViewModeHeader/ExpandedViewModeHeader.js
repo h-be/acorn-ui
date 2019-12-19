@@ -18,11 +18,8 @@ export default function ExpandedViewModeHeader({
   const updateGoalStatus = status => {
     updateGoal(
       {
-        content: goal.content,
-        user_hash: goal.user_hash,
-        unix_timestamp: moment().unix(),
-        hierarchy: goal.hierarchy,
-        description: '',
+        ...goal,
+        timestamp_updated: moment().unix(),
         status,
       },
       goalAddress

@@ -8,7 +8,7 @@
   flex-direction: row;
   margin-bottom: 10px;
   justify-content: space-around;
-  border-bottom: 1px solid #E8E8E8;
+  border-bottom: 1px solid #e8e8e8;
   font-size: 14px;
 }
 
@@ -19,10 +19,14 @@
 }
 
 .priority_tab.active {
-  color: #5F65FF;
-  border-bottom: 3px solid #5F65FF;
+  color: #5f65ff;
+  border-bottom: 3px solid #5f65ff;
 }
 
+.priority_tab.disabled {
+  opacity: 0.4;
+  cursor: default;
+}
 
 .aggregated_priority {
   padding: 0 24px 0 24px;
@@ -58,12 +62,12 @@
   width: 90px;
   font-size: 14px;
   font-family: 'renner_mediummedium', Helvetica, sans-serif;
-  color: #4D4D4D;
+  color: #4d4d4d;
 }
 
 .priority_wrapper_button {
   padding: 16px 40px;
-  text-align: center;  
+  text-align: center;
   margin-bottom: 4px;
 }
 
