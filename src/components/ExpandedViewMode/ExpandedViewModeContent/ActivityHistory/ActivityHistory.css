@@ -7,19 +7,26 @@
 .history {
   display: flex;
 }
-.historyPic {
+.history-Author {
+  margin: 0 15px 0 0;
+}
+.history-Content {
+  display: flex;
+}
+.history-Pic {
+  display: flex;
   max-width: 45px;
   max-height: 45px;
 }
-.historyHeader {
+.history-Header {
   display: flex;
   align-items: center;
 }
-.historyBody {
+.history-Body {
   max-width: 580px;
   overflow-wrap: break-word;
 }
 
-.historyDate {
+.history-Date {
   color: #787878;
 }
