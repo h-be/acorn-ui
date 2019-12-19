@@ -3,19 +3,17 @@ import './ActivityHistory.css'
 class ActivityHistory extends Component {
   render() {
     return (
-      <div className='history'>
-        <img src='#' className='historyPic' alt='user Pic' />
-        <div className='historyBody'>
-          <div className='historyHeader'>
-            <span className='historyDate'>fecha</span>
-          </div>
-          <div style={{ display: 'flex' }}>
-            <h3
-              className='historyAuthor'
-              style={{ margin: '0', marginRight: '15px' }}>
-              Nombre user
-            </h3>
-            <span className='historyContent'>comentario</span>
+      <div>
+        <div className='history'>
+          <img src='#' className='history-Pic' alt='user Pic' />
+          <div className='history-Body'>
+            <div className='history-Header'>
+              <span className='history-Date'>fecha</span>
+            </div>
+            <div className='history-Content'>
+              <h3 className='history-Author'>Nombre user</h3>
+              <span className='history-Comment'>comentario</span>
+            </div>
           </div>
         </div>
       </div>
