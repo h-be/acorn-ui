@@ -22,7 +22,7 @@ function PriorityMenuItem({ title, slug }) {
 function Quadrants({ topLeft, topRight, bottomLeft, bottomRight }) {
   return (
     <div className='priority-quadrants-wrapper'>
-      <div className='priority-quadrands-content'>
+      <div className='priority-quadrants-content'>
         <div className='priority-quadrants-row'>
           <PriorityQuadrant
             title={topLeft.title}
@@ -157,12 +157,15 @@ function PriorityView({ goalTrees, allGoals, goalVotes }) {
         <Route exact path={priorityMenuItems[1][1]}>
           <ImpactEffortQuadrants goalLists={goalLists} />
         </Route>
+        {/* uncategorized */}
         <Route exact path={priorityMenuItems[6][1]}>
-          <PriorityQuadrant
-            title='uncategorized'
-            titleClassname='bottom-left'
-            goals={goalLists}
-          />
+          <div className='priority-wrapper-full-height'>
+            <PriorityQuadrant
+              title='uncategorized'
+              titleClassname='bottom-left'
+              goals={goalLists}
+            />
+          </div>
         </Route>
       </Switch>
     </div>
