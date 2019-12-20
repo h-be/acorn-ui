@@ -1,0 +1,32 @@
+.history {
+  padding: 10px;
+  margin: 20px 30px;
+  color: rgb(0, 0, 0);
+}
+
+/* .history {
+  display: flex;
+} */
+.history-Author {
+  margin: 0 15px 0 0;
+}
+.history-Content {
+  display: flex;
+}
+/* .history-Pic {
+  display: flex;
+  max-width: 45px;
+  max-height: 45px;
+} */
+.history-Header {
+  display: flex;
+  align-items: center;
+}
+.history-Body {
+  max-width: 580px;
+  overflow-wrap: break-word;
+}
+
+.history-Date {
+  color: #787878;
+}
