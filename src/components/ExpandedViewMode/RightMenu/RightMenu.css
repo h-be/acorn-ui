@@ -9,6 +9,7 @@
   flex-direction: column;
   margin-top: 0.5px;
   position: relative;
+  height: 100%;
 }
 
 .expanded_view_right_menu > .icon {
