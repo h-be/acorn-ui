@@ -1,9 +1,9 @@
 .priority-quadrant {
-  background: white;
-  width: 50%;
   display: flex;
   flex-direction: column;
-  margin-left: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 100%;
 }
 
 .priority-quadrant-title {
@@ -16,22 +16,21 @@
   margin-left: 16px;
 }
 
-.priority-quadrant-title.urgent-important {
-  color: #FF5D36;
+.priority-quadrant-title.top-left {
+  color: #ff5d36;
 }
-.priority-quadrant-title.less-urgent-important {
-  color: #00BCAE;
+.priority-quadrant-title.top-right {
+  color: #00bcae;
 }
-.priority-quadrant-title.urgent-less-important {
-  color: #FF9C39;
+.priority-quadrant-title.bottom-left {
+  color: #ff9c39;
   margin-top: 20px;
 }
-.priority-quadrant-title.less-urgent-less-important {
-  color: #6DB7CE;
+.priority-quadrant-title.bottom-right {
+  color: #6db7ce;
   margin-top: 20px;
 }
 
 .priority-quadrant-goals {
   overflow-y: scroll;
 }
-

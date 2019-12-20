@@ -5,6 +5,7 @@
   border-radius: 10px;
   background: #ffffff;
   width: 183px;
+  margin: 15px;
 }
 
 .indented-view-search input {
@@ -19,5 +20,42 @@
 }
 
 .indented-view-search input:placeholder {
-  color: #A3A3A3;
+  color: #a3a3a3;
+}
+
+.indented-view-goals {
+  margin-left: 15px;
+  padding-right: 15px;
+  overflow: scroll;
+}
+
+.indented-view-goal {
+  margin-top: 8px;
+  font-family: 'renner_mediummedium', Helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 17px;
+  color: #4d4d4d;
+}
+
+.indented-view-goal-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.indented-view-goal-content {
+  margin-left: 6px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 10px;
+  flex: 1;
+}
+
+.indented-view-goal-content:hover {
+  color: #00A599;
+  background: #F9F9F9;
+}
+
+.indented-view-nested-goal {
+  margin-left: 20px;
 }
