@@ -59,7 +59,7 @@ function Comments({
         <div className='avatar_comment_container'>
           <Avatar avatar_url={avatarUrl} />
         </div>
-        <div>
+        <div className='input_comment_row'>
           <input
             className='input_comment'
             type='text'

@@ -29,23 +29,29 @@
   flex-wrap: nowrap;
   font-weight: bold;
 }
+.input_comment_row {
+  margin-bottom: 20px;
+}
 .input_comment {
-  width: 300px;
-  border: 1px solid #f2f2f2;
+  width: 343px;
+  border: 1px solid #d1d1d1;
   border-radius: 10px;
   padding: 15px;
   color: black;
   padding: 4px;
   outline: 0;
   box-shadow: none;
+  margin-top: 5px;
+  margin-bottom: 15px;
 }
 .avatar_comment_container {
   display: inline-block;
 }
 .avatar_comment_container img {
-  width: 36px;
-  height: 36px;
+  width: 50px;
+  height: 35px;
   border-radius: 50%;
+  margin-right: 10px;
 }
 .date {
   color: #a3a3a3;
