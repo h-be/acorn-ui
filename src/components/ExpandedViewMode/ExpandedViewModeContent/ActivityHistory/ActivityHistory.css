@@ -4,20 +4,20 @@
   color: rgb(0, 0, 0);
 }
 
-.history {
+/* .history {
   display: flex;
-}
+} */
 .history-Author {
   margin: 0 15px 0 0;
 }
 .history-Content {
   display: flex;
 }
-.history-Pic {
+/* .history-Pic {
   display: flex;
   max-width: 45px;
   max-height: 45px;
-}
+} */
 .history-Header {
   display: flex;
   align-items: center;
