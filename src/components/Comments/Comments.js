@@ -6,6 +6,9 @@ import {
   archiveCommentOfGoal,
   updateGoalComment,
 } from '../../goal-comments/actions'
+
+import TextareaAutosize from 'react-textarea-autosize'
+
 import moment from 'moment'
 import './Comments.css'
 import Avatar from '../Avatar/Avatar'
@@ -13,16 +16,18 @@ import Button from '../Button/Button'
 
 function Comment({ comment, agent }) {
   return (
-    <div className='comment'>
+    <div className='comment_history'>
       <div className='avatar_comment_container'>
-        <Avatar avatar_url={agent.avatar_url} />{' '}
+        <Avatar avatar_url={agent.avatar_url} medium />{' '}
       </div>
       <div>
-        <div className='info'>
-          <span>{agent.first_name + ' ' + agent.last_name}</span>
-          <span className='date'>
+        <div className='comment_history_info'>
+          <div className='comment_history_name'>
+            {agent.first_name + ' ' + agent.last_name}
+          </div>
+          <div className='comment_history_date'>
             {moment.unix(comment.unix_timestamp).format('Do,hh:mm a')}
-          </span>
+          </div>
         </div>
         <span>{comment.content}</span>
       </div>
@@ -57,21 +62,26 @@ function Comments({
     <div className='comments'>
       <div>
         <div className='avatar_comment_container'>
-          <Avatar avatar_url={avatarUrl} />
+          <Avatar avatar_url={avatarUrl} medium />
         </div>
         <div className='input_comment_row'>
-          <input
-            className='input_comment'
-            type='text'
-            value={value}
-            onChange={e => setValue(e.target.value)}
-          />
-          <Button
-            text='Save'
-            color='green'
-            size='small'
-            onClick={buttonClick}
-          />
+          <div className='input_comment_wrapper'>
+            <TextareaAutosize
+              className='input_comment'
+              type='text'
+              value={value}
+              placeholder='write your comment here'
+              onChange={e => setValue(e.target.value)}
+            />
+          </div>
+          <div className='comment_save_button'>
+            <Button
+              text='Save'
+              color='green'
+              size='small'
+              onClick={buttonClick}
+            />
+          </div>
         </div>
       </div>
       <div className='scroll'>

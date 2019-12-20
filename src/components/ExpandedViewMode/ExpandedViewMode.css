@@ -12,6 +12,7 @@
     box-shadow: 0px 0px 6px rgba(173, 157, 157, 0.16);
     width: 500px;
     min-height: 500px;
+    max-height: calc(100vh - 70px);
     background: #FFFFFF;
     border-radius: 10px;
     display: flex;
