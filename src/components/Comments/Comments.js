@@ -16,7 +16,7 @@ import Button from '../Button/Button'
 
 function Comment({ comment, agent }) {
   return (
-    <div className='comment_history'>
+    <div className='comment_history_item'>
       <div className='avatar_comment_container'>
         <Avatar avatar_url={agent.avatar_url} medium />{' '}
       </div>
@@ -26,10 +26,17 @@ function Comment({ comment, agent }) {
             {agent.first_name + ' ' + agent.last_name}
           </div>
           <div className='comment_history_date'>
-            {moment.unix(comment.unix_timestamp).format('Do,hh:mm a')}
+            {moment.unix(comment.unix_timestamp).calendar(null, {
+              lastDay: '[Yesterday at] LT',
+              sameDay: '[Today at] LT',
+              nextDay: '[Tomorrow at] LT',
+              lastWeek: '[last] dddd [at] LT',
+              nextWeek: 'dddd [at] LT',
+              sameElse: 'MMM Do YYYY [at] LT',
+            })}
           </div>
         </div>
-        <span>{comment.content}</span>
+        <div className='comment_history_text'>{comment.content}</div>
       </div>
     </div>
   )
@@ -84,12 +91,15 @@ function Comments({
           </div>
         </div>
       </div>
-      <div className='scroll'>
-        {Object.keys(comments).map(key => (
+      <div className='comment_history_container_scrollable'>
+        {Object.keys(comments)
+          .map(key => comments[key])
+          .sort((a, b) => a.unix_timestamp > b.unix_timestamp ? -1 : 1)
+          .map(comment => (
           <Comment
-            key={key}
-            comment={comments[key]}
-            agent={agents[comments[key].agent_address]}
+            key={comment.address}
+            comment={comment}
+            agent={agents[comment.agent_address]}
           />
         ))}
       </div>
