@@ -75,24 +75,31 @@ class ActivityHistory extends Component {
       <div className='history'>
         {this.differents(this.props.goalHistory).map((value, index) => (
           <React.Fragment key={index}>
-            <Avatar
-              avatar_url={this.props.agents[value.user].avatar_url}
-              small={true}
-            />
-            <div className='history-Body'>
-              {console.log('value', value)}
-              <div className='history-Header'>
-                <span className='history-Date'>
-                  {moment.unix(value.time).format(' MMMM Do, YYYY  h:mma')}
-                </span>
+            <div className='history-Body-Container'>
+              <div className='history-Body-Avatar'>
+                <Avatar
+                  avatar_url={this.props.agents[value.user].avatar_url}
+                  small={true}
+                />
               </div>
-              <div className='history-content'>
-                <h3 className='history-Author'>
-                  {this.props.agents[value.user].first_name +
-                    ' ' +
-                    this.props.agents[value.user].last_name}
-                </h3>
-                <span className='history-Comment'>{value.comment}</span>
+
+              <div className='history-Body'>
+                {console.log('value', value)}
+                <div className='history-Header'>
+                  <span className='history-Date'>
+                    {moment.unix(value.time).format(' MMMM Do, YYYY  h:mma')}
+                  </span>
+                </div>
+                <div className='history-content'>
+                  <p className='history-Comment'>
+                    <span className='history-Author'>
+                      {this.props.agents[value.user].first_name +
+                        ' ' +
+                        this.props.agents[value.user].last_name}
+                    </span>{' '}
+                    {value.comment}
+                  </p>
+                </div>
               </div>
             </div>
           </React.Fragment>
