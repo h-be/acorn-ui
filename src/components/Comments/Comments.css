@@ -1,25 +1,19 @@
 .comments {
-  width: 400px;
   font-family: 'rennerbook', Helvetica, Sans-Serif;
-}
-
-.comments span {
-  margin: 2px 6px;
-  white-space: pre-wrap;
 }
 
 .comments > div:first-child {
   display: flex;
 }
 
-.scroll {
+.comment_history_container_scrollable {
   overflow-y: scroll;
-  height: 180px;
+  max-height: 17vh;
   overflow-x: hidden;
 }
 
 .comment {
-  width: 400px;
+ /* width: 400px; */
   display: flex;
   flex-wrap: nowrap;
 }
@@ -44,7 +38,7 @@
 .input_comment {
   height: 32px;
   box-sizing: border-box;
-  border: 1px solid #d1d1d1;
+  border: 1.5px solid #d1d1d1;
   border-radius: 15px;
   padding: 15px;
   color: black;
@@ -55,6 +49,11 @@
   font-family: 'rennerbook', Helvetica, sans-serif;
   resize: none;
 }
+
+.input_comment:focus {
+  border: 1.5px solid #5f65ff;
+}
+
 
 .comment_save_button {
 
@@ -70,19 +69,36 @@
   margin-right: 10px;
 } */
 
+.comment_history_item {
+  display: flex;
+  margin-bottom: 16px;
+}
+
 .comment_history_info {
   display: flex;
   flex-direction: row;
+  margin-bottom: 6px;
 }
 
 .comment_history_name {
-  color: #a3a3a3;
-  font-size: 12px;
-  line-height: 14px;
+  color: #4E566F;
+  font-size: 10px;
+  line-height: 13px;
+  font-family: 'renner_mediummedium', Helvetica, sans-serif;
+  margin-right: 10px;
 }
 
 .comment_history_date {
   color: #a3a3a3;
+  font-size: 10px;
+  line-height: 13px;
+}
+
+.comment_history_text {
+  color: #4D4D4D;
   font-size: 12px;
   line-height: 14px;
+  box-sizing: border-box;
+  max-width: 365px;
+  white-space: pre-wrap;
 }
