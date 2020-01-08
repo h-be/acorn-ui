@@ -5,16 +5,30 @@ import './RightMenu.css'
 import PeoplePicker from '../../PeoplePicker'
 import DatePicker from '../../DatePicker/DatePicker'
 import Priority from '../../Priority/Priority'
+import HierarchyPicker from '../../HierarchyPicker/HierarchyPicker'
 
 import Icon from '../../Icon/Icon'
 
 export default function RightMenu({ goalAddress, goal, updateGoal }) {
   const defaultViews = {
+    help: false,
     squirrels: false,
     priority: false,
-    help: false,
     timeframe: false,
+    hierarchy: false,
   }
+
+  const innerUpdateGoal = key => val => {
+    updateGoal(
+      {
+        ...goal,
+        timestamp_updated: moment().unix(),
+        [key]: val,
+      },
+      goalAddress
+    )
+  }
+
   const [viewsOpen, setViews] = useState(defaultViews)
 
   const rightMenuPriorityClass = viewsOpen.priority ? 'active' : ''
@@ -22,6 +36,7 @@ export default function RightMenu({ goalAddress, goal, updateGoal }) {
 
   const rightMenuSquirrelsClass = viewsOpen.squirrels ? 'active' : ''
   const rightMenuTimeframeClass = viewsOpen.timeframe ? 'active' : ''
+  const rightMenuHierarchyClass = viewsOpen.hierarchy ? 'active' : ''
 
   const toggleView = key => {
     setViews({ ...defaultViews, [key]: !viewsOpen[key] })
@@ -81,6 +96,20 @@ export default function RightMenu({ goalAddress, goal, updateGoal }) {
           onSet={updateTimeframe}
           fromDate={fromDate}
           toDate={toDate}
+        />
+      )}
+      {/* hierarchy */}
+      <Icon
+        name='hierarchy.svg'
+        className={rightMenuHierarchyClass}
+        key='hierarchy'
+        onClick={() => toggleView('hierarchy')}
+      />
+      {viewsOpen.hierarchy && (
+        <HierarchyPicker
+          onClose={() => setViews({ ...defaultViews })}
+          selectedHierarchy={goal.hierarchy}
+          hierarchyClicked={innerUpdateGoal('hierarchy')}
         />
       )}
 
