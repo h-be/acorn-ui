@@ -94,6 +94,7 @@ function Comments({
       <div className='comment_history_container_scrollable'>
         {Object.keys(comments)
           .map(key => comments[key])
+           // order the comments by most recent, to least recent
           .sort((a, b) => a.unix_timestamp > b.unix_timestamp ? -1 : 1)
           .map(comment => (
           <Comment
