@@ -5,11 +5,19 @@
 
 .history {
   padding: 10px;
-  margin: 20px 30px;
+  margin: 20px 0;
   color: rgb(0, 0, 0);
+  overflow-y: scroll;
+  height: 180px;
+  overflow-x: hidden;
 }
 .history-Body-Avatar {
-  width: 10%;
+  padding: 0 8px;
+}
+.custom-status-icon {
+  margin: 0px;
+  width: 18px;
+  height: 18px;
 }
 
 .history-Author {
