@@ -4,8 +4,9 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import Icon from './Icon/Icon'
-import PeoplePicker from './PeoplePicker'
 import StatusPicker from './StatusPicker'
+import PeoplePicker from './PeoplePicker'
+import DatePicker from './DatePicker/DatePicker'
 import HierarchyPicker from './HierarchyPicker/HierarchyPicker'
 import PriorityPicker from './PriorityPicker/PriorityPicker'
 import StatusIcon from './StatusIcon'
@@ -32,6 +33,7 @@ function VerticalActionsList({
   const defaultViews = {
     status: false,
     squirrels: false,
+    timeframe: false,
     priority: false,
     hierarchy: false,
   }
@@ -60,6 +62,27 @@ function VerticalActionsList({
     </div>
   )
 
+  // timeframe consts
+
+  const updateTimeframe = (start, end) => {
+    updateGoal(
+      {
+        ...goal,
+        timestamp_updated: moment().unix(),
+        time_frame: {
+          from_date: start,
+          to_date: end,
+        },
+      },
+      goalAddress
+    )
+  }
+
+  const fromDate = goal.time_frame
+    ? moment.unix(goal.time_frame.from_date)
+    : null
+  const toDate = goal.time_frame ? moment.unix(goal.time_frame.to_date) : null
+
   return (
     <div className='vertical_actions_list'>
       <VerticalActionListItem
@@ -71,6 +94,11 @@ function VerticalActionsList({
         label='squirrels'
         icon={<Icon name='squirrel.svg' className='white not-hoverable' />}
         onClick={() => toggleView('squirrels')}
+      />
+      <VerticalActionListItem
+        label='timeframe'
+        icon={<Icon name='calendar.svg' className='white not-hoverable' />}
+        onClick={() => toggleView('timeframe')}
       />
       <VerticalActionListItem
         label='hierarchy'
@@ -100,6 +128,14 @@ function VerticalActionsList({
       )}
       {viewsOpen.squirrels && (
         <PeoplePicker onClose={() => setViews({ ...defaultViews })} />
+      )}
+      {viewsOpen.timeframe && (
+        <DatePicker
+          onClose={() => setViews({ ...defaultViews })}
+          onSet={updateTimeframe}
+          fromDate={fromDate}
+          toDate={toDate}
+        />
       )}
       {viewsOpen.hierarchy && (
         <HierarchyPicker

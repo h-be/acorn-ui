@@ -17,7 +17,29 @@
   cursor: pointer;
 }
 
+/* NavBar Item Hover State */
+
+.expanded-view-nav-bar-item:hover {
+  color: #5f65ff;
+  transition: all .3s;
+}
+
+.expanded-view-nav-bar-item:hover .icon:not(.not-hoverable) .inner-icon {
+  background-color: #5F65FF;
+  transition: all .3s;
+}
+
+/* NavBar Item Active State */
+
 .expanded-view-nav-bar-item.active-tab {
   color: #5f65ff;
   border-bottom: 3px solid #5f65ff;
+}
+
+.expanded-view-nav-bar-item.active-tab .icon:not(.not-hoverable) .inner-icon {
+  background-color: #5F65FF;
+}
+
+.expanded-view-nav-bar-item .icon.very-small.grey {
+  margin-right: 4px;
 }

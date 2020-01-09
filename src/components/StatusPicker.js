@@ -5,7 +5,7 @@ import StatusIcon from './StatusIcon'
 import PickerTemplate from './PickerTemplate/PickerTemplate'
 
 function StatusPicker({ selectedStatus, statusClicked, onClose }) {
-  const statuses = ['Uncertain', 'Incomplete', 'Complete', 'InReview']
+  const statuses = ['Uncertain', 'Incomplete', 'Complete', 'InProcess', 'InReview']
 
   return (
     <PickerTemplate
