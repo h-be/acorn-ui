@@ -61,6 +61,7 @@
   margin-bottom: 14px;
 }
 
+
 /* squirrels & timeframe wrapper */
 
 .expanded_view_squirrels_title, .expanded_view_timeframe_title {
@@ -162,11 +163,18 @@
 
 .expanded_view_timeframe_display {
   background: #F2F2F2;
+  border: 1.5px solid #F2F2F2;
   border-radius: 10px;
-  padding: 9px 12px;
+  padding: 8px 12px;
   font-size: 12px;
   font-family: 'renner_mediummedium', Helvetica, Sans-Serif;
   cursor: pointer;
+}
+
+.expanded_view_timeframe_display:hover,
+.expanded_view_timeframe_display:active,
+.expanded_view_timeframe_display:focus {
+  border: 1.5px solid #5f65ff;
 }
 
 .timeframe_wrapper {

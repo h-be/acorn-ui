@@ -8,19 +8,19 @@ function ExpandedViewNavBar({ onChange, activeTab }) {
   const navItems = [
     {
       text: 'priority',
-      icon: 'priority_4d4d4d.svg'
+      icon: 'priority.svg'
     },
     {
       text: 'comments',
-      icon: 'priority_4d4d4d.svg'
+      icon: 'comment.svg'
     },
     {
       text: 'activity history',
-      icon: 'priority_4d4d4d.svg'
+      icon: 'activity_history.svg'
     },
     {
       text: 'attachments',
-      icon: 'priority_4d4d4d.svg'
+      icon: 'attachment.svg'
     }
   ]
 
@@ -33,7 +33,7 @@ function ExpandedViewNavBar({ onChange, activeTab }) {
             className={`expanded-view-nav-bar-item ${activeClass}`}
             key={index}
             onClick={() => onChange(text)}>
-            <Icon name={icon} size='very-small' />
+            <Icon name={icon} size='very-small' className='grey' />
             {text}
           </div>
         )
