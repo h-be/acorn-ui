@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useLocation, NavLink } from 'react-router-dom'
 import Icon from '../Icon/Icon'
 
 import './IndentedTreeView.css'
@@ -10,6 +11,8 @@ function NestedTreeGoal({ goal, level, filterText }) {
   // set expanded open by default only if
   // at the first or second level
   const [expanded, setExpanded] = useState(level < 3)
+
+  const location = useLocation()
 
   const match =
     !filterText.length ||
@@ -25,7 +28,11 @@ function NestedTreeGoal({ goal, level, filterText }) {
             className='grey'
             onClick={() => setExpanded(!expanded)}
           />
-          <div className='indented-view-goal-content'>{goal.content}</div>
+          <NavLink
+            to={`${location.pathname}?contextGoal=${goal.address}`}
+            className='indented-view-goal-content'>
+            {goal.content}
+          </NavLink>
         </div>
       )}
       {/* if there's a filter, expand everything */}

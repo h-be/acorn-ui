@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import './Priority.css'
+import './PriorityPicker.css'
 import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
 import PickerTemplate from '../PickerTemplate/PickerTemplate'
@@ -34,11 +34,12 @@ const useStyles = makeStyles({
     margin: '0 0 0 -2px',
   },
   markLabel: {
-    top: '-14px',
+    top: '-18px',
     position: 'absolute',
     fontSize: '12px',
     fontFamily: '"rennerbook", "Helvetica", "Arial", "sans-serif"',
     lineHeight: '1',
+    color: '#4d4d4d',
   },
   track: {
     height: 4,
@@ -192,7 +193,7 @@ function WeighIn({ myVote, onUpdate }) {
       <PrioritySlider
         icon={icon}
         title={title}
-        withLabels={index !== 0}
+        withLabels={index === 0}
         value={values[key] * 100}
         onChange={(e, value) => setValues({ ...values, [key]: value / 100 })}
         onChangeCommitted={() => onUpdate(values)}
@@ -204,13 +205,15 @@ function WeighIn({ myVote, onUpdate }) {
 function Priority({
   goalAddress,
   onClose,
+  hideWeighIn,
   createGoalVote,
+  openToMyVote,
   whoami,
   updateGoalVote,
   votes,
   archiveVoteOfGoal,
 }) {
-  const [openMyVote, setOpenMyVote] = useState(false)
+  const [openMyVote, setOpenMyVote] = useState(openToMyVote)
 
   const myVote = votes.find(value => {
     return value.agent_address === whoami.entry.address
@@ -224,8 +227,9 @@ function Priority({
     }
     updateGoalVote(goal_vote, vote.address)
   }
-  const handleWeighIn = () => {
-    createGoalVote({
+
+  const createVote = async () => {
+    await createGoalVote({
       goal_vote: {
         urgency: 0.5,
         importance: 0.5,
@@ -235,9 +239,8 @@ function Priority({
         agent_address: whoami.entry.address,
         unix_timestamp: moment().unix(),
       },
-    }).then(() => {
-      setOpenMyVote(true)
     })
+    setOpenMyVote(true)
   }
 
   // aggregated_priority_title
@@ -264,7 +267,7 @@ function Priority({
   }
   return (
     <PickerTemplate
-      className='priority_wrapper'
+      className='priority_picker_wrapper'
       heading='priority'
       onClose={onClose}>
       <div className='priority_tabs'>
@@ -284,14 +287,16 @@ function Priority({
             Based on {votes.length} inputs
           </div>
           <Aggregated votes={votes} />
-          <div className='priority_wrapper_button'>
-            <Button
-              size='small'
-              color='purple'
-              text='Weigh In'
-              onClick={handleWeighIn}
-            />
-          </div>
+          {!hideWeighIn && (
+            <div className='priority_wrapper_button'>
+              <Button
+                size='small'
+                color='purple'
+                text={myVote ? 'See My Vote' : 'Weigh In'}
+                onClick={myVote ? () => setOpenMyVote(true) : createVote}
+              />
+            </div>
+          )}
           <div className='priority_wrapper_footer'>
             <Icon size='small' name='priority_4d4d4d.svg' />
             Locate this card on priority view mode
@@ -312,7 +317,15 @@ function Priority({
             />
           </div>
           <div className='my_vote_info priority_wrapper_footer'>
-            Last modified Aug 23, 2019 12:33pm
+            Last Modified{' '}
+            {moment.unix(myVote.unix_timestamp).calendar(null, {
+              lastDay: '[Yesterday at] LT',
+              sameDay: '[Today at] LT',
+              nextDay: '[Tomorrow at] LT',
+              lastWeek: '[last] dddd LT',
+              nextWeek: 'dddd LT',
+              sameElse: 'L LT',
+            })}
           </div>
         </div>
       )}
@@ -324,13 +337,14 @@ Priority.propTypes = {
   onClose: PropTypes.func.isRequired,
 }
 
-function mapStateToProps(state) {
-  const goalAddress = state.ui.goalForm.isOpen
-    ? state.ui.goalForm.editAddress
-    : state.ui.expandedView.goalAddress
-  const votes = Object.values(state.goalVotes).filter(
-    gv => gv.goal_address === goalAddress
-  )
+function mapStateToProps(state, ownProps) {
+  const { goalAddress } = ownProps
+  // filters all the GoalVotes down to a list
+  // of only the Votes on the selected Goal
+  const allVotesArray = Object.values(state.goalVotes)
+  const votes = allVotesArray.filter(function(goalVote) {
+    return goalVote.goal_address === goalAddress
+  })
   return {
     whoami: state.whoami,
     goalAddress,
