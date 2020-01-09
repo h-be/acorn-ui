@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import moment from 'moment'
 import './RightMenu.css'
 
+import Icon from '../../Icon/Icon'
+
 import PeoplePicker from '../../PeoplePicker'
 import DatePicker from '../../DatePicker/DatePicker'
-import Priority from '../../Priority/Priority'
-
-import Icon from '../../Icon/Icon'
+import PriorityPicker from '../../PriorityPicker/PriorityPicker'
 
 export default function RightMenu({ goalAddress, goal, updateGoal }) {
   const defaultViews = {
@@ -56,7 +56,10 @@ export default function RightMenu({ goalAddress, goal, updateGoal }) {
         onClick={() => toggleView('priority')}
       />
       {viewsOpen.priority && (
-        <Priority onClose={() => setViews({ ...defaultViews })} />
+        <PriorityPicker
+          goalAddress={goalAddress}
+          onClose={() => setViews({ ...defaultViews })}
+        />
       )}
       {/* squirrels */}
       <Icon
