@@ -236,7 +236,7 @@ class Header extends React.Component {
         {/* TODO: make this show based on whether the user has just recently created their profile (registered) */}
         {!this.state.isGuideOpen && (
           <div className='guidebook_open_help'>
-            <div>Click on the Guidebook icon to learn more</div>
+            <div>Click on the Guidebook to learn more</div>
             <img src='img/arrow_curved.svg' />
           </div>
         )}
