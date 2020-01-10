@@ -8,7 +8,7 @@ import StatusPicker from './StatusPicker'
 import PeoplePicker from './PeoplePicker'
 import DatePicker from './DatePicker/DatePicker'
 import HierarchyPicker from './HierarchyPicker/HierarchyPicker'
-import Priority from './Priority/Priority'
+import PriorityPicker from './PriorityPicker/PriorityPicker'
 import StatusIcon from './StatusIcon'
 
 import { archiveGoal, updateGoal } from '../goals/actions'
@@ -145,7 +145,10 @@ function VerticalActionsList({
         />
       )}
       {viewsOpen.priority && (
-        <Priority onClose={() => setViews({ ...defaultViews })} />
+        <PriorityPicker
+          goalAddress={goalAddress}
+          onClose={() => setViews({ ...defaultViews })}
+        />
       )}
       {viewsOpen.archive && (
         <AlertPopupTemplate

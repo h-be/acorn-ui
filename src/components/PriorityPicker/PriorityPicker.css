@@ -1,5 +1,6 @@
-.priority_wrapper {
+.priority_picker_wrapper {
   width: 300px;
+  height: 388px;
 }
 
 .priority_tabs {
@@ -66,7 +67,7 @@
 }
 
 .priority_wrapper_button {
-  padding: 16px 40px;
+  padding: 18px 40px;
   text-align: center;
   margin-bottom: 4px;
 }
