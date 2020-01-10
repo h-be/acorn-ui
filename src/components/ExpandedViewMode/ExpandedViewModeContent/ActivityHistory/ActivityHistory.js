@@ -9,8 +9,11 @@ import StatusIcon from '../../../StatusIcon'
 class ActivityHistory extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      timerId: 0,
+    }
     this.componentDidMount = this.componentDidMount.bind(this)
+    this.componentWillUnmount = this.componentWillUnmount.bind(this)
     this.differents = this.differents.bind(this)
     this.fetchChangingData = this.fetchChangingData.bind(this)
   }
@@ -22,9 +25,14 @@ class ActivityHistory extends Component {
   }
   componentDidMount() {
     this.fetchChangingData()
-    setInterval(() => {
+    const id = setInterval(() => {
       this.fetchChangingData()
     }, 3000)
+    this.setState({ timerId: id })
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.timerId)
   }
 
   differents(history) {
