@@ -116,7 +116,7 @@ class ActivityHistory extends Component {
                 this.props.agents[member.agent_address].first_name
               } ${
                 this.props.agents[member.agent_address].last_name
-              }" as a squirriel`,
+              }" as a squirrel`,
             })
           }
         })
