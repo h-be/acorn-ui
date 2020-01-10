@@ -9,19 +9,24 @@ import StatusIcon from '../../../StatusIcon'
 class ActivityHistory extends Component {
   constructor(props) {
     super(props)
+    this.state = {}
     this.componentDidMount = this.componentDidMount.bind(this)
     this.differents = this.differents.bind(this)
+    this.fetchChangingData = this.fetchChangingData.bind(this)
+  }
+
+  fetchChangingData() {
+    this.props.fetchGoalHistory({
+      address: this.props.goalAddress,
+    })
   }
   componentDidMount() {
-    this.props.fetchGoalHistory({
-      address: this.props.goalAddress,
-    })
+    this.fetchChangingData()
+    setInterval(() => {
+      this.fetchChangingData()
+    }, 3000)
   }
-  componentDidUpdate() {
-    this.props.fetchGoalHistory({
-      address: this.props.goalAddress,
-    })
-  }
+
   differents(history) {
     let vector = []
 
