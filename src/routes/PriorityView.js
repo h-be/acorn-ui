@@ -1,5 +1,13 @@
 import React from 'react'
-import { NavLink, useRouteMatch, Switch, Route } from 'react-router-dom'
+import {
+  NavLink,
+  useLocation,
+  useRouteMatch,
+  useParams,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import IndentedTreeView from '../components/IndentedTreeView/IndentedTreeView'
@@ -7,19 +15,7 @@ import IndentedTreeView from '../components/IndentedTreeView/IndentedTreeView'
 import './PriorityView.css'
 import PriorityQuadrant from '../components/PriorityQuadrant/PriorityQuadrant'
 
-function PriorityMenuItem({ title, slug }) {
-  return (
-    <NavLink
-      exact
-      to={slug}
-      className='priority-menu-item'
-      activeClassName='active'>
-      {title}
-    </NavLink>
-  )
-}
-
-function Quadrants({ topLeft, topRight, bottomLeft, bottomRight }) {
+function Quadrants({ topLeft, topRight, bottomLeft, bottomRight, whoami }) {
   return (
     <div className='priority-quadrants-wrapper'>
       <div className='priority-quadrants-content'>
@@ -28,12 +24,14 @@ function Quadrants({ topLeft, topRight, bottomLeft, bottomRight }) {
             title={topLeft.title}
             titleClassname='top-left'
             goals={topLeft.goals}
+            whoami={whoami}
           />
           <div className='priority-quadrants-vertical-divider'></div>
           <PriorityQuadrant
             title={topRight.title}
             titleClassname='top-right'
             goals={topRight.goals}
+            whoami={whoami}
           />
         </div>
         <div className='priority-quadrants-horizontal-divider'></div>
@@ -42,12 +40,14 @@ function Quadrants({ topLeft, topRight, bottomLeft, bottomRight }) {
             title={bottomLeft.title}
             titleClassname='bottom-left'
             goals={bottomLeft.goals}
+            whoami={whoami}
           />
           <div className='priority-quadrants-vertical-divider'></div>
           <PriorityQuadrant
             title={bottomRight.title}
             titleClassname='bottom-right'
             goals={bottomRight.goals}
+            whoami={whoami}
           />
         </div>
       </div>
@@ -55,7 +55,52 @@ function Quadrants({ topLeft, topRight, bottomLeft, bottomRight }) {
   )
 }
 
-function UrgencyImportanceQuadrants({ goalLists }) {
+function getSubsetOfGoalsBasedOnContext(goalTrees, contextGoalAddress) {
+  if (!contextGoalAddress) {
+    return goalTrees
+  }
+
+  // use recursion to find the goal down in the tree
+  function checkForGoalInChildren(goal) {
+    const foundInChildren = goal.children.find(
+      g => g.address === contextGoalAddress
+    )
+    if (foundInChildren) {
+      return foundInChildren
+    } else {
+      // use .find to early exit when
+      // it finds one that matches
+      const foundInChildrensChildren = goal.children.find(g => {
+        return checkForGoalInChildren(g)
+      })
+      if (foundInChildrensChildren) {
+        return checkForGoalInChildren(foundInChildrensChildren)
+      } else {
+        return null
+      }
+    }
+  }
+  const goal = checkForGoalInChildren({ children: goalTrees })
+  if (goal) {
+    return goal.children
+  } else {
+    return goalTrees
+  }
+}
+
+function UrgencyImportanceQuadrants({ goalTrees, goalVotes }) {
+  const location = useLocation()
+  const contextGoalAddress = new URLSearchParams(location.search).get(
+    'contextGoal'
+  )
+  const goals = getSubsetOfGoalsBasedOnContext(goalTrees, contextGoalAddress)
+  const goalLists = getSortedAveragesGoalLists(
+    goals,
+    goalVotes,
+    'urgency',
+    'importance'
+  )
+
   const topLeft = {
     title: 'more urgent & more important',
     goals: goalLists[0],
@@ -75,7 +120,19 @@ function UrgencyImportanceQuadrants({ goalLists }) {
   return <Quadrants {...{ topLeft, topRight, bottomLeft, bottomRight }} />
 }
 
-function ImpactEffortQuadrants({ goalLists }) {
+function ImpactEffortQuadrants({ goalTrees, goalVotes }) {
+  const location = useLocation()
+  const contextGoalAddress = new URLSearchParams(location.search).get(
+    'contextGoal'
+  )
+  const goals = getSubsetOfGoalsBasedOnContext(goalTrees, contextGoalAddress)
+  const goalLists = getSortedAveragesGoalLists(
+    goals,
+    goalVotes,
+    'impact',
+    'effort'
+  )
+
   const topLeft = {
     title: 'more impact & less effort',
     goals: goalLists[0],
@@ -95,77 +152,84 @@ function ImpactEffortQuadrants({ goalLists }) {
   return <Quadrants {...{ topLeft, topRight, bottomLeft, bottomRight }} />
 }
 
-function PriorityView({ goalTrees, allGoals, goalVotes }) {
-  const { url } = useRouteMatch()
+function Uncategorized({ goalTrees, goalVotes }) {
+  const location = useLocation()
+  const contextGoalAddress = new URLSearchParams(location.search).get(
+    'contextGoal'
+  )
+  const goals = getSubsetOfGoalsBasedOnContext(goalTrees, contextGoalAddress)
+  console.log(goals)
+  const goalList = goals.filter(goal => {
+    // if there are no Votes, this Goal is "uncategorized"
+    return !goalVotes.find(gv => gv.goal_address === goal.address)
+  })
+  return (
+    <div className='priority-wrapper-full-height'>
+      <PriorityQuadrant
+        title='uncategorized'
+        titleClassname='bottom-left'
+        goals={goalList}
+      />
+    </div>
+  )
+}
 
+function PriorityMenuItem({ exact, title, slug }) {
+  return (
+    <NavLink
+      exact={exact}
+      to={slug}
+      className='priority-menu-item'
+      activeClassName='active'>
+      {title}
+    </NavLink>
+  )
+}
+
+function PriorityView({ goalTrees, goalVotes }) {
   const priorityMenuItems = [
-    ['Urgency x Importance', `${url}`], // default
-    ['Impact x Effort', `${url}/impact-effort`],
-    ['Urgency', `${url}/urgency`],
-    ['Importance', `${url}/importance`],
-    ['Impact', `${url}/impact`],
-    ['Effort', `${url}/effort`],
-    ['Uncategorized', `${url}/uncategorized`],
+    ['Urgency x Importance', `/board/priority/urgency-importance`],
+    ['Impact x Effort', '/board/priority/impact-effort'],
+    ['Urgency', '/board/priority/urgency'],
+    ['Importance', '/board/priority/importance'],
+    ['Impact', '/board/priority/impact'],
+    ['Effort', '/board/priority/effort'],
+    ['Uncategorized', '/board/priority/uncategorized'],
   ]
-
-  let goalLists = []
-
-  // urgency x importance
-  if (useRouteMatch({ path: priorityMenuItems[0][1], exact: true })) {
-    goalLists = getSortedAveragesGoalLists(
-      allGoals,
-      goalVotes,
-      'urgency',
-      'importance'
-    )
-  }
-  // impact x effort
-  else if (useRouteMatch({ path: priorityMenuItems[1][1], exact: true })) {
-    goalLists = getSortedAveragesGoalLists(
-      allGoals,
-      goalVotes,
-      'impact',
-      'effort'
-    )
-  }
-  // uncategorized
-  else if (useRouteMatch({ path: priorityMenuItems[6][1], exact: true })) {
-    goalLists = allGoals.filter(goal => {
-      // if there are no Votes, this Goal is "uncategorized"
-      return !goalVotes.find(gv => gv.goal_address === goal.address)
-    })
-  }
 
   return (
     <div className='priority-view-wrapper'>
       <IndentedTreeView goalTrees={goalTrees} />
       <div className='priority-menu-wrapper'>
-        {priorityMenuItems.map(([menuTitle, menuSlug]) => {
+        {priorityMenuItems.map(([menuTitle, menuSlugs], index) => {
           return (
             <PriorityMenuItem
-              key={menuSlug}
+              key={index}
+              exact={index === 0}
               title={menuTitle}
-              slug={menuSlug}
+              slug={menuSlugs}
             />
           )
         })}
       </div>
       <Switch>
-        <Route exact path={priorityMenuItems[0][1]}>
-          <UrgencyImportanceQuadrants goalLists={goalLists} />
-        </Route>
-        <Route exact path={priorityMenuItems[1][1]}>
-          <ImpactEffortQuadrants goalLists={goalLists} />
+        {/* impact - effort */}
+        <Route path={priorityMenuItems[1][1]}>
+          <ImpactEffortQuadrants goalTrees={goalTrees} goalVotes={goalVotes} />
         </Route>
         {/* uncategorized */}
-        <Route exact path={priorityMenuItems[6][1]}>
-          <div className='priority-wrapper-full-height'>
-            <PriorityQuadrant
-              title='uncategorized'
-              titleClassname='bottom-left'
-              goals={goalLists}
-            />
-          </div>
+        <Route path={priorityMenuItems[6][1]}>
+          <Uncategorized goalTrees={goalTrees} goalVotes={goalVotes} />
+        </Route>
+        {/* urgency - importance */}
+        <Route path={priorityMenuItems[0][1]}>
+          <UrgencyImportanceQuadrants
+            goalTrees={goalTrees}
+            goalVotes={goalVotes}
+          />
+        </Route>
+        <Route exact path='/board/priority'>
+          <Redirect to='/board/priority/urgency-importance' />
         </Route>
       </Switch>
     </div>
@@ -281,7 +345,6 @@ function mapStateToProps(state) {
 
   return {
     goalTrees,
-    allGoals,
     goalVotes: Object.values(state.goalVotes),
   }
 }
