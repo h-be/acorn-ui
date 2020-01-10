@@ -17,6 +17,11 @@ class ActivityHistory extends Component {
       address: this.props.goalAddress,
     })
   }
+  componentDidUpdate() {
+    this.props.fetchGoalHistory({
+      address: this.props.goalAddress,
+    })
+  }
   differents(history) {
     let vector = []
 
@@ -90,50 +95,84 @@ class ActivityHistory extends Component {
           }
         }
       })
+      history.members.map(members => {
+        members.map((member, index) => {
+          if (index === 0) {
+            vector.push({
+              user: member.user_edit_hash,
+              time: member.unix_timestamp,
+              comment: `add "${
+                this.props.agents[member.agent_address].first_name
+              } ${
+                this.props.agents[member.agent_address].last_name
+              }"as a squirriel`,
+            })
+          }
+          if (index === 1) {
+            vector.push({
+              user: member.user_edit_hash,
+              time: member.unix_timestamp,
+              comment: `remove "${
+                this.props.agents[member.agent_address].first_name
+              } ${
+                this.props.agents[member.agent_address].last_name
+              }" as a squirriel`,
+            })
+          }
+        })
+      })
     }
+
     return vector
   }
   render() {
     return (
       <div className='history'>
-        {this.differents(this.props.goalHistory).map((value, index) => (
-          <React.Fragment key={index}>
-            <div className='history-Body-Container'>
-              {value.statusIcon ? (
-                <StatusIcon
-                  status={value.statusIcon}
-                  className='custom-status-icon'
-                />
-              ) : (
-                <Icon name={value.icon} size={'small'} />
-              )}
-              <div className='history-Body-Avatar'>
-                <Avatar
-                  avatar_url={this.props.agents[value.user].avatar_url}
-                  small={true}
-                />
-              </div>
+        {this.differents(this.props.goalHistory)
+          .sort((a, b) => {
+            if (a.time < b.time) {
+              return 1
+            } else if (a.time > b.time) return -1
+            else return 0
+          })
+          .map((value, index) => (
+            <React.Fragment key={index}>
+              <div className='history-Body-Container'>
+                {value.statusIcon ? (
+                  <StatusIcon
+                    status={value.statusIcon}
+                    className='custom-status-icon'
+                  />
+                ) : (
+                  <Icon name={value.icon} size={'small'} />
+                )}
+                <div className='history-Body-Avatar'>
+                  <Avatar
+                    avatar_url={this.props.agents[value.user].avatar_url}
+                    small={true}
+                  />
+                </div>
 
-              <div className='history-Body'>
-                <div className='history-Header'>
-                  <span className='history-Date'>
-                    {moment.unix(value.time).format(' MMMM Do, YYYY  h:mma')}
-                  </span>
-                </div>
-                <div className='history-content'>
-                  <p className='history-Comment'>
-                    <span className='history-Author'>
-                      {this.props.agents[value.user].first_name +
-                        ' ' +
-                        this.props.agents[value.user].last_name}
-                    </span>{' '}
-                    {value.comment}
-                  </p>
+                <div className='history-Body'>
+                  <div className='history-Header'>
+                    <span className='history-Date'>
+                      {moment.unix(value.time).format(' MMMM Do, YYYY  h:mma')}
+                    </span>
+                  </div>
+                  <div className='history-content'>
+                    <p className='history-Comment'>
+                      <span className='history-Author'>
+                        {this.props.agents[value.user].first_name +
+                          ' ' +
+                          this.props.agents[value.user].last_name}
+                      </span>{' '}
+                      {value.comment}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </React.Fragment>
-        ))}
+            </React.Fragment>
+          ))}
       </div>
     )
   }
