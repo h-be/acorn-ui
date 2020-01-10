@@ -43,7 +43,7 @@ class ActivityHistory extends Component {
             vector.push({
               user: entry.user_edit_hash,
               time: entry.timestamp_updated,
-              comment: `changed card's title from "${
+              comment: `changed goal title from "${
                 history.entries[index - 1].content
               }" to "${entry.content}" `,
               icon: 'font.svg',
