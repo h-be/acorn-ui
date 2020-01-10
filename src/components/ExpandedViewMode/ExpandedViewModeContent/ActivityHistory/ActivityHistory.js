@@ -112,7 +112,7 @@ class ActivityHistory extends Component {
             vector.push({
               user: member.user_edit_hash,
               time: member.unix_timestamp,
-              comment: `remove "${
+              comment: `removed "${
                 this.props.agents[member.agent_address].first_name
               } ${
                 this.props.agents[member.agent_address].last_name
