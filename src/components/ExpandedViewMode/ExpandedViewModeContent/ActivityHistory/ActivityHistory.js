@@ -4,99 +4,188 @@ import { fetchGoalHistory } from '../../../../goal-history/actions'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import Avatar from '../../../Avatar/Avatar'
-
+import Icon from '../../../Icon/Icon'
+import StatusIcon from '../../../StatusIcon'
 class ActivityHistory extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      timerId: 0,
+    }
     this.componentDidMount = this.componentDidMount.bind(this)
+    this.componentWillUnmount = this.componentWillUnmount.bind(this)
     this.differents = this.differents.bind(this)
+    this.fetchChangingData = this.fetchChangingData.bind(this)
   }
-  componentDidMount() {
+
+  fetchChangingData() {
     this.props.fetchGoalHistory({
       address: this.props.goalAddress,
     })
   }
+  componentDidMount() {
+    this.fetchChangingData()
+    const id = setInterval(() => {
+      this.fetchChangingData()
+    }, 3000)
+    this.setState({ timerId: id })
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.timerId)
+  }
+
   differents(history) {
     let vector = []
 
-    if (Object.keys(history).length > 0) {
-      Object.values(history).map(value => {
-        value.entries.map((entry, index) => {
-          if (entry.timestamp_updated === null) {
+    if (history && Object.keys(history).length > 0) {
+      history.entries.map((entry, index) => {
+        if (entry.timestamp_updated === null) {
+          vector.push({
+            user: entry.user_hash,
+            time: entry.timestamp_created,
+            comment: 'created a new goal',
+          })
+        } else {
+          if (history.entries[index - 1].content !== entry.content) {
             vector.push({
-              user: entry.user_hash,
-              time: entry.timestamp_created,
-              comment: 'create the goal',
+              user: entry.user_edit_hash,
+              time: entry.timestamp_updated,
+              comment: `changed goal title from "${
+                history.entries[index - 1].content
+              }" to "${entry.content}" `,
+              icon: 'font.svg',
             })
-          } else {
-            if (value.entries[index - 1].content !== entry.content) {
-              vector.push({
-                user: entry.user_edit_hash,
-                time: entry.timestamp_updated,
-                comment: 'change the conten for ' + entry.content,
-              })
+          }
+          if (history.entries[index - 1].hierarchy !== entry.hierarchy) {
+            let icon = ''
+            if (entry.hierarchy == 'Leaf') {
+              icon = 'leaf.svg'
+            } else if (entry.hierarchy == 'Branch') {
+              icon = 'branch-with-leaf.png'
+            } else if (entry.hierarchy == 'Trunk') {
+              icon: 'trunk.png'
+            } else if (entry.hierarchy == 'Root') {
+              icon: 'root.png'
+            } else if (entry.hierarchy == 'No Hierarchy') {
+              icon: 'question-mark.svg'
             }
-            if (value.entries[index - 1].hierarchy !== entry.hierarchy) {
-              vector.push({
-                user: entry.user_edit_hash,
-                time: entry.timestamp_updated,
-                comment: 'change the hierachy for ' + entry.hierarchy,
-              })
-            }
-            if (value.entries[index - 1].description !== entry.description) {
-              vector.push({
-                user: entry.user_edit_hash,
-                time: entry.timestamp_updated,
-                comment: 'change the description for ' + entry.description,
-              })
-            }
-            if (value.entries[index - 1].status !== entry.status) {
-              vector.push({
-                user: entry.user_edit_hash,
-                time: entry.timestamp_updated,
-                comment: 'change the status for ' + entry.status,
-              })
-            }
-            if (value.entries[index - 1].tags !== entry.tags) {
-              vector.push({
-                user: entry.user_edit_hash,
-                time: entry.timestamp_updated,
-                comment: 'change the tags for ' + entry.tags,
-              })
-            }
+            vector.push({
+              user: entry.user_edit_hash,
+              time: entry.timestamp_updated,
+              comment: `changed hierachy from "${
+                history.entries[index - 1].hierarchy
+              }" to "${entry.hierarchy}" `,
+              icon: icon,
+            })
+          }
+          if (history.entries[index - 1].description !== entry.description) {
+            vector.push({
+              user: entry.user_edit_hash,
+              time: entry.timestamp_updated,
+              comment: `changed description from "${
+                history.entries[index - 1].description
+              }" to "${entry.description}"`,
+              icon: 'font.svg',
+            })
+          }
+          if (history.entries[index - 1].status !== entry.status) {
+            vector.push({
+              user: entry.user_edit_hash,
+              time: entry.timestamp_updated,
+              comment: `changed status from "${
+                history.entries[index - 1].status
+              }" to "${entry.status}"`,
+              statusIcon: entry.status,
+            })
+          }
+          if (history.entries[index - 1].tags !== entry.tags) {
+            vector.push({
+              user: entry.user_edit_hash,
+              time: entry.timestamp_updated,
+              comment: 'change the tags for ' + entry.tags,
+            })
+          }
+        }
+      })
+      history.members.map(members => {
+        members.map((member, index) => {
+          if (index === 0) {
+            vector.push({
+              user: member.user_edit_hash,
+              time: member.unix_timestamp,
+              comment: `added "${
+                this.props.agents[member.agent_address].first_name
+              } ${
+                this.props.agents[member.agent_address].last_name
+              }"as a squirrel`,
+            })
+          }
+          if (index === 1) {
+            vector.push({
+              user: member.user_edit_hash,
+              time: member.unix_timestamp,
+              comment: `removed "${
+                this.props.agents[member.agent_address].first_name
+              } ${
+                this.props.agents[member.agent_address].last_name
+              }" as a squirrel`,
+            })
           }
         })
       })
     }
+
     return vector
   }
   render() {
     return (
       <div className='history'>
-        {this.differents(this.props.goalHistory).map((value, index) => (
-          <React.Fragment key={index}>
-            <Avatar
-              avatar_url={this.props.agents[value.user].avatar_url}
-              small={true}
-            />
-            <div className='history-Body'>
-              {console.log('value', value)}
-              <div className='history-Header'>
-                <span className='history-Date'>
-                  {moment.unix(value.time).format(' MMMM Do, YYYY  h:mma')}
-                </span>
+        {this.differents(this.props.goalHistory)
+          .sort((a, b) => {
+            if (a.time < b.time) {
+              return 1
+            } else if (a.time > b.time) return -1
+            else return 0
+          })
+          .map((value, index) => (
+            <React.Fragment key={index}>
+              <div className='history-Body-Container'>
+                {value.statusIcon ? (
+                  <StatusIcon
+                    status={value.statusIcon}
+                    className='custom-status-icon'
+                  />
+                ) : (
+                  <Icon name={value.icon} size={'small'} />
+                )}
+                <div className='history-Body-Avatar'>
+                  <Avatar
+                    avatar_url={this.props.agents[value.user].avatar_url}
+                    small={true}
+                  />
+                </div>
+
+                <div className='history-Body'>
+                  <div className='history-Header'>
+                    <span className='history-Date'>
+                      {moment.unix(value.time).format(' MMMM Do, YYYY  h:mma')}
+                    </span>
+                  </div>
+                  <div className='history-content'>
+                    <p className='history-Comment'>
+                      <span className='history-Author'>
+                        {this.props.agents[value.user].first_name +
+                          ' ' +
+                          this.props.agents[value.user].last_name}
+                      </span>{' '}
+                      {value.comment}
+                    </p>
+                  </div>
+                </div>
               </div>
-              <div className='history-content'>
-                <h3 className='history-Author'>
-                  {this.props.agents[value.user].first_name +
-                    ' ' +
-                    this.props.agents[value.user].last_name}
-                </h3>
-                <span className='history-Comment'>{value.comment}</span>
-              </div>
-            </div>
-          </React.Fragment>
-        ))}
+            </React.Fragment>
+          ))}
       </div>
     )
   }
@@ -104,12 +193,11 @@ class ActivityHistory extends Component {
 
 function mapStateToProps(state) {
   const goalAddress = state.ui.expandedView.goalAddress
-  console.log(state.ui.goalHistory)
   return {
     goalAddress,
 
     agents: state.agents,
-    goalHistory: state.ui.goalHistory,
+    goalHistory: state.ui.goalHistory[goalAddress],
   }
 }
 function mapDispatchToProps(dispatch) {
