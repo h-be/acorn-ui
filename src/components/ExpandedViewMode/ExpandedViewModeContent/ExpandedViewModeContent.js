@@ -187,7 +187,7 @@ export default function ExpandedViewModeContent({
         onChange={newTab => setActiveTab(newTab)}
       />
 
-      <div className='expanded_view_tabs'>
+      <div className='expanded-view-tabs'>
         {activeTab === 'priority' && <Priority />}
         {activeTab === 'comments' && <Comments />}
         {activeTab === 'activity history' && <ActivityHistory />}
