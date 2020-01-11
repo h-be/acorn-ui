@@ -67,6 +67,8 @@
 }
 
 .priority-quadrant-goal-right-menu {
+  align-items: center;
+  display: flex;
 }
 
 .priority-quadrant-goal-view-mode-icons {
@@ -82,4 +84,21 @@
   background: white;
   padding: 4px;
   border-radius: 5px;
+}
+
+.weigh_in_button {
+  padding: 4px;
+  margin-right: 10px; 
+  margin-bottom: 0;
+}
+
+.priority-quadrant-goal-item .weigh_in_button {
+  display: none;
+  transition: all .3s;
+}
+
+.priority-quadrant-goal-item:hover .weigh_in_button,
+.priority-quadrant-goal-item:focus .weigh_in_button {
+  display: block;
+  transition: all .3s;
 }

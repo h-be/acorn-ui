@@ -1,60 +1,99 @@
 .comments {
-  width: 400px;
   font-family: 'rennerbook', Helvetica, Sans-Serif;
 }
-.comments span {
-  margin: 2px 6px;
-}
+
 .comments > div:first-child {
   display: flex;
 }
-.scroll {
+
+.comment_history_container_scrollable {
   overflow-y: scroll;
-  height: 180px;
+  max-height: 17vh;
   overflow-x: hidden;
 }
+
 .comment {
-  width: 400px;
+ /* width: 400px; */
   display: flex;
   flex-wrap: nowrap;
 }
+
 .comment > div:last-child {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
-.info {
-  width: 70%;
-  display: flex;
-  flex-wrap: nowrap;
-  font-weight: bold;
-}
+
 .input_comment_row {
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
+
+.input_comment_wrapper {
+  display: flex;
+}
+
 .input_comment {
-  width: 360px;
-  border: 1px solid #d1d1d1;
-  border-radius: 10px;
+  height: 32px;
+  box-sizing: border-box;
+  border: 1.5px solid #d1d1d1;
+  border-radius: 15px;
   padding: 15px;
   color: black;
-  padding: 4px;
-  outline: 0;
-  box-shadow: none;
-  margin-top: 5px;
-  margin-bottom: 15px;
+  padding: 10px;
+  margin-bottom: 10px;
+  flex: 1;
+  font-size: 13px;
+  font-family: 'rennerbook', Helvetica, sans-serif;
+  resize: none;
 }
+
+.input_comment:focus {
+  border: 1.5px solid #5f65ff;
+}
+
+
+.comment_save_button {
+
+}
+
 .avatar_comment_container {
   display: inline-block;
-}
-.avatar_comment_container img {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
   margin-right: 10px;
 }
-.date {
+
+.comment_history_item {
+  display: flex;
+  margin-bottom: 16px;
+}
+
+.comment_history_info {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 6px;
+}
+
+.comment_history_name {
+  color: #4E566F;
+  font-size: 10px;
+  line-height: 13px;
+  font-family: 'renner_mediummedium', Helvetica, sans-serif;
+  margin-right: 10px;
+}
+
+.comment_history_date {
   color: #a3a3a3;
+  font-size: 10px;
+  line-height: 13px;
+}
+
+.comment_history_text {
+  color: #4D4D4D;
   font-size: 12px;
   line-height: 14px;
+  box-sizing: border-box;
+  max-width: 365px;
+  white-space: pre-wrap;
 }
