@@ -12,26 +12,31 @@ export default function HierarchyPicker({
   const hierarchies = [
     {
       name: 'Leaf',
+      displayName: 'Leaf',
       icon: 'leaf.svg',
       description: 'small goal',
     },
     {
       name: 'Branch',
+      displayName: 'Branch',
       icon: 'branch-with-leaf.png',
       description: 'sub-goal',
     },
     {
       name: 'Trunk',
+      displayName: 'Trunk',
       icon: 'trunk.png',
       description: 'high-level goal',
     },
     {
       name: 'Root',
+      displayName: 'Root',
       icon: 'root.png',
       description: 'primary goal',
     },
     {
-      name: 'No Hierarchy',
+      name: 'NoHierarchy',
+      displayName: 'No Hierarchy',
       icon: 'question-mark.svg',
     },
   ]
@@ -46,6 +51,7 @@ export default function HierarchyPicker({
           <HierarchyOption
             key={index}
             name={hierarchy.name}
+            displayName={hierarchy.displayName}
             icon={hierarchy.icon}
             description={hierarchy.description}
             selected={hierarchy.name === selectedHierarchy}
@@ -54,9 +60,7 @@ export default function HierarchyPicker({
         ))}
         <p className='hierarchy_wrapper_footer'>
           Not sure how to set the hierarchy for this card? Read more on our{' '}
-          <a href='#'>
-            Guidebook.
-          </a>
+          <a href='#'>Guidebook.</a>
         </p>
       </div>
     </PickerTemplate>
@@ -69,7 +73,14 @@ HierarchyPicker.propTypes = {
   onClose: PropTypes.func.isRequired,
 }
 
-function HierarchyOption({ selected, onClick, name, icon, description }) {
+function HierarchyOption({
+  selected,
+  onClick,
+  name,
+  displayName,
+  icon,
+  description,
+}) {
   return (
     <li
       className={`hierarchy_option_item ${selected ? 'active' : ''}`}
@@ -81,7 +92,7 @@ function HierarchyOption({ selected, onClick, name, icon, description }) {
           {icon && <Icon name={icon} className='light-grey' size='medium' />}
         </div>
         <div className='hierarchy_option_content'>
-          <span className='hierarchy_option_name'>{name}</span>
+          <span className='hierarchy_option_name'>{displayName}</span>
           {description && (
             <span>
               <div className='hierarchy_description'>{description}</div>
