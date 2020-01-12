@@ -18,9 +18,9 @@
 .empty_state h1 {
   font-family: 'gilroyextrabold', Helvetica, Sans-Serif;
   font-weight: normal;
-  margin: 10px auto 20px auto;
   font-size: 27px;
   letter-spacing: 1.05px;
+  margin-top: 25px;
 }
 
 .empty_state p {
@@ -46,6 +46,7 @@
   display: table-cell;
   vertical-align: middle;
 }
+
 .empty_state_squirrel_main {
   padding: 4px;
 }
@@ -58,14 +59,10 @@
 }
 
 @media (max-width: 420px) {
-  .main {
+  .empty_state_squirrel_main {
     -webkit-transform: scale(0.5);
     transform: scale(0.5);
     min-width: 200px;
-  }
-  body,
-  html {
-    overflow-x: auto;
   }
 }
 
