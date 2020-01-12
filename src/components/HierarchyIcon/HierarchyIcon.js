@@ -2,7 +2,7 @@ import React from 'react'
 
 import Icon from '../Icon/Icon'
 
-function HierarchyIcon({ hierarchy, status, size, onClick }) {
+function iconForHierarchy(hierarchy) {
   let hierarchyIcon = ''
   if (hierarchy == 'Leaf') {
     hierarchyIcon = 'leaf.svg'
@@ -16,9 +16,14 @@ function HierarchyIcon({ hierarchy, status, size, onClick }) {
     hierarchyIcon = 'question-mark.svg'
   }
 
+  return hierarchyIcon
+}
+export { iconForHierarchy }
+
+function HierarchyIcon({ hierarchy, status, size, onClick }) {
   return (
     <Icon
-      name={hierarchyIcon}
+      name={iconForHierarchy(hierarchy)}
       size={size}
       className={`not-hoverable ${status ? status : 'grey'}`}
       onClick={onClick}
