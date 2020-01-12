@@ -2,38 +2,37 @@ import './EmptyState.css'
 import React from 'react'
 
 function EmptyState() {
-  /* <img src='img/squirrel_illustration_empty.png' /> */
   return (
     <div className='empty_state_wrapper'>
       <div className='empty_state'>
-        <div class='outer'>
-          <div class='middle'>
-            <div class='main clearfix'>
-              <div class='squirrel'>
-                <div class='tail'>
-                  <span class='circle'></span>
-                  <span class='square'>
-                    <span class='sh'></span>
+        <div className='empty_state_squirrel_outer'>
+          <div className='empty_state_squirrel_middle'>
+            <div className='empty_state_squirrel_main clearfix'>
+              <div className='squirrel'>
+                <div className='tail'>
+                  <span className='circle'></span>
+                  <span className='square'>
+                    <span className='tail_square_right'></span>
                   </span>
                 </div>
-                <span class='skin'></span>
-                <span class='belly'></span>
-                <span class='ear left'></span>
-                <span class='ear right'></span>
-                <span class='nose'></span>
-                <div class='mouth'>
-                  <span class='tooth'></span>
+                <span className='skin'></span>
+                <span className='belly'></span>
+                <span className='ear left'></span>
+                <span className='ear right'></span>
+                <span className='nose'></span>
+                <div className='mouth'>
+                  <span className='tooth'></span>
                 </div>
-                <div class='eye left'>
+                <div className='eye left'>
                   <span></span>
                 </div>
-                <div class='eye right'>
+                <div className='eye right'>
                   <span></span>
                 </div>
-                <span class='leg left'></span>
-                <span class='leg right'></span>
-                <div class='nut'>
-                  <span class='hood'></span>
+                <span className='leg left'></span>
+                <span className='leg right'></span>
+                <div className='nut'>
+                  <span className='hood'></span>
                 </div>
               </div>
             </div>
