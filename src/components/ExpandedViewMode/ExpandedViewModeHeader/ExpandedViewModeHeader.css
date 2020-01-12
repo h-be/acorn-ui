@@ -1,8 +1,9 @@
 .expanded_view_header {
   border-bottom: 1px solid #e8e8e8;
-  padding: 12px 20px;
+  padding: 10px 20px;
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 .expanded_view_header .icon {
