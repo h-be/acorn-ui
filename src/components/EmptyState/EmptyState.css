@@ -36,19 +36,6 @@
   text-align: center;
 }
 
-.clearfix {
-  display: inline-block;
-}
-
-.clearfix::after {
-  content: '';
-  visibility: hidden;
-  display: inline-block;
-  font-size: 0;
-  clear: both;
-  height: 0;
-}
-
 .empty_state_squirrel_outer {
   display: table;
   margin: 0 auto;
