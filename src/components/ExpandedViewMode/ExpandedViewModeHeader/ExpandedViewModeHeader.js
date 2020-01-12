@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './ExpandedViewModeHeader.css'
 
 import Icon from '../../Icon/Icon'
+import HierarchyIcon from '../../HierarchyIcon/HierarchyIcon'
 import StatusPicker from '../../StatusPicker'
 import StatusIcon from '../../StatusIcon'
 import moment from 'moment'
@@ -29,10 +30,10 @@ export default function ExpandedViewModeHeader({
   return (
     <div className='expanded_view_header'>
       <div className='expanded_view_status_icon'>
-        <StatusIcon
-          size='small'
+        <HierarchyIcon
+          hierarchy={goal.hierarchy}
           status={goal.status}
-          hideTooltip
+          size='medium'
           onClick={() =>
             setViews({ ...defaultViews, status: !viewsOpen.status })
           }

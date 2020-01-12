@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom'
 
 import Avatar from '../Avatar/Avatar'
 import Icon from '../Icon/Icon'
+import HierarchyIcon from '../HierarchyIcon/HierarchyIcon'
 import Button from '../Button/Button'
 import { addVoteOfGoal } from '../../goal-votes/actions'
 
@@ -49,27 +50,14 @@ function PriorityGoal({ whoami, goal, votes, createGoalVote }) {
       return value.agent_address === whoami.entry.address
     })
 
-  let hierarchyIcon = ''
-  if (goal.hierarchy == 'Leaf') {
-    hierarchyIcon = 'leaf.svg'
-  } else if (goal.hierarchy == 'Branch') {
-    hierarchyIcon = 'branch-with-leaf.png'
-  } else if (goal.hierarchy == 'Trunk') {
-    hierarchyIcon = 'trunk.png'
-  } else if (goal.hierarchy == 'Root') {
-    hierarchyIcon = 'root.png'
-  } else if (goal.hierarchy == 'No Hierarchy') {
-    hierarchyIcon = 'question-mark.svg'
-  }
-
   return (
     <div className='priority-quadrant-goal-item'>
       <div className='priority-quadrant-goal-iconANDmark'>
         <div className='priority-quadrant-goal-icon'>
-          <Icon
-            name={hierarchyIcon}
+          <HierarchyIcon
             size='small'
-            className={`not-hoverable ${goal.status}`}
+            hierarchy={goal.hierarchy}
+            status={goal.status}
           />
         </div>
         {myVote && <div className='priority-myvote-mark' />}

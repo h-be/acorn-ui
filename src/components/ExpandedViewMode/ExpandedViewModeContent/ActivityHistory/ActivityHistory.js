@@ -6,6 +6,7 @@ import moment from 'moment'
 import Avatar from '../../../Avatar/Avatar'
 import Icon from '../../../Icon/Icon'
 import StatusIcon from '../../../StatusIcon'
+import HierarchyIcon from '../../../HierarchyIcon/HierarchyIcon'
 
 function checkTimeframeSame(oldTimeframe, newTimeframe) {
   if (newTimeframe && !oldTimeframe) {
@@ -88,23 +89,11 @@ class ActivityHistory extends Component {
           }
           // hierarchy
           if (previousGoalVersion.hierarchy !== entry.hierarchy) {
-            let icon = ''
-            if (entry.hierarchy == 'Leaf') {
-              icon = 'leaf.svg'
-            } else if (entry.hierarchy == 'Branch') {
-              icon = 'branch-with-leaf.png'
-            } else if (entry.hierarchy == 'Trunk') {
-              icon = 'trunk.png'
-            } else if (entry.hierarchy == 'Root') {
-              icon = 'root.png'
-            } else if (entry.hierarchy == 'No Hierarchy') {
-              icon = 'question-mark.svg'
-            }
             vector.push({
               user: entry.user_edit_hash,
               time: entry.timestamp_updated,
               comment: `changed hierachy from "${previousGoalVersion.hierarchy}" to "${entry.hierarchy}" `,
-              icon: icon,
+              hierarchyIcon: entry.hierarchy,
             })
           }
           // description
@@ -216,16 +205,24 @@ class ActivityHistory extends Component {
           .map((value, index) => (
             <React.Fragment key={index}>
               <div className='history-Body-Container'>
-                {value.statusIcon ? (
+                {value.statusIcon && (
                   <StatusIcon
                     status={value.statusIcon}
                     className='custom-status-icon'
                   />
-                ) : (
+                )}
+                {!value.statusIcon && !value.hierarchyIcon && (
                   <Icon
                     name={value.icon}
-                    size={'small'}
-                    className={'grey not-hoverable'}
+                    size='small'
+                    className='grey not-hoverable'
+                  />
+                )}
+                {value.hierarchyIcon && (
+                  <HierarchyIcon
+                    hierarchy={value.hierarchyIcon}
+                    size='small'
+                    className='grey'
                   />
                 )}
                 <div className='history-Body-Avatar'>
