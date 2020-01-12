@@ -108,23 +108,12 @@
 }
 
 .priority-quadrant-goal-item .weigh_in_button {
-  display: none;
-  transition: all 0.3s;
+  opacity: 0;
+  transition: all 0.2s;
 }
 
 .priority-quadrant-goal-item:hover .weigh_in_button,
 .priority-quadrant-goal-item:focus .weigh_in_button {
-  display: block;
-  transition: all 0.3s;
-}
-
-.weigh-in-overlay {
-  background: rgba(31, 31, 31, 0.4);
-  height: 100vh;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-y: hidden;
-  position: fixed;
-  z-index: 2;
+  opacity: 1;
+  transition: all 0.2s;
 }

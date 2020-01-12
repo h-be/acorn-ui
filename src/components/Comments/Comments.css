@@ -8,12 +8,11 @@
 
 .comment_history_container_scrollable {
   overflow-y: scroll;
-  max-height: 17vh;
   overflow-x: hidden;
 }
 
 .comment {
- /* width: 400px; */
+  /* width: 400px; */
   display: flex;
   flex-wrap: nowrap;
 }
@@ -54,20 +53,13 @@
   border: 1.5px solid #5f65ff;
 }
 
-
 .comment_save_button {
-
 }
 
 .avatar_comment_container {
   display: inline-block;
   margin-right: 10px;
 }
-
-/* .avatar_comment_container img {
-  border-radius: 50%;
-  margin-right: 10px;
-} */
 
 .comment_history_item {
   display: flex;
@@ -81,7 +73,7 @@
 }
 
 .comment_history_name {
-  color: #4E566F;
+  color: #4e566f;
   font-size: 10px;
   line-height: 13px;
   font-family: 'renner_mediummedium', Helvetica, sans-serif;
@@ -95,7 +87,7 @@
 }
 
 .comment_history_text {
-  color: #4D4D4D;
+  color: #4d4d4d;
   font-size: 12px;
   line-height: 14px;
   box-sizing: border-box;
