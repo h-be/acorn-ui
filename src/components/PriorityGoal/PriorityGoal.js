@@ -49,11 +49,28 @@ function PriorityGoal({ whoami, goal, votes, createGoalVote }) {
       return value.agent_address === whoami.entry.address
     })
 
+  let hierarchyIcon = ''
+  if (goal.hierarchy == 'Leaf') {
+    hierarchyIcon = 'leaf.svg'
+  } else if (goal.hierarchy == 'Branch') {
+    hierarchyIcon = 'branch-with-leaf.png'
+  } else if (goal.hierarchy == 'Trunk') {
+    hierarchyIcon = 'trunk.png'
+  } else if (goal.hierarchy == 'Root') {
+    hierarchyIcon = 'root.png'
+  } else if (goal.hierarchy == 'No Hierarchy') {
+    hierarchyIcon = 'question-mark.svg'
+  }
+
   return (
     <div className='priority-quadrant-goal-item'>
       <div className='priority-quadrant-goal-iconANDmark'>
         <div className='priority-quadrant-goal-icon'>
-          <Icon name='leaf_incomplete.svg' size='small' />
+          <Icon
+            name={hierarchyIcon}
+            size='small'
+            className={`not-hoverable ${goal.status}`}
+          />
         </div>
         {myVote && <div className='priority-myvote-mark' />}
       </div>
