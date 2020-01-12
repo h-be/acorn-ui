@@ -1,27 +1,26 @@
 .expanded_view_header {
-    border-bottom: 1px solid #E8E8E8;
-    padding: 16px 20px;
-    display: flex;
-    flex-direction: row;
+  border-bottom: 1px solid #e8e8e8;
+  padding: 12px 20px;
+  display: flex;
+  flex-direction: row;
 }
 
-.expanded_view_header .icon{
+.expanded_view_header .icon {
   margin-right: 16px;
   height: 22;
 }
 
 .expanded_view_status_icon {
-  margin: 0 16px 0 0;
+  margin: 0;
 }
 
-.expanded_view_status_icon .status_color_small, .expanded_view_status_icon .status_color_small:hover {
+.expanded_view_status_icon .status_color_small,
+.expanded_view_status_icon .status_color_small:hover {
   width: 26px;
   height: 26px;
   border-radius: 14px;
   margin: 0;
 }
-
-
 
 .expanded_view_header .picker-popup {
   margin-top: 54px;
