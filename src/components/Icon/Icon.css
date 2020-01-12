@@ -1,5 +1,3 @@
-/* Icon */
-
 .icon {
   width: 36px;
   height: 36px;
@@ -18,7 +16,7 @@
 }
 
 .icon:not(.not-hoverable):hover .inner-icon {
-  background-color: #5F65FF;
+  background-color: #5f65ff;
 }
 
 .icon.not-hoverable {
@@ -30,18 +28,19 @@
 }
 
 .icon.light-grey .inner-icon {
-  background-color: #D1D1D1;
+  background-color: #d1d1d1;
 }
 
 .icon.purple .inner-icon {
-  background-color: #5F65FF;
+  background-color: #5f65ff;
 }
 
 .icon.white .inner-icon {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   cursor: pointer;
 }
 
+/* Icons Sizes */
 
 .icon.very-small {
   width: 17px;
@@ -139,4 +138,26 @@
 .icon.with_background:hover {
   background-color: rgba(44, 44, 44, 0.75);
   padding: 8px;
+}
+
+/* Hierarchy Icons with Status Color */
+
+.icon.Uncertain .inner-icon {
+  background-color: #ff5d36;
+}
+
+.icon.Incomplete .inner-icon {
+  background-color: #ffc400;
+}
+
+.icon.InProcess .inner-icon {
+  background-color: #ff9cab;
+}
+
+.icon.InReview .inner-icon {
+  background-color: #00e2ff;
+}
+
+.icon.Complete .inner-icon {
+  background-color: #83e300;
 }
