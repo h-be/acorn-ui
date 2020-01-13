@@ -3,7 +3,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-html, body, canvas {
+html,
+body,
+canvas {
   height: 100%;
   width: 100%;
   margin: 0;
@@ -12,7 +14,7 @@ html, body, canvas {
 }
 
 body {
-  background-color: #F4F4F4;
+  background-color: #f4f4f4;
   font-family: 'rennerbook', Helvetica, Sans-Serif;
 }
 
@@ -25,25 +27,22 @@ div.react {
 
 /* Fonts */
 
-
 /* Gilroy Font */
 
 @font-face {
   font-family: 'gilroyextrabold';
   src: url('fonts/gilroy/gilroy-extrabold-webfont.woff2') format('woff2'),
-       url('fonts/gilroy/gilroy-extrabold-webfont.woff') format('woff');
+    url('fonts/gilroy/gilroy-extrabold-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
 
 @font-face {
   font-family: 'gilroylight';
   src: url('fonts/gilroy/gilroy-light-webfont.woff2') format('woff2'),
-       url('fonts/gilroy/gilroy-light-webfont.woff') format('woff');
+    url('fonts/gilroy/gilroy-light-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
 
 /* Renner Font */
@@ -51,99 +50,81 @@ div.react {
 @font-face {
   font-family: 'rennerbook';
   src: url('fonts/renner/renner-book-webfont.woff2') format('woff2'),
-       url('fonts/renner/renner-book-webfont.woff') format('woff');
+    url('fonts/renner/renner-book-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
 
 @font-face {
   font-family: 'renner_blackblack';
   src: url('fonts/renner/renner-black-webfont.woff2') format('woff2'),
-       url('fonts/renner/renner-black-webfont.woff') format('woff');
+    url('fonts/renner/renner-black-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
-
 
 @font-face {
   font-family: 'renner_blackblack_italic';
   src: url('fonts/renner/renner-blackitalic-webfont.woff2') format('woff2'),
-       url('fonts/renner/renner-blackitalic-webfont.woff') format('woff');
+    url('fonts/renner/renner-blackitalic-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
-
 
 @font-face {
   font-family: 'rennerbold';
   src: url('fonts/renner/renner-bold-webfont.woff2') format('woff2'),
-       url('fonts/renner/renner-bold-webfont.woff') format('woff');
+    url('fonts/renner/renner-bold-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
-
 
 @font-face {
   font-family: 'rennerbold_italic';
   src: url('fonts/renner/renner-bolditalic-webfont.woff2') format('woff2'),
-       url('fonts/renner/renner-bolditalic-webfont.woff') format('woff');
+    url('fonts/renner/renner-bolditalic-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
-
 
 @font-face {
   font-family: 'rennerbook_italic';
   src: url('fonts/renner/renner-bookitalic-webfont.woff2') format('woff2'),
-       url('fonts/renner/renner-bookitalic-webfont.woff') format('woff');
+    url('fonts/renner/renner-bookitalic-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
-
 
 @font-face {
   font-family: 'renner_lightlight';
   src: url('fonts/renner/renner-light-webfont.woff2') format('woff2'),
-       url('fonts/renner/renner-light-webfont.woff') format('woff');
+    url('fonts/renner/renner-light-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
-
 
 @font-face {
   font-family: 'renner_lightlight_italic';
   src: url('fonts/renner/renner-lightitalic-webfont.woff2') format('woff2'),
-       url('fonts/renner/renner-lightitalic-webfont.woff') format('woff');
+    url('fonts/renner/renner-lightitalic-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
-
 
 @font-face {
   font-family: 'renner_mediummedium';
   src: url('fonts/renner/renner-medium-webfont.woff2') format('woff2'),
-       url('fonts/renner/renner-medium-webfont.woff') format('woff');
+    url('fonts/renner/renner-medium-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
-
 
 @font-face {
   font-family: 'renner_mediummedium_italic';
   src: url('fonts/renner/renner-mediumitalic-webfont.woff2') format('woff2'),
-       url('fonts/renner/renner-mediumitalic-webfont.woff') format('woff');
+    url('fonts/renner/renner-mediumitalic-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
 
 /* Quebec Font */
@@ -151,16 +132,15 @@ div.react {
 @font-face {
   font-family: 'quebecbold';
   src: url('fonts/quebec/quebec-bold-webfont.woff2') format('woff2'),
-       url('fonts/quebec/quebec-bold-webfont.woff') format('woff');
+    url('fonts/quebec/quebec-bold-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
 
 @font-face {
   font-family: 'quebecbold_italic';
   src: url('fonts/quebec/quebec-bolditalic-webfont.woff2') format('woff2'),
-       url('fonts/quebec/quebec-bolditalic-webfont.woff') format('woff');
+    url('fonts/quebec/quebec-bolditalic-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -168,55 +148,49 @@ div.react {
 @font-face {
   font-family: 'quebecitalic';
   src: url('fonts/quebec/quebec-italic-webfont.woff2') format('woff2'),
-       url('fonts/quebec/quebec-italic-webfont.woff') format('woff');
+    url('fonts/quebec/quebec-italic-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
 
 @font-face {
   font-family: 'quebeclight';
   src: url('fonts/quebec/quebec-light-webfont.woff2') format('woff2'),
-       url('fonts/quebec/quebec-light-webfont.woff') format('woff');
+    url('fonts/quebec/quebec-light-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
 
 @font-face {
   font-family: 'quebeclight_italic';
   src: url('fonts/quebec/quebec-lightitalic-webfont.woff2') format('woff2'),
-       url('fonts/quebec/quebec-lightitalic-webfont.woff') format('woff');
+    url('fonts/quebec/quebec-lightitalic-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
 
 @font-face {
   font-family: 'quebecregular';
   src: url('fonts/quebec/quebec-regular-webfont.woff2') format('woff2'),
-       url('fonts/quebec/quebec-regular-webfont.woff') format('woff');
+    url('fonts/quebec/quebec-regular-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
 
 @font-face {
   font-family: 'quebecsemibold';
   src: url('fonts/quebec/quebec-semibold-webfont.woff2') format('woff2'),
-       url('fonts/quebec/quebec-semibold-webfont.woff') format('woff');
+    url('fonts/quebec/quebec-semibold-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
 
 @font-face {
   font-family: 'quebecsemibold_italic';
   src: url('fonts/quebec/quebec-semibolditalic-webfont.woff2') format('woff2'),
-       url('fonts/quebec/quebec-semibolditalic-webfont.woff') format('woff');
+    url('fonts/quebec/quebec-semibolditalic-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
 
 /* features in development */
@@ -262,7 +236,6 @@ h4 {
   position: fixed;
 }
 
-
 /* GoalForm */
 
 .goal_form_wrapper {
@@ -281,20 +254,20 @@ h4 {
   width: 309px;
   height: 70px;
   resize: none;
-  color: #4D4D4D;
-  font-family:'rennerbook', Helvetica, Sans-Serif;
+  color: #4d4d4d;
+  font-family: 'rennerbook', Helvetica, Sans-Serif;
   font-size: 20px;
   line-height: 24px;
 }
 
 .goal_form ::selection {
-  background: #77FFF5;
+  background: #77fff5;
 }
 
 .goal_form_save {
   margin-top: 75px;
   padding: 10px 30px;
-  background: #00AFA4 0% 0% no-repeat padding-box;
+  background: #00afa4 0% 0% no-repeat padding-box;
   opacity: 1;
   outline: none;
   border: 0;
@@ -303,44 +276,14 @@ h4 {
   line-height: 22px;
   font-family: 'renner_mediummedium', Helvetica, Sans-Serif;
   letter-spacing: 0;
-  color: #FFFFFF;
+  color: #ffffff;
   border-radius: 25px;
   text-align: center;
   cursor: pointer;
 }
 
 .goal_form_save:hover {
-  background: #00BEB0 0% 0% no-repeat padding-box;
-}
-
-/* Multi Edit Bar */
-
-.multi_edit_bar {
-  position: fixed;
-  bottom: 0px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 0 8px;
-  background-color: #FFFFFF;
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
-  border-radius: 10px 10px 0px 0px;
-  opacity: 1;
-  display: flex;
-  align-items: center;
-}
-
-.multi_edit_bar_item {
-  width: 60px;
-  height: 60px;
-  box-sizing: border-box;
-  border: 1px solid #E8E8E82B;
-  display: flex;
-  align-items: center;
-}
-
-.multi_edit_bar .picker-popup {
-  bottom: 62px;
-  top: unset;
+  background: #00beb0 0% 0% no-repeat padding-box;
 }
 
 /* HoverOverlay */
@@ -361,7 +304,6 @@ h4 {
 .hover_overlay li {
   cursor: pointer;
 }
-
 
 /* VerticalActionsList */
 
@@ -386,13 +328,13 @@ h4 {
   outline: 0;
   font-size: 16px;
   line-height: 18px;
-  color: #FFF;
+  color: #fff;
   margin-bottom: 5px;
   display: flex;
   align-items: center;
   cursor: pointer;
   letter-spacing: 0.5px;
-  transition: .1s all;
+  transition: 0.1s all;
 }
 
 .action_list_item:hover {
@@ -404,7 +346,7 @@ h4 {
   margin-right: 5px;
 }
 .action_list_item .icon.not-hoverable .inner-icon:hover {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 /* PeoplePicker */
@@ -416,7 +358,7 @@ h4 {
 
 .people_picker_spacer {
   margin: 0 20px 10px 20px;
-  border: 0.5px solid #F2F2F2;
+  border: 0.5px solid #f2f2f2;
 }
 
 .people_picker_search {
@@ -437,18 +379,17 @@ h4 {
 }
 
 .people_picker_search input:placeholder {
-  color: #A3A3A3;
+  color: #a3a3a3;
 }
 
 .people_picker_people {
   list-style: none;
   padding: 0;
   margin: 0;
-
 }
 
 .people_picker_people li {
-  color: #4D4D4D;
+  color: #4d4d4d;
   padding: 6px 20px;
   display: flex;
   align-items: center;
@@ -456,8 +397,8 @@ h4 {
 }
 
 .people_picker_people li:hover {
-  background: #F2F2F2;
-  color: #00A599;
+  background: #f2f2f2;
+  color: #00a599;
 }
 
 .people_picker_people li .person_name {
@@ -475,7 +416,7 @@ h4 {
 
 .person_handle {
   font-size: 12px;
-  color: #A3A3A3;
+  color: #a3a3a3;
   font-family: 'rennerbook', Helvetica, sans-serif;
 }
 
@@ -487,7 +428,7 @@ h4 {
 /* when person is a member styles */
 
 .people_picker_people li.member .person_name {
-  color: #5F65FF;
+  color: #5f65ff;
 }
 
 /* StatusPicker */
@@ -498,103 +439,45 @@ h4 {
   flex-direction: row;
 }
 
-/* StatusIcon */
-
-
-.status_color {
-  position: relative;
-}
-
-.status_color_small {
-  width: 26px;
-  height: 26px;
-  margin: 6px 12px 6px 6px;
-  border-radius: 14px;
-  cursor: pointer;
-}
-
-.status_color_medium {
-  width: 38px;
-  height: 38px;
-  border-radius: 19px;
-  margin: 0 auto;
-}
-
-.status_color.can_click {
-  cursor: pointer;
-}
-
-.status_color_small.can_click:hover {
-  width: 34px;
-  height: 34px;
-  border-radius: 17px;
-  margin: 2px 8px 2px 2px;
-  border: none;
-}
-
-.status_color.has_status {
-  box-shadow: 0 0 0 4px #FFF, 0 0 0 6px #5F65FF;
-}
-
-/* Tooltips */
-
-.tooltip_container:hover .tooltip {
-  display: block;
-}
-
-.tooltip {
-  position: absolute;
-  display: none;
-  padding: 5px 7px;
-  border-radius: 3px;
-  color: #4D4D4D;
-  font-size: 10px;
-  line-height: 12px;
-  bottom: -28px;
-  white-space: nowrap;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
 /* status colors */
 
 .border_Uncertain {
-  border: 2px solid #FF5D36;
+  border: 2px solid #ff5d36;
 }
 
 .border_Incomplete {
-  border: 2px solid #FFC400;
+  border: 2px solid #ffc400;
 }
 
 .border_InProcess {
-  border: 2px solid #FF9CAB;
+  border: 2px solid #ff9cab;
 }
 
 .border_InReview {
-  border: 2px solid #00E2FF;
+  border: 2px solid #00e2ff;
 }
 
 .border_Complete {
-  border: 2px solid #83E300;
+  border: 2px solid #83e300;
 }
 
 .bg_Uncertain {
-  background-color: #FF5D36;
-  color: #FFFFFF;
+  background-color: #ff5d36;
+  color: #ffffff;
 }
 
 .bg_Incomplete {
-  background-color: #FFC400;
+  background-color: #ffc400;
 }
 
 .bg_InProcess {
-  background-color: #FF9CAB;
+  background-color: #ff9cab;
 }
 
 .bg_InReview {
-  background-color: #00E2FF;
+  background-color: #00e2ff;
 }
 
 .bg_Complete {
-  background-color: #83E300;
+  background-color: #83e300;
 }

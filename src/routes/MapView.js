@@ -12,7 +12,7 @@ import { openExpandedView, closeExpandedView } from '../expanded-view/actions'
 import { setScreenDimensions } from '../screensize/actions'
 import EmptyState from '../components/EmptyState/EmptyState'
 import GoalForm from '../components/GoalForm'
-import MultiEditBar from '../components/MultiEditBar'
+import MultiEditBar from '../components/MultiEditBar/MultiEditBar'
 import HoverOverlay from '../components/HoverOverlay'
 import ExpandedViewMode from '../components/ExpandedViewMode/ExpandedViewMode'
 

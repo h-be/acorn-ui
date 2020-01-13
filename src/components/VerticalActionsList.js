@@ -9,7 +9,7 @@ import PeoplePicker from './PeoplePicker'
 import DatePicker from './DatePicker/DatePicker'
 import HierarchyPicker from './HierarchyPicker/HierarchyPicker'
 import PriorityPicker from './PriorityPicker/PriorityPicker'
-import StatusIcon from './StatusIcon'
+import StatusIcon from './StatusIcon/StatusIcon'
 
 import { archiveGoal, updateGoal } from '../goals/actions'
 import { closeGoalForm } from '../goal-form/actions'

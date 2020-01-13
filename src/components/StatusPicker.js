@@ -1,11 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import StatusIcon from './StatusIcon'
+import StatusIcon from './StatusIcon/StatusIcon'
 import PickerTemplate from './PickerTemplate/PickerTemplate'
 
 function StatusPicker({ selectedStatus, statusClicked, onClose }) {
-  const statuses = ['Uncertain', 'Incomplete', 'Complete', 'InProcess', 'InReview']
+  const statuses = [
+    'Uncertain',
+    'Incomplete',
+    'Complete',
+    'InProcess',
+    'InReview',
+  ]
 
   return (
     <PickerTemplate
