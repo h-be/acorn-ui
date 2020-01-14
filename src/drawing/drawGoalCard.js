@@ -15,6 +15,7 @@ import {
 
 import { colors } from '../styles'
 import { getOrSetImageForUrl } from './imageCache'
+import moment from 'moment'
 
 function roundRect(ctx, x, y, w, h, radius, color, stroke, strokeWidth) {
   const r = x + w
@@ -59,7 +60,7 @@ export default function render(
   // set up border color
   let borderColor = colors[goal.status]
 
-  const selectedColor = '#5F65FF'
+  let selectedColor = '#5F65FF'
 
   let backgroundColor = '#FFFFFF'
   if (isHovered) {
@@ -136,7 +137,27 @@ export default function render(
       ctx.fillText(line, textBoxLeft, textBoxTop + linePosition)
     })
   }
+  if (goal.time_frame) {
+    const img = getOrSetImageForUrl('img/calendar_4d4d4d.svg', 22, 22)
+    if (!img) return
+    const xImgDraw = x + goalWidth / 2 - 22 - 130
+    const yImgDraw = y + goalHeight / 2 - 22 + 20
+    const textBoxLeft = xImgDraw + textBoxMarginLeft
+    const textBoxTop = yImgDraw + textBoxMarginTop / 4 - 4
+    let text = goal.time_frame.from_date
+      ? String(moment.unix(goal.time_frame.from_date).format('MMM D, YYYY - '))
+      : ''
+    text += goal.time_frame.to_date
+      ? String(moment.unix(goal.time_frame.to_date).format('MMM D, YYYY'))
+      : ''
+    ctx.drawImage(img, xImgDraw, yImgDraw, 22, 22)
 
+    const lines = getLinesForParagraphs(ctx, text)
+    lines.forEach((line, index) => {
+      let linePosition = index * (fontSizeInt + lineSpacing)
+      ctx.fillText(line, textBoxLeft, textBoxTop + linePosition)
+    })
+  }
   members.forEach((member, index) => {
     const img = getOrSetImageForUrl(
       member.avatar_url,
