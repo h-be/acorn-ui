@@ -149,7 +149,16 @@ export default function render(
     })
   }
 
-  members.forEach((member, index) => {
+  // we need to simulate what it's like to have multiple squirrels
+  // create test data
+  const testMembers = [
+    { avatar_url: 'https://chat.eyss-dev.com/avatar/Carolina' },
+    { avatar_url: 'https://chat.eyss-dev.com/avatar/hector.vasquez' },
+    { avatar_url: 'img/profile.png' },
+  ]
+
+  // testMembers should be switched back to `members` before pushing the code
+  testMembers.forEach((member, index) => {
     const img = getOrSetImageForUrl(
       member.avatar_url,
       avatarWidth,
@@ -158,9 +167,10 @@ export default function render(
     // assume that it will be drawn the next time 'render' is called
     // if it isn't already set
     if (!img) return
+
     // adjust the x position according to the index of this member
     // since there can be many
-    const xImgDraw = x + goalWidth - (index + 1 * avatarWidth + avatarSpace)
+    const xImgDraw = x + goalWidth - (index + 1) * (avatarWidth + avatarSpace)
     const yImgDraw = y + goalHeight - avatarHeight - avatarSpace
     // url, x coordinate, y coordinate, width, height
     ctx.drawImage(img, xImgDraw, yImgDraw, avatarWidth, avatarHeight)
