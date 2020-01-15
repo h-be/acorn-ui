@@ -12,6 +12,17 @@
   opacity: 1;
   display: flex;
   align-items: center;
+  height: 60px;
+}
+
+.multi_edit_bar > .icon {
+  padding: 8px;
+  width: 44px;
+  height: 36px;
+}
+
+.multi_edit_bar .icon.medium.active .inner-icon {
+  background-color: #5f65ff;
 }
 
 .multi_edit_bar_item {
@@ -24,6 +35,6 @@
 }
 
 .multi_edit_bar .picker-popup {
-  bottom: 62px;
+  bottom: 65px;
   top: unset;
 }

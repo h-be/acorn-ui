@@ -15,7 +15,7 @@
 .alert-popup-wrapper {
   position: absolute;
   width: 634px;
-  height: 345px;
+  min-height: 345px;
   box-sizing: border-box;
   padding: 50px 60px;
   transition: .3s;

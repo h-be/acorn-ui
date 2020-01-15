@@ -84,72 +84,74 @@ function VerticalActionsList({
   const toDate = goal.time_frame ? moment.unix(goal.time_frame.to_date) : null
 
   return (
-    <div className='vertical_actions_list'>
-      <VerticalActionListItem
-        label='status'
-        icon={<StatusIcon size='small' status={goal.status} hideTooltip />}
-        onClick={() => toggleView('status')}
-      />
-      <VerticalActionListItem
-        label='squirrels'
-        icon={<Icon name='squirrel.svg' className='white not-hoverable' />}
-        onClick={() => toggleView('squirrels')}
-      />
-      <VerticalActionListItem
-        label='timeframe'
-        icon={<Icon name='calendar.svg' className='white not-hoverable' />}
-        onClick={() => toggleView('timeframe')}
-      />
-      <VerticalActionListItem
-        label='hierarchy'
-        icon={
-          <Icon name='hierarchy_white.svg' className='white not-hoverable' />
-        }
-        onClick={() => toggleView('hierarchy')}
-      />
-      <VerticalActionListItem
-        label='priority'
-        icon={
-          <Icon name='priority_white.svg' className='white not-hoverable' />
-        }
-        onClick={() => toggleView('priority')}
-      />
-      <VerticalActionListItem
-        label='archive'
-        icon={<Icon name='archive_white.svg' className='white not-hoverable' />}
-        onClick={() => toggleView('archive')}
-      />
-      {viewsOpen.status && (
-        <StatusPicker
-          selectedStatus={goal.status}
-          statusClicked={innerUpdateGoal('status')}
-          onClose={() => setViews({ ...defaultViews })}
+    <>
+      <div className='vertical_actions_list'>
+        <VerticalActionListItem
+          label='status'
+          icon={<StatusIcon size='small' status={goal.status} hideTooltip />}
+          onClick={() => toggleView('status')}
         />
-      )}
-      {viewsOpen.squirrels && (
-        <PeoplePicker onClose={() => setViews({ ...defaultViews })} />
-      )}
-      {viewsOpen.timeframe && (
-        <DatePicker
-          onClose={() => setViews({ ...defaultViews })}
-          onSet={updateTimeframe}
-          fromDate={fromDate}
-          toDate={toDate}
+        <VerticalActionListItem
+          label='squirrels'
+          icon={<Icon name='squirrel.svg' className='white not-hoverable' />}
+          onClick={() => toggleView('squirrels')}
         />
-      )}
-      {viewsOpen.hierarchy && (
-        <HierarchyPicker
-          onClose={() => setViews({ ...defaultViews })}
-          selectedHierarchy={goal.hierarchy}
-          hierarchyClicked={innerUpdateGoal('hierarchy')}
+        <VerticalActionListItem
+          label='timeframe'
+          icon={<Icon name='calendar.svg' className='white not-hoverable' />}
+          onClick={() => toggleView('timeframe')}
         />
-      )}
-      {viewsOpen.priority && (
-        <PriorityPicker
-          goalAddress={goalAddress}
-          onClose={() => setViews({ ...defaultViews })}
+        <VerticalActionListItem
+          label='hierarchy'
+          icon={
+            <Icon name='hierarchy_white.svg' className='white not-hoverable' />
+          }
+          onClick={() => toggleView('hierarchy')}
         />
-      )}
+        <VerticalActionListItem
+          label='priority'
+          icon={
+            <Icon name='priority_white.svg' className='white not-hoverable' />
+          }
+          onClick={() => toggleView('priority')}
+        />
+        <VerticalActionListItem
+          label='archive'
+          icon={<Icon name='archive.svg' className='white not-hoverable' />}
+          onClick={() => toggleView('archive')}
+        />
+        {viewsOpen.status && (
+          <StatusPicker
+            selectedStatus={goal.status}
+            statusClicked={innerUpdateGoal('status')}
+            onClose={() => setViews({ ...defaultViews })}
+          />
+        )}
+        {viewsOpen.squirrels && (
+          <PeoplePicker onClose={() => setViews({ ...defaultViews })} />
+        )}
+        {viewsOpen.timeframe && (
+          <DatePicker
+            onClose={() => setViews({ ...defaultViews })}
+            onSet={updateTimeframe}
+            fromDate={fromDate}
+            toDate={toDate}
+          />
+        )}
+        {viewsOpen.hierarchy && (
+          <HierarchyPicker
+            onClose={() => setViews({ ...defaultViews })}
+            selectedHierarchy={goal.hierarchy}
+            hierarchyClicked={innerUpdateGoal('hierarchy')}
+          />
+        )}
+        {viewsOpen.priority && (
+          <PriorityPicker
+            goalAddress={goalAddress}
+            onClose={() => setViews({ ...defaultViews })}
+          />
+        )}
+      </div>
       {viewsOpen.archive && (
         <AlertPopupTemplate
           onClose={() => setViews({ ...defaultViews })}
@@ -163,7 +165,7 @@ function VerticalActionsList({
           altButtonAction={() => setViews({ ...defaultViews })}
         />
       )}
-    </div>
+    </>
   )
 }
 
