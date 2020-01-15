@@ -17,6 +17,8 @@ import { colors } from '../styles'
 import { getOrSetImageForUrl } from './imageCache'
 import moment from 'moment'
 
+import { iconForHierarchy } from '../components/HierarchyIcon/HierarchyIcon'
+
 function roundRect(ctx, x, y, w, h, radius, color, stroke, strokeWidth) {
   const r = x + w
   const b = y + h
@@ -72,6 +74,16 @@ export default function render(
 
   const selectedOutlineMargin = 1
   const selectedOutlineWidth = '4'
+
+  // display leaf icon for small goal
+  // const leafHierarchyIcon = iconForHierarchy(goal.hierarchy)
+  if (goal.hierarchy === 'Leaf') {
+    const leafImg = getOrSetImageForUrl('img/leaf.svg', 30, 30)
+    // url, x coordinate, y coordinate, width, height
+    if (leafImg) {
+      ctx.drawImage(leafImg, x - 24, y - 24, 30, 30)
+    }
+  }
 
   // background
   roundRect(
@@ -169,10 +181,12 @@ export default function render(
     // assume that it will be drawn the next time 'render' is called
     // if it isn't already set
     if (!img) return
+
     // adjust the x position according to the index of this member
     // since there can be many
-    const xImgDraw = x + goalWidth - (index + 1 * avatarWidth + avatarSpace)
+    const xImgDraw = x + goalWidth - (index + 1) * (avatarWidth + avatarSpace)
     const yImgDraw = y + goalHeight - avatarHeight - avatarSpace
+    // url, x coordinate, y coordinate, width, height
     ctx.drawImage(img, xImgDraw, yImgDraw, avatarWidth, avatarHeight)
   })
 }

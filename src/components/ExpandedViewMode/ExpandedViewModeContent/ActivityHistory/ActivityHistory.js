@@ -6,14 +6,43 @@ import moment from 'moment'
 import Avatar from '../../../Avatar/Avatar'
 import Icon from '../../../Icon/Icon'
 import StatusIcon from '../../../StatusIcon'
+import HierarchyIcon from '../../../HierarchyIcon/HierarchyIcon'
+
+function checkTimeframeSame(oldTimeframe, newTimeframe) {
+  if (newTimeframe && !oldTimeframe) {
+    return false
+  } else if (oldTimeframe && !newTimeframe) {
+    return false
+  } else if (!oldTimeframe && !newTimeframe) {
+    return true
+  } else if (
+    oldTimeframe.from_date === newTimeframe.from_date &&
+    oldTimeframe.to_date === newTimeframe.to_date
+  ) {
+    return true
+  }
+}
+
+function FormatTimeframeDisplay({ timeframe }) {
+  const fromDate = timeframe ? moment.unix(timeframe.from_date) : null
+  const toDate = timeframe ? moment.unix(timeframe.to_date) : null
+
+  return (
+    <>
+      {fromDate && fromDate.format('MMM D, YYYY')}
+      {toDate && ' - '}
+      {toDate && toDate.format('MMM D, YYYY')}
+      {!fromDate && !toDate && 'not set'}
+    </>
+  )
+}
+
 class ActivityHistory extends Component {
   constructor(props) {
     super(props)
     this.state = {
       timerId: 0,
     }
-    this.componentDidMount = this.componentDidMount.bind(this)
-    this.componentWillUnmount = this.componentWillUnmount.bind(this)
     this.differents = this.differents.bind(this)
     this.fetchChangingData = this.fetchChangingData.bind(this)
   }
@@ -44,66 +73,90 @@ class ActivityHistory extends Component {
           vector.push({
             user: entry.user_hash,
             time: entry.timestamp_created,
-            comment: 'created a new goal',
+            comment: 'created this goal',
           })
         } else {
-          if (history.entries[index - 1].content !== entry.content) {
+          const previousGoalVersion = history.entries[index - 1]
+
+          // title/content
+          if (previousGoalVersion.content !== entry.content) {
             vector.push({
               user: entry.user_edit_hash,
               time: entry.timestamp_updated,
-              comment: `changed goal title from "${
-                history.entries[index - 1].content
-              }" to "${entry.content}" `,
+              comment: `changed goal title from "${previousGoalVersion.content}" to "${entry.content}" `,
               icon: 'font.svg',
             })
           }
-          if (history.entries[index - 1].hierarchy !== entry.hierarchy) {
-            let icon = ''
-            if (entry.hierarchy == 'Leaf') {
-              icon = 'leaf.svg'
-            } else if (entry.hierarchy == 'Branch') {
-              icon = 'branch-with-leaf.png'
-            } else if (entry.hierarchy == 'Trunk') {
-              icon: 'trunk.png'
-            } else if (entry.hierarchy == 'Root') {
-              icon: 'root.png'
-            } else if (entry.hierarchy == 'No Hierarchy') {
-              icon: 'question-mark.svg'
-            }
+          // hierarchy
+          if (previousGoalVersion.hierarchy !== entry.hierarchy) {
             vector.push({
               user: entry.user_edit_hash,
               time: entry.timestamp_updated,
-              comment: `changed hierachy from "${
-                history.entries[index - 1].hierarchy
-              }" to "${entry.hierarchy}" `,
-              icon: icon,
+              comment: `changed hierachy from "${previousGoalVersion.hierarchy}" to "${entry.hierarchy}" `,
+              hierarchyIcon: entry.hierarchy,
             })
           }
-          if (history.entries[index - 1].description !== entry.description) {
+          // description
+          if (previousGoalVersion.description !== entry.description) {
             vector.push({
               user: entry.user_edit_hash,
               time: entry.timestamp_updated,
-              comment: `changed description from "${
-                history.entries[index - 1].description
-              }" to "${entry.description}"`,
+              comment: `changed description from "${previousGoalVersion.description}" to "${entry.description}"`,
               icon: 'font.svg',
             })
           }
-          if (history.entries[index - 1].status !== entry.status) {
+          // status
+          if (previousGoalVersion.status !== entry.status) {
             vector.push({
               user: entry.user_edit_hash,
               time: entry.timestamp_updated,
-              comment: `changed status from "${
-                history.entries[index - 1].status
-              }" to "${entry.status}"`,
+              comment: `changed status from "${previousGoalVersion.status}" to "${entry.status}"`,
               statusIcon: entry.status,
             })
           }
-          if (history.entries[index - 1].tags !== entry.tags) {
+          // tags
+          if (previousGoalVersion.tags !== entry.tags) {
             vector.push({
               user: entry.user_edit_hash,
               time: entry.timestamp_updated,
-              comment: 'change the tags for ' + entry.tags,
+              comment: 'changed the tags for ' + entry.tags,
+            })
+          }
+          // timeframe added
+          if (!previousGoalVersion.time_frame && entry.time_frame) {
+            vector.push({
+              user: entry.user_edit_hash,
+              time: entry.timestamp_updated,
+              comment: (
+                <>
+                  added the timeframe{' '}
+                  {<FormatTimeframeDisplay timeframe={entry.time_frame} />} to
+                  this goal
+                </>
+              ),
+              icon: 'calendar.svg',
+            })
+          } else if (
+            !checkTimeframeSame(
+              previousGoalVersion.time_frame,
+              entry.time_frame
+            )
+          ) {
+            vector.push({
+              user: entry.user_edit_hash,
+              time: entry.timestamp_updated,
+              comment: (
+                <>
+                  changed timeframe from{' '}
+                  {
+                    <FormatTimeframeDisplay
+                      timeframe={previousGoalVersion.time_frame}
+                    />
+                  }{' '}
+                  to {<FormatTimeframeDisplay timeframe={entry.time_frame} />}
+                </>
+              ),
+              icon: 'calendar.svg',
             })
           }
         }
@@ -118,7 +171,8 @@ class ActivityHistory extends Component {
                 this.props.agents[member.agent_address].first_name
               } ${
                 this.props.agents[member.agent_address].last_name
-              }"as a squirrel`,
+              }" as a squirrel`,
+              icon: 'squirrel.svg',
             })
           }
           if (index === 1) {
@@ -151,13 +205,25 @@ class ActivityHistory extends Component {
           .map((value, index) => (
             <React.Fragment key={index}>
               <div className='history-Body-Container'>
-                {value.statusIcon ? (
+                {value.statusIcon && (
                   <StatusIcon
                     status={value.statusIcon}
                     className='custom-status-icon'
                   />
-                ) : (
-                  <Icon name={value.icon} size={'small'} />
+                )}
+                {!value.statusIcon && !value.hierarchyIcon && (
+                  <Icon
+                    name={value.icon}
+                    size='small'
+                    className='grey not-hoverable'
+                  />
+                )}
+                {value.hierarchyIcon && (
+                  <HierarchyIcon
+                    hierarchy={value.hierarchyIcon}
+                    size='small'
+                    className='grey'
+                  />
                 )}
                 <div className='history-Body-Avatar'>
                   <Avatar
@@ -168,12 +234,19 @@ class ActivityHistory extends Component {
 
                 <div className='history-Body'>
                   <div className='history-Header'>
-                    <span className='history-Date'>
-                      {moment.unix(value.time).format(' MMMM Do, YYYY  h:mma')}
+                    <span className='history-date'>
+                      {moment.unix(value.time).calendar(null, {
+                        lastDay: '[Yesterday at] LT',
+                        sameDay: '[Today at] LT',
+                        nextDay: '[Tomorrow at] LT',
+                        lastWeek: '[last] dddd [at] LT',
+                        nextWeek: 'dddd [at] LT',
+                        sameElse: 'MMM Do YYYY [at] LT',
+                      })}
                     </span>
                   </div>
                   <div className='history-content'>
-                    <p className='history-Comment'>
+                    <p className='history-info'>
                       <span className='history-Author'>
                         {this.props.agents[value.user].first_name +
                           ' ' +

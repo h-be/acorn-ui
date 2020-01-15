@@ -1,8 +1,8 @@
 .button {
   border-radius: 25px;
-  background: #6600FF;
-  border: 1px solid #6600FF;
-  color: #FFFFFF;
+  background: #6600ff;
+  border: 1px solid #6600ff;
+  color: #ffffff;
   outline: none;
   border: none;
   font-size: 16px;
@@ -10,12 +10,12 @@
   padding: 16px 45px;
   cursor: pointer;
   font-family: 'renner_mediummedium', Helvetica, sans-serif;
-  transition: .2s all;
+  transition: 0.2s all;
 }
 
 .button:hover {
-  background: #7C24FF;
-  border: 1px solid #7C24FF;
+  background: #7c24ff;
+  border: 1px solid #7c24ff;
 }
 
 .clear_button {
@@ -30,30 +30,29 @@
   font-family: 'renner_mediummedium';
   font-size: 11px;
   padding: 0;
-  color: #00BEB0;
+  color: #00beb0;
 }
 
 .clear_button:hover {
-  color: #5F65FF;
+  color: #5f65ff;
 }
 
-
 .button.purple {
-  background: #6600FF;
-  color: #FFFFFF;
+  background: #6600ff;
+  color: #ffffff;
 }
 
 .button.purple:hover {
-  background: #7C24FF;
+  background: #7c24ff;
 }
 
 .button.green {
-  background: #00AFA4;
-  color: #FFFFFF;
+  background: #00afa4;
+  color: #ffffff;
 }
 
 .button.green:hover {
-  background: #00BEB0;
+  background: #00beb0;
 }
 
 .button.small {
@@ -62,7 +61,7 @@
   border: none;
   font-size: 13px;
   line-height: 16px;
-  padding: 8px 26px;
+  padding: 10px 20px;
 }
 
 .button.medium {
@@ -91,6 +90,6 @@
 
 .button.stroke:hover {
   background: transparent;
-  border: 1px solid #7C24FF;
-  color: #7C24FF;
+  border: 1px solid #7c24ff;
+  color: #7c24ff;
 }

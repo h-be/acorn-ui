@@ -1,46 +1,48 @@
 .history-Body-Container {
   display: flex;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
 }
 
 .history {
-  padding: 10px;
-  margin: 20px 0;
-  color: rgb(0, 0, 0);
   overflow-y: scroll;
-  height: 180px;
   overflow-x: hidden;
 }
+
 .history-Body-Avatar {
   padding: 0 8px;
 }
+
 .custom-status-icon {
   margin: 0px;
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
 }
 
 .history-Author {
-  margin: 0;
   color: #4e566f;
-  font-weight: 600;
+  font-family: 'renner_mediummedium', Arial, Helvetica, sans-serif;
 }
-.history-Comment {
+
+.history-info {
   color: #4e566f;
-  margin: 0;
+  font-size: 12px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  line-height: 1.4;
 }
 
 .history-Header {
   display: flex;
   align-items: center;
 }
+
 .history-Body {
   width: 80%;
   overflow-wrap: break-word;
 }
 
-.history-Date {
-  font-size: x-small;
+.history-date {
+  margin-bottom: 6px;
+  font-size: 10px;
   color: #a3a3a3;
-  opacity: 1;
 }
