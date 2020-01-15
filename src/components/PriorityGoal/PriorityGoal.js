@@ -6,10 +6,12 @@ import { NavLink } from 'react-router-dom'
 
 import Avatar from '../Avatar/Avatar'
 import Icon from '../Icon/Icon'
+import HierarchyIcon from '../HierarchyIcon/HierarchyIcon'
 import Button from '../Button/Button'
 import { addVoteOfGoal } from '../../goal-votes/actions'
 
 import Priority from '../PriorityPicker/PriorityPicker'
+import PriorityPicker from '../PriorityPicker/PriorityPicker'
 
 function PriorityGoal({ whoami, goal, votes, createGoalVote }) {
   const fromDate = goal.time_frame
@@ -50,8 +52,15 @@ function PriorityGoal({ whoami, goal, votes, createGoalVote }) {
 
   return (
     <div className='priority-quadrant-goal-item'>
-      <div className='priority-quadrant-goal-icon'>
-        <Icon name='leaf_incomplete.svg' size='small' />
+      <div className='priority-quadrant-goal-iconANDmark'>
+        <div className='priority-quadrant-goal-icon'>
+          <HierarchyIcon
+            size='small'
+            hierarchy={goal.hierarchy}
+            status={goal.status}
+          />
+        </div>
+        {myVote && <div className='priority-myvote-mark' />}
       </div>
       <div className='priority-quadrant-goal-content'>
         <div className='priority-quadrant-goal-titleANDinfo'>

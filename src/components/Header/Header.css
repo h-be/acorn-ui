@@ -80,7 +80,7 @@
 }
 
 .divider-line {
-  border-right: 1px solid #D9D9D9;
+  border-right: 1px solid #d9d9d9;
   height: 24px;
   margin-right: 16px;
 }
@@ -114,7 +114,7 @@
 }
 
 /* guidebook section on header */
-.current-canvas div{
+.current-canvas div {
   margin-left: 10px;
 }
 .instructions_wrapper {
@@ -122,7 +122,7 @@
   position: relative;
   border-radius: 10px 0 0 10px;
   margin-top: 70px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   padding: 40px 30px 20px 30px;
   box-shadow: 0px 0px 6px #00000029;
   width: 420px;
@@ -139,7 +139,7 @@
   top: 70px;
   right: 88px;
   position: absolute;
-  font-family: 'quebecregular', Helvetica, Sans-Serif;
+  font-family: 'rennerbook', Helvetica, Sans-Serif;
   font-weight: normal;
   color: #717171;
   font-size: 14px;
@@ -151,7 +151,6 @@
   padding-bottom: 5px;
   padding-left: 10px;
 }
-
 
 .instructions_wrapper .small-close {
   position: absolute;
@@ -167,7 +166,7 @@
 .instructions {
   font-family: 'rennerbook', Helvetica, Sans-Serif;
   margin-left: 10px;
-  color: #4D4D4D;
+  color: #4d4d4d;
 }
 
 /* profile section on header */
@@ -187,7 +186,7 @@
   width: 36px;
 }
 
-.top-right-panel div .avatar_container+span {
+.top-right-panel div .avatar_container + span {
   position: absolute;
   width: 16px;
   height: 16px;
@@ -204,8 +203,8 @@
 }
 
 .profile-wrapper button:hover {
-  background: #F4F4F4 none repeat scroll 0% 0%;
-  color: #5F65FF;
+  background: #f4f4f4 none repeat scroll 0% 0%;
+  color: #5f65ff;
 }
 
 .profile-wrapper button .icon {
@@ -229,7 +228,7 @@
   margin-right: 10px;
   float: right;
   border-radius: 14px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   padding: 12px 0;
   box-shadow: 0px 0px 6px #00000029;
   display: flex;
@@ -239,39 +238,39 @@
 /* user status on header */
 
 .btn:hover {
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
 }
 
-.purple .avatar_container+span {
-  background-color: #5F65FF;
+.purple .avatar_container + span {
+  background-color: #5f65ff;
 }
 
-.green .avatar_container+span {
-  background-color: #00D0C0;
+.green .avatar_container + span {
+  background-color: #00d0c0;
 }
 
-.yellow .avatar_container+span {
-  background-color: #FFC400;
+.yellow .avatar_container + span {
+  background-color: #ffc400;
 }
 
-.gray .avatar_container+span {
-  background-color: #D1D1D1;
+.gray .avatar_container + span {
+  background-color: #d1d1d1;
 }
 
 button.green .icon {
-  background-color: #00D0C0;
+  background-color: #00d0c0;
 }
 
 button.purple .icon {
-  background-color: #5F65FF;
+  background-color: #5f65ff;
 }
 
 button.yellow .icon {
-  background-color: #FFC400;
+  background-color: #ffc400;
 }
 
 button.gray .icon {
-  background-color: #D1D1D1;
+  background-color: #d1d1d1;
 }
 
 .user-status-wrapper {
@@ -279,7 +278,7 @@ button.gray .icon {
   margin-right: 10px;
   float: right;
   border-radius: 14px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   padding: 12px 0;
   box-shadow: 0px 0px 6px #00000029;
   display: flex;
@@ -290,7 +289,7 @@ button.gray .icon {
   margin-left: 277px;
   float: left;
   border-radius: 14px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   padding: 12px 0;
   box-shadow: 0px 0px 6px #00000029;
   display: flex;
@@ -317,7 +316,7 @@ button.gray .icon {
   float: left;
   border-radius: 5px;
   color: white;
-  background-color: #5F65FF;
+  background-color: #5f65ff;
   padding: 3px 6px 6px 6px;
   box-shadow: 0px 0px 6px #00000029;
   display: flex;
@@ -326,11 +325,10 @@ button.gray .icon {
   font-weight: normal;
   font-size: 10px;
   z-index: 100;
-  
 }
 .export-wrapper a:hover {
-  background: #F4F4F4 none repeat scroll 0% 0%;
-  color: #5F65FF;
+  background: #f4f4f4 none repeat scroll 0% 0%;
+  color: #5f65ff;
 }
 .user-status-wrapper button {
   padding: 0 25px;
@@ -356,6 +354,6 @@ button.gray .icon {
 }
 
 .user-status-wrapper button:hover {
-  background: #F4F4F4 none repeat scroll 0% 0%;
-  color: #5F65FF;
+  background: #f4f4f4 none repeat scroll 0% 0%;
+  color: #5f65ff;
 }
