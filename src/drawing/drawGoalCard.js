@@ -138,10 +138,16 @@ export default function render(
     })
   }
   if (goal.time_frame) {
-    const img = getOrSetImageForUrl('img/calendar_4d4d4d.svg', 22, 22)
+    const calendarWidth = 22,
+      calendarHeight = 22
+    const img = getOrSetImageForUrl(
+      'img/calendar_4d4d4d.svg',
+      calendarWidth,
+      calendarHeight
+    )
     if (!img) return
-    const xImgDraw = x + goalWidth / 2 - 22 - 130
-    const yImgDraw = y + goalHeight / 2 - 22 + 20
+    const xImgDraw = x + goalWidth / 2 - calendarWidth - 130
+    const yImgDraw = y + goalHeight / 2 - calendarHeight + 20
     const textBoxLeft = xImgDraw + textBoxMarginLeft
     const textBoxTop = yImgDraw + textBoxMarginTop / 4 - 4
     let text = goal.time_frame.from_date
@@ -150,13 +156,9 @@ export default function render(
     text += goal.time_frame.to_date
       ? String(moment.unix(goal.time_frame.to_date).format('MMM D, YYYY'))
       : ''
-    ctx.drawImage(img, xImgDraw, yImgDraw, 22, 22)
-
-    const lines = getLinesForParagraphs(ctx, text)
-    lines.forEach((line, index) => {
-      let linePosition = index * (fontSizeInt + lineSpacing)
-      ctx.fillText(line, textBoxLeft, textBoxTop + linePosition)
-    })
+    ctx.drawImage(img, xImgDraw, yImgDraw, calendarWidth, calendarHeight)
+    ctx.font = 'normal 15px serif'
+    ctx.fillText(text, textBoxLeft, textBoxTop)
   }
   members.forEach((member, index) => {
     const img = getOrSetImageForUrl(
