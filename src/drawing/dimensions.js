@@ -1,4 +1,4 @@
-export const avatarSpace = 12
+export const avatarSpace = 6
 export const avatarWidth = 37
 export const avatarHeight = 37
 export const goalWidth = 360
