@@ -169,7 +169,7 @@ export default function render(
       ? String(moment.unix(goal.time_frame.to_date).format('MMM D, YYYY'))
       : ''
     ctx.drawImage(img, xImgDraw, yImgDraw, calendarWidth, calendarHeight)
-    ctx.font = 'normal 15px serif'
+    ctx.font = 'italic 14px Sans-serif'
     ctx.fillText(text, textBoxLeft, textBoxTop)
   }
   members.forEach((member, index) => {
