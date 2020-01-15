@@ -83,6 +83,9 @@ function VerticalActionsList({
     : null
   const toDate = goal.time_frame ? moment.unix(goal.time_frame.to_date) : null
 
+  // TODO : make the Alert Popup screen and certain elements
+  // like Quick Edit Icon and Expand Icon not shrink after zooming out on canvas
+
   return (
     <>
       <div className='vertical_actions_list'>
@@ -158,7 +161,7 @@ function VerticalActionsList({
           className='archive_popup'
           heading='Archiving'
           content={archiveContent}
-          popupIcon='archive_4d4d4d.svg'
+          popupIcon='archive.svg'
           primaryButton='Yes, Archive'
           altButton='Nevermind'
           primaryButtonAction={() => onArchiveClick(goalAddress)}

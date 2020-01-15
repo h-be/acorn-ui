@@ -6,7 +6,7 @@
   height: 100vh;
   position: fixed;
   z-index: 1;
-  transition: .2s all;
+  transition: 0.2s all;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,14 +18,14 @@
   min-height: 345px;
   box-sizing: border-box;
   padding: 50px 60px;
-  transition: .3s;
-  background-color: #FFFF;
+  transition: 0.3s;
+  background-color: #ffff;
   border-radius: 10px;
   box-shadow: 0px 0px 6px #00000041;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: .2s all;
+  transition: 0.2s all;
 }
 
 .alert-popup-wrapper .small-close {
@@ -43,7 +43,7 @@
 
 .alert-popup-heading {
   font-size: 22px;
-  font-family: 'rennerbold', Helvetica, sans-serif;
+  font-family: 'gilroyextrabold', Helvetica, sans-serif;
   font-weight: normal;
 }
 
@@ -53,13 +53,13 @@
 }
 
 .popup-content {
-  color: #4D4D4D;
+  color: #4d4d4d;
 }
 
 .dont-show-again-option {
   cursor: pointer;
   font-size: 14px;
-  color: #4D4D4D;
+  color: #4d4d4d;
 }
 
 .dont-show-again-option label {
@@ -75,4 +75,13 @@
 
 .btn-stroked {
   margin-right: 20px;
+}
+
+.alert-popup-goals-list {
+  max-height: 100px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  font-size: 12px;
+  font-family: 'rennerbold', Helvetica, sans-serif;
+  margin-bottom: 10px;
 }
