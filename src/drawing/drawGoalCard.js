@@ -161,8 +161,7 @@ export default function render(
 
     // adjust the x position according to the index of this member
     // since there can be many
-    const xImgDraw =
-      x + goalWidth - (index + 1) * (avatarWidth + avatarSpace / 2)
+    const xImgDraw = x + goalWidth - (index + 1) * (avatarWidth + avatarSpace)
     const yImgDraw = y + goalHeight - avatarHeight - avatarSpace
     // url, x coordinate, y coordinate, width, height
     ctx.drawImage(img, xImgDraw, yImgDraw, avatarWidth, avatarHeight)
