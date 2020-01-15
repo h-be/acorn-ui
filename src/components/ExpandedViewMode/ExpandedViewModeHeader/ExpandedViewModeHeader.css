@@ -11,6 +11,10 @@
   height: 22;
 }
 
+.expanded_view_header .icon.small-close.grey {
+  margin-right: 0;
+}
+
 .expanded_view_status_icon {
   margin: 0;
 }
