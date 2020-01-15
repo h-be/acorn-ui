@@ -50,12 +50,14 @@ function MultiEditBar({ selectedGoals, updateGoal }) {
 
   const archiveContent = (
     <div>
-      You’re about to archive the {selectedGoals.length} following cards:
-      {selectedGoals.map(goal => (
-        <div>{goal.content}</div>
-      ))}
-      You will be able to see this card in the archive view mode in the
-      future. Proceed?
+      You’re about to archive the following {selectedGoals.length} card(s):
+      <div className='alert-popup-goals-list'>
+        {selectedGoals.map(goal => (
+          <div>{goal.content}</div>
+        ))}
+      </div>
+      You will be able to see this card in the archive view mode in the future.
+      Proceed?
     </div>
   )
 
@@ -70,10 +72,10 @@ function MultiEditBar({ selectedGoals, updateGoal }) {
 
   return (
     <>
-      <div className='multi_edit_bar'>
+      <div className='multi-edit-bar'>
         {/* status */}
         <StatusIcon
-          size='small'
+          size='small-MultiEditBar'
           key='squirrels'
           notHoverable
           hideTooltip
@@ -136,7 +138,7 @@ function MultiEditBar({ selectedGoals, updateGoal }) {
       {viewsOpen.archive && (
         <AlertPopupTemplate
           onClose={() => setViews({ ...defaultViews })}
-          className='archive_popup'
+          className='archive-popup'
           heading='Archiving'
           content={archiveContent}
           popupIcon='archive.svg'
