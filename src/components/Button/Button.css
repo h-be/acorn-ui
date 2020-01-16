@@ -7,9 +7,9 @@
   border: none;
   font-size: 16px;
   line-height: 19px;
-  padding: 16px 45px;
+  padding: 16px 42px;
   cursor: pointer;
-  font-family: 'renner_mediummedium', Helvetica, sans-serif;
+  font-family: 'gilroyextrabold', Helvetica, sans-serif;
   transition: 0.2s all;
 }
 
@@ -77,9 +77,9 @@
   border-radius: 25px;
   outline: none;
   border: none;
-  font-size: 16px;
-  line-height: 19px;
-  padding: 13px 32px;
+  font-size: 15px;
+  line-height: 18px;
+  padding: 15px 30px;
 }
 
 .button.stroke {

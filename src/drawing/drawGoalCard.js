@@ -1,6 +1,7 @@
 import {
   avatarHeight,
   avatarWidth,
+  avatarRadius,
   avatarSpace,
   goalWidth,
   cornerRadius,
@@ -149,6 +150,7 @@ export default function render(
       ctx.fillText(line, textBoxLeft, textBoxTop + linePosition)
     })
   }
+
   if (goal.time_frame) {
     const calendarWidth = 22,
       calendarHeight = 22
@@ -169,9 +171,12 @@ export default function render(
       ? String(moment.unix(goal.time_frame.to_date).format('MMM D, YYYY'))
       : ''
     ctx.drawImage(img, xImgDraw, yImgDraw, calendarWidth, calendarHeight)
-    ctx.font = 'italic 14px Sans-serif'
+    ctx.save()
+    ctx.font = '14px Helvetica'
     ctx.fillText(text, textBoxLeft, textBoxTop)
+    ctx.restore()
   }
+
   members.forEach((member, index) => {
     const img = getOrSetImageForUrl(
       member.avatar_url,
@@ -186,7 +191,28 @@ export default function render(
     // since there can be many
     const xImgDraw = x + goalWidth - (index + 1) * (avatarWidth + avatarSpace)
     const yImgDraw = y + goalHeight - avatarHeight - avatarSpace
+
+    // help from https://stackoverflow.com/questions/4276048/html5-canvas-fill-circle-with-image
+    ctx.save()
+    ctx.beginPath()
+    ctx.arc(
+      xImgDraw + avatarWidth / 2, // x
+      yImgDraw + avatarHeight / 2, // y
+      avatarRadius, // radius
+      0,
+      Math.PI * 2,
+      true
+    )
+    ctx.closePath()
+    ctx.clip()
+
     // url, x coordinate, y coordinate, width, height
     ctx.drawImage(img, xImgDraw, yImgDraw, avatarWidth, avatarHeight)
+
+    ctx.beginPath()
+    ctx.arc(xImgDraw, yImgDraw, avatarRadius, 0, Math.PI * 2, true)
+    ctx.clip()
+    ctx.closePath()
+    ctx.restore()
   })
 }

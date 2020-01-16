@@ -42,6 +42,8 @@ export default function RightMenu({ goalAddress, goal, updateGoal }) {
     setViews({ ...defaultViews, [key]: !viewsOpen[key] })
   }
 
+  /* timeframe variables */
+
   const updateTimeframe = (start, end) => {
     updateGoal(
       {
