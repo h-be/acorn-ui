@@ -5,10 +5,10 @@ import Icon from '../../../Icon/Icon'
 
 function ExpandedViewNavBar({ onChange, activeTab }) {
   const navItems = [
-    {
-      // text: 'priority',
-      // icon: 'priority.svg'
-    },
+    // {
+    // text: 'priority',
+    // icon: 'priority.svg'
+    // },
     {
       text: 'comments',
       icon: 'comment.svg',
@@ -17,10 +17,10 @@ function ExpandedViewNavBar({ onChange, activeTab }) {
       text: 'activity history',
       icon: 'activity_history.svg',
     },
-    {
-      // text: 'attachments',
-      // icon: 'attachment.svg'
-    },
+    //{
+    // text: 'attachments',
+    // icon: 'attachment.svg'
+    //},
   ]
 
   return (
