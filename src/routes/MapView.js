@@ -62,7 +62,7 @@ function MapView(props) {
     <>
       <canvas ref={refCanvas} />
       {showEmptyState && <EmptyState />}
-      {hasSelection && <MultiEditBar />}
+      <MultiEditBar hasSelection={hasSelection} />
       <div className='transform-container' style={transform}>
         {goalFormIsOpen && <GoalForm />}
         {hasHover && <HoverOverlay onExpandClick={openExpandedView} />}

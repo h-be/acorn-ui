@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import useOnClickOutside from 'use-onclickoutside'
@@ -17,14 +17,32 @@ import DatePicker from '../DatePicker/DatePicker'
 import HierarchyPicker from '../HierarchyPicker/HierarchyPicker'
 import AlertPopupTemplate from '../AlertPopupTemplate/AlertPopupTemplate'
 
-function MultiEditBar({ selectedGoals, updateGoal }) {
+function MultiEditBar({ selectedGoals = [], updateGoal, hasSelection }) {
   const defaultViews = {
     status: false,
     squirrels: false,
     timeframe: false,
     hierarchy: false,
+    archive: false,
   }
   const [viewsOpen, setViews] = useState(defaultViews)
+
+  const [statusColor, setStatusColor] = useState(
+    selectedGoals.length ? selectedGoals[0].status : 'Uncertain'
+  )
+
+  useEffect(() => {
+    if (selectedGoals.length) {
+      setStatusColor(selectedGoals[0].status)
+    }
+  }, [selectedGoals])
+
+  // close any popups if you deselect
+  useEffect(() => {
+    if (!hasSelection) {
+      setViews({ ...defaultViews })
+    }
+  }, [hasSelection])
 
   const updateGoals = key => val => {
     selectedGoals.forEach(goal => {
@@ -72,14 +90,14 @@ function MultiEditBar({ selectedGoals, updateGoal }) {
 
   return (
     <>
-      <div className='multi-edit-bar'>
+      <div className={`multi-edit-bar ${hasSelection ? 'has-selection' : ''}`}>
         {/* status */}
         <StatusIcon
           size='small-MultiEditBar'
           key='status'
           notHoverable
           hideTooltip
-          status={selectedGoals[0].status}
+          status={statusColor}
           onClick={() => toggleView('status')}
         />
         {viewsOpen.status && (
@@ -131,6 +149,7 @@ function MultiEditBar({ selectedGoals, updateGoal }) {
         {/* archive */}
         <Icon
           name='archive.svg'
+          key='archive'
           className={multiEditBarArchiveClass}
           onClick={() => toggleView('archive')}
         />
