@@ -12,7 +12,7 @@ import { openExpandedView, closeExpandedView } from '../expanded-view/actions'
 import { setScreenDimensions } from '../screensize/actions'
 import EmptyState from '../components/EmptyState/EmptyState'
 import GoalForm from '../components/GoalForm'
-import MultiEditBar from '../components/MultiEditBar'
+import MultiEditBar from '../components/MultiEditBar/MultiEditBar'
 import HoverOverlay from '../components/HoverOverlay'
 import ExpandedViewMode from '../components/ExpandedViewMode/ExpandedViewMode'
 
@@ -62,12 +62,12 @@ function MapView(props) {
     <>
       <canvas ref={refCanvas} />
       {showEmptyState && <EmptyState />}
-      {hasSelection && <MultiEditBar />}
+      <MultiEditBar hasSelection={hasSelection} />
       <div className='transform-container' style={transform}>
         {goalFormIsOpen && <GoalForm />}
         {hasHover && <HoverOverlay onExpandClick={openExpandedView} />}
       </div>
-      {showExpandedViewMode && <ExpandedViewMode onClose={closeExpandedView} />}
+      <ExpandedViewMode onClose={closeExpandedView} />
     </>
   )
 }
@@ -114,7 +114,6 @@ function mapStateToProps(state) {
     goalFormIsOpen: state.ui.goalForm.isOpen,
     translate: state.ui.viewport.translate,
     scale: state.ui.viewport.scale,
-    showExpandedViewMode: state.ui.expandedView.isOpen,
     // TODO: make this also based on whether the user has just registered (created their profile)
     showEmptyState:
       !!state.agentAddress && Object.values(state.goals).length === 0,

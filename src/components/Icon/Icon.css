@@ -70,6 +70,13 @@
   cursor: pointer;
 }
 
+.icon.medium-MultiEditBar {
+  width: 40px;
+  height: 32px;
+  padding: 6px;
+  cursor: pointer;
+}
+
 .icon.medium-expanded-view {
   height: 26px;
   padding: 1px;
