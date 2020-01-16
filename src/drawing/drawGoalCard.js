@@ -165,9 +165,10 @@ export default function render(
     // assume that it will be drawn the next time 'render' is called
     // if it isn't already set
     if (!img) return
+
     // adjust the x position according to the index of this member
     // since there can be many
-    const xImgDraw = x + goalWidth - (index + 1 * avatarWidth + avatarSpace)
+    const xImgDraw = x + goalWidth - (index + 1) * (avatarWidth + avatarSpace)
     const yImgDraw = y + goalHeight - avatarHeight - avatarSpace
 
     // help from https://stackoverflow.com/questions/4276048/html5-canvas-fill-circle-with-image

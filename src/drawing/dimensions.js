@@ -1,4 +1,4 @@
-export const avatarSpace = 12
+export const avatarSpace = 6
 export const avatarWidth = 38
 export const avatarHeight = 38
 export const avatarRadius = 19
