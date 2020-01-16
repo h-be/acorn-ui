@@ -4,7 +4,7 @@
 }
 
 .expanded_view_right_menu {
-  background: #ffffff;
+  background: transparent;
   display: flex;
   flex-direction: column;
   margin-top: 0.5px;
