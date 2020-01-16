@@ -208,7 +208,9 @@ class ActivityHistory extends Component {
                 {value.statusIcon && (
                   <StatusIcon
                     status={value.statusIcon}
-                    className='custom-status-icon'
+                    className='status-icon-activity-history'
+                    notHoverable
+                    hideTooltip
                   />
                 )}
                 {!value.statusIcon && !value.hierarchyIcon && (

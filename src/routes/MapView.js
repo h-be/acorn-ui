@@ -67,7 +67,7 @@ function MapView(props) {
         {goalFormIsOpen && <GoalForm />}
         {hasHover && <HoverOverlay onExpandClick={openExpandedView} />}
       </div>
-      {showExpandedViewMode && <ExpandedViewMode onClose={closeExpandedView} />}
+      <ExpandedViewMode onClose={closeExpandedView} />
     </>
   )
 }
@@ -114,7 +114,6 @@ function mapStateToProps(state) {
     goalFormIsOpen: state.ui.goalForm.isOpen,
     translate: state.ui.viewport.translate,
     scale: state.ui.viewport.scale,
-    showExpandedViewMode: state.ui.expandedView.isOpen,
     // TODO: make this also based on whether the user has just registered (created their profile)
     showEmptyState:
       !!state.agentAddress && Object.values(state.goals).length === 0,
