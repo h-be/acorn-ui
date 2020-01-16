@@ -150,13 +150,7 @@ export default function render(
     })
   }
 
-  const testMembers = [
-    { avatar_url: 'img/profile.png' },
-    { avatar_url: 'img/profile.png' },
-    { avatar_url: 'img/profile.png' },
-  ]
-
-  testMembers.forEach((member, index) => {
+  members.forEach((member, index) => {
     const img = getOrSetImageForUrl(
       member.avatar_url,
       avatarWidth,
