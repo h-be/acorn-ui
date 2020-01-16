@@ -76,7 +76,7 @@ function MultiEditBar({ selectedGoals, updateGoal }) {
         {/* status */}
         <StatusIcon
           size='small-MultiEditBar'
-          key='squirrels'
+          key='status'
           notHoverable
           hideTooltip
           status={selectedGoals[0].status}
