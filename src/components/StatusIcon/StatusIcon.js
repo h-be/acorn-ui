@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import './StatusIcon.css'
+
 function StatusIcon({
   status,
   selected,
@@ -10,9 +12,9 @@ function StatusIcon({
   className = '',
   notHoverable,
 }) {
-  const classList = `status_color tooltip_container status_color_${size} bg_${status} ${
-    selected ? 'has_status' : ''
-  } ${onClick ? 'can_click' : ''} ${className} 
+  const classList = `status-color tooltip-container status-color-${size} bg_${status} ${
+    selected ? 'has-status' : ''
+  } ${onClick ? 'can-click' : ''} ${className} 
   ${notHoverable ? 'hot-hoverable' : ''}`
 
   // change camel case from spaced words e.g. "InReview" to "In Review"
