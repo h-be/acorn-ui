@@ -1,6 +1,7 @@
 import {
   avatarHeight,
   avatarWidth,
+  avatarRadius,
   avatarSpace,
   goalWidth,
   cornerRadius,
@@ -149,7 +150,13 @@ export default function render(
     })
   }
 
-  members.forEach((member, index) => {
+  const testMembers = [
+    { avatar_url: 'img/profile.png' },
+    { avatar_url: 'img/profile.png' },
+    { avatar_url: 'img/profile.png' },
+  ]
+
+  testMembers.forEach((member, index) => {
     const img = getOrSetImageForUrl(
       member.avatar_url,
       avatarWidth,
@@ -162,7 +169,28 @@ export default function render(
     // since there can be many
     const xImgDraw = x + goalWidth - (index + 1 * avatarWidth + avatarSpace)
     const yImgDraw = y + goalHeight - avatarHeight - avatarSpace
+
+    // help from https://stackoverflow.com/questions/4276048/html5-canvas-fill-circle-with-image
+    ctx.save()
+    ctx.beginPath()
+    ctx.arc(
+      xImgDraw + avatarWidth / 2, // x
+      yImgDraw + avatarHeight / 2, // y
+      avatarRadius, // radius
+      0,
+      Math.PI * 2,
+      true
+    )
+    ctx.closePath()
+    ctx.clip()
+
     // url, x coordinate, y coordinate, width, height
     ctx.drawImage(img, xImgDraw, yImgDraw, avatarWidth, avatarHeight)
+
+    ctx.beginPath()
+    ctx.arc(xImgDraw, yImgDraw, avatarRadius, 0, Math.PI * 2, true)
+    ctx.clip()
+    ctx.closePath()
+    ctx.restore()
   })
 }
