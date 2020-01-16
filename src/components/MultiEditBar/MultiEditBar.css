@@ -2,7 +2,7 @@
 
 .multi-edit-bar {
   position: fixed;
-  bottom: 10px;
+  bottom: -100px;
   left: 50%;
   transform: translateX(-50%);
   padding: 0 8px;
@@ -13,6 +13,11 @@
   display: flex;
   align-items: center;
   height: 50px;
+  transition: bottom 0.2s ease-in-out;
+}
+
+.multi-edit-bar.has-selection {
+  bottom: 10px;
 }
 
 .multi-edit-bar > .icon {
