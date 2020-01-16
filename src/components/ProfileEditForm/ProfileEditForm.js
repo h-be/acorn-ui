@@ -25,6 +25,7 @@ function ProfileEditForm({
     onSubmit({
       first_name: firstName,
       last_name: lastName,
+      status: 'Online',
       avatar_url: avatarUrl,
       address: agentAddress,
       handle,
