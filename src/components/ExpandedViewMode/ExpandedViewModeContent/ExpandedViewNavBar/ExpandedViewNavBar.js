@@ -4,24 +4,23 @@ import './ExpandedViewNavBar.css'
 import Icon from '../../../Icon/Icon'
 
 function ExpandedViewNavBar({ onChange, activeTab }) {
-
   const navItems = [
     {
-      text: 'priority',
-      icon: 'priority.svg'
+      // text: 'priority',
+      // icon: 'priority.svg'
     },
     {
       text: 'comments',
-      icon: 'comment.svg'
+      icon: 'comment.svg',
     },
     {
       text: 'activity history',
-      icon: 'activity_history.svg'
+      icon: 'activity_history.svg',
     },
     {
-      text: 'attachments',
-      icon: 'attachment.svg'
-    }
+      // text: 'attachments',
+      // icon: 'attachment.svg'
+    },
   ]
 
   return (
