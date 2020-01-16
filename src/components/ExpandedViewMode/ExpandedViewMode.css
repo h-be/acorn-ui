@@ -1,4 +1,4 @@
-.expanded_view_overlay {
+.expanded-view-overlay {
   background: rgba(31, 31, 31, 0.4);
   height: 100vh;
   width: 100%;
@@ -6,10 +6,19 @@
   padding: 0;
   overflow-y: hidden;
   position: fixed;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
 }
 
-.expanded_view_wrapper {
-  box-shadow: 0px 0px 8px rgba(173, 157, 157, 0.16);
+.expanded-view-overlay.fully-expanded {
+  opacity: 1;
+  visibility: visible;
+  transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+
+.expanded-view-wrapper {
+  box-shadow: 0px 0px 6px rgba(173, 157, 157, 0.16);
   width: 520px;
   min-height: 500px;
   max-height: calc(100vh - 70px);
@@ -20,33 +29,44 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%) scale(0.9);
+  transform: translate(-50%, -50%) scale(0.9);
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
 }
 
-.expanded_view_overlay .expanded_view_wrapper .small-close {
+.expanded-view-wrapper.fully-expanded {
+  -ms-transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  visibility: visible;
+  transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+
+.expanded-view-wrapper .small-close {
   position: absolute;
   top: 22px;
   right: 22px;
   cursor: pointer;
 }
 
-.expanded_view_main {
+.expanded-view-main {
   display: flex;
   flex-direction: row;
 }
 
-.expanded_view_right_menu {
+.expanded-view-right-menu {
   display: inline-block;
 }
 
-.expanded_view_header,
-.expanded_view_content,
-.expanded_view_footer {
+.expanded-view-header,
+.expanded-view-content,
+.expanded-view-footer {
   display: inline-block;
 }
 
-.goal_form textarea {
+.goal-form textarea {
   background-color: transparent;
   border: 0;
   outline: none;

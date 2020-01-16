@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { connect } from 'react-redux'
 import useOnClickOutside from 'use-onclickoutside'
 import Avatar from '../../Avatar/Avatar'
@@ -54,26 +54,28 @@ export default function ExpandedViewModeContent({
   const [editSquirrels, setEditSquirrels] = useState(false)
   const [squirrelInfoPopup, setSquirrelInfoPopup] = useState(null)
   const [editTimeframe, setEditTimeframe] = useState(false)
-  const [editDescription, setEditDescription] = useState(false)
-  const [editTitle, setEditTitle] = useState(false)
 
   const [content, setContent] = useState(goal.content)
   const [description, setDescription] = useState(goal.description)
 
-  const updateContent = () => {
-    if (content !== '' && description !== '') {
-      updateGoal(
-        {
-          ...goal,
-          timestamp_updated: moment().unix(),
-          content,
-          description,
-        },
-        goalAddress
-      )
+  // handle change of goal
+  useEffect(() => {
+    if (goal) {
+      setContent(goal.content)
+      setDescription(goal.description)
     }
-    setEditTitle(false)
-    setEditDescription(false)
+  }, [goal])
+
+  const updateContent = () => {
+    updateGoal(
+      {
+        ...goal,
+        timestamp_updated: moment().unix(),
+        content,
+        description,
+      },
+      goalAddress
+    )
   }
 
   const updateTimeframe = (start, end) => {
@@ -109,7 +111,7 @@ export default function ExpandedViewModeContent({
     <div className='expanded_view_content'>
       <div className='expanded_view_title'>
         <TextareaAutosize
-          defaultValue={content}
+          value={content}
           onBlur={updateContent}
           onChange={handleOnChangeTitle}
           onKeyPress={handleOnChangeTitle}
@@ -179,7 +181,7 @@ export default function ExpandedViewModeContent({
       <div className='expanded_view_description'>
         <TextareaAutosize
           placeholder='add description here'
-          defaultValue={description}
+          value={description}
           onBlur={updateContent}
           onChange={handleOnChangeDescription}
         />

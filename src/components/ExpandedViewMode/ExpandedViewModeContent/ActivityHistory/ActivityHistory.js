@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import moment from 'moment'
 import Avatar from '../../../Avatar/Avatar'
 import Icon from '../../../Icon/Icon'
-import StatusIcon from '../../../StatusIcon'
+import StatusIcon from '../../../StatusIcon/StatusIcon'
 import HierarchyIcon from '../../../HierarchyIcon/HierarchyIcon'
 
 function checkTimeframeSame(oldTimeframe, newTimeframe) {
@@ -210,7 +210,9 @@ class ActivityHistory extends Component {
                 {value.statusIcon && (
                   <StatusIcon
                     status={value.statusIcon}
-                    className='custom-status-icon'
+                    className='status-icon-activity-history'
+                    notHoverable
+                    hideTooltip
                   />
                 )}
                 {!value.statusIcon && !value.hierarchyIcon && (
