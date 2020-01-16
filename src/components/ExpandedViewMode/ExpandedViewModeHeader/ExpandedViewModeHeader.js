@@ -4,7 +4,7 @@ import './ExpandedViewModeHeader.css'
 import Icon from '../../Icon/Icon'
 import HierarchyIcon from '../../HierarchyIcon/HierarchyIcon'
 import StatusPicker from '../../StatusPicker'
-import StatusIcon from '../../StatusIcon'
+import StatusIcon from '../../StatusIcon/StatusIcon'
 import moment from 'moment'
 export default function ExpandedViewModeHeader({
   goalAddress,
