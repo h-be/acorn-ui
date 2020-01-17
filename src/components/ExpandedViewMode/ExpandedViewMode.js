@@ -36,7 +36,7 @@ function ExpandedViewMode({
     if (goal) {
       setGoalState({ ...goal })
     }
-  }, [goalAddress])
+  }, [goal])
 
   useEffect(() => {
     if (squirrels) {
