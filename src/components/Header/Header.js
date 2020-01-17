@@ -101,7 +101,7 @@ class Header extends React.Component {
     })
   }
   clickSearch(e) {}
-  loadStatus(status) {
+  saveStatus(status) {
     this.props.updateStatus(status)
     this.changeStatus(status)
   }
