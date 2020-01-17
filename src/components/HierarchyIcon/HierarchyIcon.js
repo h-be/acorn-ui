@@ -7,11 +7,11 @@ function iconForHierarchy(hierarchy) {
   if (hierarchy == 'Leaf') {
     hierarchyIcon = 'leaf.svg'
   } else if (hierarchy == 'Branch') {
-    hierarchyIcon = 'branch-with-leaf.png'
+    hierarchyIcon = 'branch.svg'
   } else if (hierarchy == 'Trunk') {
-    hierarchyIcon = 'trunk.png'
+    hierarchyIcon = 'trunk.svg'
   } else if (hierarchy == 'Root') {
-    hierarchyIcon = 'root.png'
+    hierarchyIcon = 'root.svg'
   } else if (hierarchy == 'No Hierarchy') {
     hierarchyIcon = 'question-mark.svg'
   }

@@ -19,19 +19,19 @@ export default function HierarchyPicker({
     {
       name: 'Branch',
       displayName: 'Branch',
-      icon: 'branch-with-leaf.png',
+      icon: 'branch.svg',
       description: 'sub-goal',
     },
     {
       name: 'Trunk',
       displayName: 'Trunk',
-      icon: 'trunk.png',
+      icon: 'trunk.svg',
       description: 'high-level goal',
     },
     {
       name: 'Root',
       displayName: 'Root',
-      icon: 'root.png',
+      icon: 'root.svg',
       description: 'primary goal',
     },
     {
