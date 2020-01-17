@@ -90,7 +90,7 @@ class GoalForm extends Component {
         content: this.props.content,
         user_hash: this.props.whoami.entry.address,
         timestamp_created: moment().unix(),
-        hierarchy: 'Branch',
+        hierarchy: 'NoHierarchy',
         status: 'Uncertain',
         description: '',
       },
