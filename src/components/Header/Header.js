@@ -18,7 +18,7 @@ class Header extends React.Component {
     this.clickProfile = this.clickProfile.bind(this)
     this.clickSearch = this.clickSearch.bind(this)
     this.clickExport = this.clickExport.bind(this)
-    this.loadStatus = this.loadStatus.bind(this)
+    this.saveStatus = this.saveStatus.bind(this)
 
     this.hover = this.hover.bind(this)
     this.handleStatusEnter = this.handleStatusEnter.bind(this)
@@ -279,7 +279,7 @@ class Header extends React.Component {
                 img={this.state.lista[key].img}
                 color={this.state.lista[key].color}
                 title={this.state.lista[key].title}
-                changeStatus={this.loadStatus}
+                changeStatus={this.saveStatus}
               />
             ))}
           </div>
