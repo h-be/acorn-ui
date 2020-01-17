@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import './App.css'
 
-import { updateWhoami } from '../who-am-i/actions'
+import { updateWhoami, updateStatus } from '../who-am-i/actions'
 import Header from '../components/Header/Header'
 import ProfileEditForm from '../components/ProfileEditForm/ProfileEditForm'
 import LoadingScreen from '../components/LoadingScreen/LoadingScreen'
@@ -43,6 +43,7 @@ function App(props) {
       {agentAddress && (
         <Header
           whoami={whoami}
+          updateStatus={props.updateStatus}
           setShowProfileEditForm={setShowProfileEditForm}
         />
       )}
@@ -79,6 +80,9 @@ function mapDispatchToProps(dispatch) {
   return {
     updateWhoami: (profile, address) => {
       return dispatch(updateWhoami.create({ profile, address }))
+    },
+    updateStatus: status => {
+      return dispatch(updateStatus.create({ status }))
     },
   }
 }

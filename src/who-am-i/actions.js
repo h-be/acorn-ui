@@ -28,5 +28,10 @@ const updateWhoami = createHolochainZomeCallAsyncAction(
   ZOME_NAME,
   'update_whoami'
 )
+const updateStatus = createHolochainZomeCallAsyncAction(
+  DEVELOPMENT_INSTANCE_NAME,
+  ZOME_NAME,
+  'update_status'
+)
 
-export { whoami, createWhoami, updateWhoami }
+export { whoami, createWhoami, updateWhoami, updateStatus }
