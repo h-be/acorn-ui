@@ -18,6 +18,7 @@ class Header extends React.Component {
     this.clickProfile = this.clickProfile.bind(this)
     this.clickSearch = this.clickSearch.bind(this)
     this.clickExport = this.clickExport.bind(this)
+    this.saveStatus = this.saveStatus.bind(this)
 
     this.hover = this.hover.bind(this)
     this.handleStatusEnter = this.handleStatusEnter.bind(this)
@@ -36,7 +37,9 @@ class Header extends React.Component {
   }
 
   componentDidMount() {
-    this.changeStatus('green')
+    this.changeStatus(
+      this.props.whoami ? this.props.whoami.entry.status : 'Online'
+    )
     this.setState({
       lista: [
         { color: 'green', img: 'checkmark-circle.svg', title: 'Online' },
@@ -98,19 +101,23 @@ class Header extends React.Component {
     })
   }
   clickSearch(e) {}
+  saveStatus(status) {
+    this.props.updateStatus(status)
+    this.changeStatus(status)
+  }
   changeStatus(status) {
     switch (status) {
-      case 'green':
+      case 'Online':
         this.setState({
           online: { color: 'green', img: 'checkmark-circle.svg' },
         })
         break
-      case 'yellow':
+      case 'Away':
         this.setState({
           online: { color: 'yellow', img: 'user-status-away.svg' },
         })
         break
-      case 'gray':
+      case 'Offline':
         this.setState({
           online: { color: 'gray', img: 'user-status-offline.svg' },
         })
@@ -272,7 +279,7 @@ class Header extends React.Component {
                 img={this.state.lista[key].img}
                 color={this.state.lista[key].color}
                 title={this.state.lista[key].title}
-                changeStatus={this.changeStatus}
+                changeStatus={this.saveStatus}
               />
             ))}
           </div>
@@ -302,7 +309,7 @@ const ListStatus = props => {
     <button
       className={props.color + ' btn'}
       onClick={color => {
-        props.changeStatus(props.color)
+        props.changeStatus(props.title)
       }}>
       <Icon name={props.img} className='user-status white not-hoverable' />
       <p>{props.title}</p>
