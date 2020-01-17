@@ -11,6 +11,8 @@ import TextareaAutosize from 'react-textarea-autosize'
 
 import moment from 'moment'
 import './Comments.css'
+
+import Icon from '../Icon/Icon'
 import Avatar from '../Avatar/Avatar'
 import Button from '../Button/Button'
 
@@ -52,7 +54,7 @@ function Comments({
 }) {
   const [value, setValue] = useState('')
 
-  const buttonClick = e => {
+  const sendClick = e => {
     if (value === '') {
       return
     }
@@ -67,7 +69,7 @@ function Comments({
 
   return (
     <div className='comments'>
-      <div>
+      <div className='comments_avatarANDInput_wrapper'>
         <div className='avatar_comment_container'>
           <Avatar avatar_url={avatarUrl} medium />
         </div>
@@ -80,29 +82,24 @@ function Comments({
               placeholder='write your comment here'
               onChange={e => setValue(e.target.value)}
             />
-          </div>
-          <div className='comment_save_button'>
-            <Button
-              text='Save'
-              color='green'
-              size='small'
-              onClick={buttonClick}
-            />
+            <div className='comment_save_button'>
+              <Icon name='send.svg' onClick={sendClick} />
+            </div>
           </div>
         </div>
       </div>
       <div className='comment_history_container_scrollable'>
         {Object.keys(comments)
           .map(key => comments[key])
-           // order the comments by most recent, to least recent
-          .sort((a, b) => a.unix_timestamp > b.unix_timestamp ? -1 : 1)
+          // order the comments by most recent, to least recent
+          .sort((a, b) => (a.unix_timestamp > b.unix_timestamp ? -1 : 1))
           .map(comment => (
-          <Comment
-            key={comment.address}
-            comment={comment}
-            agent={agents[comment.agent_address]}
-          />
-        ))}
+            <Comment
+              key={comment.address}
+              comment={comment}
+              agent={agents[comment.agent_address]}
+            />
+          ))}
       </div>
     </div>
   )

@@ -77,7 +77,9 @@ class ActivityHistory extends Component {
           })
         } else {
           const previousGoalVersion = history.entries[index - 1]
-
+          if (!previousGoalVersion) {
+            return
+          }
           // title/content
           if (previousGoalVersion.content !== entry.content) {
             vector.push({
