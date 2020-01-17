@@ -104,6 +104,9 @@ export default function ExpandedViewModeContent({
     : null
   const toDate = goal.time_frame ? moment.unix(goal.time_frame.to_date) : null
 
+  // TODO : add tags section
+  //<div className='expanded_view_tags'>tags</div>
+
   return (
     <div className='expanded_view_content'>
       <div className='expanded_view_title'>
@@ -115,7 +118,6 @@ export default function ExpandedViewModeContent({
         />
       </div>
 
-      <div className='expanded_view_tags'>tags</div>
       <div className='squirrels_timeframe_row'>
         <div className='expanded_view_squirrels_wrapper'>
           <div className='expanded_view_squirrels_title'>squirrels</div>

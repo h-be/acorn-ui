@@ -1,7 +1,8 @@
 .expanded-view-nav-bar {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  /* justify-content is temporarily disabled other NavTab items are developed */
+  /* justify-content: space-between; */
   border-bottom: 1px solid #e8e8e8;
   margin-bottom: 16px;
 }
@@ -16,6 +17,8 @@
   font-weight: normal;
   cursor: pointer;
   border-bottom: 3px solid transparent;
+  /* margin-raight is temporary until other NavTab items are developed */
+  margin-right: 20px;
 }
 
 /* NavBar Item Hover State */
