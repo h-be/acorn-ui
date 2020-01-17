@@ -78,7 +78,11 @@ export default function render(
   // display leaf icon for small goal
   // const leafHierarchyIcon = iconForHierarchy(goal.hierarchy)
   if (goal.hierarchy === 'Leaf') {
-    const leafImg = getOrSetImageForUrl('img/leaf.svg', 30, 30)
+    const leafImg = getOrSetImageForUrl(
+      `img/leaf_${goal.status.toLowerCase()}.svg`,
+      30,
+      30
+    )
     // url, x coordinate, y coordinate, width, height
     if (leafImg) {
       ctx.drawImage(leafImg, x - 24, y - 24, 30, 30)
