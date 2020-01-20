@@ -10,6 +10,7 @@ function ValidatingFormInput({
   value,
   onChange,
   helpText,
+  errorText,
 }) {
   const innerOnChange = e => {
     e.preventDefault()
@@ -32,6 +33,7 @@ function ValidatingFormInput({
         />
         {withAtSymbol && <div className='at_symbol'>@</div>}
       </div>
+      {errorText && <p className='error_text'>{errorText}</p>}
     </div>
   )
 }

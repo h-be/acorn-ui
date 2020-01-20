@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
+
 import PropTypes from 'prop-types'
 import './ProfileEditForm.css'
 import Button from '../Button/Button'
@@ -17,19 +19,25 @@ function ProfileEditForm({
   canClose,
 }) {
   const [firstName, setFirstName] = useState('')
+  const [isValidFistName, setIsValidFistName] = useState(true)
+  const [isValidLastName, setIsValidLastName] = useState(true)
+  const [isValidUserName, setIsValidUserName] = useState(true)
+
   const [lastName, setLastName] = useState('')
   const [handle, setHandle] = useState('')
   const [avatarUrl, setAvatarUrl] = useState('')
   const innerOnSubmit = e => {
     e.preventDefault()
-    onSubmit({
-      first_name: firstName,
-      last_name: lastName,
-      status: 'Online',
-      avatar_url: avatarUrl,
-      address: agentAddress,
-      handle,
-    })
+    if (isValidUserName && isValidFistName && isValidLastName) {
+      onSubmit({
+        first_name: firstName,
+        last_name: lastName,
+        status: 'Online',
+        avatar_url: avatarUrl,
+        address: agentAddress,
+        handle,
+      })
+    }
   }
 
   useEffect(() => {
@@ -40,10 +48,43 @@ function ProfileEditForm({
       setAvatarUrl(whoami.avatar_url)
     }
   }, [whoami])
+  const userNames = useSelector(state =>
+    Object.values(state.agents).map(agent => agent.handle)
+  )
+
+  if (
+    !/^[A-Za-z0-9_]+$/i.test(handle) ||
+    (whoami && handle != whoami.handle && userNames.includes(handle))
+  ) {
+    if (isValidUserName) {
+      setIsValidUserName(false)
+    }
+  } else {
+    if (!isValidUserName) {
+      setIsValidUserName(true)
+    }
+  }
+  if (!/^[A-Z]+$/i.test(firstName)) {
+    if (isValidFistName) {
+      setIsValidFistName(false)
+    }
+  } else {
+    if (!isValidFistName) {
+      setIsValidFistName(true)
+    }
+  }
+  if (!/^[A-Z]+$/i.test(lastName)) {
+    if (isValidLastName) {
+      setIsValidLastName(false)
+    }
+  } else {
+    if (!isValidLastName) {
+      setIsValidLastName(true)
+    }
+  }
 
   const usernameHelp =
     'Choose something easy for your teammates to use and recall. Avoid space and @.'
-
   const avatarShow = avatarUrl || 'img/avatar_placeholder.png'
 
   return (
@@ -65,6 +106,7 @@ function ProfileEditForm({
           <ValidatingFormInput
             value={firstName}
             onChange={setFirstName}
+            errorText={isValidFistName ? undefined : 'first name is no valid'}
             label='First Name'
             placeholder='Harry'
           />
@@ -72,6 +114,7 @@ function ProfileEditForm({
           <ValidatingFormInput
             value={lastName}
             onChange={setLastName}
+            errorText={isValidLastName ? undefined : 'last name is no valid'}
             label='Last Name'
             placeholder='Potter'
           />
@@ -82,6 +125,7 @@ function ProfileEditForm({
             onChange={setHandle}
             label='Username'
             helpText={usernameHelp}
+            errorText={isValidUserName ? undefined : 'Username is not valid'}
             placeholder='harrypotter'
             withAtSymbol
           />
