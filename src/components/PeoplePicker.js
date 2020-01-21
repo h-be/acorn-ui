@@ -129,6 +129,7 @@ function mapStateToProps(state) {
       const member = membersOfGoal.find(
         goalMember => goalMember.agent_address === agent.address
       )
+
       return {
         ...agent, // address, name, avatar_url
         is_member: member ? true : false,
