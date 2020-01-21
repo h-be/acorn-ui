@@ -19,16 +19,17 @@ function ProfileEditForm({
   canClose,
 }) {
   const [firstName, setFirstName] = useState('')
-  const [isValidFistName, setIsValidFistName] = useState(true)
+  const [isValidFirstName, setisValidFirstName] = useState(true)
   const [isValidLastName, setIsValidLastName] = useState(true)
   const [isValidUserName, setIsValidUserName] = useState(true)
+  const [errorUsername, setErrorUsername] = useState('')
 
   const [lastName, setLastName] = useState('')
   const [handle, setHandle] = useState('')
   const [avatarUrl, setAvatarUrl] = useState('')
   const innerOnSubmit = e => {
     e.preventDefault()
-    if (isValidUserName && isValidFistName && isValidLastName) {
+    if (isValidUserName && isValidFirstName && isValidLastName) {
       onSubmit({
         first_name: firstName,
         last_name: lastName,
@@ -51,26 +52,32 @@ function ProfileEditForm({
   const userNames = useSelector(state =>
     Object.values(state.agents).map(agent => agent.handle)
   )
-
-  if (
-    !/^[A-Za-z0-9_]+$/i.test(handle) ||
-    (whoami && handle != whoami.handle && userNames.includes(handle))
-  ) {
+  if (whoami && handle != whoami.handle && userNames.includes(handle)) {
     if (isValidUserName) {
+      setErrorUsername('Username is already in use ')
+
+      setIsValidUserName(false)
+    }
+  } else if (!/^[A-Za-z0-9_]+$/i.test(handle)) {
+    if (isValidUserName) {
+      setErrorUsername('Username is not valid')
+
       setIsValidUserName(false)
     }
   } else {
     if (!isValidUserName) {
+      setErrorUsername('')
+
       setIsValidUserName(true)
     }
   }
   if (!/^[A-Z]+$/i.test(firstName)) {
-    if (isValidFistName) {
-      setIsValidFistName(false)
+    if (isValidFirstName) {
+      setisValidFirstName(false)
     }
   } else {
-    if (!isValidFistName) {
-      setIsValidFistName(true)
+    if (!isValidFirstName) {
+      setisValidFirstName(true)
     }
   }
   if (!/^[A-Z]+$/i.test(lastName)) {
@@ -106,7 +113,7 @@ function ProfileEditForm({
           <ValidatingFormInput
             value={firstName}
             onChange={setFirstName}
-            errorText={isValidFistName ? undefined : 'first name is no valid'}
+            errorText={isValidFirstName ? undefined : 'first name is no valid'}
             label='First Name'
             placeholder='Harry'
           />
@@ -125,7 +132,7 @@ function ProfileEditForm({
             onChange={setHandle}
             label='Username'
             helpText={usernameHelp}
-            errorText={isValidUserName ? undefined : 'Username is not valid'}
+            errorText={isValidUserName ? undefined : errorUsername}
             placeholder='harrypotter'
             withAtSymbol
           />
