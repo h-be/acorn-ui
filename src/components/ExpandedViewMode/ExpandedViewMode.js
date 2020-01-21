@@ -9,6 +9,9 @@ import { updateGoal } from '../../goals/actions'
 import ExpandedViewModeHeader from './ExpandedViewModeHeader/ExpandedViewModeHeader'
 import RightMenu from './RightMenu/RightMenu'
 import ExpandedViewModeContent from './ExpandedViewModeContent/ExpandedViewModeContent'
+
+import { archiveMemberOfGoal } from '../../goal-members/actions'
+
 import ExpandedViewModeFooter from './ExpandedViewModeFooter/ExpandedViewModeFooter'
 
 function ExpandedViewMode({
@@ -18,6 +21,7 @@ function ExpandedViewMode({
   onClose,
   creator,
   squirrels,
+  archiveMemberOfGoal,
 }) {
   const [goalState, setGoalState] = useState()
   const [squirrelsState, setSquirrelsState] = useState()
@@ -77,6 +81,7 @@ function ExpandedViewMode({
               goalAddress={goalAddress}
               updateGoal={updateGoal}
               goal={goalState}
+              archiveMemberOfGoal={archiveMemberOfGoal}
             />
             <RightMenu
               goalAddress={goalAddress}
@@ -101,7 +106,11 @@ function mapStateToProps(state) {
     squirrels = Object.keys(state.goalMembers)
       .map(address => state.goalMembers[address])
       .filter(goalMember => goalMember.goal_address === goal.address)
-      .map(goalMember => state.agents[goalMember.agent_address])
+      .map(goalMember => {
+        const squirrels = state.agents[goalMember.agent_address]
+        squirrels.goalMemberAddress = goalMember.address
+        return squirrels
+      })
     Object.keys(state.agents).forEach(value => {
       if (state.agents[value].address === goal.user_hash)
         creator = state.agents[value]
@@ -120,6 +129,9 @@ function mapDispatchToProps(dispatch) {
   return {
     updateGoal: (goal, address) => {
       return dispatch(updateGoal.create({ address, goal }))
+    },
+    archiveMemberOfGoal: address => {
+      return dispatch(archiveMemberOfGoal.create({ address }))
     },
   }
 }
