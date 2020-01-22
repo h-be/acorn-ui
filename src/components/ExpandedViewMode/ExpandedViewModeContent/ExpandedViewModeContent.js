@@ -35,6 +35,7 @@ function SquirrelInfoPopup({ squirrel, onClose, archiveMemberOfGoal }) {
       <div
         className='remove-squirrel-btn'
         onClick={e => {
+          onClose()
           archiveMemberOfGoal(squirrel.goalMemberAddress)
         }}>
         remove from goal
