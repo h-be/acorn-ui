@@ -108,8 +108,8 @@ function mapStateToProps(state) {
       .filter(goalMember => goalMember.goal_address === goal.address)
       .map(goalMember => {
         const squirrel = state.agents[goalMember.agent_address]
-        squirrels.goalMemberAddress = goalMember.address
-        return squirrels
+        squirrel.goalMemberAddress = goalMember.address
+        return squirrel
       })
     Object.keys(state.agents).forEach(value => {
       if (state.agents[value].address === goal.user_hash)
