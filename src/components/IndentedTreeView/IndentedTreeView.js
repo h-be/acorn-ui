@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useLocation, NavLink } from 'react-router-dom'
 import Icon from '../Icon/Icon'
 
+import HierarchyIcon from '../HierarchyIcon/HierarchyIcon'
+
 import './IndentedTreeView.css'
 
 // Recursive because we don't know
@@ -22,17 +24,26 @@ function NestedTreeGoal({ goal, level, filterText }) {
     <div className='indented-view-goal'>
       {match && (
         <div className='indented-view-goal-item'>
-          <Icon
-            name={expanded ? 'line-angle-down.svg' : 'line-angle-right.svg'}
-            size='very-small'
-            className='grey'
-            onClick={() => setExpanded(!expanded)}
-          />
-          <NavLink
-            to={`${location.pathname}?contextGoal=${goal.address}`}
-            className='indented-view-goal-content'>
-            {goal.content}
-          </NavLink>
+          <div className='indented-view-goal-item-arrow'>
+            <Icon
+              name={expanded ? 'line-angle-down.svg' : 'line-angle-right.svg'}
+              size='very-small'
+              className='grey'
+              onClick={() => setExpanded(!expanded)}
+            />
+          </div>
+          <div className='indented-view-goal-content'>
+            <HierarchyIcon
+              size='very-small'
+              hierarchy={goal.hierarchy}
+              status={goal.status}
+            />
+            <NavLink
+              to={`${location.pathname}?contextGoal=${goal.address}`}
+              className='indented-view-goal-content-text'>
+              {goal.content}
+            </NavLink>
+          </div>
         </div>
       )}
       {/* if there's a filter, expand everything */}
