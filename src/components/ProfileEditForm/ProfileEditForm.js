@@ -8,6 +8,8 @@ import ValidatingFormInput from '../ValidatingFormInput/ValidatingFormInput'
 import Avatar from '../Avatar/Avatar'
 import Icon from '../Icon/Icon'
 
+const urlRegex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/
+
 function ProfileEditForm({
   onSubmit,
   onClose,
@@ -23,6 +25,7 @@ function ProfileEditForm({
   const [isValidLastName, setIsValidLastName] = useState(true)
   const [isValidUserName, setIsValidUserName] = useState(true)
   const [errorUsername, setErrorUsername] = useState('')
+  const [isValidAvatarUrl, setIsValidAvatarUrl] = useState(true)
 
   const [lastName, setLastName] = useState('')
   const [handle, setHandle] = useState('')
@@ -53,14 +56,34 @@ function ProfileEditForm({
     Object.values(state.agents).map(agent => agent.handle)
   )
   if (whoami && handle != whoami.handle && userNames.includes(handle)) {
+    if (!/^[A-Z]+$/i.test(firstName)) {
+      if (isValidFirstName) {
+        setisValidFirstName(false)
+      }
+    } else {
+      if (!isValidFirstName) {
+        setisValidFirstName(true)
+      }
+    }
+
+    if (!/^[A-Z]+$/i.test(lastName)) {
+      if (isValidLastName) {
+        setIsValidLastName(false)
+      }
+    } else {
+      if (!isValidLastName) {
+        setIsValidLastName(true)
+      }
+    }
+
     if (isValidUserName) {
-      setErrorUsername('Username is already in use ')
+      setErrorUsername('Username is already in use.')
 
       setIsValidUserName(false)
     }
   } else if (!/^[A-Za-z0-9_]+$/i.test(handle)) {
     if (isValidUserName) {
-      setErrorUsername('Username is not valid')
+      setErrorUsername('Username is not valid.')
 
       setIsValidUserName(false)
     }
@@ -71,22 +94,14 @@ function ProfileEditForm({
       setIsValidUserName(true)
     }
   }
-  if (!/^[A-Z]+$/i.test(firstName)) {
-    if (isValidFirstName) {
-      setisValidFirstName(false)
+
+  if (!urlRegex.test(avatarUrl)) {
+    if (isValidAvatarUrl) {
+      setIsValidAvatarUrl(false)
     }
   } else {
-    if (!isValidFirstName) {
-      setisValidFirstName(true)
-    }
-  }
-  if (!/^[A-Z]+$/i.test(lastName)) {
-    if (isValidLastName) {
-      setIsValidLastName(false)
-    }
-  } else {
-    if (!isValidLastName) {
-      setIsValidLastName(true)
+    if (!isValidAvatarUrl) {
+      setIsValidAvatarUrl(true)
     }
   }
 
@@ -113,7 +128,13 @@ function ProfileEditForm({
           <ValidatingFormInput
             value={firstName}
             onChange={setFirstName}
-            errorText={isValidFirstName ? undefined : 'first name is no valid'}
+            invalidInput={firstName.length > 0 && !isValidFirstName}
+            validInput={firstName.length > 0 && isValidFirstName}
+            errorText={
+              firstName.length > 0 && !isValidFirstName
+                ? 'First name is not valid.'
+                : ''
+            }
             label='First Name'
             placeholder='Harry'
           />
@@ -121,7 +142,13 @@ function ProfileEditForm({
           <ValidatingFormInput
             value={lastName}
             onChange={setLastName}
-            errorText={isValidLastName ? undefined : 'last name is no valid'}
+            invalidInput={lastName.length > 0 && !isValidLastName}
+            validInput={lastName.length > 0 && isValidLastName}
+            errorText={
+              lastName.length > 0 && !isValidLastName
+                ? 'Last name is not valid.'
+                : ''
+            }
             label='Last Name'
             placeholder='Potter'
           />
@@ -132,7 +159,11 @@ function ProfileEditForm({
             onChange={setHandle}
             label='Username'
             helpText={usernameHelp}
-            errorText={isValidUserName ? undefined : errorUsername}
+            invalidInput={handle.length > 0 && !isValidUserName}
+            validInput={handle.length > 0 && isValidUserName}
+            errorText={
+              handle.length > 0 && !isValidUserName ? errorUsername : ''
+            }
             placeholder='harrypotter'
             withAtSymbol
           />
@@ -143,6 +174,13 @@ function ProfileEditForm({
             onChange={setAvatarUrl}
             label='Profile Picture'
             placeholder='Paste in your profile picture URL here'
+            invalidInput={avatarUrl.length > 0 && !isValidAvatarUrl}
+            validInput={avatarUrl.length > 0 && isValidAvatarUrl}
+            errorText={
+              avatarUrl.length > 0 && !isValidAvatarUrl
+                ? 'Invalid url. Make sure the url address is complete and valid.'
+                : ''
+            }
           />
           <div className='profile_edit_form_avatar'>
             <Avatar avatar_url={avatarShow} large />

@@ -1,3 +1,8 @@
+.validating_form_inputANDError {
+  display: flex;
+  flex-direction: column;
+}
+
 .validating_form_input {
   margin-bottom: 38px;
   flex: 1;
@@ -30,7 +35,7 @@
 }
 
 .validating_form_input .input_wrapper input {
-  border: 1px solid #d1d1d1;
+  border: 1.5px solid #d1d1d1;
   outline: none;
   font-size: 14px;
   line-height: 16px;
@@ -40,6 +45,7 @@
   display: block;
   flex: 1;
   font-family: 'rennerbook';
+  height: 16px;
 }
 
 .validating_form_input input.with_at_symbol {
@@ -48,9 +54,26 @@
 
 .validating_form_input .at_symbol {
   position: absolute;
-  top: 13px;
-  left: 12px;
+  top: 11px;
+  left: 11px;
 }
 .error_text {
-  color: red;
+  color: #ff5d36;
+  font-size: 12px;
+  position: absolute;
+  top: 45px;
+}
+
+.validating_form_input .input_wrapper input.invalid-input {
+  border: 1.5px solid #ff5d36;
+}
+
+.validating_form_input .input_wrapper input.valid-input {
+  border: 1.5px solid #00d6c8;
+}
+
+.validation-mark {
+  position: absolute;
+  top: 12px;
+  right: 9px;
 }
