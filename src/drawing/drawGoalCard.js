@@ -156,16 +156,16 @@ export default function render(
   }
 
   if (goal.time_frame) {
-    const calendarWidth = 22,
-      calendarHeight = 22
+    const calendarWidth = 17,
+      calendarHeight = 17
     const img = getOrSetImageForUrl(
-      'img/calendar_4d4d4d.svg',
+      'img/calendar.svg',
       calendarWidth,
       calendarHeight
     )
     if (!img) return
-    const xImgDraw = x + goalWidth / 2 - calendarWidth - 130
-    const yImgDraw = y + goalHeight / 2 - calendarHeight + 20
+    const xImgDraw = x + goalWidth / 2 - calendarWidth - 150
+    const yImgDraw = y + goalHeight / 2 - calendarHeight + 51
     const textBoxLeft = xImgDraw + textBoxMarginLeft
     const textBoxTop = yImgDraw + textBoxMarginTop / 4 - 4
     let text = goal.time_frame.from_date
@@ -176,7 +176,8 @@ export default function render(
       : ''
     ctx.drawImage(img, xImgDraw, yImgDraw, calendarWidth, calendarHeight)
     ctx.save()
-    ctx.font = '14px Helvetica'
+    ctx.fillStyle = '#717171'
+    ctx.font = '13px rennerbook'
     ctx.fillText(text, textBoxLeft, textBoxTop)
     ctx.restore()
   }

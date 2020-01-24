@@ -6,20 +6,28 @@
   height: 24px;
   width: 24px;
   border-radius: 12px;
+  object-fit: cover;
 }
 
 .avatar.medium {
   height: 32px;
   width: 32px;
   border-radius: 16px;
+  object-fit: cover;
+}
+
+.avatar.medium-large {
+  height: 36px;
+  width: 36px;
+  object-fit: cover;
 }
 
 .avatar.large {
   height: 40px;
   width: 40px;
-  border-radius: 20px;
+  object-fit: cover;
 }
 
 .avatar.highlighted {
-  box-shadow: 0 0 0 2px #5F65FF;
+  box-shadow: 0 0 0 2px #5f65ff;
 }

@@ -102,9 +102,11 @@ class GoalForm extends Component {
       {
         content: this.props.content,
         user_hash: this.props.whoami.entry.address,
-        timestamp_created: moment().unix(),
+        timestamp_created: this.props.timestamp_created,
+        timestamp_updated: moment().unix(),
         hierarchy: this.props.hierarchy,
         status: this.props.status,
+        time_frame: this.props.time_frame,
         description: this.props.description,
       },
       this.props.editAddress
@@ -196,7 +198,11 @@ function mapStateToProps(state) {
     content,
     status: editAddress ? state.goals[editAddress].status : 'Uncertain',
     description: editAddress ? state.goals[editAddress].description : '',
-    hierarchy: editAddress ? state.goals[editAddress].hierarchy : 'Branch', // use Uncertain as a default
+    hierarchy: editAddress ? state.goals[editAddress].hierarchy : 'NoHierarchy',
+    time_frame: editAddress ? state.goals[editAddress].time_frame : null,
+    timestamp_created: editAddress
+      ? state.goals[editAddress].timestamp_created
+      : null,
     xLoc: editAddress ? goalCoord.x : xLoc,
     yLoc: editAddress ? goalCoord.y : yLoc,
   }

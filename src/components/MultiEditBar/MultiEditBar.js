@@ -25,6 +25,7 @@ function MultiEditBar({ selectedGoals = [], updateGoal, hasSelection }) {
     hierarchy: false,
     archive: false,
   }
+  const [popup, setPopup] = useState(false)
   const [viewsOpen, setViews] = useState(defaultViews)
 
   const [statusColor, setStatusColor] = useState(
@@ -63,8 +64,43 @@ function MultiEditBar({ selectedGoals = [], updateGoal, hasSelection }) {
   const multiEditBarArchiveClass = viewsOpen.archive ? 'active' : ''
 
   const toggleView = key => {
+    if (!viewsOpen[key]) {
+      setPopup(true)
+    }
     setViews({ ...defaultViews, [key]: !viewsOpen[key] })
   }
+
+  const reset = () => {
+    setPopup(false)
+    setViews({ ...defaultViews })
+  }
+
+  const statusAlertContent = (
+    <div>
+      This function will override the statuses on all selected cards. Proceed?
+    </div>
+  )
+
+  const squirrelsAlertContent = (
+    <div>
+      This function will override the existing associated members on all
+      selected cards. Proceed?
+    </div>
+  )
+
+  const timeframeAlertContent = (
+    <div>
+      This function will override the existing timeframes set on all selected
+      cards. Proceed?
+    </div>
+  )
+
+  const hierarchyAlertContent = (
+    <div>
+      This function will override the existing hierarchy levels on all selected
+      cards. Proceed?
+    </div>
+  )
 
   const archiveContent = (
     <div>
@@ -154,9 +190,65 @@ function MultiEditBar({ selectedGoals = [], updateGoal, hasSelection }) {
           onClick={() => toggleView('archive')}
         />
       </div>
+      {selectedGoals.length > 1 && popup && (
+        <>
+          {viewsOpen.status && (
+            <AlertPopupTemplate
+              onClose={reset}
+              className='archive-popup'
+              heading='Setting Status for Multiple Cards'
+              content={statusAlertContent}
+              popupIcon='status_unknown.svg'
+              primaryButton='Yes, Proceed'
+              altButton='Nevermind'
+              primaryButtonAction={() => setPopup(false)}
+              altButtonAction={reset}
+            />
+          )}
+          {viewsOpen.squirrels && (
+            <AlertPopupTemplate
+              onClose={reset}
+              className='archive-popup'
+              heading='Associating Members for Multiple Cards'
+              content={squirrelsAlertContent}
+              popupIcon='squirrel.svg'
+              primaryButton='Yes, Proceed'
+              altButton='Nevermind'
+              primaryButtonAction={() => setPopup(false)}
+              altButtonAction={reset}
+            />
+          )}
+          {viewsOpen.timeframe && (
+            <AlertPopupTemplate
+              onClose={reset}
+              className='archive-popup'
+              heading='Setting Timeframe for Multiple Cards'
+              content={timeframeAlertContent}
+              popupIcon='calendar.svg'
+              primaryButton='Yes, Proceed'
+              altButton='Nevermind'
+              primaryButtonAction={() => setPopup(false)}
+              altButtonAction={reset}
+            />
+          )}
+          {viewsOpen.hierarchy && (
+            <AlertPopupTemplate
+              onClose={reset}
+              className='archive-popup'
+              heading='Setting Hierarchy for Multiple Cards'
+              content={hierarchyAlertContent}
+              popupIcon='hierarchy.svg'
+              primaryButton='Yes, Proceed'
+              altButton='Nevermind'
+              primaryButtonAction={() => setPopup(false)}
+              altButtonAction={reset}
+            />
+          )}
+        </>
+      )}
       {viewsOpen.archive && (
         <AlertPopupTemplate
-          onClose={() => setViews({ ...defaultViews })}
+          onClose={reset}
           className='archive-popup'
           heading='Archiving'
           content={archiveContent}
@@ -164,7 +256,7 @@ function MultiEditBar({ selectedGoals = [], updateGoal, hasSelection }) {
           primaryButton='Yes, Archive'
           altButton='Nevermind'
           primaryButtonAction={() => onArchiveClick(goalAddress)}
-          altButtonAction={() => setViews({ ...defaultViews })}
+          altButtonAction={reset}
         />
       )}
     </>
