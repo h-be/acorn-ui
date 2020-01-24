@@ -123,7 +123,7 @@ class Header extends React.Component {
         })
         break
       default:
-        console.error('no definido')
+        console.error('not defined')
         break
     }
     this.setState({

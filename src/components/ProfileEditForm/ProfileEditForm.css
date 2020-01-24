@@ -1,4 +1,3 @@
-
 .profile_edit_form {
   width: 510px;
   padding: 64px 64px;
@@ -56,17 +55,20 @@
 .profile_edit_form .profile_edit_form_avatar {
   margin-top: 26px;
   margin-left: 6px;
+  height: 40px;
+  width: 40px;
+  overflow: hidden;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .profile_edit_form button {
   margin: 0 auto;
 }
 
-
 @media only screen and (max-height: 800px) {
-
-.validating_form_input {
-  margin-bottom: 22px;
-}
-
+  .validating_form_input {
+    margin-bottom: 30px;
+  }
 }
