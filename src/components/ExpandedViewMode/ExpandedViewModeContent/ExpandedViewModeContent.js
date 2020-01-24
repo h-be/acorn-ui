@@ -18,9 +18,10 @@ import ActivityHistory from './ActivityHistory/ActivityHistory'
 import Attachments from './Attachments/Attachments'
 import ExpandedViewNavBar from './ExpandedViewNavBar/ExpandedViewNavBar'
 
-function SquirrelInfoPopup({ squirrel, onClose }) {
+function SquirrelInfoPopup({ squirrel, onClose, archiveMemberOfGoal }) {
   const ref = useRef()
   useOnClickOutside(ref, onClose)
+
   // TODO : connect "squirrel-info-popup-name" div to the member's profile page
   // TODO : connect "remove from goal" button to holochain
   return (
@@ -31,7 +32,14 @@ function SquirrelInfoPopup({ squirrel, onClose }) {
         </div>
         <div className='squirrel-info-popup-handle'>{squirrel.handle}</div>
       </div>
-      <div className='remove-squirrel-btn'>remove from goal</div>
+      <div
+        className='remove-squirrel-btn'
+        onClick={e => {
+          onClose()
+          archiveMemberOfGoal(squirrel.goalMemberAddress)
+        }}>
+        remove from goal
+      </div>
     </div>
   )
 }
@@ -41,6 +49,7 @@ export default function ExpandedViewModeContent({
   goal,
   updateGoal,
   squirrels,
+  archiveMemberOfGoal,
 }) {
   // you can use these as values for
   // testing/ development, instead of `squirrels`
@@ -143,6 +152,7 @@ export default function ExpandedViewModeContent({
               <SquirrelInfoPopup
                 onClose={() => setSquirrelInfoPopup(null)}
                 squirrel={squirrelInfoPopup}
+                archiveMemberOfGoal={archiveMemberOfGoal}
               />
             )}
             <div className='expanded_view_squirrels_add_wrapper'>
