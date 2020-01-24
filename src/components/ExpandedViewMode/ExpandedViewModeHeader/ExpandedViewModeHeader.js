@@ -30,14 +30,18 @@ export default function ExpandedViewModeHeader({
   return (
     <div className='expanded_view_header'>
       <div className='expanded_view_status_icon'>
-        <HierarchyIcon
-          hierarchy={goal.hierarchy}
-          status={goal.status}
-          size='medium'
-          onClick={() =>
-            setViews({ ...defaultViews, status: !viewsOpen.status })
-          }
-        />
+        {goal.hierarchy === 'NoHierarchy' ? (
+          <StatusIcon status={goal.status} notHoverable />
+        ) : (
+          <HierarchyIcon
+            hierarchy={goal.hierarchy}
+            status={goal.status}
+            size='medium'
+            onClick={() =>
+              setViews({ ...defaultViews, status: !viewsOpen.status })
+            }
+          />
+        )}
       </div>
       {viewsOpen.status && (
         <StatusPicker
