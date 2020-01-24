@@ -120,10 +120,20 @@ function mapStateToProps(state) {
   const goalAddress = state.ui.goalForm.isOpen
     ? state.ui.goalForm.editAddress
     : state.ui.expandedView.goalAddress
-  const membersOfGoal = Object.keys(state.goalMembers)
-    .map(address => state.goalMembers[address])
-    .filter(goalMember => goalMember.goal_address === goalAddress)
-  const agents = Object.keys(state.agents).map(address => state.agents[address])
+  const goalsAddress = state.ui.selection.selectedGoals
+  let membersOfGoal
+  let agents
+  if (goalsAddress[0]) {
+    membersOfGoal = Object.keys(state.goalMembers)
+      .map(address => state.goalMembers[address])
+      .filter(goalMember => goalMember.goal_address === goalsAddress[0])
+    agents = Object.keys(state.agents).map(address => state.agents[address])
+  } else {
+    membersOfGoal = Object.keys(state.goalMembers)
+      .map(address => state.goalMembers[address])
+      .filter(goalMember => goalMember.goal_address === goalAddress)
+    agents = Object.keys(state.agents).map(address => state.agents[address])
+  }
   return {
     people: agents.map(agent => {
       const member = membersOfGoal.find(
@@ -136,7 +146,7 @@ function mapStateToProps(state) {
         goal_member_address: member ? member.address : null,
       }
     }),
-    goalAddress,
+    goalAddress: goalsAddress[0] ? goalsAddress[0] : goalAddress,
   }
 }
 
