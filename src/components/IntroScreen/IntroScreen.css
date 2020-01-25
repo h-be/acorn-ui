@@ -1,0 +1,116 @@
+.intro-screen-wrapper {
+  height: 100vh;
+  background: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.intro-screen-content-frame {
+  overflow: hidden;
+  margin: auto auto;
+  width: 900px;
+  position: relative;
+}
+
+.intro-screen-content-frame .intro-screen-buttons {
+}
+
+.intro-screen-content-frame .button-back {
+  top: 50%;
+  left: 0;
+  position: absolute;
+}
+.intro-screen-content-frame .button-next {
+  top: 50%;
+  right: 0;
+  position: absolute;
+}
+
+.content-wrapper {
+  transition: transform 0.5s;
+  display: flex;
+  flex-direction: row;
+}
+
+.content-wrapper.active-screen-0 {
+  transform: translateX(0%);
+}
+
+.content-wrapper.active-screen-1 {
+  transform: translateX(-100%);
+}
+
+.content-wrapper.active-screen-2 {
+  transform: translateX(-200%);
+}
+
+.content-wrapper.active-screen-3 {
+  transform: translateX(-300%);
+}
+
+.screen {
+  margin: 0 75px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.screen.active-screen {
+  opacity: 1;
+}
+
+.screen p {
+  width: 750px;
+}
+
+.intro-screen-image {
+  margin-bottom: 30px;
+}
+
+.intro-screen-image img {
+  height: 200px;
+}
+
+.intro-screen-text {
+  width: 750px;
+}
+
+.intro-screen-title {
+  font-size: 36px;
+  font-family: 'gilroyextrabold', Helvetica, sans-serif;
+  color: #222222;
+  margin-bottom: 20px;
+}
+
+.intro-screen-description {
+  font-size: 22px;
+  font-family: 'rennerbook', Helvetica, sans-serif;
+  color: #717171;
+  line-height: 32px;
+}
+
+.screen-dots-wrapper {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+}
+
+.screen-dot {
+  background: grey;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin: 2px;
+  cursor: pointer;
+}
+
+.screen-dot.active-screen {
+  background: purple;
+}
+
+.sign-up-button {
+  position: absolute;
+  bottom: 60px;
+  text-align: center;
+  width: 100vw;
+}

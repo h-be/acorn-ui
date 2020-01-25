@@ -14,6 +14,7 @@ import Footer from '../components/Footer/Footer'
 import CreateProfilePage from './CreateProfilePage/CreateProfilePage'
 import MapView from './MapView'
 import PriorityView from './PriorityView'
+import IntroScreen from '../components/IntroScreen/IntroScreen'
 
 function App(props) {
   const {
@@ -37,6 +38,7 @@ function App(props) {
       <Switch>
         <Route path='/board/map' component={MapView} />
         <Route path='/board/priority' component={PriorityView} />
+        <Route path='/intro' component={IntroScreen} />
         <Route path='/register' component={CreateProfilePage} />
         <Route path='/' render={() => <Redirect to='/board/map' />} />
       </Switch>
