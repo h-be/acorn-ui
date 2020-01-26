@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import './IntroScreen.css'
@@ -7,6 +8,8 @@ import Button from '../Button/Button'
 import Icon from '../Icon/Icon'
 
 export default function IntroScreen() {
+  const history = useHistory()
+
   const introScreensContents = [
     {
       image: 'img/intro-screen-image-1.svg',
@@ -44,9 +47,18 @@ export default function IntroScreen() {
     if (screenContent !== 3) setScreenContent(screenContent + 1)
   }
 
+  const goToRegister = () => {
+    // redirect
+    history.push('/register')
+  }
+
   return (
     <div className='intro-screen-wrapper'>
+      <div className='skip-intro-button'>
+        <div onClick={goToRegister}>Skip Intro</div>
+      </div>
       <div className='intro-screen-content-frame'>
+        {/* all 4 screens */}
         <div className={`content-wrapper active-screen-${screenContent}`}>
           {introScreensContents.map((screen, index) => {
             return (
@@ -68,6 +80,7 @@ export default function IntroScreen() {
             )
           })}
         </div>
+        {/* forward and back buttons */}
         <div className='intro-screen-buttons'>
           {screenContent !== 0 && (
             <div className='button-back'>
@@ -90,7 +103,7 @@ export default function IntroScreen() {
             </div>
           )}
         </div>
-
+        {/* dots for switching between screens */}
         <div className='screen-dots-wrapper'>
           {[0, 1, 2, 3].map(num => {
             return (
@@ -105,9 +118,9 @@ export default function IntroScreen() {
             )
           })}
         </div>
-      </div>
-      <div className='sign-up-button'>
-        <Button text={'Sign me up'} />
+        <div className='sign-up-button'>
+          <Button onClick={goToRegister} text={'Sign me up'} />
+        </div>
       </div>
     </div>
   )

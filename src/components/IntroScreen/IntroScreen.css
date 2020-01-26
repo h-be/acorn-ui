@@ -5,25 +5,27 @@
   flex-direction: column;
 }
 
+.skip-intro-button {
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: 'CircularStd-Book', Helvetica, sans-serif;
+  padding: 16px;
+  color: #717171;
+  transition: color 0.2s;
+  z-index: 9999;
+}
+
+.skip-intro-button:hover {
+  color: #5f65ff;
+}
+
 .intro-screen-content-frame {
   overflow: hidden;
   margin: auto auto;
   width: 900px;
   position: relative;
-}
-
-.intro-screen-content-frame .intro-screen-buttons {
-}
-
-.intro-screen-content-frame .button-back {
-  top: 50%;
-  left: 0;
-  position: absolute;
-}
-.intro-screen-content-frame .button-next {
-  top: 50%;
-  right: 0;
-  position: absolute;
 }
 
 .content-wrapper {
@@ -68,7 +70,7 @@
 }
 
 .intro-screen-image img {
-  height: 200px;
+  height: 190px;
 }
 
 .intro-screen-text {
@@ -83,20 +85,33 @@
 }
 
 .intro-screen-description {
-  font-size: 22px;
-  font-family: 'rennerbook', Helvetica, sans-serif;
+  font-size: 20px;
+  font-family: 'CircularStd-Book', Helvetica, sans-serif;
   color: #717171;
   line-height: 32px;
+  height: 165px;
+}
+
+.intro-screen-content-frame .button-back {
+  top: 41.2%;
+  left: 0;
+  position: absolute;
+}
+.intro-screen-content-frame .button-next {
+  top: 41.2%;
+  right: 0;
+  position: absolute;
 }
 
 .screen-dots-wrapper {
   display: flex;
   flex-direction: row;
-  text-align: center;
+  margin: 0 auto;
+  width: 76px;
 }
 
 .screen-dot {
-  background: grey;
+  background: #dedede;
   width: 15px;
   height: 15px;
   border-radius: 50%;
@@ -105,12 +120,10 @@
 }
 
 .screen-dot.active-screen {
-  background: purple;
+  background: #6600ff;
 }
 
 .sign-up-button {
-  position: absolute;
-  bottom: 60px;
   text-align: center;
-  width: 100vw;
+  margin-top: 40px;
 }
