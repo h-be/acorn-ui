@@ -60,7 +60,7 @@ function App(props) {
         </div>
       )}
       {!agentAddress && <LoadingScreen />}
-      {agentAddress && !whoami && <Redirect to='/register' />}
+      {agentAddress && !whoami && <Redirect to='/intro' />}
       {agentAddress && whoami && <Footer />}
     </Router>
   )

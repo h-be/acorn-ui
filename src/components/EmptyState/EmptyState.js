@@ -38,12 +38,10 @@ function EmptyState() {
             </div>
           </div>
         </div>
-        <h1>Welcome to Acorn!</h1>
-        <p>
+        <div className='empty-state-text'>
           Hold G and left click anywhere on canvas to create your first goal
-          card.
-        </p>
-        <p>Happy squirreling :)</p>
+          card. Happy squirreling :)
+        </div>
       </div>
     </div>
   )

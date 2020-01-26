@@ -23,11 +23,13 @@
   margin-top: 25px;
 }
 
-.empty_state p {
-  font-family: 'rennerbook', Helvetica, Sans-Serif;
+.empty-state-text {
+  font-family: 'CircularStd-Book', Helvetica, sans-serif;
   font-weight: normal;
-  margin: 6px auto;
+  margin: 20px auto;
   color: #4d4d4d;
+  width: 600px;
+  line-height: 32px;
 }
 
 .empty_state img {
