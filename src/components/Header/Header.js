@@ -6,13 +6,16 @@ import './Header.css'
 import Avatar from '../Avatar/Avatar'
 import Icon from '../Icon/Icon'
 import ListExport from '../ListExport/ListExport'
+import Notifications from '../Notifications/Notifications'
 
 class Header extends React.Component {
   constructor(props) {
     super(props)
     this.handleClickOutside = this.handleClickOutside.bind(this)
     this.clickAvatar = this.clickAvatar.bind(this)
+    this.clickNotifications = this.clickNotifications.bind(this)
     this.clickBook = this.clickBook.bind(this)
+
     this.clickStatus = this.clickStatus.bind(this)
     this.changeStatus = this.changeStatus.bind(this)
     this.clickProfile = this.clickProfile.bind(this)
@@ -28,6 +31,7 @@ class Header extends React.Component {
       online: {},
       isStatusHover: false,
       isStatusOpen: false,
+      isNotificationsOpen: false,
       lista: {},
       avatar: false,
       isExportOpen: false,
@@ -61,6 +65,7 @@ class Header extends React.Component {
       isExportOpen: false,
       isStatusOpen: false,
       isGuideOpen: false,
+      isNotificationsOpen: false,
     })
   }
   clickProfile(e) {
@@ -70,6 +75,7 @@ class Header extends React.Component {
       isExportOpen: false,
       isStatusOpen: false,
       isGuideOpen: false,
+      isNotificationsOpen: false,
     })
   }
   clickAvatar(e) {
@@ -78,6 +84,7 @@ class Header extends React.Component {
       isExportOpen: false,
       isStatusOpen: false,
       isGuideOpen: false,
+      isNotificationsOpen: false,
     })
   }
   hover(bool) {
@@ -90,6 +97,7 @@ class Header extends React.Component {
       isExportOpen: false,
       isGuideOpen: false,
       isProfileOpen: false,
+      isNotificationsOpen: false,
     })
   }
   clickExport(e) {
@@ -98,6 +106,7 @@ class Header extends React.Component {
       isStatusOpen: false,
       isGuideOpen: false,
       isProfileOpen: false,
+      isNotificationsOpen: false,
     })
   }
   clickSearch(e) {}
@@ -130,6 +139,7 @@ class Header extends React.Component {
       isProfileOpen: false,
       isStatusOpen: false,
       isGuideOpen: false,
+      isNotificationsOpen: false,
     })
   }
   clickBook(e) {
@@ -137,6 +147,15 @@ class Header extends React.Component {
       isGuideOpen: !this.state.isGuideOpen,
       isStatusOpen: false,
       isProfileOpen: false,
+      isNotificationsOpen: false,
+    })
+  }
+  clickNotifications(e) {
+    this.setState({
+      isNotificationsOpen: !this.state.isNotificationsOpen,
+      isStatusOpen: false,
+      isProfileOpen: false,
+      isGuideOpen: false,
     })
   }
   handleStatusEnter() {
@@ -200,6 +219,11 @@ class Header extends React.Component {
                 onClick={this.clickBook}
                 size='header'
               />
+              <Icon
+                name='bell-line.svg'
+                onClick={this.clickNotifications}
+                size='header'
+              />
               <div className={this.state.online.color}>
                 <div
                   className='avatar_container'
@@ -256,6 +280,27 @@ class Header extends React.Component {
               className='grey'
               onClick={() => {
                 this.setState({ isGuideOpen: false })
+              }}
+            />
+          </div>
+        )}
+        {this.state.isNotificationsOpen && (
+          <div className='instructions_wrapper'>
+            <Icon
+              name='bell-silent-line.svg'
+              size='small'
+              className='grey'
+              onClick={() => {
+                this.setState({ isNotificationsOpen: false })
+              }}
+            />
+            <Notifications />
+            <Icon
+              name='x_a3a3a3.svg'
+              size='small-close'
+              className='grey'
+              onClick={() => {
+                this.setState({ isNotificationsOpen: false })
               }}
             />
           </div>

@@ -1,0 +1,73 @@
+.notifications {
+  position: relative;
+}
+
+.notifications * {
+  margin: 0;
+  padding: 0;
+}
+
+.notifications > .notifications-title:first-child {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 18px;
+  font-family: 'gilroyextrabold', Helvetica, sans-serif;
+  font-weight: normal;
+  margin-top: -2px;
+}
+
+.notifications-Body-Container {
+  display: flex;
+  margin-bottom: 14px;
+}
+
+li {
+  color: #6600ff;
+  margin-left: 5% !important;
+}
+.white {
+  color: #fff !important;
+}
+.notifications-content {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.notifications-Body-Avatar {
+  padding: 0 8px;
+}
+
+.status-icon-activity-notifications {
+  margin: 0px;
+  width: 20px;
+  height: 20px;
+}
+
+.notifications-Author {
+  color: #4e566f;
+  font-family: 'renner_mediummedium', Arial, Helvetica, sans-serif;
+}
+
+.notifications-info {
+  color: #4e566f;
+  font-size: 12px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  line-height: 1.4;
+}
+
+.notifications-Header {
+  display: flex;
+  align-items: center;
+}
+
+.notifications-Body {
+  width: 80%;
+  overflow-wrap: break-word;
+}
+
+.notifications-date {
+  margin-bottom: 6px;
+  font-size: 10px;
+  color: #a3a3a3;
+}
