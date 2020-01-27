@@ -32,12 +32,6 @@
   line-height: 32px;
 }
 
-.empty_state img {
-  height: 220px;
-  width: 220px;
-  text-align: center;
-}
-
 .empty_state_squirrel_outer {
   display: table;
   margin: 0 auto;
