@@ -2,8 +2,9 @@ import React from 'react'
 import PropTypes, { bool } from 'prop-types'
 import './Button.css'
 
-function Button({ text, size, color, stroke, onClick }) {
+function Button({ className, text, size, color, stroke, onClick }) {
   let classNames = 'button'
+  if (className) classNames += ' ' + className
   classNames += ' ' + (size ? size : 'large')
   classNames += ' ' + (color ? color : 'purple')
   classNames += ' ' + (stroke ? 'stroke' : '')
@@ -16,6 +17,7 @@ function Button({ text, size, color, stroke, onClick }) {
 }
 
 Button.propTypes = {
+  className: PropTypes.string,
   text: PropTypes.string,
   size: PropTypes.string,
   color: PropTypes.string,
