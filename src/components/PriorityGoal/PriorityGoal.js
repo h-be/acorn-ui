@@ -83,6 +83,8 @@ function PriorityGoal({ whoami, goal, votes, createGoalVote }) {
                 ? goal.members.map((goalMember, index) => (
                     <Avatar
                       key={index}
+                      first_name={goalMember.first_name}
+                      last_name={goalMember.last_name}
                       avatar_url={goalMember.avatar_url}
                       small
                     />

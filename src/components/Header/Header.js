@@ -210,6 +210,8 @@ class Header extends React.Component {
                     this.hover(false)
                   }}>
                   <Avatar
+                    first_name={this.props.whoami.entry.first_name}
+                    last_name={this.props.whoami.entry.last_name}
                     avatar_url={this.props.whoami.entry.avatar_url}
                     highlighted={this.state.isProfileOpen || this.state.avatar}
                     clickable
