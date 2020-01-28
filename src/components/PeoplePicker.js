@@ -69,7 +69,12 @@ function PeoplePicker({
                 key={index}
                 className={person.is_member ? 'member' : ''}
                 onClick={onClick}>
-                <Avatar avatar_url={person.avatar_url} medium />
+                <Avatar
+                  first_name={person.first_name}
+                  last_name={person.last_name}
+                  avatar_url={person.avatar_url}
+                  medium
+                />
                 <div className='person_nameANDhandle'>
                   <span className='person_name'>
                     {person.first_name} {person.last_name}
