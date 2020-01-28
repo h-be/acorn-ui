@@ -7,6 +7,7 @@ import Avatar from '../../../Avatar/Avatar'
 import Icon from '../../../Icon/Icon'
 import StatusIcon from '../../../StatusIcon/StatusIcon'
 import HierarchyIcon from '../../../HierarchyIcon/HierarchyIcon'
+import { whoami } from '../../../../who-am-i/actions'
 
 function checkTimeframeSame(oldTimeframe, newTimeframe) {
   if (newTimeframe && !oldTimeframe) {
@@ -231,6 +232,8 @@ class ActivityHistory extends Component {
                 )}
                 <div className='history-Body-Avatar'>
                   <Avatar
+                    first_name={this.props.agents[value.user].first_name}
+                    last_name={this.props.agents[value.user].last_name}
                     avatar_url={this.props.agents[value.user].avatar_url}
                     small={true}
                   />
