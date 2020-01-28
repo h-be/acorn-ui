@@ -138,6 +138,8 @@ export default function ExpandedViewModeContent({
               return (
                 <Avatar
                   key={index}
+                  first_name={squirrel.first_name}
+                  last_name={squirrel.last_name}
                   avatar_url={squirrel.avatar_url}
                   medium
                   clickable
