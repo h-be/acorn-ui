@@ -72,7 +72,7 @@
 }
 
 .canvas-name {
-  font-family: 'renner_mediummedium', Helvetica, Sans-Serif;
+  font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
   font-weight: normal;
   font-size: 18px;
   margin-right: 20px;
@@ -136,10 +136,10 @@
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-  top: 70px;
-  right: 88px;
+  top: 68px;
+  right: 90px;
   position: absolute;
-  font-family: 'rennerbook', Helvetica, Sans-Serif;
+  font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
   font-weight: normal;
   color: #717171;
   font-size: 14px;
@@ -147,9 +147,9 @@
 }
 
 .guidebook_open_help img {
-  max-width: 70px;
+  max-width: 50px;
   padding-bottom: 5px;
-  padding-left: 10px;
+  padding-left: 5px;
 }
 
 .instructions_wrapper .small-close {
@@ -164,7 +164,7 @@
 }
 
 .instructions {
-  font-family: 'rennerbook', Helvetica, Sans-Serif;
+  font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
   margin-left: 10px;
   color: #4d4d4d;
 }
@@ -199,7 +199,7 @@
 }
 
 .profile-wrapper button p {
-  font-family: 'rennerbook', Helvetica, Sans-Serif;
+  font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
   font-size: 14px;
   padding: 0 20px;
 }
@@ -301,7 +301,7 @@ button.gray .icon {
   padding: 12px 25px;
   color: black;
   outline: none;
-  font-family: 'rennerbook', Helvetica, sans-serif;
+  font-family: 'CircularStd-Book', Helvetica, sans-serif;
   font-weight: normal;
   font-size: 14px;
   background: none;
@@ -350,7 +350,7 @@ button.gray .icon {
 }
 
 .user-status-wrapper button p {
-  font-family: 'rennerbook', Helvetica, Sans-Serif;
+  font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
   font-size: 14px;
   padding-left: 10px;
 }

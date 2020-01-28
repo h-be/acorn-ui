@@ -15,7 +15,7 @@ canvas {
 
 body {
   background-color: #f4f4f4;
-  font-family: 'rennerbook', Helvetica, Sans-Serif;
+  font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
 }
 
 div.react {
@@ -26,6 +26,24 @@ div.react {
 }
 
 /* Fonts */
+
+/* Circular-STD Font */
+
+@font-face {
+  font-family: 'CircularStd-Book';
+  src: url('fonts/circular-std/CircularStd-Book.woff2') format('woff2'),
+    url('fonts/circular-std/CircularStd-Book.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'CircularStd-Black';
+  src: url('fonts/circular-std/CircularStd-Black.woff2') format('woff2'),
+    url('fonts/circular-std/CircularStd-Black.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 
 /* Gilroy Font */
 
