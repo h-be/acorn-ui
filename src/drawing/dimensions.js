@@ -13,7 +13,7 @@ export const textBoxWidth = 310
 export const fontSize = '20px'
 export const fontSizeInt = 20
 export const lineSpacing = fontSizeInt / 5 // slice off px from font size to get font height as number
-export const fontFamily = 'rennerbook'
+export const fontFamily = 'CircularStd-book'
 
 // line wrapping code from https://stackoverflow.com/questions/2936112/
 function getLines(ctx, text, maxWidth) {

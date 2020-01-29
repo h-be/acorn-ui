@@ -14,7 +14,7 @@ export default class GuideBook extends React.Component {
         { title: 'Getting Started' },
         { title: "How To's" },
         { title: 'Shortcuts' },
-        { title: 'FAQ' },
+        // { title: 'FAQ' },
       ],
     }
 
@@ -33,7 +33,7 @@ export default class GuideBook extends React.Component {
         this.setState({ tabSelected: index })
       }
       this.setState({
-        sectionSelected: section.url,
+        sectionSelected: section,
       })
     })
   }
@@ -44,7 +44,7 @@ export default class GuideBook extends React.Component {
 
   render() {
     return (
-      <div className='guide-book'>
+      <div className='guidebook-wrapper'>
         <h2 className='guidebook-title'>Guidebook</h2>
         <Tabs
           tabs={this.state.tabs}
