@@ -39,6 +39,7 @@ function Avatar({
   highlighted,
   small,
   medium,
+  mediumLarge,
   large,
   clickable,
   onClick,
@@ -47,6 +48,7 @@ function Avatar({
   if (highlighted) classes.push('highlighted')
   if (small) classes.push('small')
   else if (medium) classes.push('medium')
+  else if (mediumLarge) classes.push('medium-large')
   else if (large) classes.push('large')
   if (clickable) classes.push('clickable')
 

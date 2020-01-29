@@ -3,7 +3,7 @@
 }
 
 .hierarchy_option_container {
-  color:#4D4D4D;
+  color: #4d4d4d;
   padding: 8px 20px;
   display: flex;
   align-items: center;
@@ -11,30 +11,30 @@
 }
 
 .hierarchy_option_container:hover {
-  background: #F2F2F2;
-  color: #00A599;
+  background: #f2f2f2;
+  color: #00a599;
 }
 
 .hierarchy_option_container:hover .inner-icon {
-  background-color: #00A599;
+  background-color: #00a599;
 }
 
 .hierarchy_option_container:hover .redio_button {
-  background-color: #D1D1D1;
+  background-color: #d1d1d1;
 }
 
 .hierarchy_option_container .icon:not(.not-hoverable):hover .inner-icon {
-  background-color: #00A599;
+  background-color: #00a599;
 }
 
 .hierarchy_option_container .icon:hover .inner-icon {
-  background-color: #D1D1D1;
+  background-color: #d1d1d1;
 }
 
 .hierarchy_option_name {
   flex: 1;
   padding: 1px 0px;
-  font-family: 'renner_mediummedium', Helvetica, sans-serif;
+  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
   font-size: 14px;
 }
 
@@ -47,7 +47,7 @@
 }
 
 .hierarchy_option_item:hover .redio_button {
-  background-color: #D1D1D1;
+  background-color: #d1d1d1;
 }
 
 .hierarchy_option_item {
@@ -58,7 +58,7 @@
 }
 
 .hierarchy_option_item li {
-  color: #4D4D4D;
+  color: #4d4d4d;
   padding: 6px 20px;
   display: flex;
   align-items: center;
@@ -66,14 +66,13 @@
 }
 
 .hierarchy_option_item li:hover {
-  background: #F2F2F2;
-  color: #00A599;
+  background: #f2f2f2;
+  color: #00a599;
 }
 
 .hierarchy_option.active {
   color: #5f65ff;
 }
-
 
 .hierarchy_option_content {
   margin-left: 10px;
@@ -86,8 +85,8 @@
 
 .hierarchy_description {
   font-size: 12px;
-  color: #A3A3A3;
-  font-family: 'rennerbook', Helvetica, sans-serif;
+  color: #a3a3a3;
+  font-family: 'CircularStd-book', Helvetica, sans-serif;
 }
 
 .radio_button {
@@ -96,7 +95,7 @@
 }
 
 .hierarchy_wrapper_footer {
-  color:#898989;
+  color: #898989;
   font-size: 12px;
   padding: 6px 20px;
   margin-bottom: 0;

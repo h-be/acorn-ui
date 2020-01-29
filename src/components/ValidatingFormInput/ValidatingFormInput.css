@@ -9,7 +9,7 @@
   display: flex;
   flex-direction: column;
   text-align: left;
-  font-family: 'rennerbook';
+  font-family: 'CircularStd-book';
 }
 
 .validating_form_input label {
@@ -44,7 +44,7 @@
   border-radius: 5px;
   display: block;
   flex: 1;
-  font-family: 'rennerbook';
+  font-family: 'CircularStd-book';
   height: 16px;
 }
 

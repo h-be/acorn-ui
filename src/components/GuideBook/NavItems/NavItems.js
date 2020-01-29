@@ -1,5 +1,7 @@
 import React from 'react'
 
+import Icon from '../../Icon/Icon'
+
 export function NavItemsGroup(props) {
   return (
     <nav>
@@ -41,11 +43,16 @@ export class NavItem extends React.Component {
       <section>
         {this.props.submenu ? (
           <>
-            <button
+            <div
               className={`nav-item ${this.props.className || ''}`}
               onClick={this.handleExpand}>
+              <Icon
+                name={expand ? 'line-angle-down.svg' : 'line-angle-right.svg'}
+                size='very-small'
+                className='grey'
+              />
               {this.props.title}
-            </button>
+            </div>
             <div className={`sidebar-submenu ${expand}`}>
               <ul>
                 {this.props.submenu.map((ni, i) => (

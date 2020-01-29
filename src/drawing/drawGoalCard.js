@@ -177,7 +177,7 @@ export default function render(
     ctx.drawImage(img, xImgDraw, yImgDraw, calendarWidth, calendarHeight)
     ctx.save()
     ctx.fillStyle = '#717171'
-    ctx.font = '13px rennerbook'
+    ctx.font = '13px CircularStd-book'
     ctx.fillText(text, textBoxLeft, textBoxTop)
     ctx.restore()
   }

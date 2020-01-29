@@ -37,7 +37,7 @@ const useStyles = makeStyles({
     top: '-18px',
     position: 'absolute',
     fontSize: '12px',
-    fontFamily: '"rennerbook", "Helvetica", "Arial", "sans-serif"',
+    fontFamily: '"CircularStd-book", "Helvetica", "Arial", "sans-serif"',
     lineHeight: '1',
     color: '#4d4d4d',
   },

@@ -1,13 +1,8 @@
-.guide-book{
+.guidebook-wrapper {
   position: relative;
 }
 
-.guide-book *{
-  margin: 0;
-  padding: 0;
-}
-
-.guide-book > .guidebook-title:first-child {
+.guidebook-title {
   text-align: center;
   margin-bottom: 30px;
   font-size: 18px;
@@ -16,94 +11,90 @@
   margin-top: -2px;
 }
 
-.guide-book .nav-item {
+.guidebook-wrapper .nav-item {
   cursor: pointer;
-  background: none;
-  border: none;
-  padding: 0;
-  font-size: 16px;
-  margin-bottom: 32px;
-  font-family: 'rennerbold', Helvetica, sans-serif;
+  font-size: 20px;
+  font-family: 'CircularStd-Bold', Helvetica, sans-serif;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  transition: all 0.2s;
+  margin-bottom: 26px;
 }
 
-.guide-book .sidebar-submenu {
+.guidebook-wrapper .nav-item .icon {
+  margin-right: 10px;
+}
+
+.guidebook-wrapper .sidebar-submenu {
   height: 0;
-  transition: all .3s;
+  transition: all 0.3s;
   overflow: hidden;
 }
 
-.guide-book .sidebar-submenu ul { 
-  list-style: none; 
-  padding-left: 20px; 
+.guidebook-wrapper .sidebar-submenu ul {
+  margin: 0;
+  list-style: none;
+  padding-left: 35px;
 }
 
-.guide-book .sidebar-submenu.active{
-  transition: all .3s;
+.guidebook-wrapper .sidebar-submenu {
+  height: 0;
+  transition: ease-in-out 0.2s;
+}
+
+.guidebook-wrapper .sidebar-submenu.active {
+  border-bottom: 1px solid #efefef;
   height: auto;
-  font-family: 'renner_mediummedium', Helvetica, sans-serif;
+  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
+  margin-bottom: 20px;
 }
 
-.guide-book .sidebar-submenu.active ul li { 
-  margin-bottom: 32px; 
+.guidebook-wrapper .sidebar-submenu.active ul li {
+  margin-bottom: 30px;
 }
 
-.guide-book .sidebar-submenu.active ul li button{
+.guidebook-wrapper .sidebar-submenu.active ul li button {
   background: none;
   margin: 0;
   display: inline-block;
   border: none;
   cursor: pointer;
-  font-size: 14px;
-  font-family: 'renner_mediummedium', Helvetica, sans-serif;
+  font-size: 16px;
+  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
 }
 
-.guide-book .guidebook-section{
+.guidebook-wrapper .guidebook-section {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
-.guide-book .guidebook-section .guidebook-section-control { 
-  margin-right: 0; 
+.guidebook-wrapper .sidebar-submenu.active ul li button:hover {
+  color: #5f65ff;
 }
 
-.guide-book .guidebook-section .guidebook-section-control >  button{
-  display: inline-block;
-  background: none;
-  border: none;
-  margin: 0;
-  padding: 0;
-  justify-content: space-around;
-  font-size: 14px;
-  font-family: 'rennerbold', Helvetica, sans-serif;
-  cursor: pointer;
-}
-
-.guide-book .sidebar-submenu.active ul li button:hover{ color: #5F65FF; }
-
-.guide-book .guidebook-section ol{
-  margin: 0;
-  padding: 0;
-  padding-left: 20px;
-  font-size: 14px;
-}
-.guide-book .guidebook-section ol li{  
+.guidebook-section-description {
   margin: 0;
   margin-bottom: 22px;
 }
 
-.guide-book .guidebook-section .guidebook-section-title{
-  font-size: 16px;
-  margin-bottom: 32px;
-  font-family: 'rennerbold', Helvetica, sans-serif;
+.guidebook-wrapper .guidebook-section ol {
+  margin-top: 0;
 }
 
+.guidebook-section-description li {
+  margin-bottom: 20px;
+}
 
-.guide-book button{ outline: none; }
+.guidebook-section-title {
+  font-size: 20px;
+  font-family: 'CircularStd-Bold', Helvetica, sans-serif;
+}
 
-
-
+.guidebook-wrapper button {
+  outline: none;
+}
 
 .guidebook-section-content {
-padding: 0;
-
+  padding: 0;
 }
