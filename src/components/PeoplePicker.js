@@ -11,6 +11,7 @@ import moment from 'moment'
 function PeoplePicker({
   people,
   goalAddress,
+  goalsAddress,
   addMemberOfGoal,
   archiveMemberOfGoal,
   onClose,
@@ -60,9 +61,17 @@ function PeoplePicker({
           })
           .map((person, index) => {
             const onClick = () => {
-              if (person.is_member)
-                archiveMemberOfGoal(person.goal_member_address)
-              else addMemberOfGoal(goalAddress, person.address)
+              if (person.is_member) {
+                person.goal_member_address.map(m => {
+                  archiveMemberOfGoal(m.address)
+                })
+              } else if (goalsAddress.length > 0) {
+                goalsAddress.map(goalAddress => {
+                  addMemberOfGoal(goalAddress, person.address)
+                })
+              } else {
+                addMemberOfGoal(goalAddress, person.address)
+              }
             }
             return (
               <li
@@ -107,7 +116,7 @@ PeoplePicker.propTypes = {
       handle: PropTypes.string.isRequired,
       avatar_url: PropTypes.string.isRequired,
       is_member: PropTypes.bool.isRequired,
-      goal_member_address: PropTypes.string,
+      goal_member_address: PropTypes.array,
     })
   ).isRequired,
   goalAddress: PropTypes.string.isRequired,
@@ -123,10 +132,10 @@ function mapStateToProps(state) {
   const goalsAddress = state.ui.selection.selectedGoals
   let membersOfGoal
   let agents
-  if (goalsAddress[0]) {
+  if (goalsAddress.length > 0) {
     membersOfGoal = Object.keys(state.goalMembers)
       .map(address => state.goalMembers[address])
-      .filter(goalMember => goalMember.goal_address === goalsAddress[0])
+      .filter(goalMember => goalsAddress.includes(goalMember.goal_address))
     agents = Object.keys(state.agents).map(address => state.agents[address])
   } else {
     membersOfGoal = Object.keys(state.goalMembers)
@@ -136,17 +145,17 @@ function mapStateToProps(state) {
   }
   return {
     people: agents.map(agent => {
-      const member = membersOfGoal.find(
+      const members = membersOfGoal.filter(
         goalMember => goalMember.agent_address === agent.address
       )
-
       return {
         ...agent, // address, name, avatar_url
-        is_member: member ? true : false,
-        goal_member_address: member ? member.address : null,
+        is_member: members.length > 0 ? true : false,
+        goal_member_address: members,
       }
     }),
-    goalAddress: goalsAddress[0] ? goalsAddress[0] : goalAddress,
+    goalAddress: goalAddress,
+    goalsAddress: goalsAddress,
   }
 }
 

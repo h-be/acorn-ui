@@ -17,7 +17,12 @@ import DatePicker from '../DatePicker/DatePicker'
 import HierarchyPicker from '../HierarchyPicker/HierarchyPicker'
 import AlertPopupTemplate from '../AlertPopupTemplate/AlertPopupTemplate'
 
-function MultiEditBar({ selectedGoals = [], updateGoal, hasSelection }) {
+function MultiEditBar({
+  onArchiveClick,
+  selectedGoals = [],
+  updateGoal,
+  hasSelection,
+}) {
   const defaultViews = {
     status: false,
     squirrels: false,
@@ -163,7 +168,9 @@ function MultiEditBar({ selectedGoals = [], updateGoal, hasSelection }) {
           popupIcon='archive.svg'
           primaryButton='Yes, Archive'
           altButton='Nevermind'
-          primaryButtonAction={() => onArchiveClick(goalAddress)}
+          primaryButtonAction={() =>
+            selectedGoals.map(goal => onArchiveClick(goal.address))
+          }
           altButtonAction={() => setViews({ ...defaultViews })}
         />
       )}
