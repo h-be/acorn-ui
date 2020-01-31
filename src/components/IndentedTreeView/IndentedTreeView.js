@@ -20,6 +20,9 @@ function NestedTreeGoal({ goal, level, filterText }) {
     !filterText.length ||
     (goal.content && goal.content.toLowerCase().includes(filterText))
 
+  const searchParams = new URLSearchParams(location.search)
+  const isUsingGoalAsContext = searchParams.get('contextGoal') === goal.address
+
   return (
     <div className='indented-view-goal'>
       {match && (
@@ -32,18 +35,22 @@ function NestedTreeGoal({ goal, level, filterText }) {
               onClick={() => setExpanded(!expanded)}
             />
           </div>
-          <div className='indented-view-goal-content'>
-            <HierarchyIcon
-              size='very-small'
-              hierarchy={goal.hierarchy}
-              status={goal.status}
-            />
-            <NavLink
-              to={`${location.pathname}?contextGoal=${goal.address}`}
-              className='indented-view-goal-content-text'>
+          <NavLink
+            to={
+              location.pathname +
+              (isUsingGoalAsContext ? '' : `?contextGoal=${goal.address}`)
+            }
+            className='indented-view-goal-content'
+            isActive={match => match && isUsingGoalAsContext}>
+            <div className='indented-view-goal-content-text'>
+              <HierarchyIcon
+                size='very-small'
+                hierarchy={goal.hierarchy}
+                status={goal.status}
+              />
               {goal.content}
-            </NavLink>
-          </div>
+            </div>
+          </NavLink>
         </div>
       )}
       {/* if there's a filter, expand everything */}
