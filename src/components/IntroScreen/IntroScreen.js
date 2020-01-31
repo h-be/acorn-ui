@@ -21,7 +21,7 @@ export default function IntroScreen() {
       image: 'img/intro-screen-image-2.svg',
       title: 'Help your team feel accomplished & aligned',
       description:
-        'You and your team are able to see the complex project you’re working on from multiple view modes and visually connect the small units of work that need to be done to the broader context of the greater goals. Everyone can see the progress being made, feel accomplished, and know clearly where they are headed.',
+        "You and your team are able to see the complex project you're working on from multiple view modes and visually connect the small units of work that need to be done to the broader context of the greater goals. Everyone can see the progress being made, feel accomplished, and know clearly where they are headed.",
     },
     {
       image: 'img/intro-screen-image-3.svg',
