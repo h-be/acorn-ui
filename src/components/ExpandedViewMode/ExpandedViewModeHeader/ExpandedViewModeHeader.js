@@ -31,7 +31,13 @@ export default function ExpandedViewModeHeader({
     <div className='expanded_view_header'>
       <div className='expanded_view_status_icon'>
         {goal.hierarchy === 'NoHierarchy' ? (
-          <StatusIcon status={goal.status} notHoverable />
+          <StatusIcon
+            status={goal.status}
+            notHoverable
+            onClick={() =>
+              setViews({ ...defaultViews, status: !viewsOpen.status })
+            }
+          />
         ) : (
           <HierarchyIcon
             hierarchy={goal.hierarchy}
