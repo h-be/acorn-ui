@@ -236,30 +236,30 @@ div.react {
 /* headers */
 
 h1 {
-  font-size: 24px;
-  line-height: 30px;
+  font-size: 26px;
+  line-height: 32px;
   font-family: 'CircularStd-Bold', Helvetica, sans-serif;
   font-weight: normal;
 }
 
 h2 {
-  font-size: 20px;
+  font-size: 22px;
   line-height: 28px;
   font-family: 'CircularStd-Bold', Helvetica, sans-serif;
   font-weight: normal;
 }
 
 h3 {
-  font-size: 18px;
-  line-height: 22px;
+  font-size: 20px;
+  line-height: 24px;
   font-family: 'CircularStd-Medium', Helvetica, sans-serif;
   font-weight: normal;
 }
 
 h4 {
-  font-size: 14px;
-  line-height: 18px;
-  font-family: 'rennerbook', Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+  font-family: 'CircularStd-book', Helvetica, sans-serif;
   font-weight: normal;
   color: #717171;
 }

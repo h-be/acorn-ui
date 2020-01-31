@@ -6,7 +6,6 @@
   display: flex;
   justify-content: space-between;
   flex-flow: nowrap row;
-  /* border: 1px solid #ccc5; */
 }
 
 .tabs > .tabs-links > button.tab-link,
@@ -55,6 +54,16 @@ a.tab-link {
 .tab-content.active {
   display: block;
   overflow-y: scroll;
-  height: calc(100vh - 400px);
-  margin-top: 20px;
+  height: calc(100vh - 334px);
+  margin-top: 24px;
+  position: relative;
+}
+.scroll-bottom-fade-effect {
+  background: linear-gradient(transparent, white 55%);
+  height: 35px;
+  width: 400px;
+  position: absolute;
+  margin-right: 12px;
+  top: calc(100vh - 368px);
+  z-index: 9999;
 }
