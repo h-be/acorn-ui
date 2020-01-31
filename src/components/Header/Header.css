@@ -117,17 +117,17 @@
 .current-canvas div {
   margin-left: 10px;
 }
-.instructions_wrapper {
+.guidebook-outer-wrapper {
   float: right;
   position: relative;
-  border-radius: 10px 0 0 10px;
-  margin-top: 70px;
+  border-radius: 10px;
+  margin-top: 64px;
+  margin-right: 12px;
   background-color: #ffffff;
-  padding: 40px 30px 20px 30px;
+  padding: 30px 20px;
   box-shadow: 0px 0px 6px #00000029;
-  width: 420px;
-  min-height: 400px;
-  max-height: calc(100vh - 120px);
+  width: 400px;
+  height: calc(100vh - 190px);
 }
 
 /* guidebook text and arrow help to open */
@@ -152,14 +152,14 @@
   padding-left: 5px;
 }
 
-.instructions_wrapper .small-close {
+.guidebook-outer-wrapper .small-close {
   position: absolute;
-  top: 40px;
-  right: 40px;
+  top: 30px;
+  right: 30px;
   cursor: pointer;
 }
 
-.instructions_wrapper button {
+.guidebook-outer-wrapper button {
   margin: 0;
 }
 

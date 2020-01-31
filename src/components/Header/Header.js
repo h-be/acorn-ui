@@ -250,7 +250,7 @@ class Header extends React.Component {
           </div>
         )}
         {this.state.isGuideOpen && (
-          <div className='instructions_wrapper'>
+          <div className='guidebook-outer-wrapper'>
             <GuideBook />
             <Icon
               name='x_a3a3a3.svg'
