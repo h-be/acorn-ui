@@ -17,7 +17,12 @@ import DatePicker from '../DatePicker/DatePicker'
 import HierarchyPicker from '../HierarchyPicker/HierarchyPicker'
 import AlertPopupTemplate from '../AlertPopupTemplate/AlertPopupTemplate'
 
-function MultiEditBar({ selectedGoals = [], updateGoal, hasSelection }) {
+function MultiEditBar({
+  selectedGoals = [],
+  updateGoal,
+  hasSelection,
+  archiveGoal,
+}) {
   const defaultViews = {
     status: false,
     squirrels: false,
@@ -56,6 +61,10 @@ function MultiEditBar({ selectedGoals = [], updateGoal, hasSelection }) {
         goal.address
       )
     })
+  }
+
+  const archiveGoals = () => {
+    selectedGoals.forEach(goal => archiveGoal(goal.address))
   }
 
   const multiEditBarSquirrelsClass = viewsOpen.squirrels ? 'active' : ''
@@ -255,7 +264,7 @@ function MultiEditBar({ selectedGoals = [], updateGoal, hasSelection }) {
           popupIcon='archive.svg'
           primaryButton='Yes, Archive'
           altButton='Nevermind'
-          primaryButtonAction={() => onArchiveClick(goalAddress)}
+          primaryButtonAction={archiveGoals}
           altButtonAction={reset}
         />
       )}
@@ -291,7 +300,7 @@ function mapDispatchToProps(dispatch) {
     updateGoal: (goal, address) => {
       return dispatch(updateGoal.create({ address, goal }))
     },
-    onArchiveClick: address => {
+    archiveGoal: address => {
       return dispatch(archiveGoal.create({ address }))
     },
   }
