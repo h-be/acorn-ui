@@ -56,7 +56,7 @@ function VerticalActionsList({
 
   const archiveContent = (
     <div>
-      You’re about to archive the card "<b>{goal.content}</b>
+      You're about to archive the card "<b>{goal.content}</b>
       ". You will be able to see this card in the archive view mode in the
       future. Proceed?
     </div>
