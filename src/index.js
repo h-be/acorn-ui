@@ -57,45 +57,57 @@ let store = createStore(
 // on first render
 const secs = num => num * 1000
 
+// recurring
 setInterval(() => {
   store.dispatch(fetchAgents.create({}))
 }, secs(20))
+// initial
+store.dispatch(fetchAgents.create({}))
 
 setTimeout(() => {
-  setInterval(() => {
-    store.dispatch(fetchEdges.create({}))
-  }, secs(20))
-}, secs(3))
-
-setTimeout(() => {
+  // recurring
   setInterval(() => {
     store.dispatch(fetchGoals.create({}))
   }, secs(20))
+  // initial
+  store.dispatch(fetchGoals.create({}))
+}, secs(3))
+
+setTimeout(() => {
+  // recurring
+  setInterval(() => {
+    store.dispatch(fetchEdges.create({}))
+  }, secs(20))
+  // initial
+  store.dispatch(fetchEdges.create({}))
 }, secs(6))
 
 setTimeout(() => {
+  // recurring
   setInterval(() => {
     store.dispatch(fetchGoalMembers.create({}))
   }, secs(20))
+  // initial
+  store.dispatch(fetchGoalMembers.create({}))
 }, secs(9))
 
 setTimeout(() => {
-  setInterval(() => {
-    store.dispatch(fetchGoalMembers.create({}))
-  }, secs(20))
-}, secs(12))
-
-setTimeout(() => {
+  // recurring
   setInterval(() => {
     store.dispatch(fetchGoalVotes.create({}))
   }, secs(20))
-}, secs(15))
+  // initial
+  store.dispatch(fetchGoalVotes.create({}))
+}, secs(12))
 
 setTimeout(() => {
+  // recurring
   setInterval(() => {
     store.dispatch(fetchGoalComments.create({}))
   }, secs(20))
-}, secs(18))
+  // initial
+  store.dispatch(fetchGoalComments.create({}))
+}, secs(15))
 
 store.dispatch(whoami.create({}))
 store.dispatch(fetchAgentAddress.create({}))
