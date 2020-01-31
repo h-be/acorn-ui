@@ -104,7 +104,7 @@ function MultiEditBar({ selectedGoals = [], updateGoal, hasSelection }) {
 
   const archiveContent = (
     <div>
-      You’re about to archive the following {selectedGoals.length} card(s):
+      You're about to archive the following {selectedGoals.length} card(s):
       <div className='alert-popup-goals-list'>
         {selectedGoals.map(goal => (
           <div>{goal.content}</div>
