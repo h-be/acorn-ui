@@ -20,7 +20,7 @@ function Comment({ comment, agent }) {
   return (
     <div className='comment_history_item'>
       <div className='avatar_comment_container'>
-        <Avatar avatar_url={agent.avatar_url} medium />{' '}
+        <Avatar first_name={agent.first_name} last_name={agent.last_name} avatar_url={agent.avatar_url} medium />{' '}
       </div>
       <div>
         <div className='comment_history_info'>
@@ -71,7 +71,7 @@ function Comments({
     <div className='comments'>
       <div className='comments_avatarANDInput_wrapper'>
         <div className='avatar_comment_container'>
-          <Avatar avatar_url={avatarUrl} medium />
+          <Avatar first_name={''} last_name={''}  avatar_url={avatarUrl} medium />
         </div>
         <div className='input_comment_row'>
           <div className='input_comment_wrapper'>
