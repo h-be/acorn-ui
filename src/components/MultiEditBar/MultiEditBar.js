@@ -152,7 +152,8 @@ function MultiEditBar({
           />
         )}
         {/* squirrels */}
-        <Icon
+        {/* TODO: connect multi edit squirrels */}
+        {/* <Icon
           name='squirrel.svg'
           size='medium-MultiEditBar'
           className={multiEditBarSquirrelsClass}
@@ -161,7 +162,7 @@ function MultiEditBar({
         />
         {viewsOpen.squirrels && (
           <PeoplePicker onClose={() => setViews({ ...defaultViews })} />
-        )}
+        )} */}
         {/* timeframe */}
         <Icon
           name='calendar.svg'

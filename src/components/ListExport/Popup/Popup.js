@@ -25,10 +25,11 @@ export default function Popup({ active, handleToHide }) {
           </p>
         </div>
         <div className='popup-footer'>
-          <div className='check-no-show-again'>
+          {/* TODO: enable "don't show me again" (persist to Holochain or localStorage) */}
+          {/* <div className='check-no-show-again'>
             <input type='checkbox' />
             <label htmlFor=''>Don't show me again</label>
-          </div>
+          </div> */}
           <div className='btn-accept'>
             <Button text='OK' onClick={handleToHide} />
           </div>
