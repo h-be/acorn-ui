@@ -119,8 +119,8 @@ function MultiEditBar({
           <div>{goal.content}</div>
         ))}
       </div>
-      You will be able to see this card in the archive view mode in the future.
-      Proceed?
+      You will be able to see these cards in the archive view mode in the
+      future. Proceed?
     </div>
   )
 
