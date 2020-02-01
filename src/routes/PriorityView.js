@@ -1,13 +1,5 @@
 import React from 'react'
-import {
-  NavLink,
-  useLocation,
-  useRouteMatch,
-  useParams,
-  Switch,
-  Route,
-  Redirect,
-} from 'react-router-dom'
+import { NavLink, useLocation, Switch, Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import IndentedTreeView from '../components/IndentedTreeView/IndentedTreeView'
@@ -158,7 +150,6 @@ function Uncategorized({ goalTrees, goalVotes }) {
     'contextGoal'
   )
   const goals = getSubsetOfGoalsBasedOnContext(goalTrees, contextGoalAddress)
-  console.log(goals)
   const goalList = goals.filter(goal => {
     // if there are no Votes, this Goal is "uncategorized"
     return !goalVotes.find(gv => gv.goal_address === goal.address)
@@ -190,10 +181,10 @@ function PriorityView({ goalTrees, goalVotes }) {
   const priorityMenuItems = [
     ['Urgency x Importance', `/board/priority/urgency-importance`],
     ['Impact x Effort', '/board/priority/impact-effort'],
-    ['Urgency', '/board/priority/urgency'],
-    ['Importance', '/board/priority/importance'],
-    ['Impact', '/board/priority/impact'],
-    ['Effort', '/board/priority/effort'],
+    // ['Urgency', '/board/priority/urgency'],
+    // ['Importance', '/board/priority/importance'],
+    // ['Impact', '/board/priority/impact'],
+    // ['Effort', '/board/priority/effort'],
     ['Uncategorized', '/board/priority/uncategorized'],
   ]
 
@@ -218,7 +209,8 @@ function PriorityView({ goalTrees, goalVotes }) {
           <ImpactEffortQuadrants goalTrees={goalTrees} goalVotes={goalVotes} />
         </Route>
         {/* uncategorized */}
-        <Route path={priorityMenuItems[6][1]}>
+        {/* TODO: change 2 back to 6 when the other modes come online */}
+        <Route path={priorityMenuItems[2][1]}>
           <Uncategorized goalTrees={goalTrees} goalVotes={goalVotes} />
         </Route>
         {/* urgency - importance */}

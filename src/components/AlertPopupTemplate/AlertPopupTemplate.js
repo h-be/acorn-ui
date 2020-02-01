@@ -27,7 +27,7 @@ export default function AlertPopupTemplate({
         />
         <div className='alert-popup-header'>
           <span className='popup-icon'>
-            <Icon name={popupIcon} className='not-hoverable'/>
+            <Icon name={popupIcon} className='not-hoverable' />
           </span>
           <div className='alert-popup-heading'>{heading}</div>
         </div>
@@ -35,16 +35,28 @@ export default function AlertPopupTemplate({
           <p>{content}</p>
         </div>
         <div className='popup-footer'>
-          <div className='dont-show-again-option'>
+          {/* TODO: enable "don't show me again" (persist to Holochain or localStorage) */}
+          {/* <div className='dont-show-again-option'>
             <input type='checkbox' id='checkbox-dont-show-again' />
             <label htmlFor='checkbox-dont-show-again'>Don't show me again</label>
-          </div>
+          </div> */}
           <div className='buttons-wrapper'>
             <div className='btn-stroked'>
-              {<Button text={altButton} onClick={altButtonAction} stroke size='medium'/>}
+              {
+                <Button
+                  text={altButton}
+                  onClick={altButtonAction}
+                  stroke
+                  size='medium'
+                />
+              }
             </div>
             <div className='btn-filled'>
-              <Button text={primaryButton} onClick={primaryButtonAction} size='medium' />
+              <Button
+                text={primaryButton}
+                onClick={primaryButtonAction}
+                size='medium'
+              />
             </div>
           </div>
         </div>
