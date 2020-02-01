@@ -119,8 +119,8 @@ function MultiEditBar({
           <div>{goal.content}</div>
         ))}
       </div>
-      You will be able to see this card in the archive view mode in the future.
-      Proceed?
+      You will be able to see these cards in the archive view mode in the
+      future. Proceed?
     </div>
   )
 
@@ -152,7 +152,8 @@ function MultiEditBar({
           />
         )}
         {/* squirrels */}
-        <Icon
+        {/* TODO: connect multi edit squirrels */}
+        {/* <Icon
           name='squirrel.svg'
           size='medium-MultiEditBar'
           className={multiEditBarSquirrelsClass}
@@ -161,7 +162,7 @@ function MultiEditBar({
         />
         {viewsOpen.squirrels && (
           <PeoplePicker onClose={() => setViews({ ...defaultViews })} />
-        )}
+        )} */}
         {/* timeframe */}
         <Icon
           name='calendar.svg'
@@ -204,7 +205,7 @@ function MultiEditBar({
           {viewsOpen.status && (
             <AlertPopupTemplate
               onClose={reset}
-              className='archive-popup'
+              className='status-popup'
               heading='Setting Status for Multiple Cards'
               content={statusAlertContent}
               popupIcon='status_unknown.svg'
@@ -217,7 +218,7 @@ function MultiEditBar({
           {viewsOpen.squirrels && (
             <AlertPopupTemplate
               onClose={reset}
-              className='archive-popup'
+              className='squirrel-popup'
               heading='Associating Members for Multiple Cards'
               content={squirrelsAlertContent}
               popupIcon='squirrel.svg'
@@ -230,7 +231,7 @@ function MultiEditBar({
           {viewsOpen.timeframe && (
             <AlertPopupTemplate
               onClose={reset}
-              className='archive-popup'
+              className='timeframe-popup'
               heading='Setting Timeframe for Multiple Cards'
               content={timeframeAlertContent}
               popupIcon='calendar.svg'
@@ -243,7 +244,7 @@ function MultiEditBar({
           {viewsOpen.hierarchy && (
             <AlertPopupTemplate
               onClose={reset}
-              className='archive-popup'
+              className='hierarchy-popup'
               heading='Setting Hierarchy for Multiple Cards'
               content={hierarchyAlertContent}
               popupIcon='hierarchy.svg'
