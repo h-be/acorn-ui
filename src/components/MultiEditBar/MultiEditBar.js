@@ -205,7 +205,7 @@ function MultiEditBar({
           {viewsOpen.status && (
             <AlertPopupTemplate
               onClose={reset}
-              className='archive-popup'
+              className='status-popup'
               heading='Setting Status for Multiple Cards'
               content={statusAlertContent}
               popupIcon='status_unknown.svg'
@@ -218,7 +218,7 @@ function MultiEditBar({
           {viewsOpen.squirrels && (
             <AlertPopupTemplate
               onClose={reset}
-              className='archive-popup'
+              className='squirrel-popup'
               heading='Associating Members for Multiple Cards'
               content={squirrelsAlertContent}
               popupIcon='squirrel.svg'
@@ -231,7 +231,7 @@ function MultiEditBar({
           {viewsOpen.timeframe && (
             <AlertPopupTemplate
               onClose={reset}
-              className='archive-popup'
+              className='timeframe-popup'
               heading='Setting Timeframe for Multiple Cards'
               content={timeframeAlertContent}
               popupIcon='calendar.svg'
@@ -244,7 +244,7 @@ function MultiEditBar({
           {viewsOpen.hierarchy && (
             <AlertPopupTemplate
               onClose={reset}
-              className='archive-popup'
+              className='hierarchy-popup'
               heading='Setting Hierarchy for Multiple Cards'
               content={hierarchyAlertContent}
               popupIcon='hierarchy.svg'
