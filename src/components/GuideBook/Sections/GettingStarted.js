@@ -2,7 +2,6 @@ import React from 'react'
 import { NavItemsGroup } from '../NavItems/NavItems'
 import Icon from '../../Icon/Icon'
 
-// export default function GettingStarted(props) {
 const gettingStartedItems = [
   {
     title: 'The Basics',

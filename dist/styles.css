@@ -14,7 +14,7 @@ canvas {
 }
 
 body {
-  background-color: #f4f4f4;
+  background-color: #fafafa;
   font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
 }
 
@@ -259,7 +259,7 @@ h3 {
 h4 {
   font-size: 16px;
   line-height: 20px;
-  font-family: 'CircularStd-book', Helvetica, sans-serif;
+  font-family: 'CircularStd-Book', Helvetica, sans-serif;
   font-weight: normal;
   color: #717171;
 }
@@ -289,7 +289,7 @@ h4 {
   height: 70px;
   resize: none;
   color: #4d4d4d;
-  font-family: 'rennerbook', Helvetica, Sans-Serif;
+  font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
   font-size: 20px;
   line-height: 24px;
 }
@@ -299,7 +299,7 @@ h4 {
 }
 
 .goal_form_save {
-  margin-top: 75px;
+  margin-top: 60px;
   padding: 10px 30px;
   background: #00afa4 0% 0% no-repeat padding-box;
   opacity: 1;
@@ -357,7 +357,7 @@ h4 {
   background-color: rgba(134, 134, 134, 0.95);
   border: 1px solid rgba(134, 134, 134, 0.95);
   border-radius: 16px;
-  font-family: 'CircularStd-Medium', Helvetica, Sans-Serif;
+  font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
   padding: 5px 25px 5px 15px;
   outline: 0;
   font-size: 16px;
@@ -409,10 +409,10 @@ h4 {
   outline: 0;
   padding: 2px;
   margin-left: 14px;
-  font-family: 'rennerbook', Helvetica, Sans-Serif;
+  font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
 }
 
-.people_picker_search input:placeholder {
+.people_picker_search input::placeholder {
   color: #a3a3a3;
 }
 
@@ -451,7 +451,7 @@ h4 {
 .person_handle {
   font-size: 12px;
   color: #a3a3a3;
-  font-family: 'rennerbook', Helvetica, sans-serif;
+  font-family: 'CircularStd-Book', Helvetica, sans-serif;
 }
 
 .radio_button {
@@ -514,4 +514,10 @@ h4 {
 
 .bg_Complete {
   background-color: #83e300;
+}
+
+/* textarea placeholder */
+
+textarea::placeholder {
+  color: #aaaaaa;
 }
