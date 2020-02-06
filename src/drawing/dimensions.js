@@ -1,7 +1,7 @@
-export const avatarSpace = 8
-export const avatarWidth = 32
-export const avatarHeight = 32
-export const avatarRadius = 16
+export const avatarSpace = 14
+export const avatarWidth = 24
+export const avatarHeight = 24
+export const avatarRadius = 12
 export const goalWidth = 360
 export const goalHeight = 130
 export const cornerRadius = 15

@@ -123,3 +123,34 @@
 .guidebook-section-content {
   padding: 0;
 }
+
+/* shortcuts section */
+
+.guidebook-shortcut-category-wrapper {
+  margin-bottom: 30px;
+}
+
+.guidebook-shortcut-category-title {
+  font-size: 20px;
+  font-family: 'CircularStd-Bold', Helvetica, sans-serif;
+  margin-bottom: 24px;
+  margin-left: 10px;
+}
+
+.guidebook-shortcut-row {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid #efefef;
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+  margin-left: 30px;
+}
+
+.guidebook-shortcut-key {
+  font-family: 'CircularStd-Bold', Helvetica, sans-serif;
+}
+
+.guidebook-shortcut-title {
+  width: 46%;
+  margin-right: 20px;
+}

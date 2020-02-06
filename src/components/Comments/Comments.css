@@ -4,7 +4,7 @@
 
 .comments_avatarANDInput_wrapper {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   margin-bottom: 16px;
 }
 
@@ -45,6 +45,10 @@ textarea.input_comment {
   height: 36px;
 }
 
+textarea.input_comment:placeholder {
+  color: red;
+}
+
 .input_comment {
   height: 32px;
   box-sizing: border-box;
@@ -65,7 +69,7 @@ textarea.input_comment {
 .comment_save_button {
   position: absolute;
   right: 2px;
-  margin-top: 2px;
+  margin-top: 1px;
 }
 
 .comment_save_button > .icon {

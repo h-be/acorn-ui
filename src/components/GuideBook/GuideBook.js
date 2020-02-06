@@ -3,6 +3,7 @@ import './GuideBook.css'
 import Tabs from './Tabs/Tabs'
 import GettingStarted from './Sections/GettingStarted'
 import HowTos from './Sections/HowTos'
+import Shortcuts from './Sections/Shortcuts'
 
 export default class GuideBook extends React.Component {
   constructor(props) {
@@ -11,7 +12,7 @@ export default class GuideBook extends React.Component {
       tabSelected: null,
       sectionSelected: null,
       tabs: [
-        { title: 'Getting Started' },
+        //{ title: 'Getting Started' },
         { title: "How To's" },
         { title: 'Shortcuts' },
         // { title: 'FAQ' },
@@ -50,17 +51,19 @@ export default class GuideBook extends React.Component {
           tabs={this.state.tabs}
           selected={this.state.tabSelected}
           toSelectTab={this.handleSelectTab}>
-          <GettingStarted
+          {/* <GettingStarted
             sectionSelected={this.state.sectionSelected}
             selectSection={this.handleSelectSection}
             goBack={this.handleGoBack}
-          />
+          /> */}
 
           <HowTos
             sectionSelected={this.state.sectionSelected}
             selectSection={this.handleSelectSection}
             goBack={this.handleGoBack}
           />
+
+          <Shortcuts />
         </Tabs>
       </div>
     )

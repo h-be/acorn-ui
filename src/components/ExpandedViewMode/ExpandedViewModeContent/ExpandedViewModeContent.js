@@ -124,6 +124,7 @@ export default function ExpandedViewModeContent({
           onBlur={updateContent}
           onChange={handleOnChangeTitle}
           onKeyPress={handleOnChangeTitle}
+          placeholder='Add a title...'
         />
       </div>
 

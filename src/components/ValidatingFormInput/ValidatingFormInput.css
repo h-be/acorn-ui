@@ -48,6 +48,10 @@
   height: 16px;
 }
 
+.validating_form_input .input_wrapper input:placeholder {
+  color: #e8e8e8;
+}
+
 .validating_form_input input.with_at_symbol {
   padding-left: 24px;
 }
