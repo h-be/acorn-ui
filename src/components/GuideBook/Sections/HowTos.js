@@ -241,7 +241,7 @@ const howTosItems = [
         ),
       },
       {
-        title: 'Hierrahcy: Set hierarchy level of cards',
+        title: 'Hierarchy: Set hierarchy level of cards',
         url: 'set_hierarchy_level_of_cards',
         tab: 'How To',
         description: (
