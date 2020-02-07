@@ -297,10 +297,11 @@ function Priority({
               />
             </div>
           )}
-          <div className='priority_wrapper_footer'>
+          {/* TODO: built this locate card on view feature */}
+          {/* <div className='priority_wrapper_footer'>
             <Icon size='small' name='priority_4d4d4d.svg' />
             Locate this card on priority view mode
-          </div>
+          </div> */}
         </div>
       )}
 

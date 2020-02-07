@@ -9,11 +9,11 @@ export default class GuideBook extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      tabSelected: null,
+      tabSelected: 0,
       sectionSelected: null,
       tabs: [
         //{ title: 'Getting Started' },
-        { title: "How To's" },
+        { title: 'How To' },
         { title: 'Shortcuts' },
         // { title: 'FAQ' },
       ],

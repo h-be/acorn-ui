@@ -34,6 +34,7 @@ import {
 import { archiveGoal } from '../goals/actions'
 import { setScreenDimensions } from '../screensize/actions'
 import { changeTranslate, changeScale } from '../viewport/actions'
+import { openExpandedView } from '../expanded-view/actions'
 
 import layoutFormula from '../drawing/layoutFormula'
 import { setGoalClone } from '../goal-clone/actions'
@@ -62,6 +63,16 @@ export default function setupEventListeners(store, canvas) {
           store.dispatch(setGKeyDown())
         }
         break
+      case 'KeyE':
+        if (
+          state.ui.selection.selectedGoals.length === 1 &&
+          !state.ui.goalForm.isOpen &&
+          !state.ui.expandedView.isOpen
+        ) {
+          console.log('eh')
+          store.dispatch(openExpandedView(state.ui.selection.selectedGoals[0]))
+        }
+        break
       case 'ShiftLeft':
       case 'ShiftRight':
         store.dispatch(setShiftKeyDown())
@@ -75,7 +86,11 @@ export default function setupEventListeners(store, canvas) {
         let selection = state.ui.selection
         // only dispatch if something's selected and the createGoal window is
         // not open
-        if (selection.selectedGoals.length > 0 && !state.ui.goalForm.isOpen) {
+        if (
+          selection.selectedGoals.length > 0 &&
+          !state.ui.goalForm.isOpen &&
+          !state.ui.expandedView.isOpen
+        ) {
           let firstOfSelection = selection.selectedGoals[0]
           store.dispatch(archiveGoal.create({ address: firstOfSelection }))
           // if on firefox, and matched this case
