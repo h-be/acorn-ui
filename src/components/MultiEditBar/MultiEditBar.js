@@ -17,7 +17,12 @@ import DatePicker from '../DatePicker/DatePicker'
 import HierarchyPicker from '../HierarchyPicker/HierarchyPicker'
 import AlertPopupTemplate from '../AlertPopupTemplate/AlertPopupTemplate'
 
-function MultiEditBar({ selectedGoals = [], updateGoal, hasSelection }) {
+function MultiEditBar({
+  selectedGoals = [],
+  updateGoal,
+  hasSelection,
+  archiveGoal,
+}) {
   const defaultViews = {
     status: false,
     squirrels: false,
@@ -56,6 +61,10 @@ function MultiEditBar({ selectedGoals = [], updateGoal, hasSelection }) {
         goal.address
       )
     })
+  }
+
+  const archiveGoals = () => {
+    selectedGoals.forEach(goal => archiveGoal(goal.address))
   }
 
   const multiEditBarSquirrelsClass = viewsOpen.squirrels ? 'active' : ''
@@ -104,14 +113,14 @@ function MultiEditBar({ selectedGoals = [], updateGoal, hasSelection }) {
 
   const archiveContent = (
     <div>
-      You’re about to archive the following {selectedGoals.length} card(s):
+      You're about to archive the following {selectedGoals.length} card(s):
       <div className='alert-popup-goals-list'>
         {selectedGoals.map(goal => (
           <div>{goal.content}</div>
         ))}
       </div>
-      You will be able to see this card in the archive view mode in the future.
-      Proceed?
+      You will be able to see these cards in the archive view mode in the
+      future. Proceed?
     </div>
   )
 
@@ -143,7 +152,8 @@ function MultiEditBar({ selectedGoals = [], updateGoal, hasSelection }) {
           />
         )}
         {/* squirrels */}
-        <Icon
+        {/* TODO: connect multi edit squirrels */}
+        {/* <Icon
           name='squirrel.svg'
           size='medium-MultiEditBar'
           className={multiEditBarSquirrelsClass}
@@ -152,7 +162,7 @@ function MultiEditBar({ selectedGoals = [], updateGoal, hasSelection }) {
         />
         {viewsOpen.squirrels && (
           <PeoplePicker onClose={() => setViews({ ...defaultViews })} />
-        )}
+        )} */}
         {/* timeframe */}
         <Icon
           name='calendar.svg'
@@ -195,7 +205,7 @@ function MultiEditBar({ selectedGoals = [], updateGoal, hasSelection }) {
           {viewsOpen.status && (
             <AlertPopupTemplate
               onClose={reset}
-              className='archive-popup'
+              className='status-popup'
               heading='Setting Status for Multiple Cards'
               content={statusAlertContent}
               popupIcon='status_unknown.svg'
@@ -208,7 +218,7 @@ function MultiEditBar({ selectedGoals = [], updateGoal, hasSelection }) {
           {viewsOpen.squirrels && (
             <AlertPopupTemplate
               onClose={reset}
-              className='archive-popup'
+              className='squirrel-popup'
               heading='Associating Members for Multiple Cards'
               content={squirrelsAlertContent}
               popupIcon='squirrel.svg'
@@ -221,7 +231,7 @@ function MultiEditBar({ selectedGoals = [], updateGoal, hasSelection }) {
           {viewsOpen.timeframe && (
             <AlertPopupTemplate
               onClose={reset}
-              className='archive-popup'
+              className='timeframe-popup'
               heading='Setting Timeframe for Multiple Cards'
               content={timeframeAlertContent}
               popupIcon='calendar.svg'
@@ -234,7 +244,7 @@ function MultiEditBar({ selectedGoals = [], updateGoal, hasSelection }) {
           {viewsOpen.hierarchy && (
             <AlertPopupTemplate
               onClose={reset}
-              className='archive-popup'
+              className='hierarchy-popup'
               heading='Setting Hierarchy for Multiple Cards'
               content={hierarchyAlertContent}
               popupIcon='hierarchy.svg'
@@ -255,7 +265,7 @@ function MultiEditBar({ selectedGoals = [], updateGoal, hasSelection }) {
           popupIcon='archive.svg'
           primaryButton='Yes, Archive'
           altButton='Nevermind'
-          primaryButtonAction={() => onArchiveClick(goalAddress)}
+          primaryButtonAction={archiveGoals}
           altButtonAction={reset}
         />
       )}
@@ -291,7 +301,7 @@ function mapDispatchToProps(dispatch) {
     updateGoal: (goal, address) => {
       return dispatch(updateGoal.create({ address, goal }))
     },
-    onArchiveClick: address => {
+    archiveGoal: address => {
       return dispatch(archiveGoal.create({ address }))
     },
   }

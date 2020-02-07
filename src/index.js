@@ -55,19 +55,60 @@ let store = createStore(
 
 // dispatch fetch goals, and fetch edges functions to pull in all the existing goals and edges
 // on first render
-function fetchChangingData() {
-  store.dispatch(fetchAgents.create({}))
-  store.dispatch(fetchEdges.create({}))
-  store.dispatch(fetchGoals.create({}))
-  store.dispatch(fetchGoalMembers.create({}))
-  store.dispatch(fetchGoalVotes.create({}))
-  store.dispatch(fetchGoalComments.create({}))
-}
-fetchChangingData()
-// refetch this data every 3 seconds
+const secs = num => num * 1000
+
+// recurring
 setInterval(() => {
-  fetchChangingData()
-}, 3000)
+  store.dispatch(fetchAgents.create({}))
+}, secs(20))
+// initial
+store.dispatch(fetchAgents.create({}))
+
+setTimeout(() => {
+  // recurring
+  setInterval(() => {
+    store.dispatch(fetchGoals.create({}))
+  }, secs(20))
+  // initial
+  store.dispatch(fetchGoals.create({}))
+}, secs(3))
+
+setTimeout(() => {
+  // recurring
+  setInterval(() => {
+    store.dispatch(fetchEdges.create({}))
+  }, secs(20))
+  // initial
+  store.dispatch(fetchEdges.create({}))
+}, secs(6))
+
+setTimeout(() => {
+  // recurring
+  setInterval(() => {
+    store.dispatch(fetchGoalMembers.create({}))
+  }, secs(20))
+  // initial
+  store.dispatch(fetchGoalMembers.create({}))
+}, secs(9))
+
+setTimeout(() => {
+  // recurring
+  setInterval(() => {
+    store.dispatch(fetchGoalVotes.create({}))
+  }, secs(20))
+  // initial
+  store.dispatch(fetchGoalVotes.create({}))
+}, secs(12))
+
+setTimeout(() => {
+  // recurring
+  setInterval(() => {
+    store.dispatch(fetchGoalComments.create({}))
+  }, secs(20))
+  // initial
+  store.dispatch(fetchGoalComments.create({}))
+}, secs(15))
+
 store.dispatch(whoami.create({}))
 store.dispatch(fetchAgentAddress.create({}))
 /*
