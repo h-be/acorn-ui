@@ -20,7 +20,12 @@ function Comment({ comment, agent }) {
   return (
     <div className='comment_history_item'>
       <div className='avatar_comment_container'>
-        <Avatar first_name={agent.first_name} last_name={agent.last_name} avatar_url={agent.avatar_url} medium />{' '}
+        <Avatar
+          first_name={agent.first_name}
+          last_name={agent.last_name}
+          avatar_url={agent.avatar_url}
+          medium
+        />{' '}
       </div>
       <div>
         <div className='comment_history_info'>
@@ -47,6 +52,8 @@ function Comment({ comment, agent }) {
 function Comments({
   goalAddress,
   avatarUrl,
+  firstName,
+  lastName,
   agents,
   comments,
   addCommentOfGoal,
@@ -71,7 +78,12 @@ function Comments({
     <div className='comments'>
       <div className='comments_avatarANDInput_wrapper'>
         <div className='avatar_comment_container'>
-          <Avatar first_name={''} last_name={''}  avatar_url={avatarUrl} medium />
+          <Avatar
+            first_name={firstName}
+            last_name={lastName}
+            avatar_url={avatarUrl}
+            mediumLarge
+          />
         </div>
         <div className='input_comment_row'>
           <div className='input_comment_wrapper'>
@@ -113,6 +125,8 @@ function mapStateToProps(state) {
     goalAddress,
     avatarAddress: state.whoami.entry.address,
     avatarUrl: state.whoami.entry.avatar_url,
+    firstName: state.whoami.entry.first_name,
+    lastName: state.whoami.entry.last_name,
     agents: state.agents,
   }
 }

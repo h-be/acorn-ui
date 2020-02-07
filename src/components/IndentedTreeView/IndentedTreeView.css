@@ -16,7 +16,7 @@
   outline: 0;
   padding: 2px;
   margin-left: 8px;
-  font-family: 'rennerbook', Helvetica, Sans-Serif;
+  font-family: 'CircularStd-book', Helvetica, Sans-Serif;
 }
 
 .indented-view-search input:placeholder {
@@ -31,7 +31,7 @@
 
 .indented-view-goal {
   margin-top: 8px;
-  font-family: 'renner_mediummedium', Helvetica, sans-serif;
+  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
   font-size: 13px;
   line-height: 17px;
   color: #4d4d4d;
@@ -75,7 +75,7 @@
 .indented-view-goal-content:focus {
   color: #5f65ff;
   background: #f9f9f9;
-  font-family: 'rennerbold';
+  font-family: 'CircularStd-Bold';
 }
 
 .indented-view-nested-goal {

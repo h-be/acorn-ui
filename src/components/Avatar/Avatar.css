@@ -34,9 +34,6 @@
 
 /* initals-avatar stylings */
 
-.initials-avatar text {
-}
-
 .initials-avatar {
   cursor: pointer;
   color: white;
@@ -46,6 +43,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 14px;
+  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
 }
 
 .initials-avatar.clickable {

@@ -29,7 +29,7 @@
 .priority-menu-item {
   padding: 17px 10px 17px 10px;
   margin-right: 20px;
-  font-family: 'renner_mediummedium', Helvetica, sans-serif;
+  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
   font-weight: normal;
   font-size: 14px;
   text-decoration: none;
@@ -39,7 +39,7 @@
 .priority-menu-item.active {
   border-bottom: 3px solid #5f65ff;
   color: #5f65ff;
-  font-family: 'renner_mediummedium', Helvetica, sans-serif;
+  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
   font-weight: normal;
 }
 

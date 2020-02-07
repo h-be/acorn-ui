@@ -1,9 +1,11 @@
 .comments {
-  font-family: 'rennerbook', Helvetica, Sans-Serif;
+  font-family: 'CircularStd-book', Helvetica, Sans-Serif;
 }
 
 .comments_avatarANDInput_wrapper {
   display: flex;
+  /* align-items: center; */
+  margin-bottom: 16px;
 }
 
 .comment_history_container_scrollable {
@@ -24,7 +26,6 @@
 }
 
 .input_comment_row {
-  margin-bottom: 16px;
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -40,17 +41,24 @@
   height: 36px;
 }
 
+textarea.input_comment {
+  height: 36px;
+}
+
+textarea.input_comment:placeholder {
+  color: red;
+}
+
 .input_comment {
   height: 32px;
   box-sizing: border-box;
-  border: 1.5px solid #d1d1d1;
+  border: 1.2px solid #d1d1d1;
   border-radius: 18px;
   color: black;
   padding: 10px 10px 10px 14px;
-  margin-bottom: 10px;
   flex: 1;
   font-size: 13px;
-  font-family: 'rennerbook', Helvetica, sans-serif;
+  font-family: 'CircularStd-book', Helvetica, sans-serif;
   resize: none;
 }
 
@@ -61,7 +69,11 @@
 .comment_save_button {
   position: absolute;
   right: 2px;
-  margin-top: 2px;
+  margin-top: 1px;
+}
+
+.comment_save_button > .icon {
+  padding: 4px;
 }
 
 .comment_save_button > .icon .inner-icon {
@@ -94,7 +106,7 @@
   color: #4e566f;
   font-size: 10px;
   line-height: 13px;
-  font-family: 'renner_mediummedium', Helvetica, sans-serif;
+  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
   margin-right: 10px;
 }
 

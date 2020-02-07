@@ -37,7 +37,7 @@ const useStyles = makeStyles({
     top: '-18px',
     position: 'absolute',
     fontSize: '12px',
-    fontFamily: '"rennerbook", "Helvetica", "Arial", "sans-serif"',
+    fontFamily: '"CircularStd-book", "Helvetica", "Arial", "sans-serif"',
     lineHeight: '1',
     color: '#4d4d4d',
   },
@@ -297,10 +297,11 @@ function Priority({
               />
             </div>
           )}
-          <div className='priority_wrapper_footer'>
+          {/* TODO: built this locate card on view feature */}
+          {/* <div className='priority_wrapper_footer'>
             <Icon size='small' name='priority_4d4d4d.svg' />
             Locate this card on priority view mode
-          </div>
+          </div> */}
         </div>
       )}
 
