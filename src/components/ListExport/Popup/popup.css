@@ -7,7 +7,7 @@
   left: 0;
   z-index: -1;
   opacity: 0;
-  transition: .2s;
+  transition: 0.2s;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,8 +36,8 @@
   height: 345px;
   box-sizing: border-box;
   padding: 50px 60px;
-  transition: .3s;
-  background-color: #FFFF;
+  transition: 0.3s;
+  background-color: #ffff;
   border-radius: 10px;
   box-shadow: 0px 0px 6px #00000041;
   display: flex;
@@ -65,11 +65,12 @@
   line-height: 2;
   height: 55%;
   margin-left: 50px;
-  color: #4D4D4D;
+  color: #4d4d4d;
 }
 
 .popup-footer {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: end;
+  /* justify-content: space-between; */
+  /* align-items: center; */
 }

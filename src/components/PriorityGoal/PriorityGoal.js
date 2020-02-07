@@ -10,7 +10,6 @@ import HierarchyIcon from '../HierarchyIcon/HierarchyIcon'
 import Button from '../Button/Button'
 import { addVoteOfGoal } from '../../goal-votes/actions'
 
-import Priority from '../PriorityPicker/PriorityPicker'
 import PriorityPicker from '../PriorityPicker/PriorityPicker'
 
 function PriorityGoal({ whoami, goal, votes, createGoalVote }) {
@@ -106,7 +105,8 @@ function PriorityGoal({ whoami, goal, votes, createGoalVote }) {
             />
           </div>
 
-          <div className='priority-quadrant-goal-view-mode-icons'>
+          {/* TODO: enable linking to this goal on the MapView */}
+          {/* <div className='priority-quadrant-goal-view-mode-icons'>
             <NavLink to='/board/map'>
               <Icon
                 name='map_aaaaa.svg'
@@ -119,11 +119,11 @@ function PriorityGoal({ whoami, goal, votes, createGoalVote }) {
               size='view-mode-small'
               className='grey'
             />
-          </div>
+          </div> */}
         </div>
         {priorityPickerOpen && (
-          <Priority
-            openToMyVote={true}
+          <PriorityPicker
+            openToMyVote
             goalAddress={goal.address}
             onClose={() => setPriorityPickerOpen(false)}
           />

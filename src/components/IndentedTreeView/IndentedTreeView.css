@@ -48,18 +48,17 @@
   cursor: pointer;
   padding: 7px;
   border-radius: 10px;
-  flex: 1;
   text-decoration: none;
+  flex: 1;
   color: #4d4d4d;
-  display: flex;
   transition: all 0.2s;
 }
 
 .indented-view-goal-content-text {
   text-decoration: none;
-  color: #4d4d4d;
   padding-left: 4px;
   transition: all 0.2s;
+  display: flex;
 }
 
 .indented-view-goal-content:hover {
@@ -67,16 +66,12 @@
   background: #f9f9f9;
 }
 
-.indented-view-goal-content:hover > .indented-view-goal-content-text {
-  color: #00a599;
-}
-
-.indented-view-goal-content:active > .indented-view-goal-content-text,
+.indented-view-goal-content.active > .indented-view-goal-content-text,
 .indented-view-goal-content:focus > .indented-view-goal-content-text {
   color: #5f65ff;
 }
 
-.indented-view-goal-content:active,
+.indented-view-goal-content.active,
 .indented-view-goal-content:focus {
   color: #5f65ff;
   background: #f9f9f9;

@@ -20,15 +20,16 @@ export default function Popup({ active, handleToHide }) {
         </div>
         <div className='popup-content'>
           <p>
-            You just exported the <b>H-BE SoA</b> canvas. You will be able to
-            find it in your Downloads folder!
+            You just exported the <b>Acorn State of Affairs</b> canvas. You will
+            be able to find it in your Downloads folder!
           </p>
         </div>
         <div className='popup-footer'>
-          <div className='check-no-show-again'>
+          {/* TODO: enable "don't show me again" (persist to Holochain or localStorage) */}
+          {/* <div className='check-no-show-again'>
             <input type='checkbox' />
             <label htmlFor=''>Don't show me again</label>
-          </div>
+          </div> */}
           <div className='btn-accept'>
             <Button text='OK' onClick={handleToHide} />
           </div>

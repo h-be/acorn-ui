@@ -56,7 +56,7 @@ function VerticalActionsList({
 
   const archiveContent = (
     <div>
-      You’re about to archive the card "<b>{goal.content}</b>
+      You're about to archive the card "<b>{goal.content}</b>
       ". You will be able to see this card in the archive view mode in the
       future. Proceed?
     </div>
@@ -82,9 +82,6 @@ function VerticalActionsList({
     ? moment.unix(goal.time_frame.from_date)
     : null
   const toDate = goal.time_frame ? moment.unix(goal.time_frame.to_date) : null
-
-  // TODO : make the Alert Popup screen and certain elements
-  // like Quick Edit Icon and Expand Icon not shrink after zooming out on canvas
 
   return (
     <>
@@ -118,11 +115,15 @@ function VerticalActionsList({
           }
           onClick={() => toggleView('priority')}
         />
-        <VerticalActionListItem
+        {/* TODO : make the Alert Popup screen and certain elements */}
+        {/* like Quick Edit Icon and Expand Icon not shrink after zooming out on canvas */}
+        {/* fix the archive based popup, by moving it UP the render tree OUTSIDE the MapView, which
+             gets zoomed in out as the map does */}
+        {/* <VerticalActionListItem
           label='archive'
           icon={<Icon name='archive.svg' className='white not-hoverable' />}
           onClick={() => toggleView('archive')}
-        />
+        /> */}
         {viewsOpen.status && (
           <StatusPicker
             selectedStatus={goal.status}
