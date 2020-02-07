@@ -4,14 +4,18 @@ import Icon from '../../Icon/Icon'
 
 const shortcutsItems = [
   {
-    title: 'Cards',
-    submenu: [
+    title: 'Modifications',
+    shortcuts: [
       {
-        shortcutKey: 'G + shift',
+        shortcutKey: 'g + click',
         shortcutTitle: 'Create a card',
       },
       {
-        shortcutKey: 'E',
+        shortcutKey: 'Select a card + g + click',
+        shortcutTitle: 'Create a child card',
+      },
+      {
+        shortcutKey: 'e',
         shortcutTitle: 'Enter expanded view (on a selected card)',
       },
       {
@@ -21,35 +25,52 @@ const shortcutsItems = [
     ],
   },
   {
-    title: 'Tools',
-    submenu: [
+    title: 'Selection',
+    shortcuts: [
       {
-        shortcutKey: '⌘ + Z',
-        shortcutTitle: 'Undo',
+        shortcutKey: 'click',
+        shortcutTitle: 'Select one card',
       },
       {
-        shortcutKey: '⌘ + shift + Z',
-        shortcutTitle: 'Redo',
-      },
-    ],
-  },
-  {
-    title: 'Navigation',
-    submenu: [
-      {
-        shortcutKey: '+',
-        shortcutTitle: 'Zoom in',
+        shortcutKey: 'shift + click',
+        shortcutTitle: 'Select/deselect card',
       },
       {
-        shortcutKey: '–',
-        shortcutTitle: 'Zoom out',
-      },
-      {
-        shortcutKey: '← → ↑ ↓',
-        shortcutTitle: 'Pan around canvas',
+        shortcutKey: 'shift + click + drag',
+        shortcutTitle: 'Select multiple in box',
       },
     ],
   },
+  // {
+  //   title: 'Tools',
+  //   shortcuts: [
+  //     {
+  //       shortcutKey: '⌘ + Z',
+  //       shortcutTitle: 'Undo',
+  //     },
+  //     {
+  //       shortcutKey: '⌘ + shift + Z',
+  //       shortcutTitle: 'Redo',
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: 'Navigation',
+  //   shortcuts: [
+  //     {
+  //       shortcutKey: '+',
+  //       shortcutTitle: 'Zoom in',
+  //     },
+  //     {
+  //       shortcutKey: '–',
+  //       shortcutTitle: 'Zoom out',
+  //     },
+  //     {
+  //       shortcutKey: '← → ↑ ↓',
+  //       shortcutTitle: 'Pan around canvas',
+  //     },
+  //   ],
+  // },
 ]
 
 // component
@@ -67,12 +88,12 @@ export default function Shortcuts() {
         <div className='guidebook-shortcut-category-title'>
           {category.title}
         </div>
-        {category.submenu.map((menuItem, index) => {
+        {category.shortcuts.map((shortcut, index) => {
           return (
             <Content
               key={index}
-              shortcutKey={menuItem.shortcutKey}
-              shortcutTitle={menuItem.shortcutTitle}
+              shortcutKey={shortcut.shortcutKey}
+              shortcutTitle={shortcut.shortcutTitle}
             />
           )
         })}

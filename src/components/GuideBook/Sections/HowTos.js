@@ -9,7 +9,7 @@ const howTosItems = [
       {
         title: 'Create a card',
         url: 'create_a_card',
-        tab: "How To's",
+        tab: 'How To',
         description: (
           <ol>
             <li>
@@ -27,7 +27,7 @@ const howTosItems = [
       {
         title: 'Add a child card to an existing card',
         url: 'add_child_card',
-        tab: "How To's",
+        tab: 'How To',
         description: (
           <ol>
             <li>
@@ -47,9 +47,9 @@ const howTosItems = [
         ),
       },
       {
-        title: 'Select Multiple Cards',
+        title: 'Select multiple cards',
         url: 'select_multiple_cards',
-        tab: "How To's",
+        tab: 'How To',
         description: (
           <ol>
             <div className='guidebook-separate-line'>Either:</div>
@@ -65,17 +65,17 @@ const howTosItems = [
         ),
       },
       {
-        title: 'Deselect Cards',
+        title: 'Deselect cards',
         url: 'deselect_cards',
-        tab: "How To's",
+        tab: 'How To',
         description: (
           <ol>
             <div className='guidebook-separate-line'>
               To deselect certain selected cards, hold Shift and left click on
-              the cards to select them.
+              the cards you wish to deselect.
             </div>
             <div className='guidebook-separate-line'>
-              To deselect all the card at once click on an empty space on
+              To deselect all the cards at once click on an empty space on
               canvas.
             </div>
           </ol>
@@ -84,7 +84,7 @@ const howTosItems = [
       {
         title: 'Title: Change card title',
         url: 'change_card_title',
-        tab: "How To's",
+        tab: 'How To',
         description: (
           <ol>
             <div className='guidebook-separate-line'>
@@ -111,7 +111,7 @@ const howTosItems = [
       {
         title: 'Status: Change card status',
         url: 'change_card_status',
-        tab: "How To's",
+        tab: 'How To',
         description: (
           <ol>
             <div className='guidebook-description-section'>
@@ -149,7 +149,7 @@ const howTosItems = [
       {
         title: 'Squirrels: Associate members with cards',
         url: 'associate_members_with_cards',
-        tab: "How To's",
+        tab: 'How To',
         description: (
           <ol>
             <div className='guidebook-description-section'>
@@ -175,7 +175,8 @@ const howTosItems = [
                 Hold shift and left click on the cards that you want to select.
               </li>
             </div>
-            <div className='guidebook-description-section'>
+            {/* TODO: show this when multi-editing gets added for squirrels */}
+            {/* <div className='guidebook-description-section'>
               <div className='guidebook-separate-line sub-heading'>
                 In Multi Edit Mode
               </div>
@@ -191,14 +192,14 @@ const howTosItems = [
                 existing settings for the associate members in all of the
                 selected cards.
               </div>
-            </div>
+            </div> */}
           </ol>
         ),
       },
       {
         title: 'Timeframe: Add or edit timeframe of cards',
         url: 'edit_timeframe_of_cards',
-        tab: "How To's",
+        tab: 'How To',
         description: (
           <ol>
             <div className='guidebook-description-section'>
@@ -242,7 +243,7 @@ const howTosItems = [
       {
         title: 'Hierrahcy: Set hierarchy level of cards',
         url: 'set_hierarchy_level_of_cards',
-        tab: "How To's",
+        tab: 'How To',
         description: (
           <ol>
             <div className='guidebook-description-section'>
@@ -250,8 +251,8 @@ const howTosItems = [
                 In Quick Edit Mode
               </div>
               <div className='guidebook-separate-line'>
-                Click on “hierarhcy” button and select the hierarschy level that
-                you want.
+                Click on "hierarchy" button and select the "hierarchy" level
+                that you want.
               </div>
             </div>
             <div className='guidebook-description-section'>
@@ -260,7 +261,7 @@ const howTosItems = [
               </div>
               <div className='guidebook-separate-line'>Either:</div>
               <div className='guidebook-separate-line'>
-                Click on the Hierearhcy icon on the Right Menu.
+                Click on the Hierarchy icon on the Right Menu.
               </div>
             </div>
             <div className='guidebook-description-section'>
@@ -268,9 +269,9 @@ const howTosItems = [
                 In Multi Edit Mode
               </div>
               <div className='guidebook-separate-line'>
-                Click on the Hierarhcy icon from the Multi Edit Bar. Please
+                Click on the Hierarchy icon from the Multi Edit Bar. Please
                 note, this function will override all the existing settings for
-                hierarhcy in all of the selected cards.
+                hierarchy in all of the selected cards.
               </div>
             </div>
           </ol>
@@ -279,7 +280,7 @@ const howTosItems = [
       {
         title: 'Priority: See aggregated priority of a card',
         url: 'setting_hierarchy_of_cards',
-        tab: "How To's",
+        tab: 'How To',
         description: (
           <ol>
             <div className='guidebook-description-section'>
@@ -309,9 +310,9 @@ const howTosItems = [
                 In Multi Edit Mode
               </div>
               <div className='guidebook-separate-line'>
-                Click on the Hierarhcy icon from the Multi Edit Bar. Please
+                Click on the Hierarchy icon from the Multi Edit Bar. Please
                 note, this function will override all the existing settings for
-                hierarhcy in all of the selected cards.
+                hierarchy in all of the selected cards.
               </div>
             </div>
           </ol>
@@ -320,7 +321,7 @@ const howTosItems = [
       {
         title: 'Priority: Vote for priority of a card',
         url: 'vote_for_priority_of_a_card',
-        tab: "How To's",
+        tab: 'How To',
         description: (
           <ol>
             <div className='guidebook-description-section'>
@@ -328,10 +329,10 @@ const howTosItems = [
                 In Quick Edit Mode
               </div>
               <div className='guidebook-separate-line'>
-                Click on “priority” button. Then click on Weigh In button. The
-                default vote is “medium” for all 4 factor. You can slide the
-                factor bars to set your own. For more information about
-                prioritization go to Proirity View Mode.
+                Click on “priority” button. Then click on the "Weigh In" button.
+                The default vote is “medium” for all 4 factors. You can slide
+                the factor bars to set your own. For more information about
+                prioritization go to Priority View Mode.
               </div>
             </div>
             <div className='guidebook-description-section'>
@@ -339,10 +340,10 @@ const howTosItems = [
                 In Expanded View Mode
               </div>
               <div className='guidebook-separate-line'>
-                Click on “priority” button. Then click on Weigh In button. The
-                default vote is “medium” for all 4 factors. You can slide the
-                factor bars to set your own. For more information about
-                prioritization go to Proirity View Mode.
+                Click on “priority” button. Then click on the "Weigh In" button.
+                The default vote is “medium” for all 4 factors. You can slide
+                the factor bars to set your own. For more information about
+                prioritization go to Priority View Mode.
               </div>
             </div>
             <div className='guidebook-description-section'>
@@ -351,29 +352,30 @@ const howTosItems = [
               </div>
               <div className='guidebook-separate-line'>
                 Click on the Priority icon from the Multi Edit Bar. Then Click
-                on Weigh In button.
+                on the "Weigh In" button.
               </div>
             </div>
           </ol>
         ),
       },
-      {
-        title: 'Locate a goal in different view modes',
-        url: 'locate_a_goal_in_different_view_modes',
-        tab: "How To's",
-        description: (
-          <ol>
-            <div className='guidebook-description-section'>
-              The view mode buttons will make it easier for you to locate
-              certain goals in different view modes. In priority view, these
-              button appear when hovering on a certain goal (map and timeline).
-              Vice versa, if you are on the map view mode, to locate a specific
-              goal in priority view, open the priority pop-up for that goal, and
-              click on the icon at the bottom of the pop-up.
-            </div>
-          </ol>
-        ),
-      },
+      // TODO: enable this section when the multi view location gets built-in
+      // {
+      //   title: 'Locate a goal in different view modes',
+      //   url: 'locate_a_goal_in_different_view_modes',
+      //   tab: 'How To',
+      //   description: (
+      //     <ol>
+      //       <div className='guidebook-description-section'>
+      //         The view mode buttons will make it easier for you to locate
+      //         certain goals in different view modes. In priority view, these
+      //         button appear when hovering on a certain goal (map and timeline).
+      //         Vice versa, if you are on the map view mode, to locate a specific
+      //         goal in priority view, open the priority pop-up for that goal, and
+      //         click on the icon at the bottom of the pop-up.
+      //       </div>
+      //     </ol>
+      //   ),
+      // },
     ],
   },
 
@@ -383,7 +385,7 @@ const howTosItems = [
       {
         title: 'Pan around in Map View Mode',
         url: 'pan_around',
-        tab: "How To's",
+        tab: 'How To',
         description: (
           <ol>
             <div className='guidebook-description-section'>
@@ -417,7 +419,7 @@ const howTosItems = [
       {
         title: 'Zoom in and out in Map View Mode',
         url: 'zooming_in_and_out',
-        tab: "How To's",
+        tab: 'How To',
         description: (
           <ol>
             <div className='guidebook-description-section'>
@@ -428,14 +430,24 @@ const howTosItems = [
                 Zoom by pinching in and out
               </div>
             </div>
-            {/* <div className='guidebook-description-section'>
+            <div className='guidebook-description-section'>
               <div className='guidebook-separate-line sub-heading'>Mouse</div>
               <div className='guidebook-separate-line'>
-                Use the mouse wheel while holding Ctrl/Cmd to zoom in and out
-                Using + and - icons on Map View Mode They are located on bottom
-                right corner of the Map View Mode.
+                {/* Use the mouse wheel while holding Ctrl/Cmd to zoom in and out */}
+                Click on the "-" and "+" icons on Map View Mode. They are
+                located at the bottom right corner of the Map View Mode.
               </div>
-            </div> */}
+            </div>
+            <div className='guidebook-description-section'>
+              <div className='guidebook-separate-line sub-heading'>
+                Current Zoom
+              </div>
+              <div className='guidebook-separate-line'>
+                The number next to the "-" and "+" icons in the bottom right
+                corner of the Map View Mode represents the current level of
+                zoom.
+              </div>
+            </div>
             {/* <div className='guidebook-description-section'>
               <div className='guidebook-separate-line sub-heading'>
               Keyboard
@@ -450,7 +462,7 @@ const howTosItems = [
       {
         title: 'Switch between Map & Priority View modes',
         url: 'switch_between_view_modes',
-        tab: "How To's",
+        tab: 'How To',
         description: (
           <ol>
             <div className='guidebook-description-section'>
@@ -462,7 +474,8 @@ const howTosItems = [
                 of the screen to switch between the two views.
               </div>
             </div>
-            <div className='guidebook-description-section'>
+            {/* TODO: show this instruction when the locate card on view mode gets built */}
+            {/* <div className='guidebook-description-section'>
               <div className='guidebook-separate-line sub-heading'>
                 Locating a specific card in a different view mode
               </div>
@@ -472,7 +485,7 @@ const howTosItems = [
                 pop-up, and vice versa: you can locate a selected card on
                 priority view to the Map view.
               </div>
-            </div>
+            </div> */}
           </ol>
         ),
       },
@@ -490,12 +503,12 @@ const howTosItems = [
           <ol>
             <div className='guidebook-description-section'>
               <div className='guidebook-separate-line'>
-                Priority View Mode is an alterntaive view mode to the map view
-                mode, specifically designed for helping you and your team with
+                Priority View Mode is an alternative view mode to the Map View
+                Mode, specifically designed for helping you and your team with
                 decision making on priority of the goals that you set on the
-                map. For determining the proiority of goals we have allocated 4
+                map. For determining the priority of goals we have allocated 4
                 factors:
-                <div className='guidebook-description-bold'>Urgence</div>
+                <div className='guidebook-description-bold'>Urgency</div>
                 <div className='guidebook-description-bold'>Importance</div>
                 <div className='guidebook-description-bold'>Effort</div>
                 <div className='guidebook-description-bold'>Impact</div>
@@ -505,41 +518,44 @@ const howTosItems = [
               <div className='guidebook-separate-line'>
                 The{' '}
                 <text className='guidebook-description-bold'>
-                  urgence-importance
+                  urgency-importance
                 </text>{' '}
-                intergration is inspired from a pricinciple called Eisenwhoer
-                Matix.
+                integration is inspired from a principle called Eisenhower
+                Matrix.
               </div>
               <div className='guidebook-separate-line'>
                 The{' '}
                 <text className='guidebook-description-bold'>
                   effort-impact
                 </text>{' '}
-                intergration is another way of prioritizing goals. “In the
-                effort-impact matrix, you evaluate tasks based on how much
-                effort they’ll require to complete and the impact that
-                completing them will have. The tasks in the two right-side
-                quadrants are your priorities.” Quote from
-                https://zapier.com/blog/how-to-prioritize/
+                integration is another way of prioritizing goals.{' '}
+                <a href='https://zapier.com/blog/how-to-prioritize/'>
+                  “In the effort-impact matrix, you evaluate tasks based on how
+                  much effort they’ll require to complete and the impact that
+                  completing them will have.”
+                </a>
+                The items in the left quadrants, which are both "More Impact",
+                are where you would start to work on tasks from, depending on
+                whether you are prepared for low or high effort.
               </div>
               <div className='guidebook-separate-line'>
-                As in complex projects the number of goals (and sometimes number
+                In complex projects as the number of goals (and sometimes number
                 of team members) expands, it gets more difficult to determine
                 ‘what to focus on next’.
               </div>
               <div className='guidebook-separate-line'>
                 All the team members (who have editing permssion) would be able
-                to “weigh in” their vote for these 4 facotrs for each goal
-                (either in map view or priority view) The “aggregated protiory”
-                that results from this collective poll will detremince where
-                each goal will stand on the priority view mode.
+                to “weigh in” their vote for these 4 factors for each goal
+                (either in map view or priority view) The “aggregated priority”
+                that results from this collective poll will determine where each
+                goal will stand on the priority view mode.
               </div>
               <div className='guidebook-separate-line guidebook-description-bold'>
-                If you have a diverse them and not sure if everyone is having a
+                If you have a diverse team and not sure if everyone is having a
                 shared understing of what each of these priority factors mean,
-                we recomemed having an onboradiang meeting/session with your
-                team members to develop of shared understing of each factor in
-                the context of the project you are working on.
+                we recommend having an onboarding meeting/session with your team
+                members to develop a shared understing of each factor in the
+                context of the project you are working on.
               </div>
             </div>
           </ol>
@@ -553,9 +569,9 @@ const howTosItems = [
           <ol>
             <div className='guidebook-description-section'>
               This column on the left side of Priority view page helps you with
-              finding a specific goal. By sleceting that goal you would be able
-              to filter the visiblity of the goals to down to only the childern
-              of that selected goal on the priority Quadrants.
+              finding and filtering by a specific goal. By selecting that goal
+              you would be able to filter the visiblity of the goals down to
+              only the childern of that selected goal on the priority quadrants.
             </div>
           </ol>
         ),
@@ -567,11 +583,11 @@ const howTosItems = [
         description: (
           <ol>
             <div className='guidebook-description-section'>
-              These tabs help you switch between piority matrixes (unrgent x
-              imprtnat and impact x effort), signle priority factors (feature in
-              developement), or uncategorazied goals. This gives you the
-              flexiblty to take action based on a specifc factor determining a
-              goal’s priority.
+              These tabs help you switch between priority matrixes (urgency x
+              important and impact x effort), single priority factors (feature
+              in developement), or uncategorized (not voted on) goals. This
+              gives you the flexibility to take action based on a specific
+              factor determining a goal’s priority.
             </div>
           </ol>
         ),
@@ -583,11 +599,13 @@ const howTosItems = [
         description: (
           <ol>
             <div className='guidebook-description-section'>
-              When hovering over goals in the priority view, “Weigh in” button
-              apprears if you haven’t voted for the priority of the goal on
-              hover state. If you have already voted for the priority of a goal,
-              a purple dot shows up under the goal title and when hovering on
-              the goal, “See my vote” button appears.
+              If you haven’t voted for the priority of the goal, When hovering
+              over goals in the priority view, “Weigh In” button apprears.
+            </div>
+            <div className='guidebook-description-section'>
+              If you have already voted for the priority of a goal, a purple dot
+              shows up under the goal title and when hovering on the goal, “See
+              My Vote” button appears.
             </div>
           </ol>
         ),
