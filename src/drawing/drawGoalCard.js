@@ -156,18 +156,18 @@ export default function render(
   }
 
   if (goal.time_frame) {
-    const calendarWidth = 17,
-      calendarHeight = 17
+    const calendarWidth = 13,
+      calendarHeight = 13
     const img = getOrSetImageForUrl(
-      'img/calendar.svg',
+      'img/calendar_898989.svg',
       calendarWidth,
       calendarHeight
     )
     if (!img) return
-    const xImgDraw = x + goalWidth / 2 - calendarWidth - 150
-    const yImgDraw = y + goalHeight / 2 - calendarHeight + 51
-    const textBoxLeft = xImgDraw + textBoxMarginLeft
-    const textBoxTop = yImgDraw + textBoxMarginTop / 4 - 4
+    const xImgDraw = x + goalWidth / 2 - calendarWidth - 140
+    const yImgDraw = y + goalHeight / 2 - calendarHeight + 46
+    const textBoxLeft = xImgDraw + textBoxMarginLeft - 8
+    const textBoxTop = yImgDraw + textBoxMarginTop / 4 - 6
     let text = goal.time_frame.from_date
       ? String(moment.unix(goal.time_frame.from_date).format('MMM D, YYYY - '))
       : ''
@@ -176,8 +176,8 @@ export default function render(
       : ''
     ctx.drawImage(img, xImgDraw, yImgDraw, calendarWidth, calendarHeight)
     ctx.save()
-    ctx.fillStyle = '#717171'
-    ctx.font = '13px rennerbook'
+    ctx.fillStyle = '#898989'
+    ctx.font = '13px CircularStd-book'
     ctx.fillText(text, textBoxLeft, textBoxTop)
     ctx.restore()
   }

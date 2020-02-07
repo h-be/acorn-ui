@@ -14,7 +14,7 @@ canvas {
 }
 
 body {
-  background-color: #f4f4f4;
+  background-color: #fafafa;
   font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
 }
 
@@ -33,6 +33,22 @@ div.react {
   font-family: 'CircularStd-Book';
   src: url('fonts/circular-std/CircularStd-Book.woff2') format('woff2'),
     url('fonts/circular-std/CircularStd-Book.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'CircularStd-Bold';
+  src: url('fonts/circular-std/CircularStd-Bold.ttf') format('woff2'),
+    url('fonts/circular-std/CircularStd-Bold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'CircularStd-Medium';
+  src: url('fonts/circular-std/CircularStd-Medium.ttf') format('woff2'),
+    url('fonts/circular-std/CircularStd-Medium.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -98,7 +114,7 @@ div.react {
 }
 
 @font-face {
-  font-family: 'rennerbold_italic';
+  font-family: 'rennerbook_italic';
   src: url('fonts/renner/renner-bolditalic-webfont.woff2') format('woff2'),
     url('fonts/renner/renner-bolditalic-webfont.woff') format('woff');
   font-weight: normal;
@@ -130,7 +146,7 @@ div.react {
 }
 
 @font-face {
-  font-family: 'renner_mediummedium';
+  font-family: 'rennermedium';
   src: url('fonts/renner/renner-medium-webfont.woff2') format('woff2'),
     url('fonts/renner/renner-medium-webfont.woff') format('woff');
   font-weight: normal;
@@ -138,7 +154,7 @@ div.react {
 }
 
 @font-face {
-  font-family: 'renner_mediummedium_italic';
+  font-family: 'rennermedium_italic';
   src: url('fonts/renner/renner-mediumitalic-webfont.woff2') format('woff2'),
     url('fonts/renner/renner-mediumitalic-webfont.woff') format('woff');
   font-weight: normal;
@@ -220,30 +236,30 @@ div.react {
 /* headers */
 
 h1 {
-  font-size: 24px;
-  line-height: 30px;
-  font-family: 'rennerbold', Helvetica, sans-serif;
+  font-size: 26px;
+  line-height: 32px;
+  font-family: 'CircularStd-Bold', Helvetica, sans-serif;
   font-weight: normal;
 }
 
 h2 {
-  font-size: 20px;
+  font-size: 22px;
   line-height: 28px;
-  font-family: 'rennerbold', Helvetica, sans-serif;
+  font-family: 'CircularStd-Bold', Helvetica, sans-serif;
   font-weight: normal;
 }
 
 h3 {
-  font-size: 18px;
-  line-height: 22px;
-  font-family: 'renner_mediummedium', Helvetica, sans-serif;
+  font-size: 20px;
+  line-height: 24px;
+  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
   font-weight: normal;
 }
 
 h4 {
-  font-size: 14px;
-  line-height: 18px;
-  font-family: 'rennerbook', Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+  font-family: 'CircularStd-Book', Helvetica, sans-serif;
   font-weight: normal;
   color: #717171;
 }
@@ -273,7 +289,7 @@ h4 {
   height: 70px;
   resize: none;
   color: #4d4d4d;
-  font-family: 'rennerbook', Helvetica, Sans-Serif;
+  font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
   font-size: 20px;
   line-height: 24px;
 }
@@ -283,7 +299,7 @@ h4 {
 }
 
 .goal_form_save {
-  margin-top: 75px;
+  margin-top: 60px;
   padding: 10px 30px;
   background: #00afa4 0% 0% no-repeat padding-box;
   opacity: 1;
@@ -341,7 +357,7 @@ h4 {
   background-color: rgba(134, 134, 134, 0.95);
   border: 1px solid rgba(134, 134, 134, 0.95);
   border-radius: 16px;
-  font-family: 'renner_mediummedium', Helvetica, Sans-Serif;
+  font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
   padding: 5px 25px 5px 15px;
   outline: 0;
   font-size: 16px;
@@ -393,10 +409,10 @@ h4 {
   outline: 0;
   padding: 2px;
   margin-left: 14px;
-  font-family: 'rennerbook', Helvetica, Sans-Serif;
+  font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
 }
 
-.people_picker_search input:placeholder {
+.people_picker_search input::placeholder {
   color: #a3a3a3;
 }
 
@@ -422,7 +438,7 @@ h4 {
 .people_picker_people li .person_name {
   flex: 1;
   padding: 1px 0px;
-  font-family: 'renner_mediummedium', Helvetica, sans-serif;
+  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
   font-size: 14px;
 }
 
@@ -435,7 +451,7 @@ h4 {
 .person_handle {
   font-size: 12px;
   color: #a3a3a3;
-  font-family: 'rennerbook', Helvetica, sans-serif;
+  font-family: 'CircularStd-Book', Helvetica, sans-serif;
 }
 
 .radio_button {
@@ -498,4 +514,10 @@ h4 {
 
 .bg_Complete {
   background-color: #83e300;
+}
+
+/* textarea placeholder */
+
+textarea::placeholder {
+  color: #aaaaaa;
 }

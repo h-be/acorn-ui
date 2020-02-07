@@ -36,6 +36,7 @@ export default function Tabs(props) {
             {props.children}
           </div>
         )}
+        <div className='scroll-bottom-fade-effect' />
       </div>
     </div>
   )
