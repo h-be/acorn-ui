@@ -74,7 +74,7 @@
 .canvas-name {
   font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
   font-weight: normal;
-  font-size: 18px;
+  font-size: 17px;
   margin-right: 20px;
   color: #4d4d4d;
 }
@@ -288,7 +288,7 @@ button.gray .icon {
 }
 .export-wrapper {
   margin-top: 62px;
-  margin-left: 277px;
+  margin-left: 348px;
   float: left;
   border-radius: 14px;
   background-color: #ffffff;

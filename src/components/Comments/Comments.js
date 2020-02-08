@@ -25,9 +25,9 @@ function Comment({ comment, agent }) {
           last_name={agent.last_name}
           avatar_url={agent.avatar_url}
           medium
-        />{' '}
+        />
       </div>
-      <div>
+      <div className='comment_history_content'>
         <div className='comment_history_info'>
           <div className='comment_history_name'>
             {agent.first_name + ' ' + agent.last_name}
@@ -77,18 +77,17 @@ function Comments({
   return (
     <div className='comments'>
       <div className='comments_avatarANDInput_wrapper'>
-        <div className='avatar_comment_container'>
-          <Avatar
+        {/* <div className='avatar_comment_container'>
+         <Avatar
             first_name={firstName}
             last_name={lastName}
             avatar_url={avatarUrl}
             mediumLarge
           />
-        </div>
+        </div> */}
         <div className='input_comment_row'>
           <div className='input_comment_wrapper'>
             <TextareaAutosize
-              className='input_comment'
               type='text'
               value={value}
               placeholder='write your comment here'
