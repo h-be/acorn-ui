@@ -51,6 +51,10 @@ a.tab-link {
   /* position: absolute; */
 }
 
+.tab-content section {
+  margin-bottom: 10px;
+}
+
 .tab-content.active {
   display: block;
   overflow-y: scroll;
@@ -58,6 +62,7 @@ a.tab-link {
   margin-top: 24px;
   position: relative;
 }
+
 .scroll-bottom-fade-effect {
   background: linear-gradient(transparent, white 55%);
   height: 35px;

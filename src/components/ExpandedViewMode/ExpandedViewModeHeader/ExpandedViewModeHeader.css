@@ -1,9 +1,10 @@
 .expanded_view_header {
   border-bottom: 1px solid #e8e8e8;
-  padding: 10px 20px;
+  padding: 11px 20px;
   display: flex;
   flex-direction: row;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .expanded_view_header .icon {
@@ -15,8 +16,9 @@
   margin-right: 0;
 }
 
-.expanded_view_status_icon {
-  margin: 0;
+.expanded_view_status_icon
+  > .status-color.tooltip-container.status-color-small.bg_Uncertain.can-click.not-hoverable {
+  margin: 0 16px 0 0;
 }
 
 .expanded_view_status_icon .status_color_small,
