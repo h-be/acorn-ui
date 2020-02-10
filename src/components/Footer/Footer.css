@@ -1,3 +1,9 @@
+.bottom-left-panel {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+}
+
 .bottom-right-panel {
   position: fixed;
   bottom: 10px;
