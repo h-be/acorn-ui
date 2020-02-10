@@ -12,7 +12,7 @@ function iconForHierarchy(hierarchy) {
     hierarchyIcon = 'trunk.svg'
   } else if (hierarchy == 'Root') {
     hierarchyIcon = 'root.svg'
-  } else if (hierarchy == 'No Hierarchy') {
+  } else if (hierarchy == 'NoHierarchy') {
     hierarchyIcon = 'question-mark.svg'
   }
 

@@ -70,4 +70,5 @@
   white-space: nowrap;
   left: 50%;
   transform: translateX(-50%);
+  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
 }
