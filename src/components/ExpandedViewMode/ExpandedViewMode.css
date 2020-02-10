@@ -46,8 +46,8 @@
 
 .expanded-view-wrapper .small-close {
   position: absolute;
-  top: 22px;
-  right: 22px;
+  top: 20px;
+  right: 20px;
   cursor: pointer;
 }
 
