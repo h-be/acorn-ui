@@ -3,6 +3,7 @@ import { NavItemsGroup } from '../NavItems/NavItems'
 import Icon from '../../Icon/Icon'
 
 const howTosItems = [
+  /* Cards */
   {
     title: 'Cards',
     submenu: [
@@ -248,6 +249,24 @@ const howTosItems = [
           <ol>
             <div className='guidebook-description-section'>
               <div className='guidebook-separate-line sub-heading'>
+                Introduction to goal hierarchy levels
+              </div>
+              <div className='guidebook-separate-line'>
+                Hierarchy adds another level of metadata to your goals. On
+                Acorn, there 4 hierarchy level options available inspired by a
+                tree mataphore: Root (primary goal) Trunk (high-level goal)
+                Branch (Sub-goal) Leaf (small goal) There is also the default
+                option of “no hierarchy”. Setting hierarchy for goals in a
+                complex project would help you and your team to be able to see
+                how bigger goals can break down to smaller units. While having
+                the bigger goals in the vision, your team would be able to
+                easily identify leaf (small) goals to complete. Completing small
+                goals more effectively, your team can see the progress being
+                made, feel accomplished, and know clearly where they are headed.
+              </div>
+            </div>
+            <div className='guidebook-description-section'>
+              <div className='guidebook-separate-line sub-heading'>
                 In Quick Edit Mode
               </div>
               <div className='guidebook-separate-line'>
@@ -378,7 +397,7 @@ const howTosItems = [
       // },
     ],
   },
-
+  /* Navigation */
   {
     title: 'Navigation',
     submenu: [
@@ -491,7 +510,7 @@ const howTosItems = [
       },
     ],
   },
-
+  /* Priority View Mode */
   {
     title: 'Priority View Mode',
     submenu: [
@@ -606,6 +625,27 @@ const howTosItems = [
               If you have already voted for the priority of a goal, a purple dot
               shows up under the goal title and when hovering on the goal, “See
               My Vote” button appears.
+            </div>
+          </ol>
+        ),
+      },
+    ],
+  },
+  /* My Data */
+  {
+    title: 'My Data',
+    submenu: [
+      {
+        title: 'Export my data',
+        url: 'export_my_data',
+        tab: 'How To',
+        description: (
+          <ol>
+            <div className='guidebook-description-section'>
+              <div className='guidebook-separate-line'>
+                Click on the Export icon on header (next to the board name), and
+                select one of the availble formats to export your data.
+              </div>
             </div>
           </ol>
         ),
