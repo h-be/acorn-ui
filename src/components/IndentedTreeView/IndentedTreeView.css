@@ -15,8 +15,9 @@
   border: 0;
   outline: 0;
   padding: 2px;
-  margin-left: 8px;
+  margin-left: 6px;
   font-family: 'CircularStd-book', Helvetica, Sans-Serif;
+  width: 136px;
 }
 
 .indented-view-search input::placeholder {

@@ -183,6 +183,8 @@ class Header extends React.Component {
                   <div className='canvas-name'>Acorn State of Affairs</div>
                   <div className='divider-line'></div>
                   <Icon
+                    withTooltip
+                    tooltipText='export'
                     name='export.svg'
                     size='header'
                     className={this.state.isExportOpen ? 'purple' : ''}

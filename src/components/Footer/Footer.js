@@ -26,13 +26,21 @@ function Footer() {
         {mapPage && <Zoom />}
         <div className='view-mode-icons'>
           <NavLink to='/board/map' activeClassName='view-mode-active'>
-            <Icon name='map.svg' size='view-mode' className='grey' />
+            <Icon
+              name='map.svg'
+              size='view-mode'
+              className='grey'
+              withTooltipTop
+              tooltipText='map view'
+            />
           </NavLink>
           <NavLink to='/board/priority' activeClassName='view-mode-active'>
             <Icon
               name='priority_898989.svg'
               size='view-mode'
               className='grey'
+              withTooltipTop
+              tooltipText='priority view'
             />
           </NavLink>
           {/* <Icon name='timeline_898989.svg' className='grey' size='view-mode' /> */}
