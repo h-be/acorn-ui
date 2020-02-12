@@ -20,7 +20,7 @@
   width: 136px;
 }
 
-.indented-view-search input:placeholder {
+.indented-view-search input::placeholder {
   color: #a3a3a3;
 }
 
@@ -55,11 +55,24 @@
   transition: all 0.2s;
 }
 
-.indented-view-goal-content-text {
+.indented-view-goal-iconANDtext {
   text-decoration: none;
   padding-left: 4px;
   transition: all 0.2s;
   display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.indented-view-goal-content-status-color {
+  width: 11px;
+  height: 11px;
+  margin: 0 4px 0 0;
+  padding: 1px;
+}
+
+.indented-view-goal-text {
+  margin-left: 6px;
 }
 
 .indented-view-goal-content:hover {

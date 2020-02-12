@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useLocation, NavLink } from 'react-router-dom'
 import Icon from '../Icon/Icon'
+import StatusIcon from '../StatusIcon/StatusIcon'
 
 import HierarchyIcon from '../HierarchyIcon/HierarchyIcon'
 
@@ -42,13 +43,22 @@ function NestedTreeGoal({ goal, level, filterText }) {
             }
             className='indented-view-goal-content'
             isActive={match => match && isUsingGoalAsContext}>
-            <div className='indented-view-goal-content-text'>
-              <HierarchyIcon
-                size='very-small'
-                hierarchy={goal.hierarchy}
-                status={goal.status}
-              />
-              {goal.content}
+            <div className='indented-view-goal-iconANDtext'>
+              {goal.hierarchy === 'NoHierarchy' ? (
+                <StatusIcon
+                  status={goal.status}
+                  notHoverable
+                  hideTooltip
+                  className='indented-view-goal-content-status-color'
+                />
+              ) : (
+                <HierarchyIcon
+                  size='very-small'
+                  hierarchy={goal.hierarchy}
+                  status={goal.status}
+                />
+              )}
+              <div className='indented-view-goal-text'>{goal.content}</div>
             </div>
           </NavLink>
         </div>

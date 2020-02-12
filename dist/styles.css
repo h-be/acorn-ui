@@ -437,15 +437,15 @@ h4 {
 
 .people_picker_people li .person_name {
   flex: 1;
-  padding: 1px 0px;
   font-family: 'CircularStd-Medium', Helvetica, sans-serif;
   font-size: 14px;
+  line-height: 12px;
 }
 
 .person_nameANDhandle {
   display: flex;
   flex-direction: column;
-  padding-left: 4px;
+  padding-left: 6px;
 }
 
 .person_handle {
@@ -498,6 +498,10 @@ h4 {
 .bg_Uncertain {
   background-color: #ff5d36;
   color: #ffffff;
+}
+
+.tooltip.bg_Uncertain {
+  color: white;
 }
 
 .bg_Incomplete {
