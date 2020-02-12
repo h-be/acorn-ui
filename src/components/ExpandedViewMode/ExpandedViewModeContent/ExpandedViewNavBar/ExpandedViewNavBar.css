@@ -12,13 +12,14 @@
   padding: 5px 0px;
   display: flex;
   flex-direction: row;
-  font-size: 12px;
+  font-size: 14px;
   font-family: 'CircularStd-Medium', Helvetica, sans-serif;
   font-weight: normal;
   cursor: pointer;
   border-bottom: 3px solid transparent;
   /* margin-raight is temporary until other NavTab items are developed */
   margin-right: 20px;
+  align-items: center;
 }
 
 /* NavBar Item Hover State */

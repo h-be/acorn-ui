@@ -15,7 +15,7 @@ function StatusIcon({
   const classList = `status-color tooltip-container status-color-${size} bg_${status} ${
     selected ? 'has-status' : ''
   } ${onClick ? 'can-click' : ''} ${className} 
-  ${notHoverable ? 'hot-hoverable' : ''}`
+  ${notHoverable ? 'not-hoverable' : ''}`
 
   // change camel case from spaced words e.g. "InReview" to "In Review"
   const readable = status.replace(/([A-Z])/g, ' $1')
