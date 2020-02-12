@@ -237,7 +237,7 @@
   flex-direction: column;
 }
 
-/* user status on header */
+/* User Status on header */
 
 .btn:hover {
   background-color: #f2f2f2;
@@ -286,9 +286,40 @@ button.gray .icon {
   display: flex;
   flex-direction: column;
 }
+
+.user-status-wrapper button {
+  padding: 0 25px;
+  outline: none;
+  background: none;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.user-status-wrapper button .icon {
+  border-radius: 50%;
+  height: 16px;
+  width: 16px;
+}
+
+.user-status-wrapper button p {
+  font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
+  font-size: 14px;
+  padding-left: 10px;
+}
+
+.user-status-wrapper button:hover {
+  background: #f4f4f4 none repeat scroll 0% 0%;
+  color: #5f65ff;
+}
+
+/* Export */
+
 .export-wrapper {
   margin-top: 62px;
-  margin-left: 348px;
+  margin-left: 349px;
   float: left;
   border-radius: 14px;
   background-color: #ffffff;
@@ -297,6 +328,7 @@ button.gray .icon {
   display: flex;
   flex-direction: column;
 }
+
 .export-wrapper a {
   padding: 12px 25px;
   color: black;
@@ -328,34 +360,8 @@ button.gray .icon {
   font-size: 10px;
   z-index: 100;
 }
+
 .export-wrapper a:hover {
-  background: #f4f4f4 none repeat scroll 0% 0%;
-  color: #5f65ff;
-}
-.user-status-wrapper button {
-  padding: 0 25px;
-  outline: none;
-  background: none;
-  border: none;
-  text-decoration: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-
-.user-status-wrapper button .icon {
-  border-radius: 50%;
-  height: 16px;
-  width: 16px;
-}
-
-.user-status-wrapper button p {
-  font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
-  font-size: 14px;
-  padding-left: 10px;
-}
-
-.user-status-wrapper button:hover {
   background: #f4f4f4 none repeat scroll 0% 0%;
   color: #5f65ff;
 }

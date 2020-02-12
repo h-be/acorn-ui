@@ -171,3 +171,33 @@
 .icon.Complete .inner-icon {
   background-color: #83e300;
 }
+
+/* Tooltips */
+
+.icon.withTooltip:hover .icon-tooltip {
+  display: block;
+  transition-delay: 0.9s;
+  visibility: visible;
+  transition-property: visibility;
+}
+
+.icon-tooltip {
+  transition: 0.3s all;
+  position: absolute;
+  visibility: hidden;
+  padding: 7px 8px;
+  border-radius: 3px;
+  color: white;
+  font-size: 11px;
+  line-height: 12px;
+  bottom: -30px;
+  white-space: nowrap;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #5f65ff;
+  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
+}
+
+.icon-tooltip.top {
+  bottom: 30px;
+}
