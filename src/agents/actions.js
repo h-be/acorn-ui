@@ -9,7 +9,17 @@ import { createHolochainZomeCallAsyncAction } from '@holochain/hc-redux-middlewa
 
 import { DEVELOPMENT_INSTANCE_NAME, ZOME_NAME } from '../holochainConfig'
 
+// SET because it could be brand new, or an update, but treat it the same way
+const SET_AGENT = 'set_agent'
+
 /* action creator functions */
+
+const setAgent = agent => {
+  return {
+    type: SET_AGENT,
+    payload: agent,
+  }
+}
 
 const fetchAgents = createHolochainZomeCallAsyncAction(
   DEVELOPMENT_INSTANCE_NAME,
@@ -17,4 +27,4 @@ const fetchAgents = createHolochainZomeCallAsyncAction(
   'fetch_agents'
 )
 
-export { fetchAgents }
+export { SET_AGENT, setAgent, fetchAgents }

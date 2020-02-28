@@ -20,12 +20,12 @@ import {
   DEFAULT_HOLOCHAIN_HOST,
 } from './holochainConfig'
 import acorn from './reducer'
+import signalsHandlers from './signalsHandlers'
 import { fetchAgents } from './agents/actions'
 import { fetchGoals } from './goals/actions'
 import { fetchEdges } from './edges/actions'
 import { fetchGoalMembers } from './goal-members/actions'
 import { fetchGoalComments } from './goal-comments/actions'
-
 import { fetchGoalVotes } from './goal-votes/actions'
 import { whoami } from './who-am-i/actions'
 import { fetchAgentAddress } from './agent-address/actions'
@@ -53,62 +53,18 @@ let store = createStore(
   /* preloadedState, */ composeEnhancers(applyMiddleware(...middleware))
 )
 
-// dispatch fetch goals, and fetch edges functions to pull in all the existing goals and edges
-// on first render
-const secs = num => num * 1000
+// set up a "signal" or "events" listener, once
+// there is a connection to the Holochain Conductor
+hcWc.then(({ onSignal }) => {
+  signalsHandlers(store, onSignal)
+})
 
-// recurring
-setInterval(() => {
-  store.dispatch(fetchAgents.create({}))
-}, secs(20))
-// initial
 store.dispatch(fetchAgents.create({}))
-
-setTimeout(() => {
-  // recurring
-  setInterval(() => {
-    store.dispatch(fetchGoals.create({}))
-  }, secs(20))
-  // initial
-  store.dispatch(fetchGoals.create({}))
-}, secs(3))
-
-setTimeout(() => {
-  // recurring
-  setInterval(() => {
-    store.dispatch(fetchEdges.create({}))
-  }, secs(20))
-  // initial
-  store.dispatch(fetchEdges.create({}))
-}, secs(6))
-
-setTimeout(() => {
-  // recurring
-  setInterval(() => {
-    store.dispatch(fetchGoalMembers.create({}))
-  }, secs(20))
-  // initial
-  store.dispatch(fetchGoalMembers.create({}))
-}, secs(9))
-
-setTimeout(() => {
-  // recurring
-  setInterval(() => {
-    store.dispatch(fetchGoalVotes.create({}))
-  }, secs(20))
-  // initial
-  store.dispatch(fetchGoalVotes.create({}))
-}, secs(12))
-
-setTimeout(() => {
-  // recurring
-  setInterval(() => {
-    store.dispatch(fetchGoalComments.create({}))
-  }, secs(20))
-  // initial
-  store.dispatch(fetchGoalComments.create({}))
-}, secs(15))
-
+store.dispatch(fetchGoals.create({}))
+store.dispatch(fetchEdges.create({}))
+store.dispatch(fetchGoalMembers.create({}))
+store.dispatch(fetchGoalVotes.create({}))
+store.dispatch(fetchGoalComments.create({}))
 store.dispatch(whoami.create({}))
 store.dispatch(fetchAgentAddress.create({}))
 /*

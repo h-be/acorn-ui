@@ -40,6 +40,8 @@ export default function(state = defaultState, action) {
       // mapped is [ { key: val, address: 'QmAsdFg' }, ...]
       return _.keyBy(mapped, 'address')
     case archiveCommentOfGoal.success().type:
+      // the payload itself should be the address of the comment being archived
+      // filter that comment out of the new state
       return _.pickBy(state, (value, key) => key !== payload)
     case archiveGoal.success().type:
       // filter out the Goalmembers whose addresses are listed as having been
