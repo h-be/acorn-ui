@@ -6,7 +6,7 @@
 */
 import _ from 'lodash'
 
-import { fetchAgents } from './actions'
+import { SET_AGENT, fetchAgents } from './actions'
 
 const defaultState = []
 
@@ -15,6 +15,11 @@ export default function(state = defaultState, action) {
   switch (type) {
     case fetchAgents.success().type:
       return _.keyBy(payload, 'address')
+    case SET_AGENT:
+      return {
+        ...state,
+        [payload.address]: payload,
+      }
     default:
       return state
   }
