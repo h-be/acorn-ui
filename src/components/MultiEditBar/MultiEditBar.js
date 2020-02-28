@@ -208,7 +208,7 @@ function MultiEditBar({
               className='status-popup'
               heading='Setting Status for Multiple Cards'
               content={statusAlertContent}
-              popupIcon='status_unknown.svg'
+              popupIcon='status-unknown.svg'
               primaryButton='Yes, Proceed'
               altButton='Nevermind'
               primaryButtonAction={() => setPopup(false)}

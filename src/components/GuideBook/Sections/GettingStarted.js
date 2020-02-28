@@ -155,7 +155,7 @@ const Content = ({ goBack, title, description }) => (
   <div className='guidebook-section'>
     <div className='nav-item'>
       <Icon
-        name='back_717171.svg'
+        name='back.svg'
         size='very-small'
         className='grey'
         onClick={goBack}

@@ -109,13 +109,13 @@ function PriorityGoal({ whoami, goal, votes, createGoalVote }) {
           {/* <div className='priority-quadrant-goal-view-mode-icons'>
             <NavLink to='/board/map'>
               <Icon
-                name='map_aaaaa.svg'
+                name='map.svg'
                 size='view-mode-small'
                 className='grey'
               />
             </NavLink>
             <Icon
-              name='timeline_aaaaa.svg'
+              name='timeline.svg'
               size='view-mode-small'
               className='grey'
             />
