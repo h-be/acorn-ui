@@ -8,9 +8,9 @@ function StatusPicker({ selectedStatus, statusClicked, onClose }) {
   const statuses = [
     'Uncertain',
     'Incomplete',
-    'Complete',
     'InProcess',
     'InReview',
+    'Complete',
   ]
 
   return (

@@ -47,6 +47,8 @@ function SquirrelInfoPopup({ squirrel, onClose, archiveMemberOfGoal }) {
 export default function ExpandedViewModeContent({
   goalAddress,
   goal,
+  goalContent,
+  goalDescription,
   updateGoal,
   squirrels,
   archiveMemberOfGoal,
@@ -64,16 +66,16 @@ export default function ExpandedViewModeContent({
   const [squirrelInfoPopup, setSquirrelInfoPopup] = useState(null)
   const [editTimeframe, setEditTimeframe] = useState(false)
 
-  const [content, setContent] = useState(goal.content)
-  const [description, setDescription] = useState(goal.description)
+  const [content, setContent] = useState(goalContent)
+  const [description, setDescription] = useState(goalDescription)
 
   // handle change of goal
   useEffect(() => {
-    if (goal) {
-      setContent(goal.content)
-      setDescription(goal.description)
-    }
-  }, [goal])
+    setContent(goalContent)
+  }, [goalContent])
+  useEffect(() => {
+    setDescription(goalDescription)
+  }, [goalDescription])
 
   const updateContent = () => {
     updateGoal(

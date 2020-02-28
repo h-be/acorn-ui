@@ -11,16 +11,10 @@ export default function HierarchyPicker({
 }) {
   const hierarchies = [
     {
-      name: 'Leaf',
-      displayName: 'Leaf',
-      icon: 'leaf.svg',
-      description: 'small goal',
-    },
-    {
-      name: 'Branch',
-      displayName: 'Branch',
-      icon: 'branch.svg',
-      description: 'sub-goal',
+      name: 'Root',
+      displayName: 'Root',
+      icon: 'root.svg',
+      description: 'primary goal',
     },
     {
       name: 'Trunk',
@@ -29,10 +23,16 @@ export default function HierarchyPicker({
       description: 'high-level goal',
     },
     {
-      name: 'Root',
-      displayName: 'Root',
-      icon: 'root.svg',
-      description: 'primary goal',
+      name: 'Branch',
+      displayName: 'Branch',
+      icon: 'branch.svg',
+      description: 'sub-goal',
+    },
+    {
+      name: 'Leaf',
+      displayName: 'Leaf',
+      icon: 'leaf.svg',
+      description: 'small goal',
     },
     {
       name: 'NoHierarchy',

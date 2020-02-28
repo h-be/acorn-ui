@@ -81,6 +81,8 @@ function ExpandedViewMode({
               goalAddress={goalAddress}
               updateGoal={updateGoal}
               goal={goalState}
+              goalContent={goalState.content}
+              goalDescription={goalState.description}
               archiveMemberOfGoal={archiveMemberOfGoal}
             />
             <RightMenu
