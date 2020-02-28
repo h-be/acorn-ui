@@ -83,14 +83,14 @@ function PeoplePicker({
                 </div>
                 {!person.is_member && (
                   <Icon
-                    name='radio_button.svg'
+                    name='radio-button.svg'
                     size='small'
                     className='light-grey radio_button'
                   />
                 )}
                 {person.is_member && (
                   <Icon
-                    name='radio_button_checked.svg'
+                    name='radio-button-checked.svg'
                     size='small'
                     className='purple radio_button'
                   />

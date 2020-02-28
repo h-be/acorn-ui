@@ -67,7 +67,7 @@ export default function RightMenu({ goalAddress, goal, updateGoal }) {
     <div className='expanded_view_right_menu'>
       {/* priority */}
       <Icon
-        name='priority_4d4d4d.svg'
+        name='priority.svg'
         className={rightMenuPriorityClass}
         key='priority'
         onClick={() => toggleView('priority')}
@@ -90,7 +90,7 @@ export default function RightMenu({ goalAddress, goal, updateGoal }) {
       )}
       {/* timeframe */}
       <Icon
-        name='calendar_4d4d4d.svg'
+        name='calendar.svg'
         className={rightMenuTimeframeClass}
         key='timeframe'
         onClick={() => toggleView('timeframe')}
@@ -118,28 +118,25 @@ export default function RightMenu({ goalAddress, goal, updateGoal }) {
         />
       )}
 
+      <Icon name='tag.svg' className='right_menu_tag feature-in-development' />
       <Icon
-        name='tag_4d4d4d.svg'
-        className='right_menu_tag feature-in-development'
-      />
-      <Icon
-        name='help_4d4d4d.svg'
+        name='help.svg'
         className='right_menu_help feature-in-development'
       />
       <Icon
-        name='link_4d4d4d.svg'
+        name='link.svg'
         className='right_menu_link feature-in-development'
       />
       <Icon
-        name='archive_4d4d4d.svg'
+        name='archive.svg'
         className='right_menu_archive feature-in-development'
       />
       <Icon
-        name='share_4d4d4d.svg'
+        name='share.svg'
         className='right_menu_share feature-in-development'
       />
       <Icon
-        name='github_4d4d4d.svg'
+        name='github.svg'
         className='right_menu_github feature-in-development'
       />
     </div>

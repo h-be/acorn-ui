@@ -101,14 +101,14 @@ function HierarchyOption({
         </div>
         {!selected && (
           <Icon
-            name='radio_button.svg'
+            name='radio-button.svg'
             size='small'
             className='light-grey radio_button not-hoverable'
           />
         )}
         {selected && (
           <Icon
-            name='radio_button_checked.svg'
+            name='radio-button-checked.svg'
             size='small'
             className='purple radio_button'
           />

@@ -15,7 +15,7 @@ function ExpandedViewNavBar({ onChange, activeTab }) {
     },
     {
       text: 'activity history',
-      icon: 'activity_history.svg',
+      icon: 'activity-history.svg',
     },
     //{
     // text: 'attachments',
