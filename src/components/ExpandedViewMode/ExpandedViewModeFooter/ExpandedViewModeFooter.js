@@ -20,7 +20,7 @@ export default function ExpandedViewModeFooter({ goal, creator }) {
         {/* TODO make this a dynamically calculated value */}
         <div className='footer_status_unknowns feature-in-development'>
           <Icon
-            name='status_unknown.svg'
+            name='status-unknown.svg'
             size='small'
             className='not-hoverable'
           />{' '}

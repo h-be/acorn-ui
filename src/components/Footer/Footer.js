@@ -36,14 +36,14 @@ function Footer() {
           </NavLink>
           <NavLink to='/board/priority' activeClassName='view-mode-active'>
             <Icon
-              name='priority_898989.svg'
+              name='priority.svg'
               size='view-mode'
               className='grey'
               withTooltipTop
               tooltipText='priority view'
             />
           </NavLink>
-          {/* <Icon name='timeline_898989.svg' className='grey' size='view-mode' /> */}
+          {/* <Icon name='timeline.svg' className='grey' size='view-mode' /> */}
         </div>
       </div>
     </div>

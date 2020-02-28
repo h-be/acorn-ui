@@ -174,7 +174,7 @@ class Header extends React.Component {
                       path='/board/priority'
                       render={() => (
                         <Icon
-                          name='priority_898989.svg'
+                          name='priority.svg'
                           className='view-mode grey not-hoverable'
                         />
                       )}
@@ -248,7 +248,7 @@ class Header extends React.Component {
         {!this.state.isGuideOpen && (
           <div className='guidebook_open_help'>
             <div>Click on the Guidebook to learn more</div>
-            <img src='img/arrow_curved.svg' />
+            <img src='img/arrow-curved.svg' />
           </div>
         )}
         {this.state.isGuideOpen && (

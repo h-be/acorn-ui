@@ -103,16 +103,12 @@ function VerticalActionsList({
         />
         <VerticalActionListItem
           label='hierarchy'
-          icon={
-            <Icon name='hierarchy_white.svg' className='white not-hoverable' />
-          }
+          icon={<Icon name='hierarchy.svg' className='white not-hoverable' />}
           onClick={() => toggleView('hierarchy')}
         />
         <VerticalActionListItem
           label='priority'
-          icon={
-            <Icon name='priority_white.svg' className='white not-hoverable' />
-          }
+          icon={<Icon name='priority.svg' className='white not-hoverable' />}
           onClick={() => toggleView('priority')}
         />
         {/* TODO : make the Alert Popup screen and certain elements */}
