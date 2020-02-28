@@ -57,17 +57,17 @@ export default function ExpandedViewModeHeader({
         />
       )}
       <Icon
-        name='lock_closed_4d4d4d.svg'
+        name='lock-closed.svg'
         className='edibility_permission feature-in-development'
         size='medium-expanded-view'
       />
       <Icon
-        name='eye_4d4d4d.svg'
+        name='eye.svg'
         className='visiblity feature-in-development'
         size='medium-expanded-view'
       />
       <Icon
-        name='notification_4d4d4d.svg'
+        name='notification.svg'
         className='follow feature-in-development'
         size='medium-expanded-view'
       />
