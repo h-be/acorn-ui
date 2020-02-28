@@ -261,10 +261,10 @@ function Priority({
       return value.agent_address === whoami.entry.address
     })
     if (!vote) return
-    archiveVoteOfGoal(vote.address).then(() => {
-      setOpenMyVote(false)
-    })
+    setOpenMyVote(false)
+    archiveVoteOfGoal(vote.address)
   }
+
   return (
     <PickerTemplate
       className='priority_picker_wrapper'
