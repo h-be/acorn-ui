@@ -57,7 +57,7 @@ export default function setupEventListeners(store, canvas) {
     // there are event.code and event.key ...
     // event.key is keyboard layout independent, so works for Dvorak users
     switch (event.key) {
-      case 'KeyG':
+      case 'g':
         // only dispatch SET_G_KEYDOWN if it's not already down
         if (state.ui.keyboard.gKeyDown) {
           event.preventDefault()
@@ -65,18 +65,16 @@ export default function setupEventListeners(store, canvas) {
           store.dispatch(setGKeyDown())
         }
         break
-      case 'KeyE':
+      case 'e':
         if (
           state.ui.selection.selectedGoals.length === 1 &&
           !state.ui.goalForm.isOpen &&
           !state.ui.expandedView.isOpen
         ) {
-          console.log('eh')
           store.dispatch(openExpandedView(state.ui.selection.selectedGoals[0]))
         }
         break
-      case 'ShiftLeft':
-      case 'ShiftRight':
+      case 'Shift':
         store.dispatch(setShiftKeyDown())
         break
       case 'Escape':
@@ -99,11 +97,11 @@ export default function setupEventListeners(store, canvas) {
           // prevent the browser from navigating back to the last page
           event.preventDefault()
         }
-      case 'ControlLeft':
-      case 'ControlRight':
+      case 'Control':
+      case 'Control':
         store.dispatch(setCtrlKeyDown())
         break
-      case 'KeyC':
+      case 'c':
         if (state.ui.keyboard.ctrlKeyDown) {
           if (state.ui.selection.selectedGoals.length) {
             // use first
@@ -111,7 +109,7 @@ export default function setupEventListeners(store, canvas) {
           }
         }
         break
-      case 'KeyV':
+      case 'v':
         if (state.ui.keyboard.ctrlKeyDown) {
           if (state.ui.goalClone.goals.length) {
             cloneGoals(
@@ -134,15 +132,13 @@ export default function setupEventListeners(store, canvas) {
     // there are event.code and event.key ...
     // event.key is keyboard layout independent, so works for Dvorak users
     switch (event.key) {
-      case 'KeyG':
+      case 'g':
         store.dispatch(unsetGKeyDown())
         break
-      case 'ShiftLeft':
-      case 'ShiftRight':
+      case 'Shift':
         store.dispatch(unsetShiftKeyDown())
         break
-      case 'ControlLeft':
-      case 'ControlRight':
+      case 'Control':
         store.dispatch(unsetCtrlKeyDown())
         break
       default:

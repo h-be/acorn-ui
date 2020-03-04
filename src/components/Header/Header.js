@@ -255,7 +255,7 @@ class Header extends React.Component {
           <div className='guidebook-outer-wrapper'>
             <GuideBook />
             <Icon
-              name='x_a3a3a3.svg'
+              name='x.svg'
               size='small-close'
               className='grey'
               onClick={() => {

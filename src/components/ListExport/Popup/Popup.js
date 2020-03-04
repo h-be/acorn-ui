@@ -8,7 +8,7 @@ export default function Popup({ active, handleToHide }) {
     <div className={'popup ' + (active ? 'active' : '')}>
       <div className='popup-window'>
         <Icon
-          name='x_a3a3a3.svg'
+          name='x.svg'
           onClick={handleToHide}
           className='btn-close-modal grey'
         />
