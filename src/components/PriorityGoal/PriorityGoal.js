@@ -68,7 +68,7 @@ function PriorityGoal({ whoami, goal, votes, createGoalVote }) {
             {goal.time_frame && (
               <div className='priority-quadrant-goal-timeframe'>
                 <Icon
-                  name='calendar_898989.svg'
+                  name='calendar.svg'
                   size='very-small'
                   className='grey not-hoverable'
                 />
