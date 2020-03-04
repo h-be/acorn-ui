@@ -306,7 +306,7 @@ function Priority({
       )}
 
       {/* Weigh In / Vote */}
-      {openMyVote && (
+      {openMyVote && myVote && (
         <div className='my_vote'>
           <WeighIn myVote={myVote} onUpdate={onUpdateVote} />
           <div className='priority_wrapper_button'>
