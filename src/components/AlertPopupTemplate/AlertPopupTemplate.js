@@ -20,7 +20,7 @@ export default function AlertPopupTemplate({
     <div className='alert-popup'>
       <div className={`${className} alert-popup-wrapper`}>
         <Icon
-          name='x_a3a3a3.svg'
+          name='x.svg'
           size='small-close'
           className='grey'
           onClick={() => onClose()}

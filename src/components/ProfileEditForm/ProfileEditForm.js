@@ -114,7 +114,7 @@ function ProfileEditForm({
       {canClose && (
         <Icon
           onClick={onClose}
-          name='x_a3a3a3.svg'
+          name='x.svg'
           size='small-close'
           className='grey'
         />
