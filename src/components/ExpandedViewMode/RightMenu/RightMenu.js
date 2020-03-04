@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import moment from 'moment'
 import './RightMenu.css'
 
@@ -30,6 +30,12 @@ export default function RightMenu({ goalAddress, goal, updateGoal }) {
   }
 
   const [viewsOpen, setViews] = useState(defaultViews)
+
+  useEffect(() => {
+    if (!goalAddress) {
+      setViews({ ...defaultViews })
+    }
+  }, [goalAddress])
 
   const rightMenuPriorityClass = viewsOpen.priority ? 'active' : ''
   const rightMenuHelpClass = viewsOpen.help ? 'active' : ''

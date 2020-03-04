@@ -69,6 +69,16 @@ export default function ExpandedViewModeContent({
   const [content, setContent] = useState(goalContent)
   const [description, setDescription] = useState(goalDescription)
 
+  // reset
+  useEffect(() => {
+    if (!goalAddress) {
+      setActiveTab('comments')
+      setEditSquirrels(false)
+      setSquirrelInfoPopup(null)
+      setEditTimeframe(false)
+    }
+  }, [goalAddress])
+
   // handle change of goal
   useEffect(() => {
     setContent(goalContent)
