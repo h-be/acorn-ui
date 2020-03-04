@@ -54,7 +54,9 @@ export default function setupEventListeners(store, canvas) {
 
   function bodyKeydown(event) {
     let state = store.getState()
-    switch (event.code) {
+    // there are event.code and event.key ...
+    // event.key is keyboard layout independent, so works for Dvorak users
+    switch (event.key) {
       case 'KeyG':
         // only dispatch SET_G_KEYDOWN if it's not already down
         if (state.ui.keyboard.gKeyDown) {
@@ -129,7 +131,9 @@ export default function setupEventListeners(store, canvas) {
   }
 
   function bodyKeyup(event) {
-    switch (event.code) {
+    // there are event.code and event.key ...
+    // event.key is keyboard layout independent, so works for Dvorak users
+    switch (event.key) {
       case 'KeyG':
         store.dispatch(unsetGKeyDown())
         break
