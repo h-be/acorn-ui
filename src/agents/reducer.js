@@ -7,6 +7,12 @@
 import _ from 'lodash'
 
 import { SET_AGENT, fetchAgents } from './actions'
+import {
+  whoami,
+  createWhoami,
+  updateWhoami,
+  updateStatus,
+} from '../who-am-i/actions'
 
 const defaultState = []
 
@@ -19,6 +25,13 @@ export default function(state = defaultState, action) {
       return {
         ...state,
         [payload.address]: payload,
+      }
+    case updateStatus.success().type:
+    case createWhoami.success().type:
+    case updateWhoami.success().type:
+      return {
+        ...state,
+        [payload.entry.address]: payload.entry,
       }
     default:
       return state
