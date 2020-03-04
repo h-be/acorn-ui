@@ -159,7 +159,7 @@ export default function render(
     const calendarWidth = 13,
       calendarHeight = 13
     const img = getOrSetImageForUrl(
-      'img/calendar_898989.svg',
+      'img/calendar.svg',
       calendarWidth,
       calendarHeight
     )
