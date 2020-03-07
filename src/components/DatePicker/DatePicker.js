@@ -18,9 +18,9 @@ function DatePicker({ fromDate, toDate, onClose, onSet }) {
   const [focusedInput, setFocusedInput] = useState(START_DATE)
 
   useEffect(() => {
-    if (dates.fromDate && dates.toDate) {
-      onSet(dates.fromDate.unix(), dates.toDate.unix())
-    }
+    onSet(
+      dates.fromDate ? dates.fromDate.unix() : null,
+      dates.toDate ? dates.toDate.unix() : null)
   }, [dates])
 
   return (
@@ -41,8 +41,8 @@ function DatePicker({ fromDate, toDate, onClose, onSet }) {
           endDate={dates.toDate} // momentPropTypes.momentObj or null,
           endDateId='your_unique_end_date_id'
           onDatesChange={({ startDate, endDate }) =>
-            setDates({ fromDate: startDate, toDate: endDate })
-          }
+              setDates({ fromDate: startDate, toDate: endDate })
+            }
           focusedInput={focusedInput}
           onFocusChange={focusedInput => {
              // doesn't update the focusedInput if it is trying to close the DRP
