@@ -185,7 +185,7 @@ function MultiEditBar({
           key='hierarchy'
           onClick={() => toggleView('hierarchy')}
         />
-        {viewsOpen.hierarchy && (
+        {viewsOpen.hierarchy && selectedGoals.length > 0 && (
           <HierarchyPicker
             selectedHierarchy={selectedGoals[0].hierarchy}
             hierarchyClicked={updateGoals('hierarchy')}
