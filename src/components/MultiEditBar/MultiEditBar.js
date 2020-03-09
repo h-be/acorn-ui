@@ -127,10 +127,16 @@ function MultiEditBar({
   /* timeframe consts */
 
   const updateTimeframe = (start, end) => {
-    updateGoals('time_frame')({
-      from_date: start,
-      to_date: end,
-    })
+    let timeframe = null;
+
+    if (start && end) {
+      timeframe = {
+        from_date: start,
+        to_date: end,
+      }
+    }
+
+    updateGoals('time_frame')(timeframe)
   }
 
   return (

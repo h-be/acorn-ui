@@ -65,14 +65,20 @@ function VerticalActionsList({
   // timeframe consts
 
   const updateTimeframe = (start, end) => {
+    let timeframe = null;
+
+    if (start && end) {
+      timeframe = {
+        from_date: start,
+        to_date: end,
+      }
+    }
+
     updateGoal(
       {
         ...goal,
         timestamp_updated: moment().unix(),
-        time_frame: {
-          from_date: start,
-          to_date: end,
-        },
+        time_frame: timeframe
       },
       goalAddress
     )
