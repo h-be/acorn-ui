@@ -15,9 +15,10 @@
 .validating_form_input label {
   color: #222222;
   line-height: 19px;
-  font-size: 16px;
+  font-size: 14px;
   margin-bottom: 7px;
   display: block;
+  font-family: 'CircularStd-Medium';
 }
 
 .validating_form_input .help_text {
@@ -35,7 +36,7 @@
 }
 
 .validating_form_input .input_wrapper input {
-  border: 1.1px solid #d1d1d1;
+  border: 1.2px solid #e2e2e2;
   outline: none;
   font-size: 14px;
   line-height: 16px;
@@ -46,10 +47,15 @@
   flex: 1;
   font-family: 'CircularStd-book', Helvetica, sans-serif;
   height: 16px;
+  transition: border 0.1s ease-in;
 }
 
-.validating_form_input .input_wrapper input:placeholder {
-  color: #e8e8e8;
+.validating_form_input .input_wrapper input:focus {
+  border: 1.2px solid #5f65ff;
+}
+
+.validating_form_input .input_wrapper input::placeholder {
+  color: #d1d1d1;
 }
 
 .validating_form_input input.with_at_symbol {
@@ -69,11 +75,11 @@
 }
 
 .validating_form_input .input_wrapper input.invalid-input {
-  border: 1.1px solid #ff5d36;
+  border: 1.2px solid #ff5d36;
 }
 
 .validating_form_input .input_wrapper input.valid-input {
-  border: 1.1px solid #00d6c8;
+  border: 1.2px solid #00d6c8;
 }
 
 .validation-mark {

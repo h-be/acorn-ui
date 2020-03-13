@@ -1,13 +1,27 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import Popup from './Popup/Popup'
+
+import Modal, { ModalContent } from '../Modal/Modal'
 
 const ListExport = props => {
   const [popup, setPopup] = useState(false)
 
   return (
     <>
-      <Popup active={popup} handleToHide={() => setPopup(false)} />
+      <Modal active={popup} onClose={() => setPopup(false)}>
+        <ModalContent
+          heading='Exporting'
+          icon='export.svg'
+          content={
+            <>
+              You just exported the <b>Acorn State of Affairs</b> canvas. You
+              will be able to find it in your Downloads folder!
+            </>
+          }
+          primaryButton='OK'
+          primaryButtonAction={() => setPopup(false)}
+        />
+      </Modal>
       <a
         href={url(props.type, props.data)}
         onClick={() => {

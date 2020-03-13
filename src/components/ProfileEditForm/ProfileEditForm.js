@@ -12,13 +12,11 @@ const urlRegex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\
 
 function ProfileEditForm({
   onSubmit,
-  onClose,
   agentAddress,
   whoami,
   titleText,
   subText,
   submitText,
-  canClose,
 }) {
   const [firstName, setFirstName] = useState('')
   const [isValidFirstName, setisValidFirstName] = useState(true)
@@ -111,14 +109,6 @@ function ProfileEditForm({
 
   return (
     <div className='profile_edit_form'>
-      {canClose && (
-        <Icon
-          onClick={onClose}
-          name='x.svg'
-          size='small-close'
-          className='grey'
-        />
-      )}
       <div className='profile_edit_form_title'>
         <h1>{titleText}</h1>
         <h4>{subText}</h4>

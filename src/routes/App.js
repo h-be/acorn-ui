@@ -10,6 +10,7 @@ import Header from '../components/Header/Header'
 import ProfileEditForm from '../components/ProfileEditForm/ProfileEditForm'
 import LoadingScreen from '../components/LoadingScreen/LoadingScreen'
 import Footer from '../components/Footer/Footer'
+import Modal from '../components/Modal/Modal'
 
 // import new routes here
 import IntroScreen from '../components/IntroScreen/IntroScreen'
@@ -33,7 +34,6 @@ function App(props) {
   const titleText = 'Profile Settings'
   const subText = ''
   const submitText = 'Save Changes'
-  const canClose = true
 
   return (
     <Router>
@@ -53,16 +53,17 @@ function App(props) {
           setShowProfileEditForm={setShowProfileEditForm}
         />
       )}
-      {showProfileEditForm && (
-        <div className='profile_edit_wrapper'>
-          <ProfileEditForm
-            onSubmit={onProfileSubmit}
-            onClose={() => setShowProfileEditForm(false)}
-            whoami={whoami ? whoami.entry : null}
-            {...{ canClose, titleText, subText, submitText, agentAddress }}
-          />
-        </div>
-      )}
+      {/* This will only show when 'active' prop is true */}
+      <Modal
+        white
+        active={showProfileEditForm}
+        onClose={() => setShowProfileEditForm(false)}>
+        <ProfileEditForm
+          onSubmit={onProfileSubmit}
+          whoami={whoami ? whoami.entry : null}
+          {...{ titleText, subText, submitText, agentAddress }}
+        />
+      </Modal>
       {!agentAddress && <LoadingScreen />}
       {agentAddress && !whoami && <Redirect to='/intro' />}
       {agentAddress && whoami && <Footer />}
