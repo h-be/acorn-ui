@@ -13,7 +13,7 @@ import StatusIcon from './StatusIcon/StatusIcon'
 
 import { archiveGoal, updateGoal } from '../goals/actions'
 import { closeGoalForm } from '../goal-form/actions'
-import AlertPopupTemplate from './AlertPopupTemplate/AlertPopupTemplate'
+import Modal, { ModalContent } from './Modal/Modal'
 
 function VerticalActionListItem({ onClick, label, icon }) {
   return (
@@ -65,7 +65,7 @@ function VerticalActionsList({
   // timeframe consts
 
   const updateTimeframe = (start, end) => {
-    let timeframe = null;
+    let timeframe = null
 
     if (start && end) {
       timeframe = {
@@ -78,7 +78,7 @@ function VerticalActionsList({
       {
         ...goal,
         timestamp_updated: moment().unix(),
-        time_frame: timeframe
+        time_frame: timeframe,
       },
       goalAddress
     )
@@ -158,19 +158,20 @@ function VerticalActionsList({
           />
         )}
       </div>
-      {viewsOpen.archive && (
-        <AlertPopupTemplate
-          onClose={() => setViews({ ...defaultViews })}
-          className='archive_popup'
+      <Modal
+        active={viewsOpen.archive}
+        onClose={() => setViews({ ...defaultViews })}
+        className='archive_popup'>
+        <ModalContent
           heading='Archiving'
           content={archiveContent}
-          popupIcon='archive.svg'
+          icon='archive.svg'
           primaryButton='Yes, Archive'
           altButton='Nevermind'
           primaryButtonAction={() => onArchiveClick(goalAddress)}
           altButtonAction={() => setViews({ ...defaultViews })}
         />
-      )}
+      </Modal>
     </>
   )
 }

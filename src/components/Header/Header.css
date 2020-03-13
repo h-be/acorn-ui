@@ -62,13 +62,21 @@
   margin: 12px;
 }
 
+.home-link {
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .logo p {
   text-align: left;
   letter-spacing: 0.1px;
   color: #2b2b2b;
   margin-top: -2px;
   font-family: 'gilroyextrabold', Helvetica, sans-serif;
-  cursor: default;
+}
+
+.logo:hover .icon .inner-icon {
+  cursor: pointer;
 }
 
 .canvas-name {

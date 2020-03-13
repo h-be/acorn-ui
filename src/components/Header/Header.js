@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, NavLink } from 'react-router-dom'
 import onClickOutside from 'react-onclickoutside'
 import GuideBook from '../GuideBook/GuideBook'
 import './Header.css'
@@ -19,10 +19,10 @@ class Header extends React.Component {
     this.clickSearch = this.clickSearch.bind(this)
     this.clickExport = this.clickExport.bind(this)
     this.saveStatus = this.saveStatus.bind(this)
-
     this.hover = this.hover.bind(this)
     this.handleStatusEnter = this.handleStatusEnter.bind(this)
     this.handleStatusLeave = this.handleStatusLeave.bind(this)
+
     this.state = {
       isGuideOpen: false,
       online: {},
@@ -150,17 +150,17 @@ class Header extends React.Component {
       <div className='header-wrapper'>
         <div className='header'>
           <div className='top-left-panel'>
-            <div className='logo'>
+            <NavLink to='/' className='home-link logo'>
               <Icon
                 name='acorn-logo-stroked.svg'
                 className='logo not-hoverable'
               />
               <p className='logo-name'>acorn</p>
-            </div>
+            </NavLink>
             {this.props.whoami && (
-              <div className='current-canvas-wrapper'>
-                <div className='current-canvas-content'>
-                  <Switch>
+              <Route path='/board'>
+                <div className='current-canvas-wrapper'>
+                  <div className='current-canvas-content'>
                     <Route
                       path='/board/map'
                       render={() => (
@@ -179,19 +179,19 @@ class Header extends React.Component {
                         />
                       )}
                     />
-                  </Switch>
-                  <div className='canvas-name'>Acorn State of Affairs</div>
-                  <div className='divider-line'></div>
-                  <Icon
-                    withTooltip
-                    tooltipText='export'
-                    name='export.svg'
-                    size='header'
-                    className={this.state.isExportOpen ? 'purple' : ''}
-                    onClick={this.clickExport}
-                  />
+                    <div className='canvas-name'>Acorn State of Affairs</div>
+                    <div className='divider-line'></div>
+                    <Icon
+                      withTooltip
+                      tooltipText='export'
+                      name='export.svg'
+                      size='header'
+                      className={this.state.isExportOpen ? 'purple' : ''}
+                      onClick={this.clickExport}
+                    />
+                  </div>
                 </div>
-              </div>
+              </Route>
             )}
           </div>
           {this.props.whoami && (

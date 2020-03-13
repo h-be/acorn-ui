@@ -56,6 +56,7 @@
   width: 24px;
   border-radius: 12px;
   object-fit: cover;
+  font-size: 11px;
 }
 
 .initials-avatar.medium {

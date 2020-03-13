@@ -1,0 +1,10 @@
+.join-project-modal-wrapper {
+  width: 550px;
+  height: 443px;
+  overflow: hidden;
+  position: relative;
+}
+
+.join-project-modal-wrapper .validating_form_input {
+  margin-bottom: 28px;
+}
