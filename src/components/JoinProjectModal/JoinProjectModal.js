@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import './JoinProjectModal.css'
 
+import Icon from '../Icon/Icon'
+
 import ValidatingFormInput from '../ValidatingFormInput/ValidatingFormInput'
 import Modal from '../Modal/Modal'
 import {
@@ -11,24 +13,38 @@ import {
   ProjectModalSubHeading,
 } from '../ProjectModal/ProjectModal'
 
-export default function CreateProjectModal({
+export default function JoinProjectModal({
   showModal,
   onClose,
   onJoinProject,
 }) {
   const reset = () => {
     setProjectSecret('')
+    setValidatingSecret(false)
   }
-  const onSubmit = () => {
+  const onValidate = () => {
     // chain this with a .then
-    onJoinProject(projectSecret)
-    reset()
+    setValidatingSecret(true)
   }
   const onDone = () => {
     onClose()
   }
 
   const [projectSecret, setProjectSecret] = useState('')
+
+  const [validatingSecret, setValidatingSecret] = useState(false)
+
+  const validateButtonContent = validatingSecret ? (
+    <div className='validating-button'>
+      <Icon
+        name='acorn-logo-stroked.svg'
+        className='white not-hoverable very-small'
+      />
+      <div>Validating...</div>
+    </div>
+  ) : (
+    'Validate'
+  )
 
   return (
     <Modal
@@ -47,7 +63,7 @@ export default function CreateProjectModal({
           />
         </ProjectModalContentSpacer>
       </ProjectModalContent>
-      <ProjectModalButton text='Done' onClick={onDone} />
+      <ProjectModalButton text={validateButtonContent} onClick={onValidate} />
     </Modal>
   )
 }

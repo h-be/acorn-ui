@@ -27,6 +27,7 @@ import { fetchEdges } from './edges/actions'
 import { fetchGoalMembers } from './goal-members/actions'
 import { fetchGoalComments } from './goal-comments/actions'
 import { fetchGoalVotes } from './goal-votes/actions'
+import { fetchProjectsDnas, fetchProjectsInstances } from './projects/actions'
 import { whoami } from './who-am-i/actions'
 import { fetchAgentAddress } from './agent-address/actions'
 import App from './routes/App'
@@ -59,6 +60,9 @@ hcWc.then(({ onSignal }) => {
   signalsHandlers(store, onSignal)
 })
 
+store.dispatch(fetchProjectsDnas.create({}))
+store.dispatch(fetchProjectsInstances.create({}))
+// all of these should be fetched within ProjectView
 store.dispatch(fetchAgents.create({}))
 store.dispatch(fetchGoals.create({}))
 store.dispatch(fetchEdges.create({}))
