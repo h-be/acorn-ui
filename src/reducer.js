@@ -14,6 +14,7 @@ import edges from './edges/reducer'
 import goalMembers from './goal-members/reducer'
 import whoami from './who-am-i/reducer'
 import agentAddress from './agent-address/reducer'
+import projects from './projects/reducer'
 import goalForm from './goal-form/reducer'
 import selection from './selection/reducer'
 import hover from './hover/reducer'
@@ -32,6 +33,7 @@ import goalHistory from './goal-history/reducer'
 // combine reducers from each feature to create the top-level reducer
 export default combineReducers({
   agents,
+  projects,
   goals, // goals: goals,
   edges, // edges: edges,
   goalMembers,

@@ -9,10 +9,6 @@
   margin-bottom: 28px;
 }
 
-.project-modal-content {
-  margin-bottom: 50px;
-}
-
 /* create project modal animation */
 
 .create-project-form {
@@ -44,4 +40,9 @@
   opacity: 1;
   -webkit-transform: scale(1);
   transform: scale(1);
+}
+
+.project-secret-row {
+  display: flex;
+  flex-direction: row;
 }

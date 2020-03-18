@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
+import { connect } from 'react-redux'
 import './Dashboard.css'
 import Icon from '../../components/Icon/Icon'
 
@@ -8,11 +9,19 @@ import './DashboardListProject.css'
 import Avatar from '../../components/Avatar/Avatar'
 import CreateProjectModal from '../../components/CreateProjectModal/CreateProjectModal'
 import JoinProjectModal from '../../components/JoinProjectModal/JoinProjectModal'
+import InviteMembersModal from '../../components/InviteMembersModal/InviteMembersModal'
 // import new modals here
 
-function DashboardListProject({ project }) {
-  const [showEntryPoints, setShowEntryPoints] = useState(false)
+import {
+  createProjectDna,
+  createProjectInstance,
+  fetchProjectsDnas,
+  fetchProjectsInstances,
+  joinProject,
+} from '../../projects/actions'
 
+function DashboardListProject({ project, setShowInviteMembersModal }) {
+  const [showEntryPoints, setShowEntryPoints] = useState(false)
   return (
     <div className='dashboard-list-project-wrapper'>
       <div className='dashboard-list-project'>
@@ -40,7 +49,10 @@ function DashboardListProject({ project }) {
               />
             ))}
           </div>
-          <div className='dashboard-invite-members-button'>
+          <div
+            className='dashboard-invite-members-button'
+            onClick={() => setShowInviteMembersModal(true)}
+            I>
             <Icon name='plus.svg' size='very-small' />
             Invite members
           </div>
@@ -81,24 +93,14 @@ function DashboardListProject({ project }) {
   )
 }
 
-export default function Dashboard() {
+function Dashboard({ projects, createProject, joinProject }) {
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [showJoinModal, setShowJoinModal] = useState(false)
+  const [showInviteMembersModal, setShowInviteMembersModal] = useState(false)
   // add new modal state managers here
 
-  const [projects, setProjects] = useState([])
-  const onCreateProject = ({ name, image }) => {
-    setProjects(
-      projects.concat([
-        {
-          address: 'abcd',
-          name,
-          members: [{ first_name: 'Harry', last_name: 'Potter' }],
-          entryPoints: ['e'],
-          image: image || 'https://via.placeholder.com/68',
-        },
-      ])
-    )
+  const onCreateProject = project => {
+    createProject(project)
   }
 
   const onJoinProject = projectSecret => {}
@@ -138,7 +140,10 @@ export default function Dashboard() {
           </div>
           <div className='my-projects-content'>
             {projects.map(project => (
-              <DashboardListProject project={project} />
+              <DashboardListProject
+                project={project}
+                setShowInviteMembersModal={setShowInviteMembersModal}
+              />
             ))}
             {!hasProjects && (
               <div className='dashboard-empty-state'>
@@ -178,7 +183,49 @@ export default function Dashboard() {
         showModal={showJoinModal}
         onClose={() => setShowJoinModal(false)}
       />
+      <InviteMembersModal
+        showModal={showInviteMembersModal}
+        onClose={() => setShowInviteMembersModal(false)}
+      />
       {/* add new modals here */}
     </>
   )
 }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    createProject: project => {
+      // .then and add the metadata
+      const someNewDnaId = '1234newid' + Math.random()
+      return dispatch(createProjectDna.create(someNewDnaId))
+        .then(() => {
+          return dispatch(
+            // TODO: don't use project.name here, generate something fresh
+            createProjectInstance.create(project.name, someNewDnaId)
+          )
+        })
+        .then(() => {
+          dispatch(fetchProjectsDnas.create({}))
+          dispatch(fetchProjectsInstances.create({}))
+        })
+    },
+    joinProject: secret => {
+      // joinProject
+      // return dispatch(closeExpandedView())
+    },
+  }
+}
+
+function mapStateToProps(state) {
+  return {
+    projects: Object.keys(state.projects.instances).map(instanceId => ({
+      address: 'abcd',
+      name: instanceId,
+      members: [{ first_name: 'Harry', last_name: 'Potter' }],
+      entryPoints: ['e'],
+      image: 'https://via.placeholder.com/68',
+    })),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
