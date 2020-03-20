@@ -1,9 +1,17 @@
 import { selectGoal } from '../selection/actions'
-import { createGoal } from '../goals/actions'
-import { addMemberOfGoal } from '../goal-members/actions'
+import { createGoal } from '../projects/goals/actions'
+import { addMemberOfGoal } from '../projects/goal-members/actions'
 import moment from 'moment'
 
-export default function cloneGoals(store, goalsToClone, goalMembers, goals) {
+export default function cloneGoals(store) {
+  const state = store.getState()
+  const {
+    ui: { activeProject },
+  } = state
+  const goalsToClone = state.ui.goalClone.goals
+  const goals = state.projects.goals[activeProject]
+  const goalMembers = state.projects.goalMembers[activeProject]
+
   goalsToClone.forEach(value => {
     let members = []
     Object.values(goalMembers).map(_value => {
@@ -12,7 +20,7 @@ export default function cloneGoals(store, goalsToClone, goalMembers, goals) {
 
     store
       .dispatch(
-        createGoal.create({
+        createGoal(activeProject).create({
           goal: {
             ...goals[value],
             timestamp_created: moment().unix(),
@@ -25,7 +33,7 @@ export default function cloneGoals(store, goalsToClone, goalMembers, goals) {
         store.dispatch(selectGoal(value.goal.address))
         members.map(member => {
           store.dispatch(
-            addMemberOfGoal.create({
+            addMemberOfGoal(activeProject).create({
               goal_member: {
                 goal_address: newGoalAddress,
                 agent_address: member.agent_address,

@@ -6,7 +6,8 @@
 */
 
 import { SELECT_GOAL, UNSELECT_GOAL, UNSELECT_ALL } from './actions'
-import { archiveGoal } from '../goals/actions'
+import { ARCHIVE_GOAL } from '../projects/goals/actions'
+import { typeSuccess } from '../projects/action_type_checker'
 
 const defaultState = {
   selectedGoals: [],
@@ -24,6 +25,20 @@ function arrayWithoutElement(array, elem) {
 
 export default function(state = defaultState, action) {
   const { payload, type } = action
+
+  if (typeSuccess(type, ARCHIVE_GOAL)) {
+    // unselect if the archived Goal was selected
+    return state.selectedGoals.includes(payload.address)
+      ? {
+          ...state,
+          selectedGoals: arrayWithoutElement(
+            state.selectedGoals,
+            payload.address
+          ),
+        }
+      : { ...state }
+  }
+
   switch (type) {
     case SELECT_GOAL:
       return {
@@ -45,17 +60,6 @@ export default function(state = defaultState, action) {
         ...state,
         selectedGoals: [],
       }
-    case archiveGoal.success().type:
-      // unselect if the archived Goal was selected
-      return state.selectedGoals.includes(payload.address)
-        ? {
-            ...state,
-            selectedGoals: arrayWithoutElement(
-              state.selectedGoals,
-              payload.address
-            ),
-          }
-        : { ...state }
     default:
       return state
   }

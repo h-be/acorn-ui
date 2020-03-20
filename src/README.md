@@ -1,32 +1,31 @@
 Folders:
 
 - Redux
-    - Holochain Actions/Reducers
-        - agents
-        - goals
-        - edges
-        - goal-members
-        - who-am-i
-    - UI only Actions/Reducers
-        - goal-form
-        - hover
-        - keyboard
-        - mouse
-        - screensize
-        - selection
-        - viewport
+  - Holochain Actions/Reducers
+    - agents
+    - goals
+    - edges
+    - goal-members
+    - who-am-i
+  - UI only Actions/Reducers
+    - goal-form
+    - hover
+    - keyboard
+    - mouse
+    - screensize
+    - selection
+    - viewport
 - React
-    - components
-    - routes
+  - components
+  - routes
 - HTML5 Canvas
-    - drawing
+  - drawing
 - Keyboard, Mouse, and Screen Event Listeners
-    - event-listeners
-        - These should be "broken out" into separate files, rather than all stuck in here together, but all these event listeners get set up when the page first loads.
+  - event-listeners
+    - These should be "broken out" into separate files, rather than all stuck in here together, but all these event listeners get set up when the page first loads.
 
-
-Folders are, in general, organized according to “features”, which relates to slices of the redux state. Such as “keyboard”. 
-Within the “keyboard” folder is “actions.js” which defines the action types, and “action creators” for those action types 
+Folders are, in general, organized according to “features”, which relates to slices of the redux state. Such as “keyboard”.
+Within the “keyboard” folder is “actions.js” which defines the action types, and “action creators” for those action types
 https://redux.js.org/basics/actions#action-creators
 Also within “keyboard” is “reducer.js” which defines the reducer which acts as the primary handler for those actions.
 
@@ -38,13 +37,13 @@ https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfk
 All the reducers from the different folders are combined in src/reducer.js
 
 The aspects of redux which interact asynchronously with Holochain, use a library called “hc-redux-middleware”
-https://www.npmjs.com/package/@holochain/hc-redux-middleware
+https://www.npmjs.com/package/connoropolous-hc-redux-middleware
 
-___ 
+---
 
 HTML5 Canvas drawing
 
-The folder where this all happens is `drawing`. 
+The folder where this all happens is `drawing`.
 
 `drawing/index.js` exports a `render` function which is the main one. It handles the drawing of everything from the redux state, onto the Canvas. A new paint occurs every time the redux state is udpated. It is very fast, so performance is not an issue. In order to repaint, first it clears what was drawn on the Canvas, then paints everything fresh.
 
@@ -58,8 +57,7 @@ Because of "zooming and panning" features, there are two coordinate systems that
 
 `eventDetection.js` is used to check whether mousemove events, and mouseclick events occur "over" a Goal so that we can change and update the UI, with hover states, or selection.
 
-___
-
+---
 
 This is a sample snapshot of the redux state
 

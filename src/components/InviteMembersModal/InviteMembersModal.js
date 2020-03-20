@@ -14,7 +14,7 @@ import {
   ProjectModalSubHeading,
 } from '../ProjectModal/ProjectModal'
 
-export default function InviteMembersModal({ showModal, onClose }) {
+export default function InviteMembersModal({ showModal, onClose, passphrase }) {
   const reset = () => {
     setProjectSecret('')
     setValidatingSecret(false)
@@ -23,10 +23,6 @@ export default function InviteMembersModal({ showModal, onClose }) {
   const onDone = () => {
     onClose()
   }
-
-  const [projectSecret, setProjectSecret] = useState(
-    'pickle cat cowboy vodka copper'
-  )
 
   return (
     <Modal
@@ -39,14 +35,11 @@ export default function InviteMembersModal({ showModal, onClose }) {
         <ProjectModalContentSpacer>
           <div className='project-secret-row'>
             <ValidatingFormInput
-              value={projectSecret}
+              value={passphrase}
               label='Project invitation secret'
               helpText='Share this secret phrase with people you want to invite to this project'
             />
-            <div>
-              <Icon name='image/refresh.png' />
-              reset
-            </div>
+            {/*  TODO: add onclick listener */}
             <div>
               <Icon name='copy.svg' />
               copy

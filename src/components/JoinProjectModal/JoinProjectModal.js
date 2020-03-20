@@ -23,8 +23,9 @@ export default function JoinProjectModal({
     setValidatingSecret(false)
   }
   const onValidate = () => {
-    // chain this with a .then
     setValidatingSecret(true)
+    // chain this with a .then
+    onJoinProject(projectSecret)
   }
   const onDone = () => {
     onClose()
@@ -35,13 +36,13 @@ export default function JoinProjectModal({
   const [validatingSecret, setValidatingSecret] = useState(false)
 
   const validateButtonContent = validatingSecret ? (
-    <div className='validating-button'>
+    <span className='validating-button'>
       <Icon
         name='acorn-logo-stroked.svg'
         className='white not-hoverable very-small'
       />
-      <div>Validating...</div>
-    </div>
+      <span>Validating...</span>
+    </span>
   ) : (
     'Validate'
   )

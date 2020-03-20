@@ -16,8 +16,7 @@ import Modal from '../components/Modal/Modal'
 import IntroScreen from '../components/IntroScreen/IntroScreen'
 import CreateProfilePage from './CreateProfilePage/CreateProfilePage'
 import Dashboard from './Dashboard/Dashboard'
-import MapView from './MapView'
-import PriorityView from './PriorityView'
+import ProjectView from './ProjectView/ProjectView'
 
 function App(props) {
   const {
@@ -42,8 +41,7 @@ function App(props) {
         <Route path='/intro' component={IntroScreen} />
         <Route path='/register' component={CreateProfilePage} />
         <Route path='/dashboard' component={Dashboard} />
-        <Route path='/board/map' component={MapView} />
-        <Route path='/board/priority' component={PriorityView} />
+        <Route path='/project/:projectId' component={ProjectView} />
         <Route path='/' render={() => <Redirect to='/dashboard' />} />
       </Switch>
       {agentAddress && (

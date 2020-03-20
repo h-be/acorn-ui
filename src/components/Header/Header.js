@@ -158,11 +158,11 @@ class Header extends React.Component {
               <p className='logo-name'>acorn</p>
             </NavLink>
             {this.props.whoami && (
-              <Route path='/board'>
+              <Route path='/project'>
                 <div className='current-canvas-wrapper'>
                   <div className='current-canvas-content'>
                     <Route
-                      path='/board/map'
+                      path='/project/:projectId/map'
                       render={() => (
                         <Icon
                           name='map.svg'
@@ -171,7 +171,7 @@ class Header extends React.Component {
                       )}
                     />
                     <Route
-                      path='/board/priority'
+                      path='/project/:projectId/priority'
                       render={() => (
                         <Icon
                           name='priority.svg'

@@ -19,7 +19,7 @@ function CreateProfilePage({ agentAddress, createWhoami }) {
   }
 
   return submitted ? (
-    <Redirect to='/board/map' />
+    <Redirect to='/' />
   ) : (
     <div className='create_profile_page'>
       <div className='profile_create_wrapper'>

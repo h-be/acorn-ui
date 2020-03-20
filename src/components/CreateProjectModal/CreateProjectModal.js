@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import randomWord from 'diceware-word'
 import './CreateProjectModal.css'
 
 import Button from '../Button/Button'
@@ -12,6 +13,10 @@ import {
   ProjectModalHeading,
   ProjectModalSubHeading,
 } from '../ProjectModal/ProjectModal'
+
+function generateUuid() {
+  return `${randomWord()} ${randomWord()} ${randomWord()} ${randomWord()} ${randomWord()}`
+}
 
 function CreateProjectForm({
   onSubmit,
@@ -88,9 +93,7 @@ function CreateProjectForm({
   )
 }
 
-function ProjectCreatedModal({ onDone, projectCreated }) {
-  const projectSecret = 'pickle cat cowboy vodka copper'
-
+function ProjectCreatedModal({ onDone, projectCreated, projectSecret }) {
   return (
     <div
       className={`project-created-modal ${
@@ -122,18 +125,23 @@ export default function CreateProjectModal({
   }
   const onSubmit = () => {
     // chain this with a .then
-    onCreateProject({
-      name: projectName,
-      image: projectCoverUrl,
-    })
+    onCreateProject(
+      {
+        name: projectName,
+        image: projectCoverUrl,
+      },
+      projectSecret
+    )
     setProjectCreated(true)
     reset()
   }
   const onDone = () => {
     onClose()
     setProjectCreated(false)
+    setProjectSecret(generateUuid())
   }
 
+  const [projectSecret, setProjectSecret] = useState(generateUuid())
   const [projectCreated, setProjectCreated] = useState(false)
   const [projectName, setProjectName] = useState('')
   const [projectCoverUrl, setProjectCoverUrl] = useState('')
@@ -144,7 +152,11 @@ export default function CreateProjectModal({
       active={showModal}
       onClose={onClose}
       className='create-project-modal-wrapper'>
-      <ProjectCreatedModal onDone={onDone} projectCreated={projectCreated} />
+      <ProjectCreatedModal
+        projectSecret={projectSecret}
+        onDone={onDone}
+        projectCreated={projectCreated}
+      />
       <CreateProjectForm
         onSubmit={onSubmit}
         projectCreated={projectCreated}

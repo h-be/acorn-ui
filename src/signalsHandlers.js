@@ -6,10 +6,16 @@ the same events types, because their payload signatures match,
 and the reducers handle them the same way
 */
 
-import { createGoal, archiveGoal } from './goals/actions'
-import { addVoteOfGoal, archiveVoteOfGoal } from './goal-votes/actions'
-import { addMemberOfGoal, archiveMemberOfGoal } from './goal-members/actions'
-import { addCommentOfGoal, archiveCommentOfGoal } from './goal-comments/actions'
+import { createGoal, archiveGoal } from './projects/goals/actions'
+import { addVoteOfGoal, archiveVoteOfGoal } from './projects/goal-votes/actions'
+import {
+  addMemberOfGoal,
+  archiveMemberOfGoal,
+} from './projects/goal-members/actions'
+import {
+  addCommentOfGoal,
+  archiveCommentOfGoal,
+} from './projects/goal-comments/actions'
 import { setAgent } from './agents/actions'
 
 // We directly use the 'success' type, since these actions
@@ -24,6 +30,7 @@ function createSignalAction(holochainAction, payload) {
 export default function(store, onSignal) {
   onSignal(rawSignal => {
     console.log(JSON.stringify(rawSignal.signal))
+    return // TODO: fixup this
     const signalContent = rawSignal.signal
     let signalArgs = JSON.parse(signalContent.arguments)
     switch (signalContent.name) {

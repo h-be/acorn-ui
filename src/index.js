@@ -12,7 +12,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
 import { connect } from '@holochain/hc-web-client'
-import { holochainMiddleware } from '@holochain/hc-redux-middleware'
+import { holochainMiddleware } from 'connoropolous-hc-redux-middleware'
 
 // Local Imports
 import {
@@ -22,11 +22,6 @@ import {
 import acorn from './reducer'
 import signalsHandlers from './signalsHandlers'
 import { fetchAgents } from './agents/actions'
-import { fetchGoals } from './goals/actions'
-import { fetchEdges } from './edges/actions'
-import { fetchGoalMembers } from './goal-members/actions'
-import { fetchGoalComments } from './goal-comments/actions'
-import { fetchGoalVotes } from './goal-votes/actions'
 import { fetchProjectsDnas, fetchProjectsInstances } from './projects/actions'
 import { whoami } from './who-am-i/actions'
 import { fetchAgentAddress } from './agent-address/actions'
@@ -38,11 +33,11 @@ const websocketUrl = `ws://${DEFAULT_HOLOCHAIN_HOST}:${DEFAULT_HOLOCHAIN_PORT}`
 // Holochain Conductor
 const connectOpts =
   process.env.NODE_ENV === 'development' ? { url: websocketUrl } : undefined
-const hcWc = connect(connectOpts)
+const hcWebClient = connect(connectOpts)
 
 // holochainMiddleware takes in the hc-web-client websocket connection
 // and uses it to facilitate the calls to Holochain
-const middleware = [holochainMiddleware(hcWc)]
+const middleware = [holochainMiddleware(hcWebClient)]
 
 // This enables the redux-devtools browser extension
 // which gives really awesome debugging for apps that use redux
@@ -56,26 +51,15 @@ let store = createStore(
 
 // set up a "signal" or "events" listener, once
 // there is a connection to the Holochain Conductor
-hcWc.then(({ onSignal }) => {
+hcWebClient.then(({ onSignal }) => {
   signalsHandlers(store, onSignal)
 })
 
 store.dispatch(fetchProjectsDnas.create({}))
 store.dispatch(fetchProjectsInstances.create({}))
-// all of these should be fetched within ProjectView
 store.dispatch(fetchAgents.create({}))
-store.dispatch(fetchGoals.create({}))
-store.dispatch(fetchEdges.create({}))
-store.dispatch(fetchGoalMembers.create({}))
-store.dispatch(fetchGoalVotes.create({}))
-store.dispatch(fetchGoalComments.create({}))
 store.dispatch(whoami.create({}))
 store.dispatch(fetchAgentAddress.create({}))
-/*
-  store.subscribe(cb)
-  store.getState()
-  store.dispatch(action)
-*/
 
 // By passing the `store` in as a wrapper around our React component
 // we make the state available throughout it

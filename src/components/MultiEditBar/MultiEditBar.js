@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import useOnClickOutside from 'use-onclickoutside'
-import { archiveGoal, updateGoal } from '../../goals/actions'
+import { archiveGoal, updateGoal } from '../../projects/goals/actions'
 import moment from 'moment'
 
 import './MultiEditBar.css'
@@ -198,7 +198,7 @@ function MultiEditBar({
           onClick={() => toggleView('squirrels')}
         />
         {viewsOpen.squirrels && (
-          <PeoplePicker onClose={() => setViews({ ...defaultViews })} />
+          <PeoplePicker projectId={projectId} onClose={() => setViews({ ...defaultViews })} />
         )} */}
         {/* timeframe */}
         <Icon
@@ -284,20 +284,24 @@ MultiEditBar.propTypes = {
 }
 
 function mapStateToProps(state) {
+  const {
+    ui: { activeProject },
+  } = state
   return {
     selectedGoals: state.ui.selection.selectedGoals.map(
-      address => state.goals[address]
+      address => state.projects.goals[activeProject][address]
     ),
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, ownProps) {
+  const { projectId } = ownProps
   return {
     updateGoal: (goal, address) => {
-      return dispatch(updateGoal.create({ address, goal }))
+      return dispatch(updateGoal(projectId).create({ address, goal }))
     },
     archiveGoal: address => {
-      return dispatch(archiveGoal.create({ address }))
+      return dispatch(archiveGoal(projectId).create({ address }))
     },
   }
 }

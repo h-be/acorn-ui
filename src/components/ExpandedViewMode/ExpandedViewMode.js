@@ -4,17 +4,18 @@ import PropTypes from 'prop-types'
 import './ExpandedViewMode.css'
 import Icon from '../Icon/Icon'
 
-import { updateGoal } from '../../goals/actions'
+import { updateGoal } from '../../projects/goals/actions'
 
 import ExpandedViewModeHeader from './ExpandedViewModeHeader/ExpandedViewModeHeader'
 import RightMenu from './RightMenu/RightMenu'
 import ExpandedViewModeContent from './ExpandedViewModeContent/ExpandedViewModeContent'
 
-import { archiveMemberOfGoal } from '../../goal-members/actions'
+import { archiveMemberOfGoal } from '../../projects/goal-members/actions'
 
 import ExpandedViewModeFooter from './ExpandedViewModeFooter/ExpandedViewModeFooter'
 
 function ExpandedViewMode({
+  projectId,
   goalAddress,
   goal,
   updateGoal,
@@ -77,6 +78,7 @@ function ExpandedViewMode({
           />
           <div className='expanded-view-main'>
             <ExpandedViewModeContent
+              projectId={projectId}
               squirrels={squirrelsState}
               goalAddress={goalAddress}
               updateGoal={updateGoal}
@@ -86,6 +88,7 @@ function ExpandedViewMode({
               archiveMemberOfGoal={archiveMemberOfGoal}
             />
             <RightMenu
+              projectId={projectId}
               goalAddress={goalAddress}
               goal={goalState}
               updateGoal={updateGoal}
@@ -98,15 +101,19 @@ function ExpandedViewMode({
   )
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   let goal,
     creator = null,
     squirrels = []
 
+  const { projectId } = ownProps
+  const goals = state.projects.goals[projectId] || {}
+  const goalMembers = state.projects.goalMembers[projectId] || {}
+
   if (state.ui.expandedView.goalAddress) {
-    goal = state.goals[state.ui.expandedView.goalAddress]
-    squirrels = Object.keys(state.goalMembers)
-      .map(address => state.goalMembers[address])
+    goal = goals[state.ui.expandedView.goalAddress]
+    squirrels = Object.keys(goalMembers)
+      .map(address => goalMembers[address])
       .filter(goalMember => goalMember.goal_address === goal.address)
       .map(goalMember => {
         const squirrel = state.agents[goalMember.agent_address]
@@ -127,13 +134,14 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, ownProps) {
+  const { projectId } = ownProps
   return {
     updateGoal: (goal, address) => {
-      return dispatch(updateGoal.create({ address, goal }))
+      return dispatch(updateGoal(projectId).create({ address, goal }))
     },
     archiveMemberOfGoal: address => {
-      return dispatch(archiveMemberOfGoal.create({ address }))
+      return dispatch(archiveMemberOfGoal(projectId).create({ address }))
     },
   }
 }
