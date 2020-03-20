@@ -18,7 +18,7 @@
   border: 1px solid #7c24ff;
 }
 
-.clear_button {
+.clear-button {
   outline: none;
   background: none;
   border: none;
@@ -33,7 +33,7 @@
   color: #00beb0;
 }
 
-.clear_button:hover {
+.clear-button:hover {
   color: #5f65ff;
 }
 

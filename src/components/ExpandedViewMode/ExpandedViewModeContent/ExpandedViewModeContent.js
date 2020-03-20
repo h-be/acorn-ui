@@ -10,7 +10,7 @@ import moment from 'moment'
 import TextareaAutosize from 'react-textarea-autosize'
 
 import DatePicker from '../../DatePicker/DatePicker'
-import PeoplePicker from '../../PeoplePicker'
+import PeoplePicker from '../../PeoplePicker/PeoplePicker'
 
 import Priority from './Priority/Priority'
 import Comments from '../../Comments/Comments'
@@ -100,7 +100,7 @@ export default function ExpandedViewModeContent({
   }
 
   const updateTimeframe = (start, end) => {
-    let timeframe = null;
+    let timeframe = null
 
     if (start && end) {
       timeframe = {

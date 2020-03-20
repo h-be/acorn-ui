@@ -8,9 +8,11 @@
   margin-top: 10px;
   display: flex;
   justify-content: space-between;
-  max-height: 50px;
+  max-height: 46px;
   top: 0;
 }
+
+/* Top Left Panel */
 
 .top-left-panel {
   display: flex;
@@ -19,8 +21,8 @@
 }
 
 .logo {
-  padding-right: 20px;
-  padding-left: 12px;
+  padding-right: 12px;
+  padding-left: 10px;
   background: rgba(255, 255, 255, 0.9) 0% 0% no-repeat padding-box;
   border-radius: 10px;
   display: -webkit-flex;
@@ -29,37 +31,21 @@
   /* Safari 7.0+ */
   display: flex;
   align-items: center;
+  margin-right: 5px;
 }
 
-.current-canvas-wrapper {
-  margin-left: 5px;
-  background: rgba(255, 255, 255, 0.9) 0% 0% no-repeat padding-box;
-  border-radius: 10px;
-  display: -webkit-flex;
-  /* Safari */
-  -webkit-align-items: center;
-  /* Safari 7.0+ */
-  display: flex;
-  align-items: center;
-}
-
-.current-canvas-content {
-  margin-left: 16px;
-  margin-right: 8px;
-  display: flex;
-  align-items: center;
-}
-
-.current-canvas-content .icon {
-  margin-right: 10px;
-}
-
-.header-icon {
-  height: 24px;
-  margin: 0px;
+.logo .icon {
+  width: 16px;
+  height: 16px;
+  padding: 2px 2px;
   display: inline-block;
   position: relative;
-  margin: 12px;
+  right: -1px;
+  top: 0.5px;
+  background: transparent;
+  cursor: default;
+  vertical-align: middle;
+  margin-right: 2px;
 }
 
 .logo p {
@@ -71,31 +57,96 @@
   cursor: default;
 }
 
-.canvas-name {
-  font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
-  font-weight: normal;
-  font-size: 17px;
-  margin-right: 20px;
-  color: #4d4d4d;
-}
-
-.divider-line {
-  border-right: 1px solid #d9d9d9;
-  height: 24px;
-  margin-right: 16px;
-}
-
 .logo-name {
   margin: 1px;
   font-family: 'quebecsemibold', Helvetica, Sans-Serif;
   font-weight: normal;
-  font-size: 28px;
+  font-size: 24px;
   margin-top: -12px;
 }
 
 .logo h3 {
   margin-top: 16px;
 }
+
+.current-project-wrapper {
+  background: rgba(255, 255, 255, 0.9) 0% 0% no-repeat padding-box;
+  border-radius: 10px;
+  display: -webkit-flex;
+  /* Safari */
+  -webkit-align-items: center;
+  /* Safari 7.0+ */
+  display: flex;
+  align-items: center;
+}
+
+.current-project-content {
+  margin-left: 10px;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.current-project-name {
+  margin: 0 12px 0 6px;
+  font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
+  font-weight: normal;
+  font-size: 14px;
+  color: #4d4d4d;
+}
+
+.current-project-content .icon {
+  padding: 4px;
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  position: relative;
+  margin-top: 0;
+  margin-left: 0;
+  box-sizing: border-box;
+}
+
+.divider-line {
+  border-right: 1px solid #d9d9d9;
+  height: 24px;
+  margin-right: 10px;
+}
+
+/* Current Entry Points Tab */
+
+.current-entry-point {
+  position: relative;
+  font-size: 13px;
+  margin-left: 5px;
+  background: rgba(255, 255, 255, 0.9) 0% 0% no-repeat padding-box;
+  border-radius: 10px;
+  display: -webkit-flex;
+  /* Safari */
+  -webkit-align-items: center;
+  /* Safari 7.0+ */
+  display: flex;
+  align-items: center;
+  padding: 0 26px 0 12px;
+  color: #4d4d4d;
+}
+
+.current-entry-point img {
+  height: 14px;
+  width: 14px;
+  margin-right: 6px;
+}
+
+.current-entry-point-close {
+  position: absolute;
+  right: 8px;
+  visibility: hidden;
+}
+
+.current-entry-point:hover > .current-entry-point-close {
+  visibility: visible;
+}
+
+/* Top Right Panel */
 
 .top-right-panel {
   margin-right: 10px;
@@ -106,6 +157,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
+}
+
+.top-right-panel-icon {
+  height: 24px;
+  width: 24px;
+  padding: 1px;
+  display: inline-block;
+  position: relative;
+  margin-top: 0;
+  margin-right: 20px;
+  margin-left: 0;
 }
 
 .stop-right-panel div .icon {
@@ -114,9 +177,11 @@
 }
 
 /* guidebook section on header */
+
 .current-canvas div {
   margin-left: 10px;
 }
+
 .guidebook-outer-wrapper {
   float: right;
   position: relative;
@@ -319,7 +384,7 @@ button.gray .icon {
 
 .export-wrapper {
   margin-top: 62px;
-  margin-left: 349px;
+  margin-left: 265px;
   float: left;
   border-radius: 14px;
   background-color: #ffffff;

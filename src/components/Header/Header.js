@@ -151,15 +151,12 @@ class Header extends React.Component {
         <div className='header'>
           <div className='top-left-panel'>
             <div className='logo'>
-              <Icon
-                name='acorn-logo-stroked.svg'
-                className='logo not-hoverable'
-              />
+              <Icon name='acorn-logo-stroked.svg' className='not-hoverable' />
               <p className='logo-name'>acorn</p>
             </div>
             {this.props.whoami && (
-              <div className='current-canvas-wrapper'>
-                <div className='current-canvas-content'>
+              <div className='current-project-wrapper'>
+                <div className='current-project-content'>
                   <Switch>
                     <Route
                       path='/board/map'
@@ -180,7 +177,9 @@ class Header extends React.Component {
                       )}
                     />
                   </Switch>
-                  <div className='canvas-name'>Acorn State of Affairs</div>
+                  <div className='current-project-name'>
+                    Acorn State of Affairs
+                  </div>
                   <div className='divider-line'></div>
                   <Icon
                     withTooltip
@@ -193,6 +192,17 @@ class Header extends React.Component {
                 </div>
               </div>
             )}
+            {/* Current Entry Points Tab */}
+            <div className='current-entry-point'>
+              <img src='img/door-open.png' />
+              <div>We have released Acorn 4.0.0</div>
+              <Icon
+                name='x.svg'
+                size='very-small-close'
+                className='grey current-entry-point-close'
+                onClick={() => onClose()}
+              />
+            </div>
           </div>
           {this.props.whoami && (
             <div className='top-right-panel'>
@@ -200,7 +210,7 @@ class Header extends React.Component {
               <Icon
                 name='guidebook.svg'
                 onClick={this.clickBook}
-                size='header'
+                className='top-right-panel-icon'
               />
               <div className={this.state.online.color}>
                 <div
