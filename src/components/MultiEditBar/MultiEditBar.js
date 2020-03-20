@@ -12,7 +12,7 @@ import Avatar from '../Avatar/Avatar'
 import StatusIcon from '../StatusIcon/StatusIcon'
 
 import StatusPicker from '../StatusPicker'
-import PeoplePicker from '../PeoplePicker'
+import PeoplePicker from '../PeoplePicker/PeoplePicker'
 import DatePicker from '../DatePicker/DatePicker'
 import HierarchyPicker from '../HierarchyPicker/HierarchyPicker'
 import AlertPopupTemplate from '../AlertPopupTemplate/AlertPopupTemplate'
@@ -127,7 +127,7 @@ function MultiEditBar({
   /* timeframe consts */
 
   const updateTimeframe = (start, end) => {
-    let timeframe = null;
+    let timeframe = null
 
     if (start && end) {
       timeframe = {

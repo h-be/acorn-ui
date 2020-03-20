@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 import Icon from './Icon/Icon'
 import StatusPicker from './StatusPicker'
-import PeoplePicker from './PeoplePicker'
+import PeoplePicker from './PeoplePicker/PeoplePicker'
 import DatePicker from './DatePicker/DatePicker'
 import HierarchyPicker from './HierarchyPicker/HierarchyPicker'
 import PriorityPicker from './PriorityPicker/PriorityPicker'
@@ -65,7 +65,7 @@ function VerticalActionsList({
   // timeframe consts
 
   const updateTimeframe = (start, end) => {
-    let timeframe = null;
+    let timeframe = null
 
     if (start && end) {
       timeframe = {
@@ -78,7 +78,7 @@ function VerticalActionsList({
       {
         ...goal,
         timestamp_updated: moment().unix(),
-        time_frame: timeframe
+        time_frame: timeframe,
       },
       goalAddress
     )
