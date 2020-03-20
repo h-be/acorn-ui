@@ -1,3 +1,5 @@
+// defined in conductor-config.json
+export const INTERFACE_ID = 'websocket-interface'
 export const PROFILES_INSTANCE_NAME = 'profiles-instance'
 export const PROFILES_ZOME_NAME = 'acorn_profiles'
 export const PROJECTS_ZOME_NAME = 'acorn_projects'

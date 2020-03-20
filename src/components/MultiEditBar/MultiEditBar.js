@@ -287,9 +287,10 @@ function mapStateToProps(state) {
   const {
     ui: { activeProject },
   } = state
+  const goals = state.projects.goals[activeProject] || {}
   return {
     selectedGoals: state.ui.selection.selectedGoals.map(
-      address => state.projects.goals[activeProject][address]
+      address => goals[address]
     ),
   }
 }

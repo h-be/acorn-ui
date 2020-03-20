@@ -6,6 +6,7 @@ import MapView from './MapView/MapView'
 import PriorityView from './PriorityView/PriorityView'
 
 import { setActiveProject } from '../../active-project/actions'
+import { fetchProjectMeta } from '../../projects/project-meta/actions'
 import { fetchMembers } from '../../projects/members/actions'
 import { fetchGoals } from '../../projects/goals/actions'
 import { fetchEdges } from '../../projects/edges/actions'
@@ -16,6 +17,7 @@ import { fetchGoalVotes } from '../../projects/goal-votes/actions'
 function ProjectViewInner({
   projectId,
   setActiveProject,
+  fetchProjectMeta,
   fetchMembers,
   fetchGoals,
   fetchEdges,
@@ -26,6 +28,7 @@ function ProjectViewInner({
   useEffect(() => {
     // pushes this new projectId into the store/state
     setActiveProject(projectId)
+    fetchProjectMeta()
     fetchMembers()
     fetchGoals()
     fetchEdges()
@@ -56,6 +59,7 @@ function mapDispatchToProps(dispatch, ownProps) {
   const { projectId } = ownProps
   return {
     setActiveProject: () => dispatch(setActiveProject(projectId)),
+    fetchProjectMeta: () => dispatch(fetchProjectMeta(projectId).create({})),
     fetchMembers: () => dispatch(fetchMembers(projectId).create({})),
     fetchGoals: () => dispatch(fetchGoals(projectId).create({})),
     fetchEdges: () => dispatch(fetchEdges(projectId).create({})),

@@ -179,7 +179,7 @@ class Header extends React.Component {
                         />
                       )}
                     />
-                    <div className='canvas-name'>Acorn State of Affairs</div>
+                    <div className='canvas-name'>{this.props.projectName}</div>
                     <div className='divider-line'></div>
                     <Icon
                       withTooltip

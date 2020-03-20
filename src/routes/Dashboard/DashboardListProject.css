@@ -16,6 +16,8 @@
 
 .dashboard-list-project-image img {
   border-radius: 5px;
+  width: 68px;
+  height: 68px;
 }
 
 .dashboard-list-project-content {

@@ -8,7 +8,7 @@
 // see https://github.com/holochain/hc-redux-middleware/blob/ed0177981644946fa15058cb4e6125fca0f3b897/src/lib/actionCreator.ts#L49
 import { createHolochainAdminAsyncAction } from 'connoropolous-hc-redux-middleware'
 
-const INTERFACE_ID = 'websocket-interface'
+import { INTERFACE_ID } from '../../holochainConfig'
 
 /* action creator functions */
 
@@ -21,7 +21,7 @@ const createProjectDna = {
     createHolochainAdminAsyncAction('admin', 'dna', 'install_from_file').create(
       {
         id,
-        copy: true,
+        // copy: true,
         // can add a 'properties' key on here if we want
         path: './dnas/projects/dist/projects.dna.json',
         uuid,
@@ -39,6 +39,16 @@ const createProjectInstance = {
       id,
       dna_id: dna,
       agent_id: 'development-agent', // TODO: change this
+    }),
+}
+
+/* see
+https://github.com/holochain/holochain-rust/blob/9564458505299c668fbf7fb311eaad86a07c6551/crates/conductor_lib/src/interface.rs#L558
+*/
+const removeProjectInstance = {
+  create: id =>
+    createHolochainAdminAsyncAction('admin', 'instance', 'remove').create({
+      id,
     }),
 }
 
@@ -84,6 +94,7 @@ export {
   addInstanceToInterface,
   createProjectDna,
   createProjectInstance,
+  removeProjectInstance,
   fetchProjectsDnas,
   fetchProjectsInstances,
 }
