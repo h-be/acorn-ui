@@ -11,7 +11,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
-import { connect } from '@holochain/hc-web-client'
+import { connect } from 'connoropolous-hc-web-client'
 import { holochainMiddleware } from 'connoropolous-hc-redux-middleware'
 
 // Local Imports
@@ -22,7 +22,10 @@ import {
 import acorn from './reducer'
 import signalsHandlers from './signalsHandlers'
 import { fetchAgents } from './agents/actions'
-import { fetchProjectsDnas, fetchProjectsInstances } from './projects/actions'
+import {
+  fetchProjectsDnas,
+  fetchProjectsInstances,
+} from './projects/conductor-admin/actions'
 import { whoami } from './who-am-i/actions'
 import { fetchAgentAddress } from './agent-address/actions'
 import App from './routes/App'
@@ -32,7 +35,9 @@ const websocketUrl = `ws://${DEFAULT_HOLOCHAIN_HOST}:${DEFAULT_HOLOCHAIN_PORT}`
 // attempts to form a websocket (two way messages) connection to a running
 // Holochain Conductor
 const connectOpts =
-  process.env.NODE_ENV === 'development' ? { url: websocketUrl } : undefined
+  process.env.NODE_ENV === 'development'
+    ? { url: websocketUrl, timeout: 4000 }
+    : { timeout: 4000 }
 const hcWebClient = connect(connectOpts)
 
 // holochainMiddleware takes in the hc-web-client websocket connection

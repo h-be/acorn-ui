@@ -20,6 +20,7 @@ import ProjectView from './ProjectView/ProjectView'
 
 function App(props) {
   const {
+    projectName,
     agentAddress,
     whoami, // .entry and .address
     updateWhoami,
@@ -46,6 +47,7 @@ function App(props) {
       </Switch>
       {agentAddress && (
         <Header
+          projectName={projectName}
           whoami={whoami}
           updateStatus={props.updateStatus}
           setShowProfileEditForm={setShowProfileEditForm}
@@ -70,6 +72,7 @@ function App(props) {
 }
 
 App.propTypes = {
+  projectName: PropTypes.string,
   agentAddress: PropTypes.string,
   whoami: PropTypes.shape({
     first_name: PropTypes.string,
@@ -93,7 +96,14 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
+  const {
+    ui: { activeProject },
+  } = state
+  // defensive coding for loading phase
+  const activeProjectMeta = state.projects.projectMeta[activeProject] || {}
+  const projectName = activeProjectMeta.name || ''
   return {
+    projectName,
     whoami: state.whoami,
     agentAddress: state.agentAddress,
   }

@@ -21,17 +21,31 @@ export default function JoinProjectModal({
   const reset = () => {
     setProjectSecret('')
     setValidatingSecret(false)
+    setInvalidText('')
   }
-  const onValidate = () => {
+  const onValidate = async () => {
     setValidatingSecret(true)
-    // chain this with a .then
-    onJoinProject(projectSecret)
+    try {
+      const projectExists = await onJoinProject(projectSecret)
+      if (!projectExists) {
+        setInvalidText('project does not exist')
+      } else {
+        // it worked! reset and close
+        onDone()
+      }
+      setValidatingSecret(false)
+    } catch (e) {
+      // there was some error :s
+      console.log(e)
+    }
   }
   const onDone = () => {
+    reset()
     onClose()
   }
 
   const [projectSecret, setProjectSecret] = useState('')
+  const [invalidText, setInvalidText] = useState('')
 
   const [validatingSecret, setValidatingSecret] = useState(false)
 
@@ -44,21 +58,34 @@ export default function JoinProjectModal({
       <span>Validating...</span>
     </span>
   ) : (
-    'Validate'
+    'Join'
   )
+
+  const onSecretChange = val => {
+    setInvalidText('')
+    setValidatingSecret(false)
+    setProjectSecret(val)
+    if (!val) {
+      setInvalidText('')
+    } else if (val.split(' ').length !== 5) {
+      setInvalidText('secret must be 5 words')
+    }
+  }
 
   return (
     <Modal
       white
       active={showModal}
-      onClose={onClose}
+      onClose={onDone}
       className='join-project-modal-wrapper'>
       <ProjectModalHeading title='Join an existing project' />
       <ProjectModalContent>
         <ProjectModalContentSpacer>
           <ValidatingFormInput
             value={projectSecret}
-            onChange={setProjectSecret}
+            onChange={onSecretChange}
+            invalidInput={invalidText}
+            errorText={invalidText}
             label='Project invitation secret'
             helpText='Paste in the secret phrase the project host has shared with you.'
           />
