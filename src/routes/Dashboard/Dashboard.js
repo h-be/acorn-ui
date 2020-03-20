@@ -6,6 +6,7 @@ import Icon from '../../components/Icon/Icon'
 
 import './DashboardListProject.css'
 
+import { passphraseToUuid } from '../../secrets'
 import Avatar from '../../components/Avatar/Avatar'
 import CreateProjectModal from '../../components/CreateProjectModal/CreateProjectModal'
 import JoinProjectModal from '../../components/JoinProjectModal/JoinProjectModal'
@@ -17,7 +18,8 @@ import {
   createProjectInstance,
   fetchProjectsDnas,
   fetchProjectsInstances,
-  joinProject,
+  addInstanceToInterface,
+  startInstance,
 } from '../../projects/actions'
 
 function DashboardListProject({ project, setShowInviteMembersModal }) {
@@ -25,11 +27,15 @@ function DashboardListProject({ project, setShowInviteMembersModal }) {
   return (
     <div className='dashboard-list-project-wrapper'>
       <div className='dashboard-list-project'>
-        <NavLink to={`/board/map`} className='dashboard-list-project-image'>
+        <NavLink
+          to={`/project/${project.instanceId}`}
+          className='dashboard-list-project-image'>
           <img src={project.image} />
         </NavLink>
         <div className='dashboard-list-project-content'>
-          <NavLink to={`/board/map`} className='dashboard-list-project-name'>
+          <NavLink
+            to={`/project/${project.instanceId}`}
+            className='dashboard-list-project-name'>
             {project.name}
           </NavLink>
           <div className='dashboard-list-project-member-count'>
@@ -42,6 +48,7 @@ function DashboardListProject({ project, setShowInviteMembersModal }) {
           <div className='dashboard-list-project-member-list'>
             {project.members.map(member => (
               <Avatar
+                key={member.address}
                 first_name={member.first_name}
                 last_name={member.last_name}
                 avatar_url={member.avatar_url}
@@ -51,8 +58,7 @@ function DashboardListProject({ project, setShowInviteMembersModal }) {
           </div>
           <div
             className='dashboard-invite-members-button'
-            onClick={() => setShowInviteMembersModal(true)}
-            I>
+            onClick={() => setShowInviteMembersModal(project.passphrase)}>
             <Icon name='plus.svg' size='very-small' />
             Invite members
           </div>
@@ -96,14 +102,15 @@ function DashboardListProject({ project, setShowInviteMembersModal }) {
 function Dashboard({ projects, createProject, joinProject }) {
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [showJoinModal, setShowJoinModal] = useState(false)
-  const [showInviteMembersModal, setShowInviteMembersModal] = useState(false)
+  // call set for this one with the actual passphrase to render inside
+  const [showInviteMembersModal, setShowInviteMembersModal] = useState(null)
   // add new modal state managers here
 
-  const onCreateProject = project => {
-    createProject(project)
+  const onCreateProject = (project, passphrase) => {
+    createProject(project, passphrase)
   }
 
-  const onJoinProject = projectSecret => {}
+  const onJoinProject = passphrase => joinProject(passphrase)
 
   const hasProjects = projects.length > 0 // write 'false' if want to see Empty State
 
@@ -184,6 +191,7 @@ function Dashboard({ projects, createProject, joinProject }) {
         onClose={() => setShowJoinModal(false)}
       />
       <InviteMembersModal
+        passphrase={showInviteMembersModal}
         showModal={showInviteMembersModal}
         onClose={() => setShowInviteMembersModal(false)}
       />
@@ -194,24 +202,34 @@ function Dashboard({ projects, createProject, joinProject }) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    createProject: project => {
-      // .then and add the metadata
-      const someNewDnaId = '1234newid' + Math.random()
-      return dispatch(createProjectDna.create(someNewDnaId))
-        .then(() => {
-          return dispatch(
-            // TODO: don't use project.name here, generate something fresh
-            createProjectInstance.create(project.name, someNewDnaId)
-          )
-        })
-        .then(() => {
-          dispatch(fetchProjectsDnas.create({}))
-          dispatch(fetchProjectsInstances.create({}))
-        })
+    createProject: (project, passphrase) => {
+      const random = Math.random()
+      const dnaId = `_acorn_projects_dna_${random}`
+      const instanceId = `_acorn_projects_instance_${random}`
+      const uuid = passphraseToUuid(passphrase)
+      return (
+        dispatch(createProjectDna.create(dnaId, uuid))
+          .then(() => dispatch(createProjectInstance.create(instanceId, dnaId)))
+          .then(() => {
+            dispatch(fetchProjectsDnas.create({}))
+            dispatch(fetchProjectsInstances.create({}))
+          })
+          .then(() => dispatch(startInstance.create(instanceId)))
+          // This will trigger a refresh of the websocket connection, as it shuts down and restarts
+          .then(() => dispatch(addInstanceToInterface.create(instanceId)))
+        // TODO: now go one step further and add the project metadata into
+        // the project DNA
+      )
     },
-    joinProject: secret => {
+    joinProject: passphrase => {
+      const uuid = passphraseToUuid(passphrase)
+      console.log(uuid)
       // joinProject
       // return dispatch(closeExpandedView())
+      // Attempt to join a DNA ... if it works
+      // then try to get the project metadata
+      // if that DOESN'T work, the attempt is INVALID
+      // remove the instance again immediately
     },
   }
 }
@@ -219,9 +237,10 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
   return {
     projects: Object.keys(state.projects.instances).map(instanceId => ({
-      address: 'abcd',
+      passphrase: 'pickle cat cowboy vodka copper',
       name: instanceId,
-      members: [{ first_name: 'Harry', last_name: 'Potter' }],
+      instanceId: instanceId,
+      members: [{ first_name: 'Harry', last_name: 'Potter', address: '123' }],
       entryPoints: ['e'],
       image: 'https://via.placeholder.com/68',
     })),

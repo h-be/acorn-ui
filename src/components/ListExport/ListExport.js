@@ -74,9 +74,9 @@ function mapStateToProps(state) {
   return {
     data: {
       agents: state.agents,
-      goals: state.goals,
-      edges: state.edges,
-      goalMembers: state.goalMembers,
+      goals: state.projects.goals,
+      edges: state.projects.edges,
+      goalMembers: state.projects.goalMembers,
     },
   }
 }

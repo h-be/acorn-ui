@@ -4,7 +4,10 @@ import { connect } from 'react-redux'
 
 import Icon from './Icon/Icon'
 import PickerTemplate from './PickerTemplate/PickerTemplate'
-import { addMemberOfGoal, archiveMemberOfGoal } from '../goal-members/actions'
+import {
+  addMemberOfGoal,
+  archiveMemberOfGoal,
+} from '../projects/goal-members/actions'
 import Avatar from './Avatar/Avatar'
 import moment from 'moment'
 
@@ -104,6 +107,7 @@ function PeoplePicker({
 }
 
 PeoplePicker.propTypes = {
+  projectId: PropTypes.string,
   people: PropTypes.arrayOf(
     PropTypes.shape({
       address: PropTypes.string.isRequired,
@@ -121,14 +125,17 @@ PeoplePicker.propTypes = {
   onClose: PropTypes.func.isRequired,
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   const goalAddress = state.ui.goalForm.isOpen
     ? state.ui.goalForm.editAddress
     : state.ui.expandedView.goalAddress
-  const membersOfGoal = Object.keys(state.goalMembers)
-    .map(address => state.goalMembers[address])
+  const { projectId } = ownProps
+  const goalMembers = state.projects.goalMembers[projectId] || {}
+  const members = state.projects.members[projectId] || {}
+  const membersOfGoal = Object.keys(goalMembers)
+    .map(address => goalMembers[address])
     .filter(goalMember => goalMember.goal_address === goalAddress)
-  const agents = Object.keys(state.agents).map(address => state.agents[address])
+  const agents = Object.keys(members).map(address => state.agents[address])
   return {
     people: agents.map(agent => {
       const member = membersOfGoal.find(
@@ -145,11 +152,12 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, ownProps) {
+  const { projectId } = ownProps
   return {
     addMemberOfGoal: (goal_address, agent_address) => {
       return dispatch(
-        addMemberOfGoal.create({
+        addMemberOfGoal(projectId).create({
           goal_member: {
             goal_address,
             agent_address,
@@ -159,7 +167,7 @@ function mapDispatchToProps(dispatch) {
       )
     },
     archiveMemberOfGoal: address => {
-      return dispatch(archiveMemberOfGoal.create({ address }))
+      return dispatch(archiveMemberOfGoal(projectId).create({ address }))
     },
   }
 }

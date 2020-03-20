@@ -55,27 +55,26 @@ function render(store, canvas) {
     translate.y * dpr
   )
 
-  // converts the goals object to an array
-  const goalsAsArray = Object.keys(state.goals).map(
-    address => state.goals[address]
-  )
-  // convert the edges object to an array
-  const edgesAsArray = Object.keys(state.edges).map(
-    address => state.edges[address]
-  )
+  const projectId = state.ui.activeProject
+  if (!projectId) return
+  const goals = state.projects.goals[projectId]
+  const edges = state.projects.edges[projectId]
+  const goalMembers = state.projects.goalMembers[projectId]
+  if (!goals || !edges || !goalMembers) return
 
-  const coordinates = layoutFormula(
-    state.ui.screensize.width,
-    state.goals,
-    state.edges
-  )
+  // converts the goals object to an array
+  const goalsAsArray = Object.keys(goals).map(address => goals[address])
+  // convert the edges object to an array
+  const edgesAsArray = Object.keys(edges).map(address => edges[address])
+
+  const coordinates = layoutFormula(state.ui.screensize.width, goals, edges)
 
   // render each edge to the canvas, basing it off the rendering coordinates of the parent and child nodes
   edgesAsArray.forEach(function(edge) {
     const childCoords = coordinates[edge.child_address]
     const parentCoords = coordinates[edge.parent_address]
-    const parentGoalText = state.goals[edge.parent_address]
-      ? state.goals[edge.parent_address].content
+    const parentGoalText = goals[edge.parent_address]
+      ? goals[edge.parent_address].content
       : ''
     if (childCoords && parentCoords)
       drawEdge(childCoords, parentCoords, parentGoalText, ctx)
@@ -88,8 +87,10 @@ function render(store, canvas) {
         x: state.ui.goalForm.xLoc,
         y: state.ui.goalForm.yLoc,
       }
-      const parentGoalText = state.goals[state.ui.goalForm.parentAddress]
-        ? state.goals[state.ui.goalForm.parentAddress].content
+      const parentGoalText = state.projects.goals[
+        state.ui.goalForm.parentAddress
+      ]
+        ? goals[state.ui.goalForm.parentAddress].content
         : ''
       drawEdge(newGoalCoords, parentCoords, parentGoalText, ctx)
     }
@@ -116,8 +117,8 @@ function render(store, canvas) {
     const isHovered = state.ui.hover.hoveredGoal === goal.address
     const isSelected = false
     const isEditing = false
-    const membersOfGoal = Object.keys(state.goalMembers)
-      .map(address => state.goalMembers[address])
+    const membersOfGoal = Object.keys(goalMembers)
+      .map(address => goalMembers[address])
       .filter(goalMember => goalMember.goal_address === goal.address)
       .map(goalMember => state.agents[goalMember.agent_address])
     drawGoalCard(
@@ -169,8 +170,8 @@ function render(store, canvas) {
     const isHovered = state.ui.hover.hoveredGoal === goal.address
     const isSelected = true
     const isEditing = false
-    const membersOfGoal = Object.keys(state.goalMembers)
-      .map(address => state.goalMembers[address])
+    const membersOfGoal = Object.keys(goalMembers)
+      .map(address => goalMembers[address])
       .filter(goalMember => goalMember.goal_address === goal.address)
       .map(goalMember => state.agents[goalMember.agent_address])
     drawGoalCard(
@@ -188,11 +189,11 @@ function render(store, canvas) {
   // draw the editing goal in front of the overlay as well
   if (state.ui.goalForm.editAddress) {
     // editing an existing Goal
-    const editingGoal = state.goals[state.ui.goalForm.editAddress]
+    const editingGoal = goals[state.ui.goalForm.editAddress]
     const isEditing = true
     const editText = state.ui.goalForm.content
-    const membersOfGoal = Object.keys(state.goalMembers)
-      .map(address => state.goalMembers[address])
+    const membersOfGoal = Object.keys(goalMembers)
+      .map(address => goalMembers[address])
       .filter(goalMember => goalMember.goal_address === editingGoal.address)
       .map(goalMember => state.agents[goalMember.agent_address])
     drawGoalCard(

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import TextareaAutosize from 'react-textarea-autosize'
 
-import { createGoal, updateGoal } from '../goals/actions'
-import { createEdge } from '../edges/actions'
+import { createGoal, updateGoal } from '../projects/goals/actions'
+import { createEdge } from '../projects/edges/actions'
 import { closeGoalForm, updateContent } from '../goal-form/actions'
 import layoutFormula from '../drawing/layoutFormula'
 import moment from 'moment'
@@ -121,7 +121,7 @@ class GoalForm extends Component {
     // is the strict definition of what HTML should appear on screen
     // depending on the data that is given to the component
 
-    const { editAddress, content, xLoc, yLoc } = this.props
+    const { projectId, editAddress, content, xLoc, yLoc } = this.props
 
     // use the xLoc and yLoc to position the form anywhere on the screen
     // using a position relative to its container
@@ -148,7 +148,7 @@ class GoalForm extends Component {
             </button>
           )}
         </form>
-        {editAddress && <VerticalActionsList />}
+        {editAddress && <VerticalActionsList projectId={projectId} />}
       </div>
     )
   }
@@ -179,12 +179,13 @@ function mapStateToProps(state) {
   // all the state for this component is store under state->ui->goalForm
   const { parentAddress, editAddress, content, xLoc, yLoc } = state.ui.goalForm
   const {
-    goals,
-    edges,
     ui: {
+      activeProject,
       screensize: { width },
     },
   } = state
+  const goals = state.projects.goals[activeProject] || {}
+  const edges = state.projects.edges[activeProject] || {}
   let goalCoord
   if (editAddress) {
     goalCoord = layoutFormula(width, goals, edges)[editAddress]
@@ -196,12 +197,20 @@ function mapStateToProps(state) {
     editAddress,
     parentAddress,
     content,
-    status: editAddress ? state.goals[editAddress].status : 'Uncertain',
-    description: editAddress ? state.goals[editAddress].description : '',
-    hierarchy: editAddress ? state.goals[editAddress].hierarchy : 'NoHierarchy',
-    time_frame: editAddress ? state.goals[editAddress].time_frame : null,
+    status: editAddress
+      ? state.projects.goals[activeProject][editAddress].status
+      : 'Uncertain',
+    description: editAddress
+      ? state.projects.goals[activeProject][editAddress].description
+      : '',
+    hierarchy: editAddress
+      ? state.projects.goals[activeProject][editAddress].hierarchy
+      : 'NoHierarchy',
+    time_frame: editAddress
+      ? state.projects.goals[activeProject][editAddress].time_frame
+      : null,
     timestamp_created: editAddress
-      ? state.goals[editAddress].timestamp_created
+      ? state.projects.goals[activeProject][editAddress].timestamp_created
       : null,
     xLoc: editAddress ? goalCoord.x : xLoc,
     yLoc: editAddress ? goalCoord.y : yLoc,
@@ -211,19 +220,22 @@ function mapStateToProps(state) {
 // https://react-redux.js.org/using-react-redux/connect-mapdispatch
 // Designed to pass functions into components which are already wrapped as
 // action dispatchers for redux action types
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, ownProps) {
+  const { projectId } = ownProps
   return {
     updateContent: content => {
       dispatch(updateContent(content))
     },
     createGoal: (goal, maybe_parent_address) => {
-      return dispatch(createGoal.create({ goal, maybe_parent_address }))
+      return dispatch(
+        createGoal(projectId).create({ goal, maybe_parent_address })
+      )
     },
     updateGoal: (goal, address) => {
-      return dispatch(updateGoal.create({ goal, address }))
+      return dispatch(updateGoal(projectId).create({ goal, address }))
     },
     createEdge: edge => {
-      return dispatch(createEdge.create({ edge }))
+      return dispatch(createEdge(projectId).create({ edge }))
     },
     closeGoalForm: () => {
       dispatch(closeGoalForm())

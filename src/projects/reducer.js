@@ -4,6 +4,7 @@
   and an action, applies that action to the state, and return
   a new state.
 */
+import { combineReducers } from 'redux'
 import _ from 'lodash'
 
 import {
@@ -11,13 +12,18 @@ import {
   fetchProjectsDnas,
   fetchProjectsInstances,
 } from './actions'
+import members from './members/reducer'
+import goals from './goals/reducer'
+import edges from './edges/reducer'
+import goalComments from './goal-comments/reducer'
+import goalMembers from './goal-members/reducer'
+import goalVotes from './goal-votes/reducer'
+import goalHistory from './goal-history/reducer'
 
-const defaultState = {
-  dnas: {},
-  instances: {},
-}
+const defaultDnasState = {}
+const defaultInstancesState = {}
 
-export default function(state = defaultState, action) {
+function dnas(state = defaultDnasState, action) {
   const { payload, type } = action
   switch (type) {
     case fetchProjectsDnas.success().type:
@@ -34,23 +40,41 @@ export default function(state = defaultState, action) {
       // Holochain fetch
       return {
         ...state,
-        dnas: {
-          ...state.dnas,
-          ...newDnaVals,
-        },
-      }
-    case fetchProjectsInstances.success().type:
-      const newInstanceVals = _.keyBy(payload, 'id')
-      // combines pre-existing values of the object with new values from
-      // Holochain fetch
-      return {
-        ...state,
-        instances: {
-          ...state.instances,
-          ...newInstanceVals,
-        },
+        ...newDnaVals,
       }
     default:
       return state
   }
 }
+
+function instances(state = defaultInstancesState, action) {
+  const { payload, type } = action
+  switch (type) {
+    case fetchProjectsInstances.success().type:
+      // filter out non-projects based instances first
+      const filteredForProjectDnas = payload.filter(instance =>
+        instance.id.startsWith('_acorn_projects_instance_')
+      )
+      const newInstanceVals = _.keyBy(filteredForProjectDnas, 'id')
+      // combines pre-existing values of the object with new values from
+      // Holochain fetch
+      return {
+        ...state,
+        ...newInstanceVals,
+      }
+    default:
+      return state
+  }
+}
+
+export default combineReducers({
+  dnas,
+  instances,
+  members,
+  goals,
+  edges,
+  goalMembers,
+  goalVotes,
+  goalComments,
+  goalHistory,
+})

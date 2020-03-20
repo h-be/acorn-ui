@@ -14,7 +14,7 @@ import {
   updateStatus,
 } from '../who-am-i/actions'
 
-const defaultState = []
+const defaultState = {}
 
 export default function(state = defaultState, action) {
   const { payload, type } = action

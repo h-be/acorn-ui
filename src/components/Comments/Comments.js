@@ -5,7 +5,7 @@ import {
   fetchGoalComments,
   archiveCommentOfGoal,
   updateGoalComment,
-} from '../../goal-comments/actions'
+} from '../../projects/goal-comments/actions'
 
 import TextareaAutosize from 'react-textarea-autosize'
 
@@ -115,10 +115,13 @@ function Comments({
     </div>
   )
 }
-function mapStateToProps(state) {
+
+function mapStateToProps(state, ownProps) {
+  const { projectId } = ownProps
   const goalAddress = state.ui.expandedView.goalAddress
+  const goalComments = state.projects.goalComments[projectId] || {}
   return {
-    comments: Object.values(state.goalComments).filter(
+    comments: Object.values(goalComments).filter(
       goalComment => goalComment.goal_address === goalAddress
     ),
     goalAddress,
@@ -129,17 +132,20 @@ function mapStateToProps(state) {
     agents: state.agents,
   }
 }
-function mapDispatchToProps(dispatch) {
+
+function mapDispatchToProps(dispatch, ownProps) {
+  const { projectId } = ownProps
   return {
     addCommentOfGoal: goal_comment => {
-      return dispatch(addCommentOfGoal.create({ goal_comment }))
+      return dispatch(addCommentOfGoal(projectId).create({ goal_comment }))
     },
-
     archiveCommentOfGoal: address => {
-      return dispatch(archiveCommentOfGoal.create({ address }))
+      return dispatch(archiveCommentOfGoal(projectId).create({ address }))
     },
     updateGoalComment: (goal_comment, address) => {
-      return dispatch(updateGoalComment.create({ goal_comment, address }))
+      return dispatch(
+        updateGoalComment(projectId).create({ goal_comment, address })
+      )
     },
   }
 }

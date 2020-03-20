@@ -1,13 +1,14 @@
 import React from 'react'
-import { NavLink, useRouteMatch } from 'react-router-dom'
+import { NavLink, useParams, useRouteMatch } from 'react-router-dom'
 import Zoom from '../Zoom/Zoom'
 import './Footer.css'
 import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
 
 function Footer() {
-  const projectPage = useRouteMatch('/board')
-  const mapPage = useRouteMatch('/board/map')
+  const projectPage = useRouteMatch('/project/:projectId')
+  const projectId = projectPage ? projectPage.params.projectId : null
+  const mapPage = useRouteMatch('/project/:projectId/map')
 
   let bottomRightPanelClassName = 'bottom-right-panel'
 
@@ -27,7 +28,9 @@ function Footer() {
         <div className={bottomRightPanelClassName}>
           {mapPage && <Zoom />}
           <div className='view-mode-icons'>
-            <NavLink to='/board/map' activeClassName='view-mode-active'>
+            <NavLink
+              to={`/project/${projectId}/map`}
+              activeClassName='view-mode-active'>
               <Icon
                 name='map.svg'
                 size='view-mode'
@@ -36,7 +39,9 @@ function Footer() {
                 tooltipText='map view'
               />
             </NavLink>
-            <NavLink to='/board/priority' activeClassName='view-mode-active'>
+            <NavLink
+              to={`/project/${projectId}/priority`}
+              activeClassName='view-mode-active'>
               <Icon
                 name='priority.svg'
                 size='view-mode'

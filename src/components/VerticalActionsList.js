@@ -11,7 +11,7 @@ import HierarchyPicker from './HierarchyPicker/HierarchyPicker'
 import PriorityPicker from './PriorityPicker/PriorityPicker'
 import StatusIcon from './StatusIcon/StatusIcon'
 
-import { archiveGoal, updateGoal } from '../goals/actions'
+import { archiveGoal, updateGoal } from '../projects/goals/actions'
 import { closeGoalForm } from '../goal-form/actions'
 import Modal, { ModalContent } from './Modal/Modal'
 
@@ -25,6 +25,7 @@ function VerticalActionListItem({ onClick, label, icon }) {
 }
 
 function VerticalActionsList({
+  projectId,
   goalAddress,
   goal,
   onArchiveClick,
@@ -128,16 +129,21 @@ function VerticalActionsList({
         /> */}
         {viewsOpen.status && (
           <StatusPicker
+            projectId={projectId}
             selectedStatus={goal.status}
             statusClicked={innerUpdateGoal('status')}
             onClose={() => setViews({ ...defaultViews })}
           />
         )}
         {viewsOpen.squirrels && (
-          <PeoplePicker onClose={() => setViews({ ...defaultViews })} />
+          <PeoplePicker
+            projectId={projectId}
+            onClose={() => setViews({ ...defaultViews })}
+          />
         )}
         {viewsOpen.timeframe && (
           <DatePicker
+            projectId={projectId}
             onClose={() => setViews({ ...defaultViews })}
             onSet={updateTimeframe}
             fromDate={fromDate}
@@ -146,6 +152,7 @@ function VerticalActionsList({
         )}
         {viewsOpen.hierarchy && (
           <HierarchyPicker
+            projectId={projectId}
             onClose={() => setViews({ ...defaultViews })}
             selectedHierarchy={goal.hierarchy}
             hierarchyClicked={innerUpdateGoal('hierarchy')}
@@ -153,6 +160,7 @@ function VerticalActionsList({
         )}
         {viewsOpen.priority && (
           <PriorityPicker
+            projectId={projectId}
             goalAddress={goalAddress}
             onClose={() => setViews({ ...defaultViews })}
           />
@@ -177,6 +185,7 @@ function VerticalActionsList({
 }
 
 VerticalActionsList.propTypes = {
+  projectId: PropTypes.string,
   goalAddress: PropTypes.string.isRequired,
   goal: PropTypes.shape({
     content: PropTypes.string.isRequired,
@@ -189,21 +198,24 @@ VerticalActionsList.propTypes = {
   updateGoal: PropTypes.func.isRequired,
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   const goalAddress = state.ui.goalForm.editAddress
+  const { projectId } = ownProps
+  const goals = state.projects.goals[projectId] || {}
   return {
     goalAddress,
-    goal: state.goals[goalAddress],
+    goal: goals[goalAddress],
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, ownProps) {
+  const { projectId } = ownProps
   return {
     onArchiveClick: address => {
-      return dispatch(archiveGoal.create({ address }))
+      return dispatch(archiveGoal(projectId).create({ address }))
     },
     updateGoal: (goal, address) => {
-      return dispatch(updateGoal.create({ address, goal }))
+      return dispatch(updateGoal(projectId).create({ address, goal }))
     },
   }
 }

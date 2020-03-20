@@ -5,29 +5,32 @@ import './MapView.css'
 
 import './MapView.css'
 
-import render from '../drawing'
+import render from '../../../drawing'
 
-import setupEventListeners from '../event-listeners'
-import { openExpandedView, closeExpandedView } from '../expanded-view/actions'
-import { setScreenDimensions } from '../screensize/actions'
-import EmptyState from '../components/EmptyState/EmptyState'
-import GoalForm from '../components/GoalForm'
-import MultiEditBar from '../components/MultiEditBar/MultiEditBar'
-import HoverOverlay from '../components/HoverOverlay'
-import ExpandedViewMode from '../components/ExpandedViewMode/ExpandedViewMode'
+import setupEventListeners from '../../../event-listeners'
+import {
+  openExpandedView,
+  closeExpandedView,
+} from '../../../expanded-view/actions'
+import { setScreenDimensions } from '../../../screensize/actions'
+import EmptyState from '../../../components/EmptyState/EmptyState'
+import GoalForm from '../../../components/GoalForm'
+import MultiEditBar from '../../../components/MultiEditBar/MultiEditBar'
+import HoverOverlay from '../../../components/HoverOverlay'
+import ExpandedViewMode from '../../../components/ExpandedViewMode/ExpandedViewMode'
 
-function MapView(props) {
-  const {
-    hasSelection,
-    hasHover,
-    goalFormIsOpen,
-    translate,
-    scale,
-    showExpandedViewMode,
-    openExpandedView,
-    closeExpandedView,
-    showEmptyState,
-  } = props
+function MapView({
+  projectId,
+  hasSelection,
+  hasHover,
+  goalFormIsOpen,
+  translate,
+  scale,
+  showExpandedViewMode,
+  openExpandedView,
+  closeExpandedView,
+  showEmptyState,
+}) {
   const store = useStore()
   const refCanvas = useRef()
 
@@ -62,17 +65,18 @@ function MapView(props) {
     <>
       <canvas ref={refCanvas} />
       {showEmptyState && <EmptyState />}
-      <MultiEditBar hasSelection={hasSelection} />
+      <MultiEditBar projectId={projectId} hasSelection={hasSelection} />
       <div className='transform-container' style={transform}>
-        {goalFormIsOpen && <GoalForm />}
+        {goalFormIsOpen && <GoalForm projectId={projectId} />}
         {hasHover && <HoverOverlay onExpandClick={openExpandedView} />}
       </div>
-      <ExpandedViewMode onClose={closeExpandedView} />
+      <ExpandedViewMode projectId={projectId} onClose={closeExpandedView} />
     </>
   )
 }
 
 MapView.propTypes = {
+  projectId: PropTypes.string,
   hasSelection: PropTypes.bool.isRequired, // whether or not there are Goals selected
   hasHover: PropTypes.bool, // whether or not a Goal is hovered over
   goalFormIsOpen: PropTypes.bool.isRequired,
@@ -105,7 +109,9 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
+  const projectId = state.ui.activeProject
   return {
+    projectId,
     // map from an array type (the selectedGoals) to a simple boolean type
     hasSelection: state.ui.selection.selectedGoals.length > 0,
     hasHover:
@@ -116,7 +122,9 @@ function mapStateToProps(state) {
     scale: state.ui.viewport.scale,
     // TODO: make this also based on whether the user has just registered (created their profile)
     showEmptyState:
-      !!state.agentAddress && Object.values(state.goals).length === 0,
+      !!state.agentAddress &&
+      state.projects.goals[projectId] &&
+      Object.values(state.projects.goals[projectId]).length === 0,
   }
 }
 

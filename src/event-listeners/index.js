@@ -31,7 +31,7 @@ import {
   closeGoalForm,
   updateContent,
 } from '../goal-form/actions'
-import { archiveGoal } from '../goals/actions'
+import { archiveGoal } from '../projects/goals/actions'
 import { setScreenDimensions } from '../screensize/actions'
 import { changeTranslate, changeScale } from '../viewport/actions'
 import { openExpandedView } from '../expanded-view/actions'
@@ -54,6 +54,9 @@ export default function setupEventListeners(store, canvas) {
 
   function bodyKeydown(event) {
     let state = store.getState()
+    const {
+      ui: { activeProject },
+    } = state
     // there are event.code and event.key ...
     // event.key is keyboard layout independent, so works for Dvorak users
     switch (event.key) {
@@ -92,7 +95,9 @@ export default function setupEventListeners(store, canvas) {
           !state.ui.expandedView.isOpen
         ) {
           let firstOfSelection = selection.selectedGoals[0]
-          store.dispatch(archiveGoal.create({ address: firstOfSelection }))
+          store.dispatch(
+            archiveGoal(activeProject).create({ address: firstOfSelection })
+          )
           // if on firefox, and matched this case
           // prevent the browser from navigating back to the last page
           event.preventDefault()
@@ -112,12 +117,7 @@ export default function setupEventListeners(store, canvas) {
       case 'v':
         if (state.ui.keyboard.ctrlKeyDown) {
           if (state.ui.goalClone.goals.length) {
-            cloneGoals(
-              store,
-              state.ui.goalClone.goals,
-              state.goalMembers,
-              state.goals
-            )
+            cloneGoals(store)
           }
         }
         break
@@ -151,9 +151,8 @@ export default function setupEventListeners(store, canvas) {
     const state = store.getState()
     let convertedMouse, goalAddressesToSelect
     const {
-      goals,
-      edges,
       ui: {
+        activeProject,
         viewport: { translate, scale },
         mouse: {
           coordinate: { x, y },
@@ -162,6 +161,8 @@ export default function setupEventListeners(store, canvas) {
         screensize: { width },
       },
     } = state
+    const goals = state.projects.goals[activeProject] || {}
+    const edges = state.projects.edges[activeProject] || {}
     if (state.ui.mouse.mousedown) {
       if (event.shiftKey) {
         convertedMouse = coordsPageToCanvas(
@@ -282,13 +283,14 @@ export default function setupEventListeners(store, canvas) {
       // check for node in clicked area
       // select it if so
       const {
-        goals,
-        edges,
         ui: {
+          activeProject,
           viewport: { translate, scale },
           screensize: { width },
         },
       } = state
+      const goals = state.projects.goals[activeProject] || {}
+      const edges = state.projects.edges[activeProject] || {}
       const clickedAddress = checkForGoalAtCoordinates(
         canvas.getContext('2d'),
         translate,
@@ -337,13 +339,14 @@ export default function setupEventListeners(store, canvas) {
   function canvasDblclick(event) {
     const state = store.getState()
     const {
-      goals,
-      edges,
       ui: {
+        activeProject,
         viewport: { translate, scale },
         screensize: { width },
       },
     } = state
+    const goals = state.projects.goals[activeProject] || {}
+    const edges = state.projects.edges[activeProject] || {}
     const goalAddress = checkForGoalAtCoordinates(
       canvas.getContext('2d'),
       translate,
