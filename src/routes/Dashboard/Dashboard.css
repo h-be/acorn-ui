@@ -98,6 +98,72 @@
   margin-right: 8px;
 }
 
+.my-projects-sorting {
+  color: #8e8e8e;
+  font-size: 16px;
+  line-height: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+}
+.my-projects-sorting-selected {
+  border: 1.5px solid #d0d0d0;
+  border-radius: 30px;
+  padding: 8px 14px;
+  margin-left: 10px;
+  font-size: 14px;
+  line-height: 17px;
+  display: flex;
+  cursor: pointer;
+  color: #535353;
+}
+.my-projects-sorting-selected .icon {
+  margin-left: 10px;
+  transition: transform 0.2s ease-in;
+}
+.my-projects-sorting-selected:hover .icon .inner-icon {
+  background-color: #5f65ff;
+}
+.my-projects-sorting-selected .icon.active {
+  transform: rotateX(180deg);
+  -webkit-transform: rotate(180deg);
+}
+
+.my-projects-sorting-select {
+  position: absolute;
+  right: 0;
+  top: 25px;
+  background: #ffffff;
+  padding: 8px 0;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  z-index: 1;
+  list-style: none;
+}
+.my-projects-sorting-select li {
+  padding: 4px 14px;
+  color: #535353;
+}
+.my-projects-sorting-select li:hover {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+.my-projects-sorting-select-enter {
+  opacity: 0;
+}
+.my-projects-sorting-select-enter-active {
+  opacity: 1;
+  transition: opacity 100ms ease-in;
+}
+.my-projects-sorting-select-exit {
+  opacity: 1;
+}
+.my-projects-sorting-select-exit-active {
+  opacity: 0;
+  transition: opacity 100ms ease-out;
+}
+
 .my-projects-content {
   position: relative;
   overflow-y: scroll;

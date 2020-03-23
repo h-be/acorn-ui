@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { CSSTransition } from 'react-transition-group'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import './Dashboard.css'
@@ -125,6 +126,9 @@ function Dashboard({
     })
   }, [JSON.stringify(instances)])
 
+  // created_at, name
+  const [selectedSort, setSelectedSort] = useState('created_at')
+  const [showSortPicker, setShowSortPicker] = useState(false)
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [showJoinModal, setShowJoinModal] = useState(false)
   // call set for this one with the actual passphrase to render inside
@@ -138,6 +142,22 @@ function Dashboard({
   const onJoinProject = passphrase => joinProject(passphrase)
 
   const hasProjects = projects.length > 0 // write 'false' if want to see Empty State
+
+  const setSortBy = sortBy => () => {
+    setSelectedSort(sortBy)
+    setShowSortPicker(false)
+  }
+
+  let sortedProjects
+  if (selectedSort === 'created_at') {
+    // sort most recent first, oldest last
+    sortedProjects = projects.sort((a, b) => b.created_at - a.created_at)
+  } else if (selectedSort === 'name') {
+    // sort alphabetically ascending
+    sortedProjects = projects.sort((a, b) => {
+      return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
+    })
+  }
 
   return (
     <>
@@ -168,10 +188,33 @@ function Dashboard({
                 Join a project
               </div>
             </div>
-            <div className='my-projects-header-sorting'>Sort by</div>
+            <div className='my-projects-sorting'>
+              <div>Sort by</div>
+              <div
+                className='my-projects-sorting-selected'
+                onClick={() => setShowSortPicker(!showSortPicker)}>
+                {selectedSort === 'created_at' && 'Last Created'}
+                {selectedSort === 'name' && 'Name'}
+                <Icon
+                  name='line-angle-down.svg'
+                  size='very-small'
+                  className={`grey ${showSortPicker ? 'active' : ''}`}
+                />
+              </div>
+              <CSSTransition
+                in={showSortPicker}
+                timeout={100}
+                unmountOnExit
+                classNames='my-projects-sorting-select'>
+                <ul className='my-projects-sorting-select'>
+                  <li onClick={setSortBy('created_at')}>Last Created</li>
+                  <li onClick={setSortBy('name')}>Name</li>
+                </ul>
+              </CSSTransition>
+            </div>
           </div>
           <div className='my-projects-content'>
-            {projects.map(project => (
+            {sortedProjects.map(project => (
               <DashboardListProject
                 project={project}
                 setShowInviteMembersModal={setShowInviteMembersModal}
