@@ -6,6 +6,7 @@ import MapView from './MapView/MapView'
 import PriorityView from './PriorityView/PriorityView'
 
 import { setActiveProject } from '../../active-project/actions'
+// data
 import { fetchProjectMeta } from '../../projects/project-meta/actions'
 import { fetchMembers } from '../../projects/members/actions'
 import { fetchGoals } from '../../projects/goals/actions'
@@ -13,9 +14,14 @@ import { fetchEdges } from '../../projects/edges/actions'
 import { fetchGoalMembers } from '../../projects/goal-members/actions'
 import { fetchGoalComments } from '../../projects/goal-comments/actions'
 import { fetchGoalVotes } from '../../projects/goal-votes/actions'
+// ui
+import { closeGoalForm } from '../../goal-form/actions'
+import { unselectAll } from '../../selection/actions'
+import { closeExpandedView } from '../../expanded-view/actions'
 
 function ProjectViewInner({
   projectId,
+  resetProjectView,
   setActiveProject,
   fetchProjectMeta,
   fetchMembers,
@@ -35,6 +41,9 @@ function ProjectViewInner({
     fetchGoalMembers()
     fetchGoalVotes()
     fetchGoalComments()
+
+    // this will get called to unmount the component
+    return resetProjectView
   }, [projectId])
 
   return (
@@ -59,6 +68,11 @@ function mapDispatchToProps(dispatch, ownProps) {
   const { projectId } = ownProps
   return {
     setActiveProject: () => dispatch(setActiveProject(projectId)),
+    resetProjectView: () => {
+      dispatch(closeExpandedView())
+      dispatch(closeGoalForm())
+      dispatch(unselectAll())
+    },
     fetchProjectMeta: () => dispatch(fetchProjectMeta(projectId).create({})),
     fetchMembers: () => dispatch(fetchMembers(projectId).create({})),
     fetchGoals: () => dispatch(fetchGoals(projectId).create({})),
