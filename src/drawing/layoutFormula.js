@@ -1,6 +1,8 @@
 import dagre from 'dagre'
 import { goalWidth, goalHeight } from './dimensions'
 
+const VERTICAL_SPACING = 50
+
 export default function layoutFormula(screenWidth, goals, edges) {
   // convert objects to arrays for iterating
   const goalsAddressesArray = Object.keys(goals)
@@ -17,7 +19,7 @@ export default function layoutFormula(screenWidth, goals, edges) {
   goalsAsArray.forEach(goal => {
     graph.setNode(goal.address, {
       width: goalWidth,
-      height: goalHeight,
+      height: goalHeight + VERTICAL_SPACING,
     })
   })
   // add each edge as an edge in the graph
