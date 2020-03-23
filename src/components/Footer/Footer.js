@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { NavLink, useRouteMatch } from 'react-router-dom'
+import { NavLink, Route, useRouteMatch } from 'react-router-dom'
 import Zoom from '../Zoom/Zoom'
 import './Footer.css'
 import Icon from '../Icon/Icon'
@@ -27,21 +27,23 @@ function Footer() {
           target='_blank'>
           <Button text='Report Issue' size='small' className='green' />
         </a>
-        <div className='bottom-left-panel-entry-points'>
-          <Icon
-            name='door-open.png'
-            size=''
-            className={`grey ${openEntryPointPicker ? 'active' : ''}`}
-            withTooltipTop
-            tooltipText='entry points'
-            onClick={() => setOpenEntryPointPicker(!openEntryPointPicker)}
+        <Route path='/project'>
+          <div className='bottom-left-panel-entry-points'>
+            <Icon
+              name='door-open.png'
+              size=''
+              className={`grey ${openEntryPointPicker ? 'active' : ''}`}
+              withTooltipTop
+              tooltipText='entry points'
+              onClick={() => setOpenEntryPointPicker(!openEntryPointPicker)}
+            />
+            {/* <img src='img/door-open.png' /> entry points */}
+          </div>
+          <EntryPointPicker
+            isOpen={openEntryPointPicker}
+            onClose={() => setOpenEntryPointPicker(false)}
           />
-          {/* <img src='img/door-open.png' /> entry points */}
-        </div>
-        <EntryPointPicker
-          isOpen={openEntryPointPicker}
-          onClose={() => setOpenEntryPointPicker(false)}
-        />
+        </Route>
       </div>
       {projectPage && (
         <div className={bottomRightPanelClassName}>
