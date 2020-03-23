@@ -2,7 +2,7 @@
   background-color: #ffffff;
   display: flex;
   flex-direction: row;
-  height: 100vh;
+  height: calc(100vh - 70px);
   padding-top: 70px;
 }
 
@@ -51,6 +51,8 @@
   flex: 1;
   margin: 0 auto;
   max-width: 70%;
+  display: flex;
+  flex-direction: column;
 }
 
 @media only screen and (max-width: 1045px) {
@@ -98,7 +100,7 @@
 
 .my-projects-content {
   position: relative;
-  height: 70vh;
+  overflow-y: scroll;
 }
 
 /* dashboard empty state */
