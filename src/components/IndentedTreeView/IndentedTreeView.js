@@ -118,7 +118,7 @@ export default function IndentedTreeView({ goalTrees }) {
             onClick={() => {
               setFilterText('')
             }}
-            className='clear_button'>
+            className='clear-button'>
             clear
           </button>
         )}

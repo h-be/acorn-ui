@@ -10,7 +10,7 @@ import moment from 'moment'
 import TextareaAutosize from 'react-textarea-autosize'
 
 import DatePicker from '../../DatePicker/DatePicker'
-import PeoplePicker from '../../PeoplePicker'
+import PeoplePicker from '../../PeoplePicker/PeoplePicker'
 
 import Priority from './Priority/Priority'
 import Comments from '../../Comments/Comments'

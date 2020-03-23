@@ -2,13 +2,15 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import Icon from './Icon/Icon'
-import PickerTemplate from './PickerTemplate/PickerTemplate'
+import './PeoplePicker.css'
+
+import Icon from '../Icon/Icon'
+import PickerTemplate from '../PickerTemplate/PickerTemplate'
 import {
   addMemberOfGoal,
   archiveMemberOfGoal,
-} from '../projects/goal-members/actions'
-import Avatar from './Avatar/Avatar'
+} from '../../projects/goal-members/actions'
+import Avatar from '../Avatar/Avatar'
 import moment from 'moment'
 
 function PeoplePicker({
@@ -22,10 +24,10 @@ function PeoplePicker({
 
   return (
     <PickerTemplate
-      className='people_picker'
+      className='people-picker'
       heading='squirrels'
       onClose={onClose}>
-      <div className='people_picker_search'>
+      <div className='people-picker-search'>
         <Icon name='search.svg' size='small' className='not-hoverable' />
         <input
           type='text'
@@ -39,13 +41,13 @@ function PeoplePicker({
             onClick={() => {
               setFilterText('')
             }}
-            className='clear_button'>
+            className='clear-button'>
             clear
           </button>
         )}
       </div>
-      <div className='people_picker_spacer' />
-      <ul className='people_picker_people'>
+      <div className='people-picker-spacer' />
+      <ul className='people-picker-people'>
         {people
           // filter people out if there's filter text defined, and don't bother case matching
           .filter(person => {
@@ -78,24 +80,24 @@ function PeoplePicker({
                   avatar_url={person.avatar_url}
                   medium
                 />
-                <div className='person_nameANDhandle'>
-                  <span className='person_name'>
+                <div className='person-nameANDhandle'>
+                  <span className='person-name'>
                     {person.first_name} {person.last_name}
                   </span>
-                  <div className='person_handle'>{person.handle}</div>
+                  <div className='person-handle'>{person.handle}</div>
                 </div>
                 {!person.is_member && (
                   <Icon
                     name='radio-button.svg'
                     size='small'
-                    className='light-grey radio_button'
+                    className='light-grey radio-button'
                   />
                 )}
                 {person.is_member && (
                   <Icon
                     name='radio-button-checked.svg'
                     size='small'
-                    className='purple radio_button'
+                    className='purple radio-button'
                   />
                 )}
               </li>

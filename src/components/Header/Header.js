@@ -151,35 +151,36 @@ class Header extends React.Component {
         <div className='header'>
           <div className='top-left-panel'>
             <NavLink to='/' className='home-link logo'>
-              <Icon
-                name='acorn-logo-stroked.svg'
-                className='logo not-hoverable'
-              />
+              <Icon name='acorn-logo-stroked.svg' className='not-hoverable' />
               <p className='logo-name'>acorn</p>
             </NavLink>
             {this.props.whoami && (
               <Route path='/project'>
-                <div className='current-canvas-wrapper'>
-                  <div className='current-canvas-content'>
-                    <Route
-                      path='/project/:projectId/map'
-                      render={() => (
-                        <Icon
-                          name='map.svg'
-                          className='view-mode grey not-hoverable'
-                        />
-                      )}
-                    />
-                    <Route
-                      path='/project/:projectId/priority'
-                      render={() => (
-                        <Icon
-                          name='priority.svg'
-                          className='view-mode grey not-hoverable'
-                        />
-                      )}
-                    />
-                    <div className='canvas-name'>{this.props.projectName}</div>
+                <div className='current-project-wrapper'>
+                  <div className='current-project-content'>
+                    <Switch>
+                      <Route
+                        path='/project/:projectId/map'
+                        render={() => (
+                          <Icon
+                            name='map.svg'
+                            className='view-mode grey not-hoverable'
+                          />
+                        )}
+                      />
+                      <Route
+                        path='/project/:projectId/priority'
+                        render={() => (
+                          <Icon
+                            name='priority.svg'
+                            className='view-mode grey not-hoverable'
+                          />
+                        )}
+                      />
+                    </Switch>
+                    <div className='current-project-name'>
+                      {this.props.projectName}
+                    </div>
                     <div className='divider-line'></div>
                     <Icon
                       withTooltip
@@ -193,6 +194,18 @@ class Header extends React.Component {
                 </div>
               </Route>
             )}
+            {/* Current Entry Points Tab */}
+            <div className='current-entry-point'>
+              <img src='img/door-open.png' />
+              {/* TODO: make dynamic Entry Points name value */}
+              <div>We have released Acorn 4.0.0</div>
+              <Icon
+                name='x.svg'
+                size='very-small-close'
+                className='grey current-entry-point-close'
+                onClick={() => onClose()}
+              />
+            </div>
           </div>
           {this.props.whoami && (
             <div className='top-right-panel'>
@@ -200,7 +213,7 @@ class Header extends React.Component {
               <Icon
                 name='guidebook.svg'
                 onClick={this.clickBook}
-                size='header'
+                className='top-right-panel-icon'
               />
               <div className={this.state.online.color}>
                 <div

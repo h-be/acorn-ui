@@ -1,11 +1,12 @@
 .zoom-wrapper {
   display: flex;
   align-items: center;
-  margin: 0 0 0 24px;
-  border-right: 1px solid #D9D9D9;
+  margin: 0 0 0 12px;
+  border-right: 1px solid #d9d9d9;
 }
 
-.zoom-wrapper .icon, span{
+.zoom-wrapper .icon,
+span {
   display: inline-block;
 }
 
@@ -13,12 +14,14 @@
   font-size: 16px;
   font-family: 'CircularStd-Medium', Helvetica, sans-serif;
   font-weight: normal;
-  margin-right: 20px;
+  margin-right: 12px;
   width: 44px;
 }
 
 .zoom-wrapper .icon {
-  margin-right: 24px;
+  height: 22px;
+  width: 22px;
+  padding: 4px;
+  margin-right: 12px;
   box-sizing: border-box;
-  padding: 2px;
 }

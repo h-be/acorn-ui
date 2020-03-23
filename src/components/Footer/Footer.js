@@ -1,9 +1,11 @@
-import React from 'react'
-import { NavLink, useParams, useRouteMatch } from 'react-router-dom'
+import React, { useState } from 'react'
+import { NavLink, useRouteMatch } from 'react-router-dom'
 import Zoom from '../Zoom/Zoom'
 import './Footer.css'
 import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
+
+import EntryPointPicker from '../EntryPointPicker/EntryPointPicker'
 
 function Footer() {
   const projectPage = useRouteMatch('/project/:projectId')
@@ -15,6 +17,8 @@ function Footer() {
   bottomRightPanelClassName =
     bottomRightPanelClassName + (mapPage ? '' : ' bottom-right-panel-not-map')
 
+  const [openEntryPointPicker, setOpenEntryPointPicker] = useState(false)
+
   return (
     <div className='footer'>
       <div className='bottom-left-panel'>
@@ -23,17 +27,33 @@ function Footer() {
           target='_blank'>
           <Button text='Report Issue' size='small' className='green' />
         </a>
+        <div className='bottom-left-panel-entry-points'>
+          <Icon
+            name='door-open.png'
+            size=''
+            className={`grey ${openEntryPointPicker ? 'active' : ''}`}
+            withTooltipTop
+            tooltipText='entry points'
+            onClick={() => setOpenEntryPointPicker(!openEntryPointPicker)}
+          />
+          {/* <img src='img/door-open.png' /> entry points */}
+        </div>
+        <EntryPointPicker
+          isOpen={openEntryPointPicker}
+          onClose={() => setOpenEntryPointPicker(false)}
+        />
       </div>
       {projectPage && (
         <div className={bottomRightPanelClassName}>
           {mapPage && <Zoom />}
-          <div className='view-mode-icons'>
+          <div className='bottom-right-panel-view-modes'>
             <NavLink
               to={`/project/${projectId}/map`}
-              activeClassName='view-mode-active'>
+              activeClassName='view-mode-active'
+              className='view-mode-link'>
               <Icon
                 name='map.svg'
-                size='view-mode'
+                size=''
                 className='grey'
                 withTooltipTop
                 tooltipText='map view'
@@ -41,7 +61,8 @@ function Footer() {
             </NavLink>
             <NavLink
               to={`/project/${projectId}/priority`}
-              activeClassName='view-mode-active'>
+              activeClassName='view-mode-active'
+              className='view-mode-link'>
               <Icon
                 name='priority.svg'
                 size='view-mode'
