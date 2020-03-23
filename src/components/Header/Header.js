@@ -182,14 +182,29 @@ class Header extends React.Component {
                       {this.props.projectName}
                     </div>
                     <div className='divider-line'></div>
-                    <Icon
-                      withTooltip
-                      tooltipText='export'
-                      name='export.svg'
-                      size='header'
-                      className={this.state.isExportOpen ? 'purple' : ''}
-                      onClick={this.clickExport}
-                    />
+                    <div className='export-wrapper'>
+                      <Icon
+                        withTooltip
+                        tooltipText='export'
+                        name='export.svg'
+                        size='header'
+                        className={this.state.isExportOpen ? 'purple' : ''}
+                        onClick={this.clickExport}
+                      />
+                      {this.state.isExportOpen && (
+                        <ul className='export-list-wrapper'>
+                          {Object.keys(this.state.listaExport).map(key => (
+                            <li key={key}>
+                              <ListExport
+                                type={this.state.listaExport[key].type}
+                                title={this.state.listaExport[key].title}
+                                download={this.state.listaExport[key].download}
+                              />
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
                   </div>
                 </div>
                 {/* Current Entry Points Tab */}
@@ -297,22 +312,6 @@ class Header extends React.Component {
                 color={this.state.lista[key].color}
                 title={this.state.lista[key].title}
                 changeStatus={this.saveStatus}
-              />
-            ))}
-          </div>
-        )}
-        {!this.state.isExportOpen && this.state.isHoverExport && (
-          <span className='export-hover-display'>Export</span>
-        )}
-
-        {this.state.isExportOpen && (
-          <div className='export-wrapper'>
-            {Object.keys(this.state.listaExport).map(key => (
-              <ListExport
-                key={key}
-                type={this.state.listaExport[key].type}
-                title={this.state.listaExport[key].title}
-                download={this.state.listaExport[key].download}
               />
             ))}
           </div>
