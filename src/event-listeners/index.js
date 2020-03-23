@@ -102,7 +102,7 @@ export default function setupEventListeners(store, canvas) {
           // prevent the browser from navigating back to the last page
           event.preventDefault()
         }
-      case 'Control':
+        break
       case 'Control':
         store.dispatch(setCtrlKeyDown())
         break
