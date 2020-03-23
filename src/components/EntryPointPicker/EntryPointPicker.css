@@ -1,38 +1,32 @@
-.entry-point-picker-wrapper {
-  opacity: 0;
-  transition: opacity 0.1s ease-in;
-  z-index: -999;
-}
-
 .entry-point-picker.picker-popup {
-  opacity: 0;
-  transition: opacity 0.1s ease-in;
-  z-index: -999;
-  top: unset; /* this overrrides defult top position set for pciker-popup which is 0*/
+  top: unset; /* this overrides defult top position set for picker-popup which is 0*/
   bottom: 68px;
   left: 10px;
-  width: 360px;
-  height: 360px;
   border-radius: 10px;
   background: #ffffff;
-  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+  box-shadow: 0px 0px 6px rgba(201, 174, 174, 0.16);
   padding: 20px 0px;
   z-index: 10;
   position: fixed;
   box-sizing: border-box;
+  width: 360px;
+  height: 360px;
 }
 
-.entry-point-picker-wrapper.active {
+.entry-point-picker-wrapper-enter {
+  opacity: 0;
+}
+.entry-point-picker-wrapper-enter-active {
   opacity: 1;
-  z-index: 999;
+  transition: opacity 0.1s ease-in;
 }
 
-.entry-point-picker {
-}
-
-.entry-point-picker-wrapper.active > .entry-point-picker.picker-popup {
+.entry-point-picker-wrapper-exit {
   opacity: 1;
-  z-index: 999;
+}
+.entry-point-picker-wrapper-exit-active {
+  opacity: 0;
+  transition: opacity 0.1s ease-out;
 }
 
 .entry-point-picker-pointer {

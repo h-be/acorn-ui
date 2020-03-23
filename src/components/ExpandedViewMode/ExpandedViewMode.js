@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import './ExpandedViewMode.css'
 import Icon from '../Icon/Icon'
+import { CSSTransition } from 'react-transition-group'
 
 import { updateGoal } from '../../projects/goals/actions'
 
@@ -57,45 +58,52 @@ function ExpandedViewMode({
 
   return (
     <>
-      <div
-        className={`expanded-view-overlay ${showing ? 'fully-expanded' : ''}`}
-      />
+      <CSSTransition
+        in={showing}
+        timeout={100}
+        unmountOnExit
+        classNames='expanded-view-overlay'>
+        <div className='expanded-view-overlay' />
+      </CSSTransition>
       {goalState && (
-        <div
-          className={`expanded-view-wrapper border_${goalState.status} ${
-            showing ? 'fully-expanded' : ''
-          }`}>
-          <Icon
-            onClick={onClose}
-            name='x.svg'
-            size='small-close'
-            className='grey'
-          />
-          <ExpandedViewModeHeader
-            goalAddress={goalAddress}
-            goal={goalState}
-            updateGoal={updateGoal}
-          />
-          <div className='expanded-view-main'>
-            <ExpandedViewModeContent
-              projectId={projectId}
-              squirrels={squirrelsState}
-              goalAddress={goalAddress}
-              updateGoal={updateGoal}
-              goal={goalState}
-              goalContent={goalState.content}
-              goalDescription={goalState.description}
-              archiveMemberOfGoal={archiveMemberOfGoal}
+        <CSSTransition
+          in={showing}
+          timeout={100}
+          unmountOnExit
+          classNames='expanded-view-wrapper'>
+          <div className={`expanded-view-wrapper border_${goalState.status}`}>
+            <Icon
+              onClick={onClose}
+              name='x.svg'
+              size='small-close'
+              className='grey'
             />
-            <RightMenu
-              projectId={projectId}
+            <ExpandedViewModeHeader
               goalAddress={goalAddress}
               goal={goalState}
               updateGoal={updateGoal}
             />
+            <div className='expanded-view-main'>
+              <ExpandedViewModeContent
+                projectId={projectId}
+                squirrels={squirrelsState}
+                goalAddress={goalAddress}
+                updateGoal={updateGoal}
+                goal={goalState}
+                goalContent={goalState.content}
+                goalDescription={goalState.description}
+                archiveMemberOfGoal={archiveMemberOfGoal}
+              />
+              <RightMenu
+                projectId={projectId}
+                goalAddress={goalAddress}
+                goal={goalState}
+                updateGoal={updateGoal}
+              />
+            </div>
+            <ExpandedViewModeFooter goal={goalState} creator={creatorState} />
           </div>
-          <ExpandedViewModeFooter goal={goalState} creator={creatorState} />
-        </div>
+        </CSSTransition>
       )}
     </>
   )

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import { CSSTransition } from 'react-transition-group'
 
 import './EntryPointPicker.css'
 
@@ -11,7 +10,11 @@ function EntryPointPicker({ isOpen, onClose }) {
   const [filterText, setFilterText] = useState('')
 
   return (
-    <div className={`entry-point-picker-wrapper ${isOpen ? 'active' : ''}`}>
+    <CSSTransition
+      in={isOpen}
+      timeout={100}
+      unmountOnExit
+      classNames='entry-point-picker-wrapper'>
       <PickerTemplate
         className='entry-point-picker'
         heading='entry points'
@@ -139,7 +142,7 @@ function EntryPointPicker({ isOpen, onClose }) {
           src='img/popup-curved-pointer-downside.svg'
         />
       </PickerTemplate>
-    </div>
+    </CSSTransition>
   )
 }
 
