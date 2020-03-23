@@ -192,20 +192,20 @@ class Header extends React.Component {
                     />
                   </div>
                 </div>
+                {/* Current Entry Points Tab */}
+                <div className='current-entry-point'>
+                  <img src='img/door-open.png' />
+                  {/* TODO: make dynamic Entry Points name value */}
+                  <div>We have released Acorn 4.0.0</div>
+                  <Icon
+                    name='x.svg'
+                    size='very-small-close'
+                    className='grey current-entry-point-close'
+                    onClick={() => onClose()}
+                  />
+                </div>
               </Route>
             )}
-            {/* Current Entry Points Tab */}
-            <div className='current-entry-point'>
-              <img src='img/door-open.png' />
-              {/* TODO: make dynamic Entry Points name value */}
-              <div>We have released Acorn 4.0.0</div>
-              <Icon
-                name='x.svg'
-                size='very-small-close'
-                className='grey current-entry-point-close'
-                onClick={() => onClose()}
-              />
-            </div>
           </div>
           {this.props.whoami && (
             <div className='top-right-panel'>
