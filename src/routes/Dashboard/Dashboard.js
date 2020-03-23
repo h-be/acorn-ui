@@ -24,6 +24,7 @@ import {
   removeProjectInstance,
   addInstanceToInterface,
   startInstance,
+  fetchProjectsInstances,
 } from '../../projects/conductor-admin/actions'
 
 function DashboardListProject({ project, setShowInviteMembersModal }) {
@@ -264,8 +265,14 @@ function mapDispatchToProps(dispatch) {
           created_at: Date.now(),
         },
       }
-      return addDnaAndIntance(dispatch, passphrase).then(({ instanceId }) =>
-        dispatch(createProjectMeta(instanceId).create(projectMeta))
+      return (
+        addDnaAndIntance(dispatch, passphrase)
+          .then(({ instanceId }) =>
+            dispatch(createProjectMeta(instanceId).create(projectMeta))
+          )
+          // this will cause the eventual refetch of Project Members and Entry Points,
+          // due to useEffect within Dashboard
+          .then(() => dispatch(fetchProjectsInstances.create({})))
       )
       // .catch
     },
