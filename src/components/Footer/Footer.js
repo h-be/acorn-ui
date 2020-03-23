@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
+import useOnClickOutside from 'use-onclickoutside'
 import { NavLink, Route, useRouteMatch } from 'react-router-dom'
 import Zoom from '../Zoom/Zoom'
 import './Footer.css'
@@ -17,10 +18,12 @@ function Footer() {
   bottomRightPanelClassName =
     bottomRightPanelClassName + (mapPage ? '' : ' bottom-right-panel-not-map')
 
+  const ref = useRef()
+  useOnClickOutside(ref, () => setOpenEntryPointPicker(false))
   const [openEntryPointPicker, setOpenEntryPointPicker] = useState(false)
 
   return (
-    <div className='footer'>
+    <div className='footer' ref={ref}>
       <div className='bottom-left-panel'>
         <a
           href='https://github.com/h-be/acorn-release/issues/new'

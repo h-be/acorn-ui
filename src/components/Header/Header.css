@@ -1,15 +1,15 @@
 .header-wrapper {
-  position: relative;
+  position: fixed;
+  width: 100%;
+  top: 0;
 }
 
 .header {
-  position: fixed;
   width: 100%;
   margin-top: 10px;
   display: flex;
   justify-content: space-between;
   max-height: 46px;
-  top: 0;
 }
 
 /* Top Left Panel */
@@ -191,6 +191,7 @@
 /* Top Right Panel */
 
 .top-right-panel {
+  position: relative;
   margin-right: 10px;
   margin-left: 10px;
   padding: 5px 20px 5px 20px;
@@ -225,10 +226,10 @@
 }
 
 .guidebook-outer-wrapper {
-  float: right;
-  position: relative;
+  position: absolute;
+  right: 0;
+  top: 52px;
   border-radius: 10px;
-  margin-top: 64px;
   margin-right: 12px;
   background-color: #ffffff;
   padding: 30px 20px;
@@ -251,6 +252,7 @@
   color: #717171;
   font-size: 14px;
   z-index: -1;
+  white-space: nowrap;
 }
 
 .guidebook_open_help img {
@@ -282,12 +284,16 @@
   margin-right: 10px;
 }
 
-.avatar_container {
+.avatar-and-status-wrapper {
+  position: relative;
+}
+
+.avatar-container {
   height: 36px;
   width: 36px;
 }
 
-.avatar_container img {
+.avatar-container img {
   width: 36px;
   height: 36px;
   object-fit: cover;
@@ -295,14 +301,26 @@
   border-radius: 50%;
 }
 
-.top-right-panel div .avatar_container + span {
+.user-status-icon-wrapper {
   position: absolute;
   width: 16px;
   height: 16px;
-  right: 22px;
+  right: 0px;
   bottom: -2px;
-  transform: translate(-50%, -50%);
   border-radius: 50%;
+}
+
+.profile-wrapper {
+  position: absolute;
+  right: 0;
+  top: 52px;
+  border-radius: 14px;
+  background-color: #ffffff;
+  padding: 12px 0;
+  box-shadow: 0px 0px 6px #00000029;
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
 }
 
 .profile-wrapper button p {
@@ -332,37 +350,25 @@
   align-items: center;
 }
 
-.profile-wrapper {
-  margin-top: 62px;
-  margin-right: 10px;
-  float: right;
-  border-radius: 14px;
-  background-color: #ffffff;
-  padding: 12px 0;
-  box-shadow: 0px 0px 6px #00000029;
-  display: flex;
-  flex-direction: column;
-}
-
 /* User Status on header */
 
 .btn:hover {
   background-color: #f2f2f2;
 }
 
-.purple .avatar_container + span {
+.purple .avatar-container + span {
   background-color: #5f65ff;
 }
 
-.green .avatar_container + span {
+.green .avatar-container + span {
   background-color: #00d0c0;
 }
 
-.yellow .avatar_container + span {
+.yellow .avatar-container + span {
   background-color: #ffc400;
 }
 
-.gray .avatar_container + span {
+.gray .avatar-container + span {
   background-color: #d1d1d1;
 }
 
@@ -383,9 +389,9 @@ button.gray .icon {
 }
 
 .user-status-wrapper {
-  margin-top: 62px;
-  margin-right: 10px;
-  float: right;
+  position: absolute;
+  top: 52px;
+  right: 0;
   border-radius: 14px;
   background-color: #ffffff;
   padding: 12px 0;
