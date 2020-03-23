@@ -18,6 +18,7 @@ import { fetchGoalVotes } from '../../projects/goal-votes/actions'
 import { closeGoalForm } from '../../goal-form/actions'
 import { unselectAll } from '../../selection/actions'
 import { closeExpandedView } from '../../expanded-view/actions'
+import { resetTranslateAndScale } from '../../viewport/actions'
 
 function ProjectViewInner({
   projectId,
@@ -72,6 +73,7 @@ function mapDispatchToProps(dispatch, ownProps) {
       dispatch(closeExpandedView())
       dispatch(closeGoalForm())
       dispatch(unselectAll())
+      dispatch(resetTranslateAndScale())
     },
     fetchProjectMeta: () => dispatch(fetchProjectMeta(projectId).create({})),
     fetchMembers: () => dispatch(fetchMembers(projectId).create({})),

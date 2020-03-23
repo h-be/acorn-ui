@@ -225,14 +225,17 @@ class Header extends React.Component {
           {this.props.whoami && (
             <div className='top-right-panel'>
               {/* <Icon name="search-line.svg" onClick={this.clickSearch}/> */}
-              <Icon
-                name='guidebook.svg'
-                onClick={this.clickBook}
-                className='top-right-panel-icon'
-              />
-              <div className={this.state.online.color}>
+              <Route path='/project'>
+                <Icon
+                  name='guidebook.svg'
+                  onClick={this.clickBook}
+                  className='top-right-panel-icon'
+                />
+              </Route>
+              <div
+                className={`avatar-and-status-wrapper ${this.state.online.color}`}>
                 <div
-                  className='avatar_container'
+                  className='avatar-container'
                   onMouseEnter={e => {
                     this.hover(true)
                   }}
@@ -250,6 +253,7 @@ class Header extends React.Component {
                 </div>
 
                 <span
+                  className='user-status-icon-wrapper'
                   onMouseEnter={this.handleStatusEnter}
                   onMouseLeave={this.handleStatusLeave}>
                   {!this.state.isStatusOpen && !this.state.isStatusHover && (
@@ -268,54 +272,55 @@ class Header extends React.Component {
                   )}
                 </span>
               </div>
+              {/* TODO: make this show based on whether the user has just recently created their profile (registered) */}
+              <Route path='/project'>
+                {!this.state.isGuideOpen && (
+                  <div className='guidebook_open_help'>
+                    <div>Click on the Guidebook to learn more</div>
+                    <img src='img/arrow-curved.svg' />
+                  </div>
+                )}
+                {this.state.isGuideOpen && (
+                  <div className='guidebook-outer-wrapper'>
+                    <GuideBook />
+                    <Icon
+                      name='x.svg'
+                      size='small-close'
+                      className='grey'
+                      onClick={() => {
+                        this.setState({ isGuideOpen: false })
+                      }}
+                    />
+                  </div>
+                )}
+              </Route>
+              {this.state.isProfileOpen && (
+                <div className='profile-wrapper'>
+                  {Object.keys(this.state.listaProfile).map(key => (
+                    <ListProfile
+                      key={key}
+                      title={this.state.listaProfile[key].title}
+                      click={this.state.listaProfile[key].click}
+                    />
+                  ))}
+                </div>
+              )}
+              {this.state.isStatusOpen && (
+                <div className='user-status-wrapper'>
+                  {Object.keys(this.state.lista).map(key => (
+                    <ListStatus
+                      key={key}
+                      img={this.state.lista[key].img}
+                      color={this.state.lista[key].color}
+                      title={this.state.lista[key].title}
+                      changeStatus={this.saveStatus}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>
-
-        {/* TODO: make this show based on whether the user has just recently created their profile (registered) */}
-        {!this.state.isGuideOpen && (
-          <div className='guidebook_open_help'>
-            <div>Click on the Guidebook to learn more</div>
-            <img src='img/arrow-curved.svg' />
-          </div>
-        )}
-        {this.state.isGuideOpen && (
-          <div className='guidebook-outer-wrapper'>
-            <GuideBook />
-            <Icon
-              name='x.svg'
-              size='small-close'
-              className='grey'
-              onClick={() => {
-                this.setState({ isGuideOpen: false })
-              }}
-            />
-          </div>
-        )}
-        {this.state.isProfileOpen && (
-          <div className='profile-wrapper'>
-            {Object.keys(this.state.listaProfile).map(key => (
-              <ListProfile
-                key={key}
-                title={this.state.listaProfile[key].title}
-                click={this.state.listaProfile[key].click}
-              />
-            ))}
-          </div>
-        )}
-        {this.state.isStatusOpen && (
-          <div className='user-status-wrapper'>
-            {Object.keys(this.state.lista).map(key => (
-              <ListStatus
-                key={key}
-                img={this.state.lista[key].img}
-                color={this.state.lista[key].color}
-                title={this.state.lista[key].title}
-                changeStatus={this.saveStatus}
-              />
-            ))}
-          </div>
-        )}
       </div>
     )
   }

@@ -15,10 +15,12 @@
 .dashboard-list-project-image {
 }
 
-.dashboard-list-project-image img {
+.dashboard-list-project-image-bg {
   border-radius: 5px;
   width: 68px;
   height: 68px;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .dashboard-list-project-content {
@@ -143,15 +145,11 @@
 /* dashboard project members list */
 
 .dashboard-list-project-members {
-  float: right;
   display: flex;
   flex-direction: column;
+  align-items: end;
 }
 
 .dashboard-list-project-member-list {
   margin-bottom: 8px;
-}
-
-.dashboard-list-project-member-list .initials-avatar {
-  float: right;
 }

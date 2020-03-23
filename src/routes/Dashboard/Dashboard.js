@@ -35,7 +35,10 @@ function DashboardListProject({ project, setShowInviteMembersModal }) {
         <NavLink
           to={`/project/${project.instanceId}`}
           className='dashboard-list-project-image'>
-          <img src={project.image} />
+          <div
+            className='dashboard-list-project-image-bg'
+            style={{ backgroundImage: `url(${project.image})` }}
+          />
         </NavLink>
         <div className='dashboard-list-project-content'>
           <NavLink

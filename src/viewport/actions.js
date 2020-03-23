@@ -6,10 +6,17 @@
 */
 
 /* constants */
+const RESET_TRANSLATE_AND_SCALE = 'RESET_TRANSLATE_AND_SCALE'
 const CHANGE_TRANSLATE = 'CHANGE_TRANSLATE'
 const CHANGE_SCALE = 'CHANGE_SCALE'
 
 /* action creator functions */
+
+function resetTranslateAndScale() {
+  return {
+    type: RESET_TRANSLATE_AND_SCALE,
+  }
+}
 
 function changeTranslate(x, y) {
   return {
@@ -32,4 +39,11 @@ function changeScale(zoom, mouseX, mouseY) {
   }
 }
 
-export { CHANGE_TRANSLATE, CHANGE_SCALE, changeTranslate, changeScale }
+export {
+  RESET_TRANSLATE_AND_SCALE,
+  CHANGE_TRANSLATE,
+  CHANGE_SCALE,
+  resetTranslateAndScale,
+  changeTranslate,
+  changeScale,
+}
