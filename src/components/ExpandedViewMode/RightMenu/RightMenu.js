@@ -4,7 +4,7 @@ import './RightMenu.css'
 
 import Icon from '../../Icon/Icon'
 
-import PeoplePicker from '../../PeoplePicker'
+import PeoplePicker from '../../PeoplePicker/PeoplePicker'
 import DatePicker from '../../DatePicker/DatePicker'
 import PriorityPicker from '../../PriorityPicker/PriorityPicker'
 import HierarchyPicker from '../../HierarchyPicker/HierarchyPicker'

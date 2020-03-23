@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 import Icon from './Icon/Icon'
 import StatusPicker from './StatusPicker'
-import PeoplePicker from './PeoplePicker'
+import PeoplePicker from './PeoplePicker/PeoplePicker'
 import DatePicker from './DatePicker/DatePicker'
 import HierarchyPicker from './HierarchyPicker/HierarchyPicker'
 import PriorityPicker from './PriorityPicker/PriorityPicker'

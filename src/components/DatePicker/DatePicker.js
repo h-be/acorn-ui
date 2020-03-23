@@ -20,7 +20,8 @@ function DatePicker({ fromDate, toDate, onClose, onSet }) {
   useEffect(() => {
     onSet(
       dates.fromDate ? dates.fromDate.unix() : null,
-      dates.toDate ? dates.toDate.unix() : null)
+      dates.toDate ? dates.toDate.unix() : null
+    )
   }, [dates])
 
   return (
@@ -35,17 +36,17 @@ function DatePicker({ fromDate, toDate, onClose, onSet }) {
           onClose={() => {}}
           showClearDates
           keepOpenOnDateSelect
-          customCloseIcon={<button className='clear_button'>clear all</button>}
+          customCloseIcon={<button className='clear-button'>clear all</button>}
           startDate={dates.fromDate} // momentPropTypes.momentObj or null,
           startDateId='your_unique_start_date_id'
           endDate={dates.toDate} // momentPropTypes.momentObj or null,
           endDateId='your_unique_end_date_id'
           onDatesChange={({ startDate, endDate }) =>
-              setDates({ fromDate: startDate, toDate: endDate })
-            }
+            setDates({ fromDate: startDate, toDate: endDate })
+          }
           focusedInput={focusedInput}
           onFocusChange={focusedInput => {
-             // doesn't update the focusedInput if it is trying to close the DRP
+            // doesn't update the focusedInput if it is trying to close the DRP
             if (!focusedInput) return
             setFocusedInput(focusedInput)
           }}

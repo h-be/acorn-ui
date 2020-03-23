@@ -12,7 +12,7 @@ import Avatar from '../Avatar/Avatar'
 import StatusIcon from '../StatusIcon/StatusIcon'
 
 import StatusPicker from '../StatusPicker'
-import PeoplePicker from '../PeoplePicker'
+import PeoplePicker from '../PeoplePicker/PeoplePicker'
 import DatePicker from '../DatePicker/DatePicker'
 import HierarchyPicker from '../HierarchyPicker/HierarchyPicker'
 import Modal, { ModalContent } from '../Modal/Modal'
