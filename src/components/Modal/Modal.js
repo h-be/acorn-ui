@@ -1,4 +1,5 @@
 import React from 'react'
+import { CSSTransition } from 'react-transition-group'
 
 import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
@@ -59,19 +60,18 @@ export { ModalContent }
 
 export default function Modal({ white, active, className, onClose, children }) {
   return (
-    <div
-      className={`modal ${active ? 'active' : ''} ${
-        white ? 'modal-white' : ''
-      }`}>
-      <div className={`${className} modal-wrapper`}>
-        <Icon
-          name='x.svg'
-          size='small-close'
-          className='grey'
-          onClick={() => onClose()}
-        />
-        {children}
+    <CSSTransition in={active} timeout={100} unmountOnExit classNames='modal'>
+      <div className={`modal ${white ? 'modal-white' : ''}`}>
+        <div className={`${className} modal-wrapper`}>
+          <Icon
+            name='x.svg'
+            size='small-close'
+            className='grey'
+            onClick={() => onClose()}
+          />
+          {children}
+        </div>
       </div>
-    </div>
+    </CSSTransition>
   )
 }

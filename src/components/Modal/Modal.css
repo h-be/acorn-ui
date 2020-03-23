@@ -5,21 +5,31 @@
   width: 100vw;
   height: 100vh;
   position: fixed;
-  z-index: -1;
-  opacity: 0;
-  transition: 0.2s all;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.modal.modal-white {
-  background: rgba(255, 255, 255, 0.7);
+.modal-enter {
+  opacity: 0;
 }
 
-.modal.active {
+.modal-enter-active {
   opacity: 1;
-  z-index: 200;
+  transition: 0.2s all;
+}
+
+.modal-exit {
+  opacity: 1;
+}
+
+.modal-exit-active {
+  opacity: 0;
+  transition: 0.2s all;
+}
+
+.modal.modal-white {
+  background: rgba(255, 255, 255, 0.7);
 }
 
 .modal-wrapper {

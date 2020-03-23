@@ -7,6 +7,7 @@ import { createGoal, updateGoal } from '../projects/goals/actions'
 import { createEdge } from '../projects/edges/actions'
 import { closeGoalForm, updateContent } from '../goal-form/actions'
 import layoutFormula from '../drawing/layoutFormula'
+import { goalWidth } from '../drawing/dimensions'
 import moment from 'moment'
 import VerticalActionsList from './VerticalActionsList'
 
@@ -129,27 +130,31 @@ class GoalForm extends Component {
     // optionally render the form dependent on whether the `isOpen` prop
     // is true, else render nothing
     return (
-      <div
-        className='goal_form_wrapper'
-        style={{ position: 'absolute', top: `${yLoc}px`, left: `${xLoc}px` }}>
-        <form className={'goal_form'} onSubmit={this.handleSubmit}>
-          <TextareaAutosize
-            placeholder='Add a title...'
-            value={content}
-            onChange={this.handleChange}
-            onKeyDown={this.handleKeyDown}
-            autoFocus
-            onFocus={this.handleFocus}
-            onBlur={this.hadleBlur}
-          />
-          {editAddress && (
-            <button type='submit' className='goal_form_save'>
-              Save
-            </button>
-          )}
-        </form>
-        {editAddress && <VerticalActionsList projectId={projectId} />}
-      </div>
+      <>
+        <div
+          className='goal_form_wrapper'
+          style={{ position: 'absolute', top: `${yLoc}px`, left: `${xLoc}px` }}>
+          <form className={'goal_form'} onSubmit={this.handleSubmit}>
+            <TextareaAutosize
+              placeholder='Add a title...'
+              value={content}
+              onChange={this.handleChange}
+              onKeyDown={this.handleKeyDown}
+              autoFocus
+              onFocus={this.handleFocus}
+              onBlur={this.hadleBlur}
+            />
+          </form>
+        </div>
+        <div
+          style={{
+            position: 'absolute',
+            top: `${yLoc}px`,
+            left: `${xLoc + goalWidth}px`,
+          }}>
+          {editAddress && <VerticalActionsList projectId={projectId} />}
+        </div>
+      </>
     )
   }
 }

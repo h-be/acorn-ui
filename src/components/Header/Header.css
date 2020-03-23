@@ -35,24 +35,22 @@
 }
 
 .logo .icon {
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   padding: 2px 2px;
   display: inline-block;
   position: relative;
-  right: -1px;
-  top: 0.5px;
+  top: 0.75px;
   background: transparent;
   cursor: default;
   vertical-align: middle;
-  margin-right: 2px;
 }
 
 .logo-name {
   margin: 1px;
   font-family: 'quebecsemibold', Helvetica, Sans-Serif;
   font-weight: normal;
-  font-size: 24px;
+  font-size: 22px;
   margin-top: -12px;
 }
 
@@ -80,7 +78,7 @@
 
 .current-project-name {
   margin: 0 12px 0 6px;
-  font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
+  font-family: 'CircularStd-Medium', Helvetica, Sans-Serif;
   font-weight: normal;
   font-size: 14px;
   color: #4d4d4d;
