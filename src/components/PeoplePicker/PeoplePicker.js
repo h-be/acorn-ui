@@ -50,6 +50,7 @@ function PeoplePicker({
       <ul className='people-picker-people'>
         {people
           // filter people out if there's filter text defined, and don't bother case matching
+          // also match anywhere in the string, not just the start
           .filter(person => {
             const name = `${person.first_name} ${person.last_name}`
             return (

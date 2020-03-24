@@ -28,6 +28,7 @@ import {
   startInstance,
   fetchProjectsInstances,
 } from '../../projects/conductor-admin/actions'
+import selectEntryPoints from '../../projects/entry-points/select'
 
 function DashboardListProject({ project, setShowInviteMembersModal }) {
   const [showEntryPoints, setShowEntryPoints] = useState(false)
@@ -93,12 +94,11 @@ function DashboardListProject({ project, setShowInviteMembersModal }) {
         {showEntryPoints && (
           <div className='dashboard-list-project-entry-point-expanded'>
             {project.entryPoints.map(entryPoint => {
+              // TODO: make this a link
               return (
                 <div className='entry-point-item'>
                   <div className='entry-point-icon'></div>
-                  <div clasName='entry-point-name'>
-                    We have released Acorn 4.0.0
-                  </div>
+                  <div clasName='entry-point-name'>{entryPoint.content}</div>
                 </div>
               )
             })}
@@ -366,14 +366,14 @@ function mapStateToProps(state) {
       const memberProfiles = Object.keys(members).map(
         agentAddress => state.agents[agentAddress]
       )
+      const entryPoints = selectEntryPoints(state, instanceId)
       return {
         ...project,
         // TODO: better placeholder
         image: project.image || 'https://via.placeholder.com/68',
         instanceId: instanceId,
         members: memberProfiles,
-        // TODO: real entry points
-        entryPoints: ['e'],
+        entryPoints,
       }
     }),
   }
