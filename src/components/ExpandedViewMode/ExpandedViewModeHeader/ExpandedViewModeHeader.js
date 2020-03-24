@@ -10,6 +10,8 @@ export default function ExpandedViewModeHeader({
   goalAddress,
   goal,
   updateGoal,
+  isEntryPoint,
+  entryPointClickAction,
 }) {
   const defaultViews = {
     status: false,
@@ -32,6 +34,10 @@ export default function ExpandedViewModeHeader({
       goalAddress
     )
   }
+
+  const entryPointToggleIcon = isEntryPoint
+    ? 'door-open.png'
+    : 'door-closed.png'
 
   return (
     <div className='expanded_view_header'>
@@ -62,6 +68,18 @@ export default function ExpandedViewModeHeader({
           onClose={() => setViews({ ...defaultViews })}
         />
       )}
+      <Icon
+        withTooltip
+        tooltipText={
+          isEntryPoint
+            ? 'This goal is an entry point'
+            : 'This goal is not an entry point'
+        }
+        onClick={entryPointClickAction}
+        name={entryPointToggleIcon}
+        className='entry-points-toggle'
+        size='medium-expanded-view'
+      />
       <Icon
         name='lock-closed.svg'
         className='edibility_permission feature-in-development'

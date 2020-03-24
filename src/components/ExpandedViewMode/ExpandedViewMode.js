@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import './ExpandedViewMode.css'
 import Icon from '../Icon/Icon'
 import { CSSTransition } from 'react-transition-group'
 
+import {
+  createEntryPoint,
+  archiveEntryPoint,
+} from '../../projects/entry-points/actions'
 import { updateGoal } from '../../projects/goals/actions'
 
 import ExpandedViewModeHeader from './ExpandedViewModeHeader/ExpandedViewModeHeader'
@@ -17,6 +20,7 @@ import ExpandedViewModeFooter from './ExpandedViewModeFooter/ExpandedViewModeFoo
 
 function ExpandedViewMode({
   projectId,
+  agentAddress,
   goalAddress,
   goal,
   updateGoal,
@@ -24,6 +28,10 @@ function ExpandedViewMode({
   creator,
   squirrels,
   archiveMemberOfGoal,
+  createEntryPoint,
+  archiveEntryPoint,
+  isEntryPoint,
+  entryPointAddress,
 }) {
   const [goalState, setGoalState] = useState()
   const [squirrelsState, setSquirrelsState] = useState()
@@ -56,6 +64,20 @@ function ExpandedViewMode({
     }
   }, [creator])
 
+  const turnIntoEntryPoint = () => {
+    createEntryPoint({
+      creator_address: agentAddress,
+      created_at: Date.now(),
+      goal_address: goalAddress,
+    })
+  }
+  const unmakeAsEntryPoint = () => {
+    archiveEntryPoint(entryPointAddress)
+  }
+  const entryPointClickAction = isEntryPoint
+    ? unmakeAsEntryPoint
+    : turnIntoEntryPoint
+
   return (
     <>
       <CSSTransition
@@ -82,6 +104,8 @@ function ExpandedViewMode({
               goalAddress={goalAddress}
               goal={goalState}
               updateGoal={updateGoal}
+              entryPointClickAction={entryPointClickAction}
+              isEntryPoint={isEntryPoint}
             />
             <div className='expanded-view-main'>
               <ExpandedViewModeContent
@@ -117,6 +141,7 @@ function mapStateToProps(state, ownProps) {
   const { projectId } = ownProps
   const goals = state.projects.goals[projectId] || {}
   const goalMembers = state.projects.goalMembers[projectId] || {}
+  const entryPoints = state.projects.entryPoints[projectId] || {}
 
   if (state.ui.expandedView.goalAddress) {
     goal = goals[state.ui.expandedView.goalAddress]
@@ -134,8 +159,18 @@ function mapStateToProps(state, ownProps) {
     })
   }
 
+  const goalAddress = state.ui.expandedView.goalAddress
+  const entryPoint = Object.values(entryPoints).find(
+    entryPoint => entryPoint.goal_address === goalAddress
+  )
+  const isEntryPoint = entryPoint ? true : false
+  const entryPointAddress = entryPoint ? entryPoint.address : null
+
   return {
-    goalAddress: state.ui.expandedView.goalAddress,
+    agentAddress: state.agentAddress,
+    isEntryPoint,
+    entryPointAddress,
+    goalAddress,
     creator,
     goal,
     squirrels,
@@ -145,6 +180,14 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch, ownProps) {
   const { projectId } = ownProps
   return {
+    createEntryPoint: entryPoint => {
+      return dispatch(
+        createEntryPoint(projectId).create({ entry_point: entryPoint })
+      )
+    },
+    archiveEntryPoint: address => {
+      return dispatch(archiveEntryPoint(projectId).create({ address }))
+    },
     updateGoal: (goal, address) => {
       return dispatch(updateGoal(projectId).create({ address, goal }))
     },
