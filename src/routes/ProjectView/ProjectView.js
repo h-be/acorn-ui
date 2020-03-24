@@ -8,6 +8,7 @@ import PriorityView from './PriorityView/PriorityView'
 import { setActiveProject } from '../../active-project/actions'
 // data
 import { fetchProjectMeta } from '../../projects/project-meta/actions'
+import { fetchEntryPoints } from '../../projects/entry-points/actions'
 import { fetchMembers } from '../../projects/members/actions'
 import { fetchGoals } from '../../projects/goals/actions'
 import { fetchEdges } from '../../projects/edges/actions'
@@ -37,6 +38,7 @@ function ProjectViewInner({
     setActiveProject(projectId)
     fetchProjectMeta()
     fetchMembers()
+    fetchEntryPoints()
     fetchGoals()
     fetchEdges()
     fetchGoalMembers()
@@ -76,6 +78,7 @@ function mapDispatchToProps(dispatch, ownProps) {
       dispatch(resetTranslateAndScale())
     },
     fetchProjectMeta: () => dispatch(fetchProjectMeta(projectId).create({})),
+    fetchEntryPoints: () => dispatch(fetchEntryPoints(projectId).create({})),
     fetchMembers: () => dispatch(fetchMembers(projectId).create({})),
     fetchGoals: () => dispatch(fetchGoals(projectId).create({})),
     fetchEdges: () => dispatch(fetchEdges(projectId).create({})),
