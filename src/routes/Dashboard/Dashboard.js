@@ -14,6 +14,7 @@ import JoinProjectModal from '../../components/JoinProjectModal/JoinProjectModal
 import InviteMembersModal from '../../components/InviteMembersModal/InviteMembersModal'
 // import new modals here
 
+import { fetchEntryPoints } from '../../projects/entry-points/actions'
 import { fetchMembers } from '../../projects/members/actions'
 import {
   createProjectMeta,
@@ -112,6 +113,7 @@ function Dashboard({
   agentAddress,
   instances,
   projects,
+  fetchEntryPoints,
   fetchMembers,
   fetchProjectMeta,
   createProject,
@@ -122,7 +124,7 @@ function Dashboard({
     instances.forEach(instanceId => {
       fetchProjectMeta(instanceId)
       fetchMembers(instanceId)
-      // TODO: also fetch entry points
+      fetchEntryPoints(instanceId)
     })
   }, [JSON.stringify(instances)])
 
@@ -294,7 +296,9 @@ function addDnaAndIntance(dispatch, passphrase) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    // TODO: add fetch entry points here too
+    fetchEntryPoints: instanceId => {
+      return dispatch(fetchEntryPoints(instanceId).create({}))
+    },
     fetchMembers: instanceId => {
       return dispatch(fetchMembers(instanceId).create({}))
     },

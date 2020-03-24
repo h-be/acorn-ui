@@ -167,6 +167,7 @@
 .my-projects-content {
   position: relative;
   overflow-y: scroll;
+  flex: 1;
 }
 
 /* dashboard empty state */

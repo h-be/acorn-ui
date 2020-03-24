@@ -10,6 +10,7 @@ import { dnas, instances } from './conductor-admin/reducer'
 import members from './members/reducer'
 import goals from './goals/reducer'
 import edges from './edges/reducer'
+import entryPoints from './entry-points/reducer'
 import goalComments from './goal-comments/reducer'
 import goalMembers from './goal-members/reducer'
 import goalVotes from './goal-votes/reducer'
@@ -23,6 +24,7 @@ export default combineReducers({
   members,
   goals,
   edges,
+  entryPoints,
   goalMembers,
   goalVotes,
   goalComments,
