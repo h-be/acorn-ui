@@ -27,6 +27,7 @@ function ProjectViewInner({
   setActiveProject,
   fetchProjectMeta,
   fetchMembers,
+  fetchEntryPoints,
   fetchGoals,
   fetchEdges,
   fetchGoalMembers,
