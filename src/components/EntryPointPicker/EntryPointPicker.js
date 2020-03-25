@@ -9,10 +9,12 @@ import Icon from '../Icon/Icon'
 import selectEntryPoints from '../../projects/entry-points/select'
 
 function EntryPointPickerItem({ entryPoint }) {
+  const dotStyle = {
+    backgroundColor: entryPoint.color,
+  }
   return (
     <li className='entry-point-picker-item'>
-      {/* TODO : The colored dot below needs to be a randomized color set upon creation of the entry point */}
-      <div className='entry-point-picker-dot'></div>
+      <div className='entry-point-picker-dot' style={dotStyle}></div>
       <div className='entry-point-picker-name'>{entryPoint.content}</div>
       <Icon
         name='enter.png'

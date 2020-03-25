@@ -95,9 +95,12 @@ function DashboardListProject({ project, setShowInviteMembersModal }) {
           <div className='dashboard-list-project-entry-point-expanded'>
             {project.entryPoints.map(entryPoint => {
               // TODO: make this a link
+              const dotStyle = {
+                backgroundColor: entryPoint.color,
+              }
               return (
                 <div className='entry-point-item'>
-                  <div className='entry-point-icon'></div>
+                  <div className='entry-point-color-dot' style={dotStyle} />
                   <div clasName='entry-point-name'>{entryPoint.content}</div>
                 </div>
               )

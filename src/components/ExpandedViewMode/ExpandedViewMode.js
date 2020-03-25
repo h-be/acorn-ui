@@ -17,6 +17,7 @@ import ExpandedViewModeContent from './ExpandedViewModeContent/ExpandedViewModeC
 import { archiveMemberOfGoal } from '../../projects/goal-members/actions'
 
 import ExpandedViewModeFooter from './ExpandedViewModeFooter/ExpandedViewModeFooter'
+import { pickColorForString } from '../../styles'
 
 function ExpandedViewMode({
   projectId,
@@ -66,6 +67,7 @@ function ExpandedViewMode({
 
   const turnIntoEntryPoint = () => {
     createEntryPoint({
+      color: pickColorForString(goalAddress),
       creator_address: agentAddress,
       created_at: Date.now(),
       goal_address: goalAddress,
