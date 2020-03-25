@@ -83,7 +83,7 @@ function DashboardListProject({ project, setShowInviteMembersModal }) {
             onClick={() => setShowEntryPoints(!showEntryPoints)}>
             {/*<img className='entry-point-button-image' src='img/door-open.png' />*/}
             {project.entryPoints.length} entry point
-            {project.members.length === 1 ? '' : 's'}
+            {project.entryPoints.length === 1 ? '' : 's'}
             <Icon
               name='line-angle-down.svg'
               size='very-small'
