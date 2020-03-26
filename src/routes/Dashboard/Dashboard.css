@@ -26,23 +26,24 @@
   transition: color 0.1s ease-in, background-color 0.1s ease-in;
   width: 110px;
   border-radius: 10px;
+  text-decoration: none;
 }
 
 .dashboard-left-menu-item .icon {
   margin-right: 6px;
 }
 
-.dashboard-left-menu-item:hover {
+.dashboard-left-menu-item:hover,
+.dashboard-left-menu-item.active {
   color: #5f65ff;
   background-color: #f7f7f7;
 }
-
+.dashboard-left-menu-item:hover .inner-icon,
+.dashboard-left-menu-item.active .inner-icon {
+  background-color: #5f65ff;
+}
 .dashboard-left-menu-item .inner-icon {
   transition: background-color 0.1s ease-in;
-}
-
-.dashboard-left-menu-item:hover .inner-icon {
-  background-color: #5f65ff;
 }
 
 /* dashboard my projects */
