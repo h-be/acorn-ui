@@ -1,18 +1,18 @@
-import './EmptyState.css'
 import React from 'react'
+import './DashboardEmptyState.css'
 
-function EmptyState() {
+function DashboardEmptyState({ onJoinClick, onCreateClick }) {
   return (
-    <div className='empty_state_wrapper'>
-      <div className='empty_state'>
-        <div className='empty_state_squirrel_outer'>
-          <div className='empty_state_squirrel_middle'>
-            <div className='empty_state_squirrel_main clearfix'>
+    <div className='dashboard-empty-state-wrapper'>
+      <div className='dashboard-empty-state'>
+        <div className='dashboard-empty-state-squirrel-outer'>
+          <div className='dashboard-empty-state-squirrel-middle'>
+            <div className='dashboard-empty-state-squirrel-main clearfix'>
               <div className='squirrel'>
                 <div className='tail'>
                   <span className='circle'></span>
                   <span className='square'>
-                    <span className='tail_square_right'></span>
+                    <span className='tail-square-right'></span>
                   </span>
                 </div>
                 <span className='skin'></span>
@@ -38,13 +38,23 @@ function EmptyState() {
             </div>
           </div>
         </div>
-        <div className='empty-state-text'>
-          Hold G and left click anywhere on canvas to create your first goal
-          card. Happy squirreling :)
+        <div className='dashboard-empty-state-heading'>Let's get started!</div>
+        <div className='dashboard-empty-state-description'>
+          You currently have no projects. <br /> Start by
+          <a className='description-link' onClick={onCreateClick}>
+            {' '}
+            creating a new project{' '}
+          </a>
+          or{' '}
+          <a className='description-link' onClick={onJoinClick}>
+            {' '}
+            joining an existing one
+          </a>
+          .
         </div>
       </div>
     </div>
   )
 }
 
-export default EmptyState
+export default DashboardEmptyState

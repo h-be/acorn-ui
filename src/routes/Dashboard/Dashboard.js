@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import './Dashboard.css'
 import Icon from '../../components/Icon/Icon'
+import DashboardEmptyState from '../../components/DashboardEmptyState/DashboardEmptyState'
 
 import { passphraseToUuid } from '../../secrets'
 
@@ -146,29 +147,10 @@ function Dashboard({
               />
             ))}
             {!hasProjects && (
-              <div className='dashboard-empty-state'>
-                <div className='dashboard-empty-state-image'></div>
-                <div className='dashboard-empty-state-heading'>
-                  Let's get started!
-                </div>
-                <div className='dashboard-empty-state-description'>
-                  You currently have no projects. Start by
-                  <a
-                    className='description-link'
-                    onClick={() => setShowCreateModal(true)}>
-                    {' '}
-                    creating a new project{' '}
-                  </a>
-                  or{' '}
-                  <a
-                    className='description-link'
-                    onClick={() => setShowJoinModal(true)}>
-                    {' '}
-                    joining an existing one
-                  </a>
-                  .
-                </div>
-              </div>
+              <DashboardEmptyState
+                onJoinClick={() => setShowJoinModal(true)}
+                onCreateClick={() => setShowCreateModal(true)}
+              />
             )}
           </div>
         </div>
