@@ -72,7 +72,7 @@ function CreateProjectForm({
           placeholder='The best project ever'
         />
         {/* project cover image */}
-        <div className='row'>
+        <div className='create-project-image-row'>
           <ValidatingFormInput
             value={projectCoverUrl}
             onChange={setProjectCoverUrl}
@@ -82,9 +82,10 @@ function CreateProjectForm({
             validInput={projectCoverUrl.length > 0 && isValidProjectCoverUrl}
             errorText={errorProjectCoverUrl}
           />
-          <div className=''>
-            {/* <Avatar avatar_url={projectCoverUrl} large /> */}
-          </div>
+          <div
+            className='create-project-image'
+            style={{ backgroundImage: `url(${projectCoverUrl})` }}
+          />
         </div>
       </ProjectModalContent>
       <ProjectModalButton text='Create Project' onClick={onSubmit} />
