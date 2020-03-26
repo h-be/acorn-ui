@@ -1,61 +1,73 @@
-.empty_state_wrapper {
-  height: 100vh;
+.dashboard-empty-state-wrapper {
   width: 100%;
-  display: flex;
-  align-items: center;
-  z-index: -1;
-  position: absolute;
+  height: 100%;
 }
 
-.empty_state {
+.dashboard-empty-state {
   display: flex;
   flex-direction: column;
   text-align: center;
   align-items: center;
   margin: 0 auto;
+  width: 650px;
+  top: 35%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -35%);
 }
 
-.empty_state h1 {
-  font-family: 'gilroyextrabold', Helvetica, Sans-Serif;
-  font-weight: normal;
-  font-size: 27px;
-  letter-spacing: 1.05px;
-  margin-top: 25px;
+.dashboard-empty-state-heading {
+  font-size: 40px;
+  font-family: 'CircularStd-Bold', Helvetica, sans-serif;
+  margin-bottom: 20px;
+  margin-top: 30px;
+  color: #535353;
+  letter-spacing: 0.5px;
 }
 
-.empty-state-text {
+.dashboard-empty-state-description {
+  text-align: center;
+  color: #535353;
+  font-size: 22px;
+  line-height: 34px;
+  letter-spacing: 0.3px;
   font-family: 'CircularStd-Book', Helvetica, sans-serif;
-  font-weight: normal;
-  margin: 20px auto;
-  color: #4d4d4d;
-  width: 550px;
-  line-height: 32px;
 }
 
-.empty_state_squirrel_outer {
+.dashboard-empty-state-description a {
+  color: #5f65ff;
+  cursor: pointer;
+  transition: color 0.2s ease-in;
+}
+
+.dashboard-empty-state-description a:hover {
+  color: #00beb0;
+}
+
+.dashboard-empty-state-squirrel-outer {
   display: table;
   margin: 0 auto;
   height: 100%;
 }
 
-.empty_state_squirrel_middle {
+.dashboard-empty-state-squirrel-middle {
   display: table-cell;
   vertical-align: middle;
 }
 
-.empty_state_squirrel_main {
+.dashboard-empty-state-squirrel-main {
   padding: 4px;
 }
 
 @media (max-width: 560px) {
-  .empty_state_squirrel_main {
+  .dashboard-empty-state-squirrel-main {
     -webkit-transform: scale(0.75);
     transform: scale(0.75);
   }
 }
 
 @media (max-width: 420px) {
-  .empty_state_squirrel_main {
+  .dashboard-empty-state-squirrel-main {
     -webkit-transform: scale(0.5);
     transform: scale(0.5);
     min-width: 200px;
@@ -206,7 +218,7 @@
   border-radius: 0 0 0 55px;
 }
 
-.squirrel .tail .square .tail_square_right {
+.squirrel .tail .square .tail-square-right {
   position: absolute;
   top: 0;
   right: 0;
