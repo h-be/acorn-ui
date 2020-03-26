@@ -123,6 +123,9 @@
   margin-left: 10px;
   transition: transform 0.2s ease-in;
 }
+.my-projects-sorting-selected:hover {
+  color: #5f65ff;
+}
 .my-projects-sorting-selected:hover .icon .inner-icon {
   background-color: #5f65ff;
 }
@@ -143,9 +146,13 @@
   list-style: none;
 }
 .my-projects-sorting-select li {
-  padding: 4px 14px;
+  padding: 8px 24px;
   color: #535353;
 }
+.my-projects-sorting-select li:hover {
+  color: #5f65ff;
+}
+
 .my-projects-sorting-select li:hover {
   background-color: #f2f2f2;
   cursor: pointer;
