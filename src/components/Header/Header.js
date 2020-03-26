@@ -7,18 +7,21 @@ import Avatar from '../Avatar/Avatar'
 import Icon from '../Icon/Icon'
 import ListExport from '../ListExport/ListExport'
 
-function EntryPoint({ entryPoint, activeEntryPointAddresses }) {
+function ActiveEntryPoint({ entryPoint, activeEntryPointAddresses }) {
   const location = useLocation()
   const entryPointsAbsentThisOne = activeEntryPointAddresses
     .filter(address => address !== entryPoint.address)
     .join(',')
   return (
-    <div className='current-entry-point'>
+    <div className='active-entry-point'>
       <img src='img/door-open.png' />
-      <div>{entryPoint.content}</div>
+      {/* add title because text-overflow: ellipsis */}
+      <div className='active-entry-point-content' title={entryPoint.content}>
+        {entryPoint.content}
+      </div>
       <NavLink
         to={`${location.pathname}?entryPoints=${entryPointsAbsentThisOne}`}
-        className='current-entry-point-close'>
+        className='active-entry-point-close'>
         <Icon name='x.svg' size='very-small-close' className='grey' />
       </NavLink>
     </div>
@@ -230,7 +233,8 @@ class Header extends React.Component {
                 </div>
                 {/* Current Entry Points Tab */}
                 {this.props.activeEntryPoints.map(entryPoint => (
-                  <EntryPoint
+                  <ActiveEntryPoint
+                    key={entryPoint.address}
                     entryPoint={entryPoint}
                     activeEntryPointAddresses={activeEntryPointAddresses}
                   />
