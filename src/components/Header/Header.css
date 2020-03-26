@@ -156,7 +156,7 @@
 
 /* Current Entry Points Tab */
 
-.current-entry-point {
+.active-entry-point {
   position: relative;
   font-size: 13px;
   margin-left: 5px;
@@ -172,19 +172,26 @@
   color: #4d4d4d;
 }
 
-.current-entry-point img {
+.active-entry-point-content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 200px;
+}
+
+.active-entry-point img {
   height: 14px;
   width: 14px;
   margin-right: 6px;
 }
 
-.current-entry-point-close {
+.active-entry-point-close {
   position: absolute;
   right: 8px;
   visibility: hidden;
 }
 
-.current-entry-point:hover > .current-entry-point-close {
+.active-entry-point:hover > .active-entry-point-close {
   visibility: visible;
 }
 
