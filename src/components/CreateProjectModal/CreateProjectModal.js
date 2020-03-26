@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react'
 import randomWord from 'diceware-word'
 import './CreateProjectModal.css'
 
-import Button from '../Button/Button'
-import Avatar from '../Avatar/Avatar'
 import ValidatingFormInput from '../ValidatingFormInput/ValidatingFormInput'
 import Modal from '../Modal/Modal'
 import {
@@ -13,6 +11,7 @@ import {
   ProjectModalHeading,
   ProjectModalSubHeading,
 } from '../ProjectModal/ProjectModal'
+import ProjectSecret from '../ProjectSecret/ProjectSecret'
 
 function generateUuid() {
   return `${randomWord()} ${randomWord()} ${randomWord()} ${randomWord()} ${randomWord()}`
@@ -102,11 +101,7 @@ function ProjectCreatedModal({ onDone, projectCreated, projectSecret }) {
       <ProjectModalHeading title='New project created!' />
       <ProjectModalContent>
         <ProjectModalContentSpacer>
-          <ValidatingFormInput
-            value={projectSecret}
-            label='Project invitation secret'
-            helpText='Share this secret phrase with people you want to invite to this project'
-          />
+          <ProjectSecret passphrase={projectSecret} />
         </ProjectModalContentSpacer>
       </ProjectModalContent>
       <ProjectModalButton text='Done' onClick={onDone} />

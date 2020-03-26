@@ -4,6 +4,7 @@
   box-sizing: border-box;
   padding: 6px;
   cursor: pointer;
+  position: relative;
 }
 .inner-icon {
   /* default: black */

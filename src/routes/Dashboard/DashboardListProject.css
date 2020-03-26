@@ -138,6 +138,10 @@
   align-items: center;
 }
 
+.dashboard-invite-members-button:hover {
+  color: #5f65ff;
+}
+
 .dashboard-invite-members-button .icon {
   margin-right: 4px;
   width: 12px;
