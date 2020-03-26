@@ -63,6 +63,11 @@ function MapView({
   }
   return (
     <>
+      {/* TODO: make this show based on whether the user has just recently created their profile (registered) */}
+      <div className='guidebook_open_help'>
+        <div>Click on the Guidebook to learn more</div>
+        <img src='img/arrow-curved.svg' />
+      </div>
       <canvas ref={refCanvas} />
       {showEmptyState && <EmptyState />}
       <MultiEditBar projectId={projectId} hasSelection={hasSelection} />

@@ -17,9 +17,11 @@ import IntroScreen from '../components/IntroScreen/IntroScreen'
 import CreateProfilePage from './CreateProfilePage/CreateProfilePage'
 import Dashboard from './Dashboard/Dashboard'
 import ProjectView from './ProjectView/ProjectView'
+import selectEntryPoints from '../projects/entry-points/select'
 
 function App(props) {
   const {
+    activeEntryPoints,
     projectName,
     agentAddress,
     whoami, // .entry and .address
@@ -47,6 +49,7 @@ function App(props) {
       </Switch>
       {agentAddress && (
         <Header
+          activeEntryPoints={activeEntryPoints}
           projectName={projectName}
           whoami={whoami}
           updateStatus={props.updateStatus}
@@ -97,12 +100,26 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   const {
-    ui: { activeProject },
+    ui: { activeProject, activeEntryPoints },
   } = state
   // defensive coding for loading phase
   const activeProjectMeta = state.projects.projectMeta[activeProject] || {}
   const projectName = activeProjectMeta.name || ''
+
+  const allProjectEntryPoints = activeProject
+    ? selectEntryPoints(state, activeProject)
+    : []
+  const activeEntryPointsObjects = activeEntryPoints
+    .map(address => {
+      return allProjectEntryPoints.find(
+        entryPoint => entryPoint.address === address
+      )
+    })
+    // cut out invalid ones
+    .filter(e => e)
+
   return {
+    activeEntryPoints: activeEntryPointsObjects,
     projectName,
     whoami: state.whoami,
     agentAddress: state.agentAddress,

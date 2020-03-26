@@ -1,11 +1,16 @@
 import React, { useEffect } from 'react'
-import { Redirect, Route, Switch, useParams } from 'react-router-dom'
+import {
+  Redirect,
+  Route,
+  Switch,
+  useParams,
+  useLocation,
+} from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import MapView from './MapView/MapView'
 import PriorityView from './PriorityView/PriorityView'
 
-import { setActiveProject } from '../../active-project/actions'
 // data
 import { fetchProjectMeta } from '../../projects/project-meta/actions'
 import { fetchEntryPoints } from '../../projects/entry-points/actions'
@@ -16,6 +21,8 @@ import { fetchGoalMembers } from '../../projects/goal-members/actions'
 import { fetchGoalComments } from '../../projects/goal-comments/actions'
 import { fetchGoalVotes } from '../../projects/goal-votes/actions'
 // ui
+import { setActiveEntryPoints } from '../../active-entry-points/actions'
+import { setActiveProject } from '../../active-project/actions'
 import { closeGoalForm } from '../../goal-form/actions'
 import { unselectAll } from '../../selection/actions'
 import { closeExpandedView } from '../../expanded-view/actions'
@@ -23,8 +30,10 @@ import { resetTranslateAndScale } from '../../viewport/actions'
 
 function ProjectViewInner({
   projectId,
+  entryPointAddresses,
   resetProjectView,
   setActiveProject,
+  setActiveEntryPoints,
   fetchProjectMeta,
   fetchMembers,
   fetchEntryPoints,
@@ -45,10 +54,13 @@ function ProjectViewInner({
     fetchGoalMembers()
     fetchGoalVotes()
     fetchGoalComments()
-
     // this will get called to unmount the component
     return resetProjectView
   }, [projectId])
+
+  useEffect(() => {
+    setActiveEntryPoints(entryPointAddresses)
+  }, [JSON.stringify(entryPointAddresses)])
 
   return (
     <Switch>
@@ -71,7 +83,9 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch, ownProps) {
   const { projectId } = ownProps
   return {
-    setActiveProject: () => dispatch(setActiveProject(projectId)),
+    setActiveProject: projectId => dispatch(setActiveProject(projectId)),
+    setActiveEntryPoints: entryPointAddresses =>
+      dispatch(setActiveEntryPoints(entryPointAddresses)),
     resetProjectView: () => {
       dispatch(closeExpandedView())
       dispatch(closeGoalForm())
@@ -96,7 +110,21 @@ const ProjectView = connect(
 
 function ProjectViewWrapper() {
   const { projectId } = useParams()
-  return <ProjectView projectId={projectId} />
+  const location = useLocation()
+  let entryPointAddresses = new URLSearchParams(location.search).get(
+    'entryPoints'
+  )
+  if (entryPointAddresses) {
+    entryPointAddresses = entryPointAddresses.split(',')
+  } else {
+    entryPointAddresses = []
+  }
+  return (
+    <ProjectView
+      projectId={projectId}
+      entryPointAddresses={entryPointAddresses}
+    />
+  )
 }
 
 export default ProjectViewWrapper

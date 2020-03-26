@@ -1,11 +1,29 @@
 import React from 'react'
-import { Switch, Route, NavLink } from 'react-router-dom'
+import { Switch, Route, NavLink, useLocation } from 'react-router-dom'
 import onClickOutside from 'react-onclickoutside'
 import GuideBook from '../GuideBook/GuideBook'
 import './Header.css'
 import Avatar from '../Avatar/Avatar'
 import Icon from '../Icon/Icon'
 import ListExport from '../ListExport/ListExport'
+
+function EntryPoint({ entryPoint, activeEntryPointAddresses }) {
+  const location = useLocation()
+  const entryPointsAbsentThisOne = activeEntryPointAddresses
+    .filter(address => address !== entryPoint.address)
+    .join(',')
+  return (
+    <div className='current-entry-point'>
+      <img src='img/door-open.png' />
+      <div>{entryPoint.content}</div>
+      <NavLink
+        to={`${location.pathname}?entryPoints=${entryPointsAbsentThisOne}`}
+        className='current-entry-point-close'>
+        <Icon name='x.svg' size='very-small-close' className='grey' />
+      </NavLink>
+    </div>
+  )
+}
 
 class Header extends React.Component {
   constructor(props) {
@@ -146,6 +164,9 @@ class Header extends React.Component {
     this.setState({ isStatusHover: false })
   }
   render() {
+    const activeEntryPointAddresses = this.props.activeEntryPoints.map(
+      entryPoint => entryPoint.address
+    )
     return (
       <div className='header-wrapper'>
         <div className='header'>
@@ -208,17 +229,12 @@ class Header extends React.Component {
                   </div>
                 </div>
                 {/* Current Entry Points Tab */}
-                <div className='current-entry-point'>
-                  <img src='img/door-open.png' />
-                  {/* TODO: make dynamic Entry Points name value */}
-                  <div>We have released Acorn 4.0.0</div>
-                  <Icon
-                    name='x.svg'
-                    size='very-small-close'
-                    className='grey current-entry-point-close'
-                    onClick={() => onClose()}
+                {this.props.activeEntryPoints.map(entryPoint => (
+                  <EntryPoint
+                    entryPoint={entryPoint}
+                    activeEntryPointAddresses={activeEntryPointAddresses}
                   />
-                </div>
+                ))}
               </Route>
             )}
           </div>
@@ -272,14 +288,7 @@ class Header extends React.Component {
                   )}
                 </span>
               </div>
-              {/* TODO: make this show based on whether the user has just recently created their profile (registered) */}
               <Route path='/project'>
-                {!this.state.isGuideOpen && (
-                  <div className='guidebook_open_help'>
-                    <div>Click on the Guidebook to learn more</div>
-                    <img src='img/arrow-curved.svg' />
-                  </div>
-                )}
                 {this.state.isGuideOpen && (
                   <div className='guidebook-outer-wrapper'>
                     <GuideBook />
