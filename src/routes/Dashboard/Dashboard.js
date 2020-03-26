@@ -5,10 +5,8 @@ import { connect } from 'react-redux'
 import './Dashboard.css'
 import Icon from '../../components/Icon/Icon'
 
-import './DashboardListProject.css'
-
 import { passphraseToUuid } from '../../secrets'
-import Avatar from '../../components/Avatar/Avatar'
+
 import CreateProjectModal from '../../components/CreateProjectModal/CreateProjectModal'
 import JoinProjectModal from '../../components/JoinProjectModal/JoinProjectModal'
 import InviteMembersModal from '../../components/InviteMembersModal/InviteMembersModal'
@@ -30,87 +28,7 @@ import {
 } from '../../projects/conductor-admin/actions'
 import selectEntryPoints from '../../projects/entry-points/select'
 
-function DashboardListProject({ project, setShowInviteMembersModal }) {
-  const [showEntryPoints, setShowEntryPoints] = useState(false)
-  return (
-    <div className='dashboard-list-project-wrapper'>
-      <div className='dashboard-list-project'>
-        <NavLink
-          to={`/project/${project.instanceId}`}
-          className='dashboard-list-project-image'>
-          <div
-            className='dashboard-list-project-image-bg'
-            style={{ backgroundImage: `url(${project.image})` }}
-          />
-        </NavLink>
-        <div className='dashboard-list-project-content'>
-          <NavLink
-            to={`/project/${project.instanceId}`}
-            className='dashboard-list-project-name'>
-            {project.name}
-          </NavLink>
-          <div className='dashboard-list-project-member-count'>
-            {project.members.length} member
-            {project.members.length > 1 ? 's' : ''}
-          </div>
-        </div>
-
-        <div className='dashboard-list-project-members'>
-          <div className='dashboard-list-project-member-list'>
-            {project.members.map(member => (
-              <Avatar
-                key={member.address}
-                first_name={member.first_name}
-                last_name={member.last_name}
-                avatar_url={member.avatar_url}
-                small
-              />
-            ))}
-          </div>
-          <div
-            className='dashboard-invite-members-button'
-            onClick={() => setShowInviteMembersModal(project.passphrase)}>
-            <Icon name='plus.svg' size='very-small' />
-            Invite members
-          </div>
-        </div>
-      </div>
-      <div className='dashboard-list-project-entry-points'>
-        {/* only allow expanding entry points list if there are some */}
-        {project.entryPoints.length > 0 && (
-          <div
-            className='dashboard-list-project-entry-point-button'
-            onClick={() => setShowEntryPoints(!showEntryPoints)}>
-            {/*<img className='entry-point-button-image' src='img/door-open.png' />*/}
-            {project.entryPoints.length} entry point
-            {project.entryPoints.length === 1 ? '' : 's'}
-            <Icon
-              name='line-angle-down.svg'
-              size='very-small'
-              className={`grey ${showEntryPoints ? 'active' : ''}`}
-            />
-          </div>
-        )}
-        {showEntryPoints && (
-          <div className='dashboard-list-project-entry-point-expanded'>
-            {project.entryPoints.map(entryPoint => {
-              // TODO: make this a link
-              const dotStyle = {
-                backgroundColor: entryPoint.color,
-              }
-              return (
-                <div className='entry-point-item'>
-                  <div className='entry-point-color-dot' style={dotStyle} />
-                  <div clasName='entry-point-name'>{entryPoint.content}</div>
-                </div>
-              )
-            })}
-          </div>
-        )}
-      </div>
-    </div>
-  )
-}
+import DashboardListProject from './DashboardListProject'
 
 function Dashboard({
   agentAddress,
@@ -168,14 +86,16 @@ function Dashboard({
     <>
       <div className='dashboard-background'>
         <div className='dashboard-left-menu'>
-          <div className='dashboard-left-menu-item'>
+          <NavLink to='/dashboard' className='dashboard-left-menu-item'>
             <Icon name='folder.svg' size='very-small' className='grey' />
             My projects
-          </div>
-          <div className='dashboard-left-menu-item'>
+          </NavLink>
+          <NavLink
+            to='/settings'
+            className='dashboard-left-menu-item feature-in-development'>
             <Icon name='setting.svg' size='very-small' className='grey' />
             Settings
-          </div>
+          </NavLink>
         </div>
         <div className='dashboard-my-projects'>
           <div className='my-projects-heading'>My projects</div>
@@ -372,8 +292,7 @@ function mapStateToProps(state) {
       const entryPoints = selectEntryPoints(state, instanceId)
       return {
         ...project,
-        // TODO: better placeholder
-        image: project.image || 'https://via.placeholder.com/68',
+        image: project.image,
         instanceId: instanceId,
         members: memberProfiles,
         entryPoints,
