@@ -13,6 +13,25 @@
   margin-bottom: 50px;
 }
 
+.create-project-image-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  margin-bottom: 28px;
+}
+.create-project-image-row .validating_form_input {
+  margin-bottom: 0;
+}
+.create-project-image {
+  margin-left: 8px;
+  width: 40px;
+  height: 40px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 5px;
+  border: 1.2px solid #e2e2e2;
+}
+
 /* create project modal animation */
 
 .create-project-form {
