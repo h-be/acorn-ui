@@ -238,29 +238,6 @@
   height: calc(100vh - 192px);
 }
 
-/* guidebook text and arrow help to open */
-
-.guidebook_open_help {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  top: 68px;
-  right: 90px;
-  position: absolute;
-  font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
-  font-weight: normal;
-  color: #717171;
-  font-size: 14px;
-  z-index: -1;
-  white-space: nowrap;
-}
-
-.guidebook_open_help img {
-  max-width: 50px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-}
-
 .guidebook-outer-wrapper .small-close {
   position: absolute;
   top: 30px;

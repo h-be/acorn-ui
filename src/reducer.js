@@ -22,6 +22,7 @@ import viewport from './viewport/reducer'
 import expandedView from './expanded-view/reducer'
 import goalClone from './goal-clone/reducer'
 import activeProject from './active-project/reducer'
+import activeEntryPoints from './active-entry-points/reducer'
 // import anotherone from './another/path'
 
 // combine reducers from each feature to create the top-level reducer
@@ -41,6 +42,7 @@ export default combineReducers({
     expandedView,
     goalClone,
     activeProject,
+    activeEntryPoints,
   }), // ,
   // anotherone: anotherone
 })

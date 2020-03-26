@@ -86,8 +86,12 @@
   cursor: pointer;
   background-color: transparent;
   transition: background-color 0.1s ease-in, color 0.1s ease-in;
+  text-decoration: none;
+  color: #535353;
 }
-
+.entry-point-picker-item.active {
+  color: #5f65ff;
+}
 .entry-point-picker-item:hover {
   background: #f2f2f2;
   color: #00a599;
@@ -103,18 +107,15 @@
 }
 
 .entry-point-picker-name {
-  max-width: 230px;
-}
-
-.radio-button {
-  right: 20px;
-  position: absolute;
+  flex: 1;
 }
 
 .entry-point-picker-switch {
-  right: 60px;
-  position: absolute;
   visibility: hidden;
+}
+.entry-point-picker-switch,
+.entry-point-picker-radio {
+  margin-left: 8px;
 }
 
 .entry-point-picker-item:hover > .entry-point-picker-switch {

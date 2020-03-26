@@ -5,10 +5,6 @@ import Icon from '../../components/Icon/Icon'
 import './DashboardListProject.css'
 import { pickColorForString } from '../../styles'
 
-function Imageless({ projectName }) {
-  return <div className='imageless-project'>PT</div>
-}
-
 export default function DashboardListProject({
   project,
   setShowInviteMembersModal,
@@ -85,15 +81,16 @@ export default function DashboardListProject({
         {showEntryPoints && (
           <div className='dashboard-list-project-entry-point-expanded'>
             {project.entryPoints.map(entryPoint => {
-              // TODO: make this a link
               const dotStyle = {
                 backgroundColor: entryPoint.color,
               }
               return (
-                <div className='entry-point-item'>
+                <NavLink
+                  to={`/project/${project.instanceId}/map?entryPoints=${entryPoint.address}`}
+                  className='entry-point-item'>
                   <div className='entry-point-color-dot' style={dotStyle} />
                   <div className='entry-point-name'>{entryPoint.content}</div>
-                </div>
+                </NavLink>
               )
             })}
           </div>

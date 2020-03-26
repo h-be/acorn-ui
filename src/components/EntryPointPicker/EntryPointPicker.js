@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { connect } from 'react-redux'
 
@@ -7,37 +8,47 @@ import './EntryPointPicker.css'
 import PickerTemplate from '../PickerTemplate/PickerTemplate'
 import Icon from '../Icon/Icon'
 import selectEntryPoints from '../../projects/entry-points/select'
+import { NavLink } from 'react-router-dom'
 
-function EntryPointPickerItem({ entryPoint }) {
+function EntryPointPickerItem({ entryPoint, isActive, activeEntryPoints }) {
   const dotStyle = {
     backgroundColor: entryPoint.color,
   }
+  const location = useLocation()
+  const pathWithEntryPoint = `${
+    location.pathname
+  }?entryPoints=${activeEntryPoints.concat([entryPoint.address]).join(',')}`
+  const pathWithoutEntryPoint = `${
+    location.pathname
+  }?entryPoints=${activeEntryPoints
+    .filter(address => address !== entryPoint.address)
+    .join(',')}`
   return (
-    <li className='entry-point-picker-item'>
-      <div className='entry-point-picker-dot' style={dotStyle}></div>
-      <div className='entry-point-picker-name'>{entryPoint.content}</div>
-      <Icon
-        name='enter.png'
-        size='small'
-        className='grey entry-point-picker-switch'
-      />
-      <Icon
-        name='radio-button.svg'
-        size='small'
-        className='light-grey radio-button'
-      />
-      {/* {entryPoint.is_selected && (
-        <Icon
-          name='radio-button-checked.svg'
-          size='small'
-          className='purple radio-button'
-        />
-      )} */}
+    <li>
+      <NavLink
+        isActive={() => isActive}
+        to={isActive ? pathWithoutEntryPoint : pathWithEntryPoint}
+        className='entry-point-picker-item'>
+        <div className='entry-point-picker-dot' style={dotStyle}></div>
+        <div className='entry-point-picker-name'>{entryPoint.content}</div>
+        <NavLink
+          to={`${location.pathname}?entryPoints=${entryPoint.address}`}
+          className='entry-point-picker-switch'>
+          <Icon name='enter.png' size='small' className='grey' />
+        </NavLink>
+        <div className='entry-point-picker-radio'>
+          <Icon
+            name={isActive ? 'radio-button-checked.svg' : 'radio-button.svg'}
+            size='small'
+            className={isActive ? 'purple' : 'light-grey'}
+          />
+        </div>
+      </NavLink>
     </li>
   )
 }
 
-function EntryPointPicker({ entryPoints, isOpen, onClose }) {
+function EntryPointPicker({ entryPoints, isOpen, onClose, activeEntryPoints }) {
   const [filterText, setFilterText] = useState('')
 
   // filter people out if there's filter text defined, and don't bother case matching
@@ -88,6 +99,10 @@ function EntryPointPicker({ entryPoints, isOpen, onClose }) {
             <EntryPointPickerItem
               key={entryPoint.address}
               entryPoint={entryPoint}
+              isActive={activeEntryPoints.some(
+                address => address === entryPoint.address
+              )}
+              activeEntryPoints={activeEntryPoints}
             />
           ))}
           {/* Entry Points Empty State */}
@@ -119,11 +134,13 @@ function EntryPointPicker({ entryPoints, isOpen, onClose }) {
 
 function mapStateToProps(state) {
   const {
-    ui: { activeProject },
+    ui: { activeProject, activeEntryPoints },
   } = state
   const combinedEntryPoints = selectEntryPoints(state, activeProject)
+
   return {
     entryPoints: combinedEntryPoints,
+    activeEntryPoints,
   }
 }
 
