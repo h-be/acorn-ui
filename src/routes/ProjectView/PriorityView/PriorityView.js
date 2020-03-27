@@ -14,6 +14,7 @@ import IndentedTreeView from '../../../components/IndentedTreeView/IndentedTreeV
 
 import './PriorityView.css'
 import PriorityQuadrant from '../../../components/PriorityQuadrant/PriorityQuadrant'
+import goalsAsTree from '../../../projects/goals/goalsAsTrees'
 
 function Quadrants({
   projectId,
@@ -343,46 +344,9 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   const projectId = state.ui.activeProject
-  const goalMembers = state.projects.goalMembers[projectId] || {}
   const goalVotes = state.projects.goalVotes[projectId] || {}
-  const goals = state.projects.goals[projectId] || {}
-  const edges = state.projects.edges[projectId] || {}
 
-  // modify so that all goals have their related goal members
-  // modify so that all goals have their related goal members
-  const allGoalsArray = Object.values(goals).map(goal => {
-    const members = Object.values(goalMembers)
-      .filter(gm => gm.goal_address === goal.address)
-      .map(gm => state.agents[gm.agent_address])
-    return {
-      ...goal,
-      members,
-    }
-  })
-  const allGoals = _.keyBy(allGoalsArray, 'address')
-
-  // CONSTRUCT TREES FOR THE INDENTED NAV TREE VIEW
-  const edgesAsArray = Object.values(edges)
-  const allGoalAddresses = allGoalsArray.map(goal => goal.address)
-  // find the Goal objects without parent Goals
-  // since they will sit at the top level
-  const noParentsAddresses = allGoalAddresses.filter(goalAddress => {
-    return !edgesAsArray.find(edge => edge.child_address === goalAddress)
-  })
-  // recursively calls itself
-  // so that it constructs the full sub-tree for each root Goal
-  function getGoal(goalAddress) {
-    return {
-      ...allGoals[goalAddress],
-      children: edgesAsArray
-        // find the edges indicating the children of this goal
-        .filter(edge => edge.parent_address === goalAddress)
-        // actually nest the children Goals, recurse
-        .map(edge => getGoal(edge.child_address)),
-    }
-  }
-  // start with the root Goals, and recurse down to their children
-  const goalTrees = noParentsAddresses.map(getGoal)
+  const goalTrees = goalsAsTree(state, { withMembers: true })
 
   return {
     projectId,

@@ -189,11 +189,9 @@ function mapStateToProps(state) {
       screensize: { width },
     },
   } = state
-  const goals = state.projects.goals[activeProject] || {}
-  const edges = state.projects.edges[activeProject] || {}
   let goalCoord
   if (editAddress) {
-    goalCoord = layoutFormula(width, goals, edges)[editAddress]
+    goalCoord = layoutFormula(width, state)[editAddress]
   }
   // the name of the expected proptypes is the same
   // as the name of the properties as stored in state

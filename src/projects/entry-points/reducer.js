@@ -60,6 +60,18 @@ export default function(state = defaultState, action) {
       },
     }
   }
+  // ARCHIVE_GOAL
+  else if (typeSuccess(type, ARCHIVE_GOAL)) {
+    // filter out the entry points whose addresses are listed as having been
+    // archived on account of having archived its associated Goal
+    return {
+      ...state,
+      [instanceId]: _.pickBy(
+        state[instanceId],
+        (value, key) => payload.archived_entry_points.indexOf(key) === -1
+      ),
+    }
+  }
   // ARCHIVE_ENTRY_POINT
   else if (typeSuccess(type, ARCHIVE_ENTRY_POINT)) {
     return {
