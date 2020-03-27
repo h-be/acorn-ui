@@ -58,12 +58,9 @@ function mapStateToProps(state) {
   const hoveredAddress = state.ui.hover.hoveredGoal // null or an address
   const { activeProject } = state.ui
   const goals = state.projects.goals[activeProject] || {}
-  const edges = state.projects.edges[activeProject] || {}
   let position, goalCoord, goalContent
   if (hoveredAddress) {
-    goalCoord = layoutFormula(state.ui.screensize.width, goals, edges)[
-      hoveredAddress
-    ]
+    goalCoord = layoutFormula(state.ui.screensize.width, state)[hoveredAddress]
     position = {
       x: goalCoord.x + goalWidth,
       y: goalCoord.y + 6,

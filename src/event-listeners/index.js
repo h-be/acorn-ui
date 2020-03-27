@@ -182,8 +182,7 @@ export default function setupEventListeners(store, canvas) {
         )
         goalAddressesToSelect = checkForGoalAtCoordinatesInBox(
           width,
-          goals,
-          edges,
+          state,
           convertedMouse,
           { x, y }
         )
@@ -198,8 +197,7 @@ export default function setupEventListeners(store, canvas) {
       translate,
       scale,
       width,
-      goals,
-      edges,
+      state,
       event.clientX,
       event.clientY
     )
@@ -296,8 +294,7 @@ export default function setupEventListeners(store, canvas) {
         translate,
         scale,
         width,
-        goals,
-        edges,
+        state,
         event.clientX,
         event.clientY
       )
@@ -346,19 +343,17 @@ export default function setupEventListeners(store, canvas) {
       },
     } = state
     const goals = state.projects.goals[activeProject] || {}
-    const edges = state.projects.edges[activeProject] || {}
     const goalAddress = checkForGoalAtCoordinates(
       canvas.getContext('2d'),
       translate,
       scale,
       width,
-      goals,
-      edges,
+      state,
       event.clientX,
       event.clientY
     )
     if (goalAddress) {
-      let goalCoord = layoutFormula(width, goals, edges)[goalAddress]
+      let goalCoord = layoutFormula(width, state)[goalAddress]
       store.dispatch(unselectAll())
       store.dispatch(openGoalForm(goalCoord.x, goalCoord.y, goalAddress))
       store.dispatch(updateContent(goals[goalAddress].content))

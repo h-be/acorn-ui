@@ -10,6 +10,7 @@ import drawGoalCard from './drawGoalCard'
 import drawEdge from './drawEdge'
 import drawOverlay from './drawOverlay'
 import drawSelectBox from '../drawing/drawSelectBox'
+import drawEntryPoints from './drawEntryPoints'
 function setupCanvas(canvas) {
   // Get the device pixel ratio, falling back to 1.
   const dpr = window.devicePixelRatio || 1
@@ -56,18 +57,31 @@ function render(store, canvas) {
   )
 
   const projectId = state.ui.activeProject
+  const activeEntryPoints = state.ui.activeEntryPoints
   if (!projectId) return
   const goals = state.projects.goals[projectId]
   const edges = state.projects.edges[projectId]
   const goalMembers = state.projects.goalMembers[projectId]
-  if (!goals || !edges || !goalMembers) return
+  const entryPoints = state.projects.entryPoints[projectId]
+  if (!goals || !edges || !goalMembers || !entryPoints) return
 
   // converts the goals object to an array
   const goalsAsArray = Object.keys(goals).map(address => goals[address])
   // convert the edges object to an array
   const edgesAsArray = Object.keys(edges).map(address => edges[address])
 
-  const coordinates = layoutFormula(state.ui.screensize.width, goals, edges)
+  const coordinates = layoutFormula(state.ui.screensize.width, state)
+
+  const activeEntryPointsObjects = activeEntryPoints.map(
+    entryPointAddress => entryPoints[entryPointAddress]
+  )
+  drawEntryPoints(
+    ctx,
+    activeEntryPointsObjects,
+    goals,
+    edgesAsArray,
+    coordinates
+  )
 
   // render each edge to the canvas, basing it off the rendering coordinates of the parent and child nodes
   edgesAsArray.forEach(function(edge) {

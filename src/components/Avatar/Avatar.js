@@ -33,8 +33,8 @@ function Avatar({
     classes.push('initials-avatar')
     return (
       <div className={classes.join(' ')} onClick={onClick} style={style}>
-        {first_name[0]}
-        {last_name[0]}
+        {first_name[0].toUpperCase()}
+        {last_name[0].toUpperCase()}
       </div>
     )
   }
