@@ -1,20 +1,27 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import './ExpandedViewMode.css'
 import Icon from '../Icon/Icon'
+import { CSSTransition } from 'react-transition-group'
 
-import { updateGoal } from '../../goals/actions'
+import {
+  createEntryPoint,
+  archiveEntryPoint,
+} from '../../projects/entry-points/actions'
+import { updateGoal } from '../../projects/goals/actions'
 
 import ExpandedViewModeHeader from './ExpandedViewModeHeader/ExpandedViewModeHeader'
 import RightMenu from './RightMenu/RightMenu'
 import ExpandedViewModeContent from './ExpandedViewModeContent/ExpandedViewModeContent'
 
-import { archiveMemberOfGoal } from '../../goal-members/actions'
+import { archiveMemberOfGoal } from '../../projects/goal-members/actions'
 
 import ExpandedViewModeFooter from './ExpandedViewModeFooter/ExpandedViewModeFooter'
+import { pickColorForString } from '../../styles'
 
 function ExpandedViewMode({
+  projectId,
+  agentAddress,
   goalAddress,
   goal,
   updateGoal,
@@ -22,6 +29,10 @@ function ExpandedViewMode({
   creator,
   squirrels,
   archiveMemberOfGoal,
+  createEntryPoint,
+  archiveEntryPoint,
+  isEntryPoint,
+  entryPointAddress,
 }) {
   const [goalState, setGoalState] = useState()
   const [squirrelsState, setSquirrelsState] = useState()
@@ -54,59 +65,90 @@ function ExpandedViewMode({
     }
   }, [creator])
 
+  const turnIntoEntryPoint = () => {
+    createEntryPoint({
+      color: pickColorForString(goalAddress),
+      creator_address: agentAddress,
+      created_at: Date.now(),
+      goal_address: goalAddress,
+    })
+  }
+  const unmakeAsEntryPoint = () => {
+    archiveEntryPoint(entryPointAddress)
+  }
+  const entryPointClickAction = isEntryPoint
+    ? unmakeAsEntryPoint
+    : turnIntoEntryPoint
+
   return (
     <>
-      <div
-        className={`expanded-view-overlay ${showing ? 'fully-expanded' : ''}`}
-      />
+      <CSSTransition
+        in={showing}
+        timeout={100}
+        unmountOnExit
+        classNames='expanded-view-overlay'>
+        <div className='expanded-view-overlay' />
+      </CSSTransition>
       {goalState && (
-        <div
-          className={`expanded-view-wrapper border_${goalState.status} ${
-            showing ? 'fully-expanded' : ''
-          }`}>
-          <Icon
-            onClick={onClose}
-            name='x.svg'
-            size='small-close'
-            className='grey'
-          />
-          <ExpandedViewModeHeader
-            goalAddress={goalAddress}
-            goal={goalState}
-            updateGoal={updateGoal}
-          />
-          <div className='expanded-view-main'>
-            <ExpandedViewModeContent
-              squirrels={squirrelsState}
-              goalAddress={goalAddress}
-              updateGoal={updateGoal}
-              goal={goalState}
-              goalContent={goalState.content}
-              goalDescription={goalState.description}
-              archiveMemberOfGoal={archiveMemberOfGoal}
+        <CSSTransition
+          in={showing}
+          timeout={100}
+          unmountOnExit
+          classNames='expanded-view-wrapper'>
+          <div className={`expanded-view-wrapper border_${goalState.status}`}>
+            <Icon
+              onClick={onClose}
+              name='x.svg'
+              size='small-close'
+              className='grey'
             />
-            <RightMenu
+            <ExpandedViewModeHeader
               goalAddress={goalAddress}
               goal={goalState}
               updateGoal={updateGoal}
+              entryPointClickAction={entryPointClickAction}
+              isEntryPoint={isEntryPoint}
             />
+            <div className='expanded-view-main'>
+              <ExpandedViewModeContent
+                projectId={projectId}
+                squirrels={squirrelsState}
+                goalAddress={goalAddress}
+                updateGoal={updateGoal}
+                goal={goalState}
+                goalContent={goalState.content}
+                goalDescription={goalState.description}
+                archiveMemberOfGoal={archiveMemberOfGoal}
+              />
+              <RightMenu
+                projectId={projectId}
+                goalAddress={goalAddress}
+                goal={goalState}
+                updateGoal={updateGoal}
+              />
+            </div>
+            <ExpandedViewModeFooter goal={goalState} creator={creatorState} />
           </div>
-          <ExpandedViewModeFooter goal={goalState} creator={creatorState} />
-        </div>
+        </CSSTransition>
       )}
     </>
   )
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   let goal,
     creator = null,
     squirrels = []
 
+  const { projectId } = ownProps
+  const goals = state.projects.goals[projectId] || {}
+  const goalMembers = state.projects.goalMembers[projectId] || {}
+  const entryPoints = state.projects.entryPoints[projectId] || {}
+
   if (state.ui.expandedView.goalAddress) {
-    goal = state.goals[state.ui.expandedView.goalAddress]
-    squirrels = Object.keys(state.goalMembers)
-      .map(address => state.goalMembers[address])
+    goal = goals[state.ui.expandedView.goalAddress]
+    squirrels = Object.keys(goalMembers)
+      .map(address => goalMembers[address])
       .filter(goalMember => goalMember.goal_address === goal.address)
       .map(goalMember => {
         const squirrel = state.agents[goalMember.agent_address]
@@ -119,21 +161,40 @@ function mapStateToProps(state) {
     })
   }
 
+  const goalAddress = state.ui.expandedView.goalAddress
+  const entryPoint = Object.values(entryPoints).find(
+    entryPoint => entryPoint.goal_address === goalAddress
+  )
+  const isEntryPoint = entryPoint ? true : false
+  const entryPointAddress = entryPoint ? entryPoint.address : null
+
   return {
-    goalAddress: state.ui.expandedView.goalAddress,
+    agentAddress: state.agentAddress,
+    isEntryPoint,
+    entryPointAddress,
+    goalAddress,
     creator,
     goal,
     squirrels,
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, ownProps) {
+  const { projectId } = ownProps
   return {
+    createEntryPoint: entryPoint => {
+      return dispatch(
+        createEntryPoint(projectId).create({ entry_point: entryPoint })
+      )
+    },
+    archiveEntryPoint: address => {
+      return dispatch(archiveEntryPoint(projectId).create({ address }))
+    },
     updateGoal: (goal, address) => {
-      return dispatch(updateGoal.create({ address, goal }))
+      return dispatch(updateGoal(projectId).create({ address, goal }))
     },
     archiveMemberOfGoal: address => {
-      return dispatch(archiveMemberOfGoal.create({ address }))
+      return dispatch(archiveMemberOfGoal(projectId).create({ address }))
     },
   }
 }

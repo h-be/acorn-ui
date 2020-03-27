@@ -18,7 +18,6 @@ function Button({ className, text, size, color, stroke, onClick }) {
 
 Button.propTypes = {
   className: PropTypes.string,
-  text: PropTypes.string,
   size: PropTypes.string,
   color: PropTypes.string,
   stroke: PropTypes.bool,

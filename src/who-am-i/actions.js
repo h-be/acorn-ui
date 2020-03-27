@@ -5,32 +5,32 @@
   that can be taken within that feature.
 */
 
-import { createHolochainZomeCallAsyncAction } from '@holochain/hc-redux-middleware'
+import { createHolochainZomeCallAsyncAction } from 'connoropolous-hc-redux-middleware'
 
-import { DEVELOPMENT_INSTANCE_NAME, ZOME_NAME } from '../holochainConfig'
+import { PROFILES_INSTANCE_NAME, PROFILES_ZOME_NAME } from '../holochainConfig'
 
 /* action creator functions */
 
 const whoami = createHolochainZomeCallAsyncAction(
-  DEVELOPMENT_INSTANCE_NAME,
-  ZOME_NAME,
+  PROFILES_INSTANCE_NAME,
+  PROFILES_ZOME_NAME,
   'whoami'
 )
 
 const createWhoami = createHolochainZomeCallAsyncAction(
-  DEVELOPMENT_INSTANCE_NAME,
-  ZOME_NAME,
+  PROFILES_INSTANCE_NAME,
+  PROFILES_ZOME_NAME,
   'create_whoami'
 )
 
 const updateWhoami = createHolochainZomeCallAsyncAction(
-  DEVELOPMENT_INSTANCE_NAME,
-  ZOME_NAME,
+  PROFILES_INSTANCE_NAME,
+  PROFILES_ZOME_NAME,
   'update_whoami'
 )
 const updateStatus = createHolochainZomeCallAsyncAction(
-  DEVELOPMENT_INSTANCE_NAME,
-  ZOME_NAME,
+  PROFILES_INSTANCE_NAME,
+  PROFILES_ZOME_NAME,
   'update_status'
 )
 

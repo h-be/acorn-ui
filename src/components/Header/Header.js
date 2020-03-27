@@ -1,11 +1,32 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, NavLink, useLocation } from 'react-router-dom'
 import onClickOutside from 'react-onclickoutside'
 import GuideBook from '../GuideBook/GuideBook'
 import './Header.css'
 import Avatar from '../Avatar/Avatar'
 import Icon from '../Icon/Icon'
 import ListExport from '../ListExport/ListExport'
+
+function ActiveEntryPoint({ entryPoint, activeEntryPointAddresses }) {
+  const location = useLocation()
+  const entryPointsAbsentThisOne = activeEntryPointAddresses
+    .filter(address => address !== entryPoint.address)
+    .join(',')
+  return (
+    <div className='active-entry-point'>
+      <img src='img/door-open.png' />
+      {/* add title because text-overflow: ellipsis */}
+      <div className='active-entry-point-content' title={entryPoint.content}>
+        {entryPoint.content}
+      </div>
+      <NavLink
+        to={`${location.pathname}?entryPoints=${entryPointsAbsentThisOne}`}
+        className='active-entry-point-close'>
+        <Icon name='x.svg' size='very-small-close' className='grey' />
+      </NavLink>
+    </div>
+  )
+}
 
 class Header extends React.Component {
   constructor(props) {
@@ -19,10 +40,10 @@ class Header extends React.Component {
     this.clickSearch = this.clickSearch.bind(this)
     this.clickExport = this.clickExport.bind(this)
     this.saveStatus = this.saveStatus.bind(this)
-
     this.hover = this.hover.bind(this)
     this.handleStatusEnter = this.handleStatusEnter.bind(this)
     this.handleStatusLeave = this.handleStatusLeave.bind(this)
+
     this.state = {
       isGuideOpen: false,
       online: {},
@@ -146,65 +167,95 @@ class Header extends React.Component {
     this.setState({ isStatusHover: false })
   }
   render() {
+    const activeEntryPointAddresses = this.props.activeEntryPoints.map(
+      entryPoint => entryPoint.address
+    )
     return (
       <div className='header-wrapper'>
         <div className='header'>
           <div className='top-left-panel'>
-            <div className='logo'>
-              <Icon
-                name='acorn-logo-stroked.svg'
-                className='logo not-hoverable'
-              />
+            <NavLink to='/' className='home-link logo'>
+              <Icon name='acorn-logo-stroked.svg' className='not-hoverable' />
               <p className='logo-name'>acorn</p>
-            </div>
+            </NavLink>
             {this.props.whoami && (
-              <div className='current-canvas-wrapper'>
-                <div className='current-canvas-content'>
-                  <Switch>
-                    <Route
-                      path='/board/map'
-                      render={() => (
-                        <Icon
-                          name='map.svg'
-                          className='view-mode grey not-hoverable'
-                        />
+              <Route path='/project'>
+                <div className='current-project-wrapper'>
+                  <div className='current-project-content'>
+                    <Switch>
+                      <Route
+                        path='/project/:projectId/map'
+                        render={() => (
+                          <Icon
+                            name='map.svg'
+                            className='view-mode grey not-hoverable'
+                          />
+                        )}
+                      />
+                      <Route
+                        path='/project/:projectId/priority'
+                        render={() => (
+                          <Icon
+                            name='priority.svg'
+                            className='view-mode grey not-hoverable'
+                          />
+                        )}
+                      />
+                    </Switch>
+                    <div className='current-project-name'>
+                      {this.props.projectName}
+                    </div>
+                    <div className='divider-line'></div>
+                    <div className='export-wrapper'>
+                      <Icon
+                        withTooltip
+                        tooltipText='export'
+                        name='export.svg'
+                        size='header'
+                        className={this.state.isExportOpen ? 'purple' : ''}
+                        onClick={this.clickExport}
+                      />
+                      {this.state.isExportOpen && (
+                        <ul className='export-list-wrapper'>
+                          {Object.keys(this.state.listaExport).map(key => (
+                            <li key={key}>
+                              <ListExport
+                                type={this.state.listaExport[key].type}
+                                title={this.state.listaExport[key].title}
+                                download={this.state.listaExport[key].download}
+                              />
+                            </li>
+                          ))}
+                        </ul>
                       )}
-                    />
-                    <Route
-                      path='/board/priority'
-                      render={() => (
-                        <Icon
-                          name='priority.svg'
-                          className='view-mode grey not-hoverable'
-                        />
-                      )}
-                    />
-                  </Switch>
-                  <div className='canvas-name'>Acorn State of Affairs</div>
-                  <div className='divider-line'></div>
-                  <Icon
-                    withTooltip
-                    tooltipText='export'
-                    name='export.svg'
-                    size='header'
-                    className={this.state.isExportOpen ? 'purple' : ''}
-                    onClick={this.clickExport}
-                  />
+                    </div>
+                  </div>
                 </div>
-              </div>
+                {/* Current Entry Points Tab */}
+                {this.props.activeEntryPoints.map(entryPoint => (
+                  <ActiveEntryPoint
+                    key={entryPoint.address}
+                    entryPoint={entryPoint}
+                    activeEntryPointAddresses={activeEntryPointAddresses}
+                  />
+                ))}
+              </Route>
             )}
           </div>
           {this.props.whoami && (
             <div className='top-right-panel'>
               {/* <Icon name="search-line.svg" onClick={this.clickSearch}/> */}
-              <Icon
-                name='guidebook.svg'
-                onClick={this.clickBook}
-                size='header'
-              />
-              <div className={this.state.online.color}>
+              <Route path='/project'>
+                <Icon
+                  name='guidebook.svg'
+                  onClick={this.clickBook}
+                  className='top-right-panel-icon'
+                />
+              </Route>
+              <div
+                className={`avatar-and-status-wrapper ${this.state.online.color}`}>
                 <div
-                  className='avatar_container'
+                  className='avatar-container'
                   onMouseEnter={e => {
                     this.hover(true)
                   }}
@@ -222,6 +273,7 @@ class Header extends React.Component {
                 </div>
 
                 <span
+                  className='user-status-icon-wrapper'
                   onMouseEnter={this.handleStatusEnter}
                   onMouseLeave={this.handleStatusLeave}>
                   {!this.state.isStatusOpen && !this.state.isStatusHover && (
@@ -240,70 +292,48 @@ class Header extends React.Component {
                   )}
                 </span>
               </div>
+              <Route path='/project'>
+                {this.state.isGuideOpen && (
+                  <div className='guidebook-outer-wrapper'>
+                    <GuideBook />
+                    <Icon
+                      name='x.svg'
+                      size='small-close'
+                      className='grey'
+                      onClick={() => {
+                        this.setState({ isGuideOpen: false })
+                      }}
+                    />
+                  </div>
+                )}
+              </Route>
+              {this.state.isProfileOpen && (
+                <div className='profile-wrapper'>
+                  {Object.keys(this.state.listaProfile).map(key => (
+                    <ListProfile
+                      key={key}
+                      title={this.state.listaProfile[key].title}
+                      click={this.state.listaProfile[key].click}
+                    />
+                  ))}
+                </div>
+              )}
+              {this.state.isStatusOpen && (
+                <div className='user-status-wrapper'>
+                  {Object.keys(this.state.lista).map(key => (
+                    <ListStatus
+                      key={key}
+                      img={this.state.lista[key].img}
+                      color={this.state.lista[key].color}
+                      title={this.state.lista[key].title}
+                      changeStatus={this.saveStatus}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>
-
-        {/* TODO: make this show based on whether the user has just recently created their profile (registered) */}
-        {!this.state.isGuideOpen && (
-          <div className='guidebook_open_help'>
-            <div>Click on the Guidebook to learn more</div>
-            <img src='img/arrow-curved.svg' />
-          </div>
-        )}
-        {this.state.isGuideOpen && (
-          <div className='guidebook-outer-wrapper'>
-            <GuideBook />
-            <Icon
-              name='x.svg'
-              size='small-close'
-              className='grey'
-              onClick={() => {
-                this.setState({ isGuideOpen: false })
-              }}
-            />
-          </div>
-        )}
-        {this.state.isProfileOpen && (
-          <div className='profile-wrapper'>
-            {Object.keys(this.state.listaProfile).map(key => (
-              <ListProfile
-                key={key}
-                title={this.state.listaProfile[key].title}
-                click={this.state.listaProfile[key].click}
-              />
-            ))}
-          </div>
-        )}
-        {this.state.isStatusOpen && (
-          <div className='user-status-wrapper'>
-            {Object.keys(this.state.lista).map(key => (
-              <ListStatus
-                key={key}
-                img={this.state.lista[key].img}
-                color={this.state.lista[key].color}
-                title={this.state.lista[key].title}
-                changeStatus={this.saveStatus}
-              />
-            ))}
-          </div>
-        )}
-        {!this.state.isExportOpen && this.state.isHoverExport && (
-          <span className='export-hover-display'>Export</span>
-        )}
-
-        {this.state.isExportOpen && (
-          <div className='export-wrapper'>
-            {Object.keys(this.state.listaExport).map(key => (
-              <ListExport
-                key={key}
-                type={this.state.listaExport[key].type}
-                title={this.state.listaExport[key].title}
-                download={this.state.listaExport[key].download}
-              />
-            ))}
-          </div>
-        )}
       </div>
     )
   }

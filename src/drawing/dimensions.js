@@ -48,6 +48,10 @@ export function getLinesForParagraphs(ctx, textWithParagraphs) {
 }
 
 export function getGoalHeight(ctx, goalText) {
+  if (!ctx) {
+    ctx = document.createElement('canvas').getContext('2d')
+  }
+
   // get lines after font and font size are set up, since ctx.measureText()
   // takes font and font size into account
   const lines = getLinesForParagraphs(ctx, goalText)

@@ -14,35 +14,12 @@ import {
   getLinesForParagraphs,
 } from './dimensions'
 
-import { colors } from '../styles'
+import { colors, pickColorForString } from '../styles'
 import { getOrSetImageForUrl } from './imageCache'
 import moment from 'moment'
 
 import { iconForHierarchy } from '../components/HierarchyIcon/HierarchyIcon'
-
-function roundRect(ctx, x, y, w, h, radius, color, stroke, strokeWidth) {
-  const r = x + w
-  const b = y + h
-
-  ctx.beginPath()
-
-  if (stroke) ctx.strokeStyle = color
-  else ctx.fillStyle = color
-
-  ctx.lineWidth = stroke ? strokeWidth : '1'
-  ctx.moveTo(x + radius, y)
-  ctx.lineTo(r - radius, y)
-  ctx.quadraticCurveTo(r, y, r, y + radius)
-  ctx.lineTo(r, y + h - radius)
-  ctx.quadraticCurveTo(r, b, r - radius, b)
-  ctx.lineTo(x + radius, b)
-  ctx.quadraticCurveTo(x, b, x, b - radius)
-  ctx.lineTo(x, y + radius)
-  ctx.quadraticCurveTo(x, y, x + radius, y)
-
-  if (stroke) ctx.stroke()
-  else ctx.fill()
-}
+import roundRect from './drawRoundRect'
 
 // render a goal card
 export default function render(
@@ -183,6 +160,39 @@ export default function render(
   }
 
   members.forEach((member, index) => {
+    // adjust the x position according to the index of this member
+    // since there can be many
+    const xAvatarDraw =
+      x + goalWidth - (index + 1) * (avatarWidth + avatarSpace)
+    const yAvatarDraw = y + goalHeight - avatarHeight - avatarSpace
+
+    // first of all, render the initials
+    // if there's no image set
+    if (!member.avatar_url) {
+      const backgroundInitialsAvatar = pickColorForString(member.first_name)
+      const initials = `${member.first_name[0].toUpperCase()}${member.last_name[0].toUpperCase()}`
+      ctx.save()
+      ctx.fillStyle = backgroundInitialsAvatar
+      ctx.beginPath()
+      ctx.arc(
+        xAvatarDraw + avatarWidth / 2, // x
+        yAvatarDraw + avatarHeight / 2, // y
+        avatarRadius, // radius
+        0,
+        Math.PI * 2,
+        true
+      )
+      ctx.closePath()
+      ctx.fill()
+      ctx.restore()
+      ctx.save()
+      ctx.fillStyle = '#FFF'
+      ctx.font = '11px CircularStd-book'
+      ctx.fillText(initials, xAvatarDraw + 5, yAvatarDraw + 7)
+      ctx.restore()
+      return
+    }
+
     const img = getOrSetImageForUrl(
       member.avatar_url,
       avatarWidth,
@@ -192,17 +202,12 @@ export default function render(
     // if it isn't already set
     if (!img) return
 
-    // adjust the x position according to the index of this member
-    // since there can be many
-    const xImgDraw = x + goalWidth - (index + 1) * (avatarWidth + avatarSpace)
-    const yImgDraw = y + goalHeight - avatarHeight - avatarSpace
-
     // help from https://stackoverflow.com/questions/4276048/html5-canvas-fill-circle-with-image
     ctx.save()
     ctx.beginPath()
     ctx.arc(
-      xImgDraw + avatarWidth / 2, // x
-      yImgDraw + avatarHeight / 2, // y
+      xAvatarDraw + avatarWidth / 2, // x
+      yAvatarDraw + avatarHeight / 2, // y
       avatarRadius, // radius
       0,
       Math.PI * 2,
@@ -212,10 +217,10 @@ export default function render(
     ctx.clip()
 
     // url, x coordinate, y coordinate, width, height
-    ctx.drawImage(img, xImgDraw, yImgDraw, avatarWidth, avatarHeight)
+    ctx.drawImage(img, xAvatarDraw, yAvatarDraw, avatarWidth, avatarHeight)
 
     ctx.beginPath()
-    ctx.arc(xImgDraw, yImgDraw, avatarRadius, 0, Math.PI * 2, true)
+    ctx.arc(xAvatarDraw, yAvatarDraw, avatarRadius, 0, Math.PI * 2, true)
     ctx.clip()
     ctx.closePath()
     ctx.restore()

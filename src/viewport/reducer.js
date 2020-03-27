@@ -5,10 +5,10 @@
   a new state.
 */
 import {
-  coordsPageToCanvas,
-  coordsCanvasToPage,
-} from '../drawing/coordinateSystems'
-import { CHANGE_TRANSLATE, CHANGE_SCALE } from './actions'
+  RESET_TRANSLATE_AND_SCALE,
+  CHANGE_TRANSLATE,
+  CHANGE_SCALE,
+} from './actions'
 
 const defaultState = {
   translate: {
@@ -43,6 +43,8 @@ export default function(state = defaultState, action) {
           y: mouseY - (mouseY - state.translate.y) * zoom,
         },
       }
+    case RESET_TRANSLATE_AND_SCALE:
+      return defaultState
     default:
       return state
   }

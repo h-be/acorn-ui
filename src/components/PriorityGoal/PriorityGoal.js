@@ -8,11 +8,11 @@ import Avatar from '../Avatar/Avatar'
 import Icon from '../Icon/Icon'
 import HierarchyIcon from '../HierarchyIcon/HierarchyIcon'
 import Button from '../Button/Button'
-import { addVoteOfGoal } from '../../goal-votes/actions'
+import { addVoteOfGoal } from '../../projects/goal-votes/actions'
 
 import PriorityPicker from '../PriorityPicker/PriorityPicker'
 
-function PriorityGoal({ whoami, goal, votes, createGoalVote }) {
+function PriorityGoal({ projectId, whoami, goal, votes, createGoalVote }) {
   const fromDate = goal.time_frame
     ? moment.unix(goal.time_frame.from_date)
     : null
@@ -107,7 +107,7 @@ function PriorityGoal({ whoami, goal, votes, createGoalVote }) {
 
           {/* TODO: enable linking to this goal on the MapView */}
           {/* <div className='priority-quadrant-goal-view-mode-icons'>
-            <NavLink to='/board/map'>
+            <NavLink to='/project/:projectId/map'>
               <Icon
                 name='map.svg'
                 size='view-mode-small'
@@ -123,6 +123,7 @@ function PriorityGoal({ whoami, goal, votes, createGoalVote }) {
         </div>
         {priorityPickerOpen && (
           <PriorityPicker
+            projectId={projectId}
             openToMyVote
             goalAddress={goal.address}
             onClose={() => setPriorityPickerOpen(false)}
@@ -134,10 +135,11 @@ function PriorityGoal({ whoami, goal, votes, createGoalVote }) {
 }
 
 function mapStateToProps(state, ownProps) {
-  const { goal } = ownProps
+  const { projectId, goal } = ownProps
   // filters all the GoalVotes down to a list
   // of only the Votes on the selected Goal
-  const allVotesArray = Object.values(state.goalVotes)
+  const goalVotes = state.projects.goalVotes[projectId] || {}
+  const allVotesArray = Object.values(goalVotes)
   const votes = allVotesArray.filter(function(goalVote) {
     return goalVote.goal_address === goal.address
   })
@@ -149,10 +151,11 @@ function mapStateToProps(state, ownProps) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, ownProps) {
+  const { projectId } = ownProps
   return {
     createGoalVote: goal_vote => {
-      return dispatch(addVoteOfGoal.create(goal_vote))
+      return dispatch(addVoteOfGoal(projectId).create(goal_vote))
     },
   }
 }

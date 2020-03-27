@@ -5,15 +5,15 @@ import PropTypes from 'prop-types'
 
 import Icon from './Icon/Icon'
 import StatusPicker from './StatusPicker'
-import PeoplePicker from './PeoplePicker'
+import PeoplePicker from './PeoplePicker/PeoplePicker'
 import DatePicker from './DatePicker/DatePicker'
 import HierarchyPicker from './HierarchyPicker/HierarchyPicker'
 import PriorityPicker from './PriorityPicker/PriorityPicker'
 import StatusIcon from './StatusIcon/StatusIcon'
 
-import { archiveGoal, updateGoal } from '../goals/actions'
+import { archiveGoal, updateGoal } from '../projects/goals/actions'
 import { closeGoalForm } from '../goal-form/actions'
-import AlertPopupTemplate from './AlertPopupTemplate/AlertPopupTemplate'
+import Modal, { ModalContent } from './Modal/Modal'
 
 function VerticalActionListItem({ onClick, label, icon }) {
   return (
@@ -25,6 +25,7 @@ function VerticalActionListItem({ onClick, label, icon }) {
 }
 
 function VerticalActionsList({
+  projectId,
   goalAddress,
   goal,
   onArchiveClick,
@@ -65,7 +66,7 @@ function VerticalActionsList({
   // timeframe consts
 
   const updateTimeframe = (start, end) => {
-    let timeframe = null;
+    let timeframe = null
 
     if (start && end) {
       timeframe = {
@@ -78,7 +79,7 @@ function VerticalActionsList({
       {
         ...goal,
         timestamp_updated: moment().unix(),
-        time_frame: timeframe
+        time_frame: timeframe,
       },
       goalAddress
     )
@@ -128,16 +129,21 @@ function VerticalActionsList({
         /> */}
         {viewsOpen.status && (
           <StatusPicker
+            projectId={projectId}
             selectedStatus={goal.status}
             statusClicked={innerUpdateGoal('status')}
             onClose={() => setViews({ ...defaultViews })}
           />
         )}
         {viewsOpen.squirrels && (
-          <PeoplePicker onClose={() => setViews({ ...defaultViews })} />
+          <PeoplePicker
+            projectId={projectId}
+            onClose={() => setViews({ ...defaultViews })}
+          />
         )}
         {viewsOpen.timeframe && (
           <DatePicker
+            projectId={projectId}
             onClose={() => setViews({ ...defaultViews })}
             onSet={updateTimeframe}
             fromDate={fromDate}
@@ -146,6 +152,7 @@ function VerticalActionsList({
         )}
         {viewsOpen.hierarchy && (
           <HierarchyPicker
+            projectId={projectId}
             onClose={() => setViews({ ...defaultViews })}
             selectedHierarchy={goal.hierarchy}
             hierarchyClicked={innerUpdateGoal('hierarchy')}
@@ -153,29 +160,32 @@ function VerticalActionsList({
         )}
         {viewsOpen.priority && (
           <PriorityPicker
+            projectId={projectId}
             goalAddress={goalAddress}
             onClose={() => setViews({ ...defaultViews })}
           />
         )}
       </div>
-      {viewsOpen.archive && (
-        <AlertPopupTemplate
-          onClose={() => setViews({ ...defaultViews })}
-          className='archive_popup'
+      <Modal
+        active={viewsOpen.archive}
+        onClose={() => setViews({ ...defaultViews })}
+        className='archive_popup'>
+        <ModalContent
           heading='Archiving'
           content={archiveContent}
-          popupIcon='archive.svg'
+          icon='archive.svg'
           primaryButton='Yes, Archive'
           altButton='Nevermind'
           primaryButtonAction={() => onArchiveClick(goalAddress)}
           altButtonAction={() => setViews({ ...defaultViews })}
         />
-      )}
+      </Modal>
     </>
   )
 }
 
 VerticalActionsList.propTypes = {
+  projectId: PropTypes.string,
   goalAddress: PropTypes.string.isRequired,
   goal: PropTypes.shape({
     content: PropTypes.string.isRequired,
@@ -188,21 +198,24 @@ VerticalActionsList.propTypes = {
   updateGoal: PropTypes.func.isRequired,
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   const goalAddress = state.ui.goalForm.editAddress
+  const { projectId } = ownProps
+  const goals = state.projects.goals[projectId] || {}
   return {
     goalAddress,
-    goal: state.goals[goalAddress],
+    goal: goals[goalAddress],
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, ownProps) {
+  const { projectId } = ownProps
   return {
     onArchiveClick: address => {
-      return dispatch(archiveGoal.create({ address }))
+      return dispatch(archiveGoal(projectId).create({ address }))
     },
     updateGoal: (goal, address) => {
-      return dispatch(updateGoal.create({ address, goal }))
+      return dispatch(updateGoal(projectId).create({ address, goal }))
     },
   }
 }

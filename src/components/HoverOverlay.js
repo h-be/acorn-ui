@@ -56,18 +56,16 @@ HoverOverlay.propTypes = {
 
 function mapStateToProps(state) {
   const hoveredAddress = state.ui.hover.hoveredGoal // null or an address
+  const { activeProject } = state.ui
+  const goals = state.projects.goals[activeProject] || {}
   let position, goalCoord, goalContent
   if (hoveredAddress) {
-    goalCoord = layoutFormula(
-      state.ui.screensize.width,
-      state.goals,
-      state.edges
-    )[hoveredAddress]
+    goalCoord = layoutFormula(state.ui.screensize.width, state)[hoveredAddress]
     position = {
       x: goalCoord.x + goalWidth,
       y: goalCoord.y + 6,
     }
-    goalContent = state.goals[hoveredAddress].content
+    goalContent = goals[hoveredAddress].content
   }
   return {
     hoveredAddress,
