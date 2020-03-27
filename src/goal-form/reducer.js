@@ -7,7 +7,8 @@
 
 import { OPEN_GOAL_FORM, CLOSE_GOAL_FORM, UPDATE_CONTENT } from './actions'
 
-import { archiveGoal } from '../goals/actions'
+import { ARCHIVE_GOAL } from '../projects/goals/actions'
+import { typeSuccess } from '../projects/action_type_checker'
 
 const defaultState = {
   editAddress: null,
@@ -20,6 +21,19 @@ const defaultState = {
 
 export default function(state = defaultState, action) {
   const { payload, type } = action
+
+  const resetVersion = {
+    ...state,
+    isOpen: false,
+    content: '',
+    parentAddress: null,
+    editAddress: null,
+  }
+
+  if (typeSuccess(type, ARCHIVE_GOAL)) {
+    return resetVersion
+  }
+
   switch (type) {
     case UPDATE_CONTENT:
       return {
@@ -36,14 +50,7 @@ export default function(state = defaultState, action) {
         editAddress: payload.editAddress,
       }
     case CLOSE_GOAL_FORM:
-    case archiveGoal.success().type:
-      return {
-        ...state,
-        isOpen: false,
-        content: '',
-        parentAddress: null,
-        editAddress: null,
-      }
+      return resetVersion
     default:
       return state
   }

@@ -7,13 +7,16 @@ export function checkForGoalAtCoordinates(
   translate,
   scale,
   width,
-  goals,
-  edges,
+  state,
   clickX,
   clickY
 ) {
   // get coordinates of all goals
-  const coordinates = layoutFormula(width, goals, edges)
+  const coordinates = layoutFormula(width, state)
+  const {
+    ui: { activeProject },
+  } = state
+  const goals = state.projects.goals[activeProject] || {}
   // convert the coordinates of the click to canvas space
   const convertedClick = coordsPageToCanvas(
     {
@@ -49,13 +52,16 @@ export function checkForGoalAtCoordinates(
 }
 export function checkForGoalAtCoordinatesInBox(
   width,
-  goals,
-  edges,
+  state,
   convertedClick,
   convertedIni
 ) {
   // get coordinates of all goals
-  const coordinates = layoutFormula(width, goals, edges)
+  const coordinates = layoutFormula(width, state)
+  const {
+    ui: { activeProject },
+  } = state
+  const goals = state.projects.goals[activeProject] || {}
   // convert the coordinates of the click to canvas space
   // keep track of whether a goal was selected
   let clickedAddresses = {}

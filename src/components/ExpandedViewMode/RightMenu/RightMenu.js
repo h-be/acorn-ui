@@ -4,12 +4,17 @@ import './RightMenu.css'
 
 import Icon from '../../Icon/Icon'
 
-import PeoplePicker from '../../PeoplePicker'
+import PeoplePicker from '../../PeoplePicker/PeoplePicker'
 import DatePicker from '../../DatePicker/DatePicker'
 import PriorityPicker from '../../PriorityPicker/PriorityPicker'
 import HierarchyPicker from '../../HierarchyPicker/HierarchyPicker'
 
-export default function RightMenu({ goalAddress, goal, updateGoal }) {
+export default function RightMenu({
+  projectId,
+  goalAddress,
+  goal,
+  updateGoal,
+}) {
   const defaultViews = {
     help: false,
     squirrels: false,
@@ -51,7 +56,7 @@ export default function RightMenu({ goalAddress, goal, updateGoal }) {
   /* timeframe variables */
 
   const updateTimeframe = (start, end) => {
-    let timeframe = null;
+    let timeframe = null
 
     if (start && end) {
       timeframe = {
@@ -86,6 +91,7 @@ export default function RightMenu({ goalAddress, goal, updateGoal }) {
       />
       {viewsOpen.priority && (
         <PriorityPicker
+          projectId={projectId}
           goalAddress={goalAddress}
           onClose={() => setViews({ ...defaultViews })}
         />
@@ -98,7 +104,10 @@ export default function RightMenu({ goalAddress, goal, updateGoal }) {
         onClick={() => toggleView('squirrels')}
       />
       {viewsOpen.squirrels && (
-        <PeoplePicker onClose={() => setViews({ ...defaultViews })} />
+        <PeoplePicker
+          projectId={projectId}
+          onClose={() => setViews({ ...defaultViews })}
+        />
       )}
       {/* timeframe */}
       <Icon

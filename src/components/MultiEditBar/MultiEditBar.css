@@ -44,6 +44,6 @@
   top: unset;
 }
 
-.status-popup.alert-popup-wrapper .alert-popup-header .inner-icon {
+.status-popup.modal-wrapper .modal-header .inner-icon {
   background-color: #ff5d36;
 }

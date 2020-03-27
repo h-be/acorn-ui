@@ -10,7 +10,7 @@ import moment from 'moment'
 import TextareaAutosize from 'react-textarea-autosize'
 
 import DatePicker from '../../DatePicker/DatePicker'
-import PeoplePicker from '../../PeoplePicker'
+import PeoplePicker from '../../PeoplePicker/PeoplePicker'
 
 import Priority from './Priority/Priority'
 import Comments from '../../Comments/Comments'
@@ -45,6 +45,7 @@ function SquirrelInfoPopup({ squirrel, onClose, archiveMemberOfGoal }) {
 }
 
 export default function ExpandedViewModeContent({
+  projectId,
   goalAddress,
   goal,
   goalContent,
@@ -100,7 +101,7 @@ export default function ExpandedViewModeContent({
   }
 
   const updateTimeframe = (start, end) => {
-    let timeframe = null;
+    let timeframe = null
 
     if (start && end) {
       timeframe = {
@@ -184,7 +185,10 @@ export default function ExpandedViewModeContent({
                 onClick={() => setEditSquirrels(!editSquirrels)}
               />
               {editSquirrels && (
-                <PeoplePicker onClose={() => setEditSquirrels(false)} />
+                <PeoplePicker
+                  projectId={projectId}
+                  onClose={() => setEditSquirrels(false)}
+                />
               )}
             </div>
           </div>
@@ -224,8 +228,10 @@ export default function ExpandedViewModeContent({
 
       <div className='expanded-view-tabs'>
         {activeTab === 'priority' && <Priority />}
-        {activeTab === 'comments' && <Comments />}
-        {activeTab === 'activity history' && <ActivityHistory />}
+        {activeTab === 'comments' && <Comments projectId={projectId} />}
+        {activeTab === 'activity history' && (
+          <ActivityHistory projectId={projectId} />
+        )}
         {activeTab === 'attachments' && <Attachments />}
       </div>
     </div>

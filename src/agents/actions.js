@@ -5,9 +5,9 @@
   that can be taken within that feature.
 */
 
-import { createHolochainZomeCallAsyncAction } from '@holochain/hc-redux-middleware'
+import { createHolochainZomeCallAsyncAction } from 'connoropolous-hc-redux-middleware'
 
-import { DEVELOPMENT_INSTANCE_NAME, ZOME_NAME } from '../holochainConfig'
+import { PROFILES_INSTANCE_NAME, PROFILES_ZOME_NAME } from '../holochainConfig'
 
 // SET because it could be brand new, or an update, but treat it the same way
 const SET_AGENT = 'set_agent'
@@ -22,8 +22,8 @@ const setAgent = agent => {
 }
 
 const fetchAgents = createHolochainZomeCallAsyncAction(
-  DEVELOPMENT_INSTANCE_NAME,
-  ZOME_NAME,
+  PROFILES_INSTANCE_NAME,
+  PROFILES_ZOME_NAME,
   'fetch_agents'
 )
 

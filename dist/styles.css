@@ -14,7 +14,7 @@ canvas {
 }
 
 body {
-  background-color: #fafafa;
+  background-color: #ebe9e2;
   font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
 }
 
@@ -298,28 +298,6 @@ h4 {
   background: #77fff5;
 }
 
-.goal_form_save {
-  margin-top: 60px;
-  padding: 10px 30px;
-  background: #00afa4 0% 0% no-repeat padding-box;
-  opacity: 1;
-  outline: none;
-  border: 0;
-  text-align: left;
-  font-size: 14px;
-  line-height: 22px;
-  font-family: 'gilroyextrabold', Helvetica, Sans-Serif;
-  letter-spacing: 0;
-  color: #ffffff;
-  border-radius: 25px;
-  text-align: center;
-  cursor: pointer;
-}
-
-.goal_form_save:hover {
-  background: #00beb0 0% 0% no-repeat padding-box;
-}
-
 /* HoverOverlay */
 
 .hover_overlay {
@@ -381,88 +359,6 @@ h4 {
 }
 .action_list_item .icon.not-hoverable .inner-icon:hover {
   background-color: #ffffff;
-}
-
-/* PeoplePicker */
-
-.people_picker {
-  min-width: 253px;
-  max-width: 290px;
-}
-
-.people_picker_spacer {
-  margin: 0 20px 10px 20px;
-  border: 0.5px solid #f2f2f2;
-}
-
-.people_picker_search {
-  display: flex;
-  align-items: center;
-  padding: 0 20px 5px 20px;
-}
-
-.people_picker_search input {
-  font-size: 14px;
-  line-height: 23px;
-  color: #4d4d4d;
-  border: 0;
-  outline: 0;
-  padding: 2px;
-  margin-left: 14px;
-  font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
-}
-
-.people_picker_search input::placeholder {
-  color: #a3a3a3;
-}
-
-.people_picker_people {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.people_picker_people li {
-  color: #4d4d4d;
-  padding: 6px 20px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.people_picker_people li:hover {
-  background: #f2f2f2;
-  color: #00a599;
-}
-
-.people_picker_people li .person_name {
-  flex: 1;
-  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
-  font-size: 14px;
-  line-height: 12px;
-}
-
-.person_nameANDhandle {
-  display: flex;
-  flex-direction: column;
-  padding-left: 6px;
-}
-
-.person_handle {
-  font-size: 12px;
-  color: #a3a3a3;
-  font-family: 'CircularStd-Book', Helvetica, sans-serif;
-}
-
-.radio_button {
-  right: 20px;
-  position: absolute;
-}
-
-/* when person is a member styles */
-
-.people_picker_people li.member .person_name {
-  color: #5f65ff;
 }
 
 /* StatusPicker */

@@ -643,8 +643,8 @@ const howTosItems = [
           <ol>
             <div className='guidebook-description-section'>
               <div className='guidebook-separate-line'>
-                Click on the Export icon on header (next to the board name), and
-                select one of the availble formats to export your data.
+                Click on the Export icon on header (next to the project name),
+                and select one of the availble formats to export your data.
               </div>
             </div>
           </ol>

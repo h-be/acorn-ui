@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import useOnClickOutside from 'use-onclickoutside'
-import { archiveGoal, updateGoal } from '../../goals/actions'
+import { archiveGoal, updateGoal } from '../../projects/goals/actions'
 import moment from 'moment'
 
 import './MultiEditBar.css'
@@ -12,10 +11,10 @@ import Avatar from '../Avatar/Avatar'
 import StatusIcon from '../StatusIcon/StatusIcon'
 
 import StatusPicker from '../StatusPicker'
-import PeoplePicker from '../PeoplePicker'
+import PeoplePicker from '../PeoplePicker/PeoplePicker'
 import DatePicker from '../DatePicker/DatePicker'
 import HierarchyPicker from '../HierarchyPicker/HierarchyPicker'
-import AlertPopupTemplate from '../AlertPopupTemplate/AlertPopupTemplate'
+import Modal, { ModalContent } from '../Modal/Modal'
 
 function MultiEditBar({
   selectedGoals = [],
@@ -114,7 +113,7 @@ function MultiEditBar({
   const archiveContent = (
     <div>
       You're about to archive the following {selectedGoals.length} card(s):
-      <div className='alert-popup-goals-list'>
+      <div className='modal-goals-list'>
         {selectedGoals.map(goal => (
           <div>{goal.content}</div>
         ))}
@@ -127,7 +126,7 @@ function MultiEditBar({
   /* timeframe consts */
 
   const updateTimeframe = (start, end) => {
-    let timeframe = null;
+    let timeframe = null
 
     if (start && end) {
       timeframe = {
@@ -137,6 +136,37 @@ function MultiEditBar({
     }
 
     updateGoals('time_frame')(timeframe)
+  }
+
+  let showModal = false,
+    modalClassname,
+    modalHeading,
+    modalContent,
+    modalIcon
+  if (popup && viewsOpen.status) {
+    showModal = true
+    modalClassname = 'status-popup'
+    modalHeading = 'Setting Status for Multiple Cards'
+    modalContent = statusAlertContent
+    modalIcon = 'status-unknown.svg'
+  } else if (popup && viewsOpen.squirrels) {
+    showModal = true
+    modalClassname = 'squirrel-popup'
+    modalHeading = 'Associating Members for Multiple Cards'
+    modalContent = squirrelsAlertContent
+    modalIcon = 'squirrel.svg'
+  } else if (popup && viewsOpen.timeframe) {
+    showModal = true
+    modalClassname = 'timeframe-popup'
+    modalHeading = 'Setting Timeframe for Multiple Cards'
+    modalContent = timeframeAlertContent
+    modalIcon = 'calendar.svg'
+  } else if (popup && viewsOpen.hierarchy) {
+    showModal = true
+    modalClassname = 'hierarchy-popup'
+    modalHeading = 'Setting Hierarchy for Multiple Cards'
+    modalContent = hierarchyAlertContent
+    modalIcon = 'hierarchy.svg'
   }
 
   return (
@@ -167,7 +197,7 @@ function MultiEditBar({
           onClick={() => toggleView('squirrels')}
         />
         {viewsOpen.squirrels && (
-          <PeoplePicker onClose={() => setViews({ ...defaultViews })} />
+          <PeoplePicker projectId={projectId} onClose={() => setViews({ ...defaultViews })} />
         )} */}
         {/* timeframe */}
         <Icon
@@ -206,75 +236,33 @@ function MultiEditBar({
           onClick={() => toggleView('archive')}
         />
       </div>
-      {selectedGoals.length > 1 && popup && (
-        <>
-          {viewsOpen.status && (
-            <AlertPopupTemplate
-              onClose={reset}
-              className='status-popup'
-              heading='Setting Status for Multiple Cards'
-              content={statusAlertContent}
-              popupIcon='status-unknown.svg'
-              primaryButton='Yes, Proceed'
-              altButton='Nevermind'
-              primaryButtonAction={() => setPopup(false)}
-              altButtonAction={reset}
-            />
-          )}
-          {viewsOpen.squirrels && (
-            <AlertPopupTemplate
-              onClose={reset}
-              className='squirrel-popup'
-              heading='Associating Members for Multiple Cards'
-              content={squirrelsAlertContent}
-              popupIcon='squirrel.svg'
-              primaryButton='Yes, Proceed'
-              altButton='Nevermind'
-              primaryButtonAction={() => setPopup(false)}
-              altButtonAction={reset}
-            />
-          )}
-          {viewsOpen.timeframe && (
-            <AlertPopupTemplate
-              onClose={reset}
-              className='timeframe-popup'
-              heading='Setting Timeframe for Multiple Cards'
-              content={timeframeAlertContent}
-              popupIcon='calendar.svg'
-              primaryButton='Yes, Proceed'
-              altButton='Nevermind'
-              primaryButtonAction={() => setPopup(false)}
-              altButtonAction={reset}
-            />
-          )}
-          {viewsOpen.hierarchy && (
-            <AlertPopupTemplate
-              onClose={reset}
-              className='hierarchy-popup'
-              heading='Setting Hierarchy for Multiple Cards'
-              content={hierarchyAlertContent}
-              popupIcon='hierarchy.svg'
-              primaryButton='Yes, Proceed'
-              altButton='Nevermind'
-              primaryButtonAction={() => setPopup(false)}
-              altButtonAction={reset}
-            />
-          )}
-        </>
+      {selectedGoals.length > 1 && (
+        <Modal onClose={reset} className={modalClassname} active={showModal}>
+          <ModalContent
+            heading={modalHeading}
+            content={modalContent}
+            icon={modalIcon}
+            primaryButton='Yes, Proceed'
+            altButton='Nevermind'
+            primaryButtonAction={() => setPopup(false)}
+            altButtonAction={reset}
+          />
+        </Modal>
       )}
-      {viewsOpen.archive && (
-        <AlertPopupTemplate
-          onClose={reset}
-          className='archive-popup'
+      <Modal
+        onClose={reset}
+        className='archive-popup'
+        active={viewsOpen.archive}>
+        <ModalContent
           heading='Archiving'
           content={archiveContent}
-          popupIcon='archive.svg'
+          icon='archive.svg'
           primaryButton='Yes, Archive'
           altButton='Nevermind'
           primaryButtonAction={archiveGoals}
           altButtonAction={reset}
         />
-      )}
+      </Modal>
     </>
   )
 }
@@ -295,20 +283,25 @@ MultiEditBar.propTypes = {
 }
 
 function mapStateToProps(state) {
+  const {
+    ui: { activeProject },
+  } = state
+  const goals = state.projects.goals[activeProject] || {}
   return {
     selectedGoals: state.ui.selection.selectedGoals.map(
-      address => state.goals[address]
+      address => goals[address]
     ),
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, ownProps) {
+  const { projectId } = ownProps
   return {
     updateGoal: (goal, address) => {
-      return dispatch(updateGoal.create({ address, goal }))
+      return dispatch(updateGoal(projectId).create({ address, goal }))
     },
     archiveGoal: address => {
-      return dispatch(archiveGoal.create({ address }))
+      return dispatch(archiveGoal(projectId).create({ address }))
     },
   }
 }

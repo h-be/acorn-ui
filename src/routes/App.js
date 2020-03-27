@@ -10,14 +10,19 @@ import Header from '../components/Header/Header'
 import ProfileEditForm from '../components/ProfileEditForm/ProfileEditForm'
 import LoadingScreen from '../components/LoadingScreen/LoadingScreen'
 import Footer from '../components/Footer/Footer'
+import Modal from '../components/Modal/Modal'
 
-import CreateProfilePage from './CreateProfilePage/CreateProfilePage'
-import MapView from './MapView'
-import PriorityView from './PriorityView'
+// import new routes here
 import IntroScreen from '../components/IntroScreen/IntroScreen'
+import CreateProfilePage from './CreateProfilePage/CreateProfilePage'
+import Dashboard from './Dashboard/Dashboard'
+import ProjectView from './ProjectView/ProjectView'
+import selectEntryPoints from '../projects/entry-points/select'
 
 function App(props) {
   const {
+    activeEntryPoints,
+    projectName,
     agentAddress,
     whoami, // .entry and .address
     updateWhoami,
@@ -31,34 +36,37 @@ function App(props) {
   const titleText = 'Profile Settings'
   const subText = ''
   const submitText = 'Save Changes'
-  const canClose = true
 
   return (
     <Router>
       <Switch>
-        <Route path='/board/map' component={MapView} />
-        <Route path='/board/priority' component={PriorityView} />
+        {/* Add new routes in here */}
         <Route path='/intro' component={IntroScreen} />
         <Route path='/register' component={CreateProfilePage} />
-        <Route path='/' render={() => <Redirect to='/board/map' />} />
+        <Route path='/dashboard' component={Dashboard} />
+        <Route path='/project/:projectId' component={ProjectView} />
+        <Route path='/' render={() => <Redirect to='/dashboard' />} />
       </Switch>
       {agentAddress && (
         <Header
+          activeEntryPoints={activeEntryPoints}
+          projectName={projectName}
           whoami={whoami}
           updateStatus={props.updateStatus}
           setShowProfileEditForm={setShowProfileEditForm}
         />
       )}
-      {showProfileEditForm && (
-        <div className='profile_edit_wrapper'>
-          <ProfileEditForm
-            onSubmit={onProfileSubmit}
-            onClose={() => setShowProfileEditForm(false)}
-            whoami={whoami ? whoami.entry : null}
-            {...{ canClose, titleText, subText, submitText, agentAddress }}
-          />
-        </div>
-      )}
+      {/* This will only show when 'active' prop is true */}
+      <Modal
+        white
+        active={showProfileEditForm}
+        onClose={() => setShowProfileEditForm(false)}>
+        <ProfileEditForm
+          onSubmit={onProfileSubmit}
+          whoami={whoami ? whoami.entry : null}
+          {...{ titleText, subText, submitText, agentAddress }}
+        />
+      </Modal>
       {!agentAddress && <LoadingScreen />}
       {agentAddress && !whoami && <Redirect to='/intro' />}
       {agentAddress && whoami && <Footer />}
@@ -67,6 +75,7 @@ function App(props) {
 }
 
 App.propTypes = {
+  projectName: PropTypes.string,
   agentAddress: PropTypes.string,
   whoami: PropTypes.shape({
     first_name: PropTypes.string,
@@ -90,7 +99,28 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
+  const {
+    ui: { activeProject, activeEntryPoints },
+  } = state
+  // defensive coding for loading phase
+  const activeProjectMeta = state.projects.projectMeta[activeProject] || {}
+  const projectName = activeProjectMeta.name || ''
+
+  const allProjectEntryPoints = activeProject
+    ? selectEntryPoints(state, activeProject)
+    : []
+  const activeEntryPointsObjects = activeEntryPoints
+    .map(address => {
+      return allProjectEntryPoints.find(
+        entryPoint => entryPoint.address === address
+      )
+    })
+    // cut out invalid ones
+    .filter(e => e)
+
   return {
+    activeEntryPoints: activeEntryPointsObjects,
+    projectName,
     whoami: state.whoami,
     agentAddress: state.agentAddress,
   }

@@ -12,7 +12,7 @@ import {
   addVoteOfGoal,
   archiveVoteOfGoal,
   updateGoalVote,
-} from '../../goal-votes/actions'
+} from '../../projects/goal-votes/actions'
 const useStyles = makeStyles({
   root: {
     color: '#6600FF',
@@ -334,15 +334,12 @@ function Priority({
   )
 }
 
-Priority.propTypes = {
-  onClose: PropTypes.func.isRequired,
-}
-
 function mapStateToProps(state, ownProps) {
-  const { goalAddress } = ownProps
+  const { projectId, goalAddress } = ownProps
   // filters all the GoalVotes down to a list
   // of only the Votes on the selected Goal
-  const allVotesArray = Object.values(state.goalVotes)
+  const goalVotes = state.projects.goalVotes[projectId] || {}
+  const allVotesArray = Object.values(goalVotes)
   const votes = allVotesArray.filter(function(goalVote) {
     return goalVote.goal_address === goalAddress
   })
@@ -353,16 +350,17 @@ function mapStateToProps(state, ownProps) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, ownProps) {
+  const { projectId } = ownProps
   return {
     createGoalVote: goal_vote => {
-      return dispatch(addVoteOfGoal.create(goal_vote))
+      return dispatch(addVoteOfGoal(projectId).create(goal_vote))
     },
     updateGoalVote: (goal_vote, address) => {
-      return dispatch(updateGoalVote.create({ goal_vote, address }))
+      return dispatch(updateGoalVote(projectId).create({ goal_vote, address }))
     },
     archiveVoteOfGoal: address => {
-      return dispatch(archiveVoteOfGoal.create({ address }))
+      return dispatch(archiveVoteOfGoal(projectId).create({ address }))
     },
   }
 }

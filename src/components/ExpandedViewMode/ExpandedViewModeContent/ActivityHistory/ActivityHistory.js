@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './ActivityHistory.css'
-import { fetchGoalHistory } from '../../../../goal-history/actions'
+import { fetchGoalHistory } from '../../../../projects/goal-history/actions'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import Avatar from '../../../Avatar/Avatar'
@@ -271,19 +271,22 @@ class ActivityHistory extends Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
+  const { projectId } = ownProps
   const goalAddress = state.ui.expandedView.goalAddress
+  const goalHistory = state.projects.goalHistory[projectId] || {}
   return {
     goalAddress,
-
     agents: state.agents,
-    goalHistory: state.ui.goalHistory[goalAddress],
+    goalHistory: goalHistory[goalAddress],
   }
 }
-function mapDispatchToProps(dispatch) {
+
+function mapDispatchToProps(dispatch, ownProps) {
+  const { projectId } = ownProps
   return {
     fetchGoalHistory: address => {
-      return dispatch(fetchGoalHistory.create(address))
+      return dispatch(fetchGoalHistory(projectId).create(address))
     },
   }
 }

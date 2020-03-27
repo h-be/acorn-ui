@@ -6,7 +6,8 @@
 */
 
 import { HOVER_GOAL, UNHOVER_GOAL } from './actions'
-import { archiveGoal } from '../goals/actions'
+import { ARCHIVE_GOAL } from '../projects/goals/actions'
+import { typeSuccess } from '../projects/action_type_checker'
 
 const defaultState = {
   hoveredGoal: null,
@@ -14,6 +15,17 @@ const defaultState = {
 
 export default function(state = defaultState, action) {
   const { payload, type } = action
+
+  if (typeSuccess(type, ARCHIVE_GOAL)) {
+    // unhover if the archived Goal was hovered over
+    return state.hoveredGoal === payload.address
+      ? {
+          ...state,
+          hoveredGoal: null,
+        }
+      : { ...state }
+  }
+
   switch (type) {
     case HOVER_GOAL:
       return {
@@ -25,14 +37,6 @@ export default function(state = defaultState, action) {
         ...state,
         hoveredGoal: null,
       }
-    case archiveGoal.success().type:
-      // unhover if the archived Goal was hovered over
-      return state.hoveredGoal === payload.address
-        ? {
-            ...state,
-            hoveredGoal: null,
-          }
-        : { ...state }
     default:
       return state
   }
