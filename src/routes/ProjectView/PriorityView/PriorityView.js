@@ -8,6 +8,7 @@ import {
   Redirect,
 } from 'react-router-dom'
 import { connect } from 'react-redux'
+import _ from 'lodash'
 
 import IndentedTreeView from '../../../components/IndentedTreeView/IndentedTreeView'
 
@@ -349,7 +350,7 @@ function mapStateToProps(state) {
 
   // modify so that all goals have their related goal members
   // modify so that all goals have their related goal members
-  const allGoals = Object.values(goals).map(goal => {
+  const allGoalsArray = Object.values(goals).map(goal => {
     const members = Object.values(goalMembers)
       .filter(gm => gm.goal_address === goal.address)
       .map(gm => state.agents[gm.agent_address])
@@ -358,10 +359,11 @@ function mapStateToProps(state) {
       members,
     }
   })
+  const allGoals = _.keyBy(allGoalsArray, 'address')
 
   // CONSTRUCT TREES FOR THE INDENTED NAV TREE VIEW
   const edgesAsArray = Object.values(edges)
-  const allGoalAddresses = allGoals.map(goal => goal.address)
+  const allGoalAddresses = allGoalsArray.map(goal => goal.address)
   // find the Goal objects without parent Goals
   // since they will sit at the top level
   const noParentsAddresses = allGoalAddresses.filter(goalAddress => {
@@ -371,7 +373,7 @@ function mapStateToProps(state) {
   // so that it constructs the full sub-tree for each root Goal
   function getGoal(goalAddress) {
     return {
-      ...goals[goalAddress],
+      ...allGoals[goalAddress],
       children: edgesAsArray
         // find the edges indicating the children of this goal
         .filter(edge => edge.parent_address === goalAddress)
