@@ -35,8 +35,7 @@ export default function JoinProjectModal({
       }
       setValidatingSecret(false)
     } catch (e) {
-      // there was some error :s
-      console.log(e)
+      setInvalidText('There was an error while joining project: ' + e.message)
     }
   }
   const onDone = () => {
