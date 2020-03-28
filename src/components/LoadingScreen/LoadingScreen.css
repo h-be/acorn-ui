@@ -3,6 +3,10 @@
   width: 100%;
   display: flex;
   align-items: center;
+  position: fixed;
+  top: 0;
+  background: #fff;
+  z-index: 10000;
 }
 
 .loading_screen {

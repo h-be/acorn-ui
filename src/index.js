@@ -39,7 +39,7 @@ const websocketUrl =
 // attempts to form a websocket (two way messages) connection to a running
 // Holochain Conductor
 
-const DEFAULT_TIMEOUT = 10000
+const DEFAULT_TIMEOUT = 60000 // give Holochain lotsa time
 const connectOpts = { url: websocketUrl, timeout: DEFAULT_TIMEOUT }
 const hcWebClient = connect(connectOpts)
 
