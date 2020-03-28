@@ -38,7 +38,7 @@ const createProjectInstance = {
     createHolochainAdminAsyncAction('admin', 'instance', 'add').create({
       id,
       dna_id: dna,
-      agent_id: 'development-agent', // TODO: change this
+      agent_id: 'development-agent',
     }),
 }
 
