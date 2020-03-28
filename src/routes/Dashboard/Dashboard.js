@@ -175,22 +175,29 @@ function Dashboard({
   )
 }
 
+function timeoutOrReject(error) {
+  // admin/instance/add and admin/interface/add_instance will trigger a refresh of the websocket connection, as it shuts down and restarts
+  // swallow the error if it is the to-be-expected timeout from this call
+  return error.startsWith('Timeout occurred during ws call.')
+    ? Promise.resolve()
+    : Promise.reject(new Error(error))
+}
+
 function addDnaAndIntance(dispatch, passphrase) {
   const random = Math.random()
   const dnaId = `_acorn_projects_dna_${random}`
   const instanceId = `_acorn_projects_instance_${random}`
   const uuid = passphraseToUuid(passphrase)
+
   return dispatch(createProjectDna.create(dnaId, uuid))
-    .then(() => dispatch(createProjectInstance.create(instanceId, dnaId)))
+    .then(() =>
+      dispatch(createProjectInstance.create(instanceId, dnaId)).catch(
+        timeoutOrReject
+      )
+    )
     .then(() => dispatch(startInstance.create(instanceId)))
     .then(() =>
-      dispatch(addInstanceToInterface.create(instanceId)).catch(error => {
-        // addInstanceToInterface will trigger a refresh of the websocket connection, as it shuts down and restarts
-        // swallow the error if it is the to-be-expected timeout from this call
-        return error.startsWith('Timeout occurred during ws call.')
-          ? Promise.resolve()
-          : Promise.reject(new Error(error))
-      })
+      dispatch(addInstanceToInterface.create(instanceId)).catch(timeoutOrReject)
     )
     .then(() => ({
       dnaId,
