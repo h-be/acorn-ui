@@ -195,7 +195,9 @@ function addDnaAndIntance(dispatch, passphrase) {
         timeoutOrReject
       )
     )
-    .then(() => dispatch(startInstance.create(instanceId)))
+    .then(() =>
+      dispatch(startInstance.create(instanceId)).catch(timeoutOrReject)
+    )
     .then(() =>
       dispatch(addInstanceToInterface.create(instanceId)).catch(timeoutOrReject)
     )
