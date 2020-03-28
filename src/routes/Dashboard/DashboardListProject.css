@@ -161,4 +161,5 @@
 
 .dashboard-list-project-member-list {
   margin-bottom: 8px;
+  display: flex;
 }
