@@ -18,15 +18,13 @@ https://github.com/holochain/holochain-rust/blob/9564458505299c668fbf7fb311eaad8
 */
 const createProjectDna = {
   create: (id, uuid) =>
-    createHolochainAdminAsyncAction('admin', 'dna', 'install_from_file').create(
-      {
-        id,
-        // copy: true,
-        // can add a 'properties' key on here if we want
-        path: './dnas/projects/dist/projects.dna.json',
-        uuid,
-      }
-    ),
+    createHolochainAdminAsyncAction('admin/dna/install_from_file').create({
+      id,
+      // copy: true,
+      // can add a 'properties' key on here if we want
+      path: './dnas/projects/dist/projects.dna.json',
+      uuid,
+    }),
 }
 
 /* see
@@ -35,7 +33,7 @@ https://github.com/holochain/holochain-rust/blob/9564458505299c668fbf7fb311eaad8
 */
 const createProjectInstance = {
   create: (id, dna) =>
-    createHolochainAdminAsyncAction('admin', 'instance', 'add').create({
+    createHolochainAdminAsyncAction('admin/instance/add').create({
       id,
       dna_id: dna,
       agent_id: 'development-agent',
@@ -47,7 +45,7 @@ https://github.com/holochain/holochain-rust/blob/9564458505299c668fbf7fb311eaad8
 */
 const removeProjectInstance = {
   create: id =>
-    createHolochainAdminAsyncAction('admin', 'instance', 'remove').create({
+    createHolochainAdminAsyncAction('admin/instance/remove').create({
       id,
     }),
 }
@@ -57,7 +55,7 @@ https://github.com/holochain/holoscape/blob/cfc1f2d8969dba02c4fbeb0ec62bfa7819d0
 */
 const startInstance = {
   create: instanceId =>
-    createHolochainAdminAsyncAction('admin', 'instance', 'start').create({
+    createHolochainAdminAsyncAction('admin/instance/start').create({
       id: instanceId,
     }),
 }
@@ -67,26 +65,16 @@ https://github.com/holochain/holoscape/blob/e0c94afa12e28387a37781394282ab12f391
 */
 const addInstanceToInterface = {
   create: instanceId =>
-    createHolochainAdminAsyncAction(
-      'admin',
-      'interface',
-      'add_instance'
-    ).create({
+    createHolochainAdminAsyncAction('admin/interface/add_instance').create({
       interface_id: INTERFACE_ID,
       instance_id: instanceId,
     }),
 }
 
-const fetchProjectsDnas = createHolochainAdminAsyncAction(
-  'admin',
-  'dna',
-  'list'
-)
+const fetchProjectsDnas = createHolochainAdminAsyncAction('admin/dna/list')
 
 const fetchProjectsInstances = createHolochainAdminAsyncAction(
-  'admin',
-  'instance',
-  'list'
+  'admin/instance/list'
 )
 
 export {

@@ -175,12 +175,14 @@ function Dashboard({
   )
 }
 
-function timeoutOrReject(error) {
+function timeoutCatcher(promise) {
   // admin/instance/add and admin/interface/add_instance will trigger a refresh of the websocket connection, as it shuts down and restarts
   // swallow the error if it is the to-be-expected timeout from this call
-  return error.startsWith('Timeout occurred during ws call.')
-    ? Promise.resolve()
-    : Promise.reject(new Error(error))
+  return promise.catch(error =>
+    error.startsWith('Timeout occurred during ws call.')
+      ? Promise.resolve()
+      : Promise.reject(new Error(error))
+  )
 }
 
 function addDnaAndIntance(dispatch, passphrase) {
@@ -191,15 +193,11 @@ function addDnaAndIntance(dispatch, passphrase) {
 
   return dispatch(createProjectDna.create(dnaId, uuid))
     .then(() =>
-      dispatch(createProjectInstance.create(instanceId, dnaId)).catch(
-        timeoutOrReject
-      )
+      timeoutCatcher(dispatch(createProjectInstance.create(instanceId, dnaId)))
     )
+    .then(() => timeoutCatcher(dispatch(startInstance.create(instanceId))))
     .then(() =>
-      dispatch(startInstance.create(instanceId)).catch(timeoutOrReject)
-    )
-    .then(() =>
-      dispatch(addInstanceToInterface.create(instanceId)).catch(timeoutOrReject)
+      timeoutCatcher(dispatch(addInstanceToInterface.create(instanceId)))
     )
     .then(() => ({
       dnaId,
@@ -232,13 +230,14 @@ function mapDispatchToProps(dispatch) {
       return (
         addDnaAndIntance(dispatch, passphrase)
           .then(({ instanceId }) =>
-            dispatch(createProjectMeta(instanceId).create(projectMeta))
+            timeoutCatcher(
+              dispatch(createProjectMeta(instanceId).create(projectMeta))
+            )
           )
           // this will cause the eventual refetch of Project Members and Entry Points,
           // due to useEffect within Dashboard
           .then(() => dispatch(fetchProjectsInstances.create({})))
       )
-      // .catch
     },
     joinProject: passphrase => {
       // joinProject
@@ -248,23 +247,24 @@ function mapDispatchToProps(dispatch) {
       // remove the instance again immediately
       // we can't remove the DNA itself, but that's fine
       return addDnaAndIntance(dispatch, passphrase).then(({ instanceId }) => {
-        return dispatch(fetchProjectMeta(instanceId).create({})).catch(
-          async e => {
-            if (
-              e &&
-              e.Err &&
-              e.Err.Internal &&
-              e.Err.Internal === 'no project meta exists'
-            ) {
-              // remove the instance again immediately, let the resolver know we did this, by returning false
-              await dispatch(removeProjectInstance.create(instanceId))
-              return false
-            } else {
-              // some unintended error
-              throw e
-            }
+        const HIGH_TIMEOUT = 20000 // ms
+        return dispatch(
+          fetchProjectMeta(instanceId).create({}, HIGH_TIMEOUT)
+        ).catch(async e => {
+          if (
+            e &&
+            e.Err &&
+            e.Err.Internal &&
+            e.Err.Internal === 'no project meta exists'
+          ) {
+            // remove the instance again immediately, let the resolver know we did this, by returning false
+            await dispatch(removeProjectInstance.create(instanceId))
+            return false
+          } else {
+            // some unintended error
+            throw e
           }
-        )
+        })
       })
     },
   }
