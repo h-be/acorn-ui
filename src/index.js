@@ -16,7 +16,8 @@ import { holochainMiddleware } from 'connoropolous-hc-redux-middleware'
 
 // Local Imports
 import {
-  DEFAULT_HOLOCHAIN_PORT,
+  DEVELOPMENT_HOLOCHAIN_PORT,
+  PRODUCTION_HOLOCHAIN_PORT,
   DEFAULT_HOLOCHAIN_HOST,
 } from './holochainConfig'
 import acorn from './reducer'
@@ -31,13 +32,15 @@ import { fetchAgentAddress } from './agent-address/actions'
 import App from './routes/App'
 
 // this url should use the same port set up by the Holochain Conductor
-const websocketUrl = `ws://${DEFAULT_HOLOCHAIN_HOST}:${DEFAULT_HOLOCHAIN_PORT}`
+const websocketUrl =
+  process.env.NODE_ENV === 'development'
+    ? `ws://${DEFAULT_HOLOCHAIN_HOST}:${DEVELOPMENT_HOLOCHAIN_PORT}`
+    : `ws://${DEFAULT_HOLOCHAIN_HOST}:${PRODUCTION_HOLOCHAIN_PORT}`
 // attempts to form a websocket (two way messages) connection to a running
 // Holochain Conductor
-const connectOpts =
-  process.env.NODE_ENV === 'development'
-    ? { url: websocketUrl, timeout: 4000 }
-    : { timeout: 4000 }
+
+const DEFAULT_TIMEOUT = 5000
+const connectOpts = { url: websocketUrl, timeout: DEFAULT_TIMEOUT }
 const hcWebClient = connect(connectOpts)
 
 // holochainMiddleware takes in the hc-web-client websocket connection
