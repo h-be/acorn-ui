@@ -175,14 +175,21 @@ function Dashboard({
   )
 }
 
-function timeoutCatcher(promise) {
+function timeoutCatcher(promise, namespace) {
   // admin/instance/add and admin/interface/add_instance will trigger a refresh of the websocket connection, as it shuts down and restarts
   // swallow the error if it is the to-be-expected timeout from this call
-  return promise.catch(error =>
-    error.startsWith('Timeout occurred during ws call.')
-      ? Promise.resolve()
-      : Promise.reject(new Error(error))
-  )
+  return promise.catch(error => {
+    if (typeof error === 'string') {
+      if (error.startsWith('Timeout occurred during ws call.')) {
+        return Promise.resolve()
+      } else {
+        Promise.reject(new Error(namespace + ': ' + error))
+      }
+    } else {
+      error.message = namespace + ': ' + error.message
+      return Promise.reject(error)
+    }
+  })
 }
 
 function addDnaAndIntance(dispatch, passphrase) {
@@ -191,13 +198,27 @@ function addDnaAndIntance(dispatch, passphrase) {
   const instanceId = `_acorn_projects_instance_${random}`
   const uuid = passphraseToUuid(passphrase)
 
+  const LOW_TIMEOUT = 1000
+  const HIGH_TIMEOUT = 20000
+
   return dispatch(createProjectDna.create(dnaId, uuid))
     .then(() =>
-      timeoutCatcher(dispatch(createProjectInstance.create(instanceId, dnaId)))
+      timeoutCatcher(
+        dispatch(createProjectInstance.create(instanceId, dnaId, HIGH_TIMEOUT)),
+        'creating project instance'
+      )
     )
-    .then(() => timeoutCatcher(dispatch(startInstance.create(instanceId))))
     .then(() =>
-      timeoutCatcher(dispatch(addInstanceToInterface.create(instanceId)))
+      timeoutCatcher(
+        dispatch(startInstance.create(instanceId, LOW_TIMEOUT)),
+        'starting project instance'
+      )
+    )
+    .then(() =>
+      timeoutCatcher(
+        dispatch(addInstanceToInterface.create(instanceId, LOW_TIMEOUT)),
+        'adding instance to interface'
+      )
     )
     .then(() => ({
       dnaId,
@@ -230,9 +251,7 @@ function mapDispatchToProps(dispatch) {
       return (
         addDnaAndIntance(dispatch, passphrase)
           .then(({ instanceId }) =>
-            timeoutCatcher(
-              dispatch(createProjectMeta(instanceId).create(projectMeta))
-            )
+            dispatch(createProjectMeta(instanceId).create(projectMeta))
           )
           // this will cause the eventual refetch of Project Members and Entry Points,
           // due to useEffect within Dashboard
@@ -261,6 +280,7 @@ function mapDispatchToProps(dispatch) {
             await dispatch(removeProjectInstance.create(instanceId))
             return false
           } else {
+            dispatch(removeProjectInstance.create(instanceId))
             // some unintended error
             throw e
           }

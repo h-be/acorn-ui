@@ -17,14 +17,30 @@ https://github.com/holochain/holoscape/blob/e0c94afa12e28387a37781394282ab12f391
 https://github.com/holochain/holochain-rust/blob/9564458505299c668fbf7fb311eaad86a07c6551/crates/conductor_lib/src/conductor/admin.rs#L84
 */
 const createProjectDna = {
-  create: (id, uuid) =>
-    createHolochainAdminAsyncAction('admin/dna/install_from_file').create({
-      id,
-      // copy: true,
-      // can add a 'properties' key on here if we want
-      path: './dnas/projects/dist/projects.dna.json',
-      uuid,
-    }),
+  create: (id, uuid, timeout) =>
+    createHolochainAdminAsyncAction('admin/dna/install_from_file').create(
+      {
+        id,
+        // copy: true,
+        // can add a 'properties' key on here if we want
+        path: './dnas/projects/dist/projects.dna.json',
+        uuid,
+      },
+      timeout
+    ),
+}
+
+/* see
+https://github.com/holochain/holochain-rust/blob/9564458505299c668fbf7fb311eaad86a07c6551/crates/conductor_lib/src/interface.rs#L525-L530
+*/
+const removeProjectInstance = {
+  create: (id, timeout) =>
+    createHolochainAdminAsyncAction('admin/instance/remove').create(
+      {
+        id,
+      },
+      timeout
+    ),
 }
 
 /* see
@@ -32,43 +48,42 @@ https://github.com/holochain/holoscape/blob/e0c94afa12e28387a37781394282ab12f391
 https://github.com/holochain/holochain-rust/blob/9564458505299c668fbf7fb311eaad86a07c6551/crates/conductor_lib/src/conductor/admin.rs#L193
 */
 const createProjectInstance = {
-  create: (id, dna) =>
-    createHolochainAdminAsyncAction('admin/instance/add').create({
-      id,
-      dna_id: dna,
-      agent_id: 'development-agent',
-    }),
-}
-
-/* see
-https://github.com/holochain/holochain-rust/blob/9564458505299c668fbf7fb311eaad86a07c6551/crates/conductor_lib/src/interface.rs#L558
-*/
-const removeProjectInstance = {
-  create: id =>
-    createHolochainAdminAsyncAction('admin/instance/remove').create({
-      id,
-    }),
+  create: (id, dna, timeout) =>
+    createHolochainAdminAsyncAction('admin/instance/add').create(
+      {
+        id,
+        dna_id: dna,
+        agent_id: 'development-agent',
+      },
+      timeout
+    ),
 }
 
 /* see
 https://github.com/holochain/holoscape/blob/cfc1f2d8969dba02c4fbeb0ec62bfa7819d0ed21/views/install_bundle_view.js#L489
 */
 const startInstance = {
-  create: instanceId =>
-    createHolochainAdminAsyncAction('admin/instance/start').create({
-      id: instanceId,
-    }),
+  create: (instanceId, timeout) =>
+    createHolochainAdminAsyncAction('admin/instance/start').create(
+      {
+        id: instanceId,
+      },
+      timeout
+    ),
 }
 
 /* see
 https://github.com/holochain/holoscape/blob/e0c94afa12e28387a37781394282ab12f391d96b/views/conductor_config.js#L112
 */
 const addInstanceToInterface = {
-  create: instanceId =>
-    createHolochainAdminAsyncAction('admin/interface/add_instance').create({
-      interface_id: INTERFACE_ID,
-      instance_id: instanceId,
-    }),
+  create: (instanceId, timeout) =>
+    createHolochainAdminAsyncAction('admin/interface/add_instance').create(
+      {
+        interface_id: INTERFACE_ID,
+        instance_id: instanceId,
+      },
+      timeout
+    ),
 }
 
 const fetchProjectsDnas = createHolochainAdminAsyncAction('admin/dna/list')
