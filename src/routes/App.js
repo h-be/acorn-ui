@@ -6,11 +6,14 @@ import { connect } from 'react-redux'
 import './App.css'
 
 import { updateWhoami, updateStatus } from '../who-am-i/actions'
+
+// import components here
 import Header from '../components/Header/Header'
 import ProfileEditForm from '../components/ProfileEditForm/ProfileEditForm'
 import LoadingScreen from '../components/LoadingScreen/LoadingScreen'
 import Footer from '../components/Footer/Footer'
 import Modal from '../components/Modal/Modal'
+import Preferences from '../components/Preferences/Preferences'
 
 // import new routes here
 import IntroScreen from '../components/IntroScreen/IntroScreen'
@@ -28,6 +31,7 @@ function App(props) {
     updateWhoami,
   } = props
   const [showProfileEditForm, setShowProfileEditForm] = useState(false)
+  const [showPreferences, setShowPreferences] = useState(false)
 
   const onProfileSubmit = profile => {
     updateWhoami(profile, whoami.address)
@@ -54,9 +58,11 @@ function App(props) {
           whoami={whoami}
           updateStatus={props.updateStatus}
           setShowProfileEditForm={setShowProfileEditForm}
+          setShowPreferences={setShowPreferences}
         />
       )}
       {/* This will only show when 'active' prop is true */}
+      {/* Modal for Profile Settings */}
       <Modal
         white
         active={showProfileEditForm}
@@ -66,6 +72,13 @@ function App(props) {
           whoami={whoami ? whoami.entry : null}
           {...{ titleText, subText, submitText, agentAddress }}
         />
+      </Modal>
+      {/* Modal for Preferences */}
+      <Modal
+        white
+        active={showPreferences}
+        onClose={() => setShowPreferences(false)}>
+        <Preferences />
       </Modal>
       {!agentAddress && <LoadingScreen />}
       {agentAddress && !whoami && <Redirect to='/intro' />}

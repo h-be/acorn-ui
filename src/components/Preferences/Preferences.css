@@ -1,0 +1,76 @@
+.preferences-title {
+  font-size: 20px;
+  line-height: 28px;
+  color: #4d4d4d;
+  font-family: 'gilroyextrabold', 'CircularStd-Bold', Helvetica, sans-serif;
+  text-align: center;
+}
+
+.preferences-section {
+  padding: 20px 0;
+  border-bottom: 1px solid #e3e3e3;
+}
+
+.preferences-section-title {
+  font-size: 18px;
+  line-height: 24px;
+  font-family: 'CircularStd-Bold', Helvetica, sans-serif;
+  color: #222222;
+  display: flex;
+  flex-direction: row;
+}
+
+.preferences-section-subtitle {
+  font-size: 14px;
+  line-height: 18px;
+  color: #b7b7b7;
+  margin-bottom: 20px;
+}
+
+.navigation-mode-options-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.navigation-mode-option {
+  padding: 40px;
+  font-size: 18px;
+  line-height: 22px;
+  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
+  color: #222222;
+  text-align: center;
+  border: 1px solid #e3e3e3;
+  border-radius: 10px;
+  width: 150px;
+  height: 120px;
+  vertical-align: middle;
+  margin-bottom: 60px;
+}
+
+.navigation-mode-option .icon {
+  margin: 0 auto;
+}
+
+.navigation-mode-description-wrapper {
+  padding-bottom: 20px;
+  padding-left: 20px;
+}
+
+.navigation-mode-description-title-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.navigation-mode-description-title {
+  font-size: 16px;
+  line-height: 20px;
+  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
+  color: #222222;
+}
+
+.navigation-mode-description-text {
+  font-size: 14px;
+  line-height: 18px;
+  font-family: 'CircularStd-Regular', Helvetica, sans-serif;
+  color: #3b3b3b;
+}
