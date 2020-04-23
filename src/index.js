@@ -31,16 +31,8 @@ import { whoami } from './who-am-i/actions'
 import { fetchAgentAddress } from './agent-address/actions'
 import App from './routes/App'
 
-// this url should use the same port set up by the Holochain Conductor
-const websocketUrl =
-  process.env.NODE_ENV === 'development'
-    ? `ws://${DEFAULT_HOLOCHAIN_HOST}:${DEVELOPMENT_HOLOCHAIN_PORT}`
-    : `ws://${DEFAULT_HOLOCHAIN_HOST}:${PRODUCTION_HOLOCHAIN_PORT}`
-// attempts to form a websocket (two way messages) connection to a running
-// Holochain Conductor
-
 const DEFAULT_TIMEOUT = 60000 // give Holochain lotsa time
-const connectOpts = { url: websocketUrl, timeout: DEFAULT_TIMEOUT }
+const connectOpts = { timeout: DEFAULT_TIMEOUT }
 const hcWebClient = connect(connectOpts)
 
 // holochainMiddleware takes in the hc-web-client websocket connection

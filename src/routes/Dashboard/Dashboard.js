@@ -192,13 +192,13 @@ function timeoutCatcher(promise, namespace) {
   })
 }
 
-function addDnaAndIntance(dispatch, passphrase) {
+async function addDnaAndIntance(dispatch, passphrase) {
   const random = Math.random()
   const dnaId = `_acorn_projects_dna_${random}`
   const instanceId = `_acorn_projects_instance_${random}`
   const uuid = passphraseToUuid(passphrase)
 
-  const LOW_TIMEOUT = 1000
+  const LOW_TIMEOUT = 3000
   const HIGH_TIMEOUT = 20000
 
   return dispatch(createProjectDna.create(dnaId, uuid))
