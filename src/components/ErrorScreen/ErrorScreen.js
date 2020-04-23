@@ -1,0 +1,73 @@
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+
+import './ErrorScreen.css'
+
+import Button from '../Button/Button'
+import Icon from '../Icon/Icon'
+
+export default function ErrorScreen() {
+  const [expanded, setExpanded] = useState(false)
+  const expandClass = expanded ? 'active' : ''
+
+  return (
+    <div className='error-screen-wrapper'>
+      <div className='error-screen-content-frame'>
+        <div className='error-screen-column-left'>
+          <div className='error-screen-title'>Sorry...</div>
+          <div className='error-screen-subtitle'>
+            Acorn has become unresponsive
+          </div>
+          <div className='error-screen-description'>
+            Please help us improve the app’s performance by{' '}
+            <a
+              href='https://github.com/h-be/acorn-release/issues/new'
+              target='_blank'>
+              reporting the issue
+            </a>
+            .
+          </div>
+          <div className='show-stack-trace-wrapper'>
+            <div
+              className='show-stack-trace-button'
+              onClick={() => setExpanded(!expanded)}>
+              <div className='show-stack-trace-button-text'>
+                {expanded ? 'Hide stack trace' : 'Show stack trace'}
+              </div>
+              <Icon
+                name={expanded ? 'line-angle-down.svg' : 'line-angle-right.svg'}
+                size='very-small'
+                className='grey'
+              />
+            </div>
+            {expanded ? (
+              <div className='show-stack-trace-field'></div>
+            ) : (
+              <div className='show-stack-field-palceholder'></div>
+            )}
+          </div>
+          <div className='error-screen-buttons'>
+            <a
+              className='error-screen-report-issue-button'
+              href='https://github.com/h-be/acorn-release/issues/new'
+              target='_blank'>
+              <Button text='Report Issue' size='small' className='green' />
+            </a>
+            <a
+              href='https://github.com/h-be/acorn-release/issues/new'
+              target='_blank'>
+              <Button
+                text='Restart the app'
+                size='small'
+                className='green stroke'
+              />
+            </a>
+          </div>
+        </div>
+        <div className='error-screen-column-right'>
+          <img src='img/error-screen-image.png' />
+        </div>
+      </div>
+    </div>
+  )
+}
