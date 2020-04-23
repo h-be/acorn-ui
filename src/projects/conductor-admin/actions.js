@@ -8,7 +8,11 @@
 // see https://github.com/holochain/hc-redux-middleware/blob/ed0177981644946fa15058cb4e6125fca0f3b897/src/lib/actionCreator.ts#L49
 import { createHolochainAdminAsyncAction } from 'connoropolous-hc-redux-middleware'
 
-import { INTERFACE_ID } from '../../holochainConfig'
+import {
+  INTERFACE_ID,
+  PROJECTS_DNA_PATH,
+  AGENT_ID,
+} from '../../holochainConfig'
 
 /* action creator functions */
 
@@ -23,7 +27,7 @@ const createProjectDna = {
         id,
         // copy: true,
         // can add a 'properties' key on here if we want
-        path: './dnas/projects/dist/projects.dna.json',
+        path: PROJECTS_DNA_PATH,
         uuid,
       },
       timeout
@@ -53,7 +57,7 @@ const createProjectInstance = {
       {
         id,
         dna_id: dna,
-        agent_id: 'development-agent',
+        agent_id: AGENT_ID,
       },
       timeout
     ),
