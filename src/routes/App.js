@@ -18,6 +18,7 @@ import CreateProfilePage from './CreateProfilePage/CreateProfilePage'
 import Dashboard from './Dashboard/Dashboard'
 import ProjectView from './ProjectView/ProjectView'
 import selectEntryPoints from '../projects/entry-points/select'
+import ErrorScreen from '../components/ErrorScreen/ErrorScreen'
 
 function App(props) {
   const {
@@ -41,6 +42,7 @@ function App(props) {
     <Router>
       <Switch>
         {/* Add new routes in here */}
+        <Route path='/error' component={ErrorScreen} />
         <Route path='/intro' component={IntroScreen} />
         <Route path='/register' component={CreateProfilePage} />
         <Route path='/dashboard' component={Dashboard} />
