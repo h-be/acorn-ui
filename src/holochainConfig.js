@@ -11,33 +11,34 @@ export const AGENT_ID = 'acorn-profiles-instance-agent'
 
 // this will error if not in a nodejs/electron runtime
 // which is the desired behaviour
-const getHoloscapeDir = () => {
+const getAppDataDir = () => {
   const { app } = window.require('electron').remote
-  // mirroring holoscape behaviours from
+
+  // only enable default persona... relates to holoscape behaviours from
   // https://github.com/holochain/holoscape/blob/2a755b2ca16c9cbffba179c72c0d4132f2fc5a71/conductor.js#L7-L9
-  const persona = process.env.HOLOSCAPE_PERSONA
-    ? process.env.HOLOSCAPE_PERSONA
-    : 'default'
+  const holoscapeOrStandalone =
+    app.name === 'holoscape' ? 'Holoscape-default' : 'Acorn'
   const rootConfigPath = path.join(
     app.getPath('appData'),
-    'Holoscape-' + persona
+    holoscapeOrStandalone
   )
   return rootConfigPath
 }
 
-const PROJECTS_DNA_ADDRESS = 'QmSBCuE94MdSXXpMrvn8UA1CpNsXqfh37YhMU3SsiKMh46'
+// replaced by webpack based on build environment variables
+const PROJECTS_DNA_ADDRESS = __PROJECTS_DNA_ADDRESS__
 const getProjectsDnaPath = () => {
   let dna_path
-  // just try getting holoscape config dir first, since it failing will get caught and
-  // function normally within Acorn electron app
   try {
-    const holoscapeDir = getHoloscapeDir()
-    dna_path = path.join(
-      holoscapeDir,
-      'dna',
-      `${PROJECTS_DNA_ADDRESS}.dna.json`
-    )
+    // getAppDataDir will throw error if we're not in Electron
+    // as is the case during development
+    const appDataDir = getAppDataDir()
+    // this is based on the behaviour of Holoscape
+    // and then mirrored as behaviour within standalone
+    dna_path = path.join(appDataDir, 'dna', `${PROJECTS_DNA_ADDRESS}.dna.json`)
   } catch (e) {
+    // associated with acorn-hc and a development
+    // environment
     dna_path = './dnas/projects/dist/projects.dna.json'
     console.log(
       'Not within an electron environment, falling back to default PROJECTS_DNA_PATH: ' +

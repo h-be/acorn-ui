@@ -5,8 +5,7 @@
   "scripts": {
     "start": "webpack-dev-server --open --config webpack.dev.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config webpack.prod.js",
-    "build-holoscape": "webpack --config webpack.holoscape.js"
+    "build": "webpack --config webpack.prod.js"
   },
   "repository": {
     "type": "git",
@@ -25,7 +24,7 @@
   "homepage": "https://github.com/h-be/acorn#readme",
   "devDependencies": {
     "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-env": "7.5.5",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
@@ -33,6 +32,7 @@
     "webpack": "4.41.3",
     "webpack-cli": "^3.3.6",
     "webpack-dev-server": "^3.8.0",
+    "terser": "4.4.2",
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
