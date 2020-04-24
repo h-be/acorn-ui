@@ -1,4 +1,5 @@
 const path = require('path')
+
 module.exports = {
   entry: {
     app: './src/index.js',
@@ -7,8 +8,11 @@ module.exports = {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
   },
+  node: {
+    fs: 'empty',
+  },
   devServer: {
-    host: '0.0.0.0',
+    host: 'localhost',
     disableHostCheck: true,
   },
   module: {
