@@ -192,7 +192,7 @@ function timeoutCatcher(promise, namespace) {
   })
 }
 
-async function addDnaAndIntance(dispatch, passphrase) {
+async function addDnaAndInstance(dispatch, passphrase) {
   const random = Math.random()
   const dnaId = `_acorn_projects_dna_${random}`
   const instanceId = `_acorn_projects_instance_${random}`
@@ -249,7 +249,7 @@ function mapDispatchToProps(dispatch) {
         },
       }
       return (
-        addDnaAndIntance(dispatch, passphrase)
+        addDnaAndInstance(dispatch, passphrase)
           .then(({ instanceId }) =>
             dispatch(createProjectMeta(instanceId).create(projectMeta))
           )
@@ -265,7 +265,7 @@ function mapDispatchToProps(dispatch) {
       // if that DOESN'T work, the attempt is INVALID
       // remove the instance again immediately
       // we can't remove the DNA itself, but that's fine
-      return addDnaAndIntance(dispatch, passphrase).then(({ instanceId }) => {
+      return addDnaAndInstance(dispatch, passphrase).then(({ instanceId }) => {
         const HIGH_TIMEOUT = 20000 // ms
         return dispatch(
           fetchProjectMeta(instanceId).create({}, HIGH_TIMEOUT)
