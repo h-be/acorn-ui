@@ -33,6 +33,12 @@ import App from './routes/App'
 
 const DEFAULT_TIMEOUT = 60000 // give Holochain lotsa time
 const connectOpts = { timeout: DEFAULT_TIMEOUT }
+
+// being able to call `connect` without passing it the `url` property is
+// dependent on a hidden path called `/_dna_connections.json` being exposed
+// on the same endpoint that this UI is served over.
+// without proxying that path and serving the correctly formatted response
+// this connect call will fail
 const hcWebClient = connect(connectOpts)
 
 // holochainMiddleware takes in the hc-web-client websocket connection

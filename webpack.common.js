@@ -1,4 +1,12 @@
 const path = require('path')
+const webpack = require('webpack')
+
+if (!process.env.PROJECTS_DNA_ADDRESS) {
+  throw new Error(
+    'PROJECTS_DNA_ADDRESS env var is not set, Set it like: export PROJECTS_DNA_ADDRESS="\'AADJI\'"'
+  )
+}
+
 module.exports = {
   entry: {
     app: './src/index.js',
@@ -7,13 +15,20 @@ module.exports = {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
   },
+  node: {
+    fs: 'empty',
+  },
   devServer: {
     host: 'localhost',
     disableHostCheck: true,
   },
-  node: {
-    fs: 'empty',
-  },
+  plugins: [
+    // only relevant for the production versions
+    // however leave in common to prevent build errors
+    new webpack.DefinePlugin({
+      __PROJECTS_DNA_ADDRESS__: process.env.PROJECTS_DNA_ADDRESS,
+    }),
+  ],
   module: {
     rules: [
       {

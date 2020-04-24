@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import randomWord from 'diceware-word'
 import './CreateProjectModal.css'
 
 import ValidatingFormInput from '../ValidatingFormInput/ValidatingFormInput'
@@ -13,7 +12,10 @@ import {
 } from '../ProjectModal/ProjectModal'
 import ProjectSecret from '../ProjectSecret/ProjectSecret'
 
-function generateUuid() {
+// since this is a big wordset, dynamically import it
+// instead of including in the main bundle
+async function generatePassphrase() {
+  const { default: randomWord } = await import('diceware-word')
   return `${randomWord()} ${randomWord()} ${randomWord()} ${randomWord()} ${randomWord()}`
 }
 
@@ -131,16 +133,27 @@ export default function CreateProjectModal({
     setProjectCreated(true)
     reset()
   }
+
+  const genAndSetPassphrase = async () => {
+    const passphrase = await generatePassphrase()
+    setProjectSecret(passphrase)
+  }
+
   const onDone = () => {
     onClose()
     setProjectCreated(false)
-    setProjectSecret(generateUuid())
+    genAndSetPassphrase()
   }
 
-  const [projectSecret, setProjectSecret] = useState(generateUuid())
+  const [projectSecret, setProjectSecret] = useState('')
   const [projectCreated, setProjectCreated] = useState(false)
   const [projectName, setProjectName] = useState('')
   const [projectCoverUrl, setProjectCoverUrl] = useState('')
+
+  // generate a passphrase on component mount
+  useEffect(() => {
+    genAndSetPassphrase()
+  }, [])
 
   return (
     <Modal
