@@ -49,6 +49,8 @@ Pass a version of acorn-hc release to build for that specific one (there is a de
 nix-shell --run 'acorn-build 0.3.3'
 ```
 
+This will produce a file under `dist/acorn-ui.zip` with all the assets
+
 #### UI Dev Resources
 
 - [redux](https://redux.js.org/introduction/getting-started)
