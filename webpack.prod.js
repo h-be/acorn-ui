@@ -1,5 +1,6 @@
 const merge = require('webpack-merge')
 const common = require('./webpack.common.js')
+const webpack = require('webpack')
 
 if (!process.env.PROJECTS_DNA_ADDRESS) {
   throw new Error(
