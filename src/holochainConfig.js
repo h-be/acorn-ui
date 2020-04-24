@@ -25,14 +25,14 @@ const getAppDataDir = () => {
   return rootConfigPath
 }
 
-// replaced by webpack based on build environment variables
-const PROJECTS_DNA_ADDRESS = __PROJECTS_DNA_ADDRESS__
 const getProjectsDnaPath = () => {
   let dna_path
   try {
     // getAppDataDir will throw error if we're not in Electron
     // as is the case during development
     const appDataDir = getAppDataDir()
+    // replaced by webpack based on build environment variables
+    const PROJECTS_DNA_ADDRESS = __PROJECTS_DNA_ADDRESS__
     // this is based on the behaviour of Holoscape
     // and then mirrored as behaviour within standalone
     dna_path = path.join(appDataDir, 'dna', `${PROJECTS_DNA_ADDRESS}.dna.json`)
