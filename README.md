@@ -1,4 +1,5 @@
 # acorn-ui
+
 the user interface for Acorn app, see [acorn-hc](https://github.com/h-be/acorn-hc) for backend
 
 ### UI
@@ -11,11 +12,13 @@ order to also develop the UI, since they are now coupled.
 Open a terminal to this folder
 
 Run the following command
+
 ```
 npm install
 ```
 
 Now run
+
 ```
 npm start
 ```
@@ -32,7 +35,23 @@ Use the nix shell to have npm installed and run npm install and start.
 nix-shell --run acorn-ui
 ```
 
-####  UI Dev Resources
+#### Building For Release
+
+Use the nix shell.
+
+```shell
+nix-shell --run acorn-build
+```
+
+Pass a version of acorn-hc release to build for that specific one (there is a default fallback)
+
+```shell
+nix-shell --run 'acorn-build 0.3.3'
+```
+
+This will produce a file under `dist/acorn-ui.zip` with all the assets
+
+#### UI Dev Resources
 
 - [redux](https://redux.js.org/introduction/getting-started)
 - [react](https://reactjs.org/docs/getting-started.html)
