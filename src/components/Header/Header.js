@@ -167,7 +167,6 @@ class Header extends React.Component {
     this.setState({ isStatusHover: false })
   }
   render() {
-    throw new Error('asaas')
     const activeEntryPointAddresses = this.props.activeEntryPoints.map(
       entryPoint => entryPoint.address
     )
