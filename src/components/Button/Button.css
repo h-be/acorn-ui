@@ -94,15 +94,3 @@
   border: 1px solid #7c24ff;
   color: #7c24ff;
 }
-
-.button.green.stroke {
-  background: transparent;
-  border: 1px solid #00beb0;
-  color: #00beb0;
-}
-
-.button.green.stroke:hover {
-  background: transparent;
-  border: 1px solid #7c24ff;
-  color: #7c24ff;
-}
