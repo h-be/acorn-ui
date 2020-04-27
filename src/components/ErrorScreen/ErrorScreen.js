@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
 
 import './ErrorScreen.css'
 
 import Button from '../Button/Button'
 import Icon from '../Icon/Icon'
 
-export default function ErrorScreen() {
+function ErrorScreen({ stackTrace }) {
   const [expanded, setExpanded] = useState(false)
   const expandClass = expanded ? 'active' : ''
 
@@ -15,17 +14,15 @@ export default function ErrorScreen() {
       <div className='error-screen-content-frame'>
         <div className='error-screen-column-left'>
           <div className='error-screen-title'>Sorry...</div>
-          <div className='error-screen-subtitle'>
-            Acorn has become unresponsive
-          </div>
+          <div className='error-screen-subtitle'>Acorn has crashed</div>
           <div className='error-screen-description'>
             Please help us improve the app’s performance by{' '}
             <a
-              href='https://github.com/h-be/acorn-release/issues/new'
+              href='https://github.com/h-be/acorn-release/issues/new?assignees=&labels=bug&template=bug_report.md&title='
               target='_blank'>
               reporting the issue
             </a>
-            .
+            . Try restarting the application to continue using Acorn.
           </div>
           <div className='show-stack-trace-wrapper'>
             <div
@@ -40,27 +37,18 @@ export default function ErrorScreen() {
                 className='grey'
               />
             </div>
-            {expanded ? (
-              <div className='show-stack-trace-field'></div>
-            ) : (
-              <div className='show-stack-field-palceholder'></div>
+            {expanded && (
+              <textarea className='show-stack-trace-field'>
+                {stackTrace}
+              </textarea>
             )}
           </div>
           <div className='error-screen-buttons'>
             <a
               className='error-screen-report-issue-button'
-              href='https://github.com/h-be/acorn-release/issues/new'
+              href='https://github.com/h-be/acorn-release/issues/new?assignees=&labels=bug&template=bug_report.md&title='
               target='_blank'>
               <Button text='Report Issue' size='small' className='green' />
-            </a>
-            <a
-              href='https://github.com/h-be/acorn-release/issues/new'
-              target='_blank'>
-              <Button
-                text='Restart the app'
-                size='small'
-                className='green stroke'
-              />
             </a>
           </div>
         </div>
@@ -71,3 +59,32 @@ export default function ErrorScreen() {
     </div>
   )
 }
+
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { hasError: false, errorText: null }
+  }
+
+  static getDerivedStateFromError(error) {
+    // Update state so the next render will show the fallback UI.
+    return {
+      hasError: true,
+      errorText: error.message + '\n\n' + error.stack,
+    }
+  }
+  componentDidCatch(error, errorInfo) {
+    // You can also log the error to an error reporting service
+    // logErrorToMyService(error, errorInfo)
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // You can render any custom fallback UI
+      return <ErrorScreen stackTrace={this.state.errorText} />
+    }
+    return this.props.children
+  }
+}
+
+export default ErrorBoundary
