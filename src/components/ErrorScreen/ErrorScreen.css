@@ -92,11 +92,6 @@
   resize: none;
 }
 
-.show-stack-field-placeholder {
-  height: 100px;
-  transition: ease-in-out 0.2s;
-}
-
 .error-screen-buttons {
   margin-top: 20px;
   display: flex;
