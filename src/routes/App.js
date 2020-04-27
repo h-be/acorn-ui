@@ -21,6 +21,7 @@ import CreateProfilePage from './CreateProfilePage/CreateProfilePage'
 import Dashboard from './Dashboard/Dashboard'
 import ProjectView from './ProjectView/ProjectView'
 import selectEntryPoints from '../projects/entry-points/select'
+import ErrorBoundaryScreen from '../components/ErrorScreen/ErrorScreen'
 
 function App(props) {
   const {
@@ -42,48 +43,50 @@ function App(props) {
   const submitText = 'Save Changes'
 
   return (
-    <Router>
-      <Switch>
-        {/* Add new routes in here */}
-        <Route path='/intro' component={IntroScreen} />
-        <Route path='/register' component={CreateProfilePage} />
-        <Route path='/dashboard' component={Dashboard} />
-        <Route path='/project/:projectId' component={ProjectView} />
-        <Route path='/' render={() => <Redirect to='/dashboard' />} />
-      </Switch>
-      {agentAddress && (
-        <Header
-          activeEntryPoints={activeEntryPoints}
-          projectName={projectName}
-          whoami={whoami}
-          updateStatus={props.updateStatus}
-          setShowProfileEditForm={setShowProfileEditForm}
-          setShowPreferences={setShowPreferences}
-        />
-      )}
-      {/* This will only show when 'active' prop is true */}
-      {/* Modal for Profile Settings */}
-      <Modal
-        white
-        active={showProfileEditForm}
-        onClose={() => setShowProfileEditForm(false)}>
-        <ProfileEditForm
-          onSubmit={onProfileSubmit}
-          whoami={whoami ? whoami.entry : null}
-          {...{ titleText, subText, submitText, agentAddress }}
-        />
-      </Modal>
-      {/* Modal for Preferences */}
-      <Modal
-        white
-        active={showPreferences}
-        onClose={() => setShowPreferences(false)}>
-        <Preferences />
-      </Modal>
-      {!agentAddress && <LoadingScreen />}
-      {agentAddress && !whoami && <Redirect to='/intro' />}
-      {agentAddress && whoami && <Footer />}
-    </Router>
+    <ErrorBoundaryScreen>
+      <Router>
+        <Switch>
+          {/* Add new routes in here */}
+          <Route path='/intro' component={IntroScreen} />
+          <Route path='/register' component={CreateProfilePage} />
+          <Route path='/dashboard' component={Dashboard} />
+          <Route path='/project/:projectId' component={ProjectView} />
+          <Route path='/' render={() => <Redirect to='/dashboard' />} />
+        </Switch>
+        {agentAddress && (
+          <Header
+            activeEntryPoints={activeEntryPoints}
+            projectName={projectName}
+            whoami={whoami}
+            updateStatus={props.updateStatus}
+            setShowProfileEditForm={setShowProfileEditForm}
+            setShowPreferences={setShowPreferences}
+          />
+        )}
+        {/* This will only show when 'active' prop is true */}
+        {/* Modal for Profile Settings */}
+        <Modal
+          white
+          active={showProfileEditForm}
+          onClose={() => setShowProfileEditForm(false)}>
+          <ProfileEditForm
+            onSubmit={onProfileSubmit}
+            whoami={whoami ? whoami.entry : null}
+            {...{ titleText, subText, submitText, agentAddress }}
+          />
+        </Modal>
+        {/* Modal for Preferences */}
+        <Modal
+          white
+          active={showPreferences}
+          onClose={() => setShowPreferences(false)}>
+          <Preferences />
+        </Modal>
+        {!agentAddress && <LoadingScreen />}
+        {agentAddress && !whoami && <Redirect to='/intro' />}
+        {agentAddress && whoami && <Footer />}
+      </Router>
+    </ErrorBoundaryScreen>
   )
 }
 
