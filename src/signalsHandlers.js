@@ -35,10 +35,21 @@ export default function(store, onSignal) {
       // rawSignal.type === 'InstanceStats'
       return
     }
+    if (typeof rawSignal.signal === 'object') {
+      // this is the case with 'trace' type
+      // signals that come from the conductor
+      return
+    }
 
     const instanceId = rawSignal.instance_id
     const signalContent = rawSignal.signal
-    let signalArgs = JSON.parse(signalContent.arguments)
+    let signalArgs
+    try {
+      signalArgs = JSON.parse(signalContent.arguments)
+    } catch (e) {
+      console.log(e, signalContent)
+      return
+    }
     switch (signalContent.name) {
       case 'new_agent':
         const { agent } = signalArgs
