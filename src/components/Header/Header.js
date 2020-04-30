@@ -1,11 +1,20 @@
 import React from 'react'
-import { Switch, Route, NavLink, useLocation } from 'react-router-dom'
+import {
+  Switch,
+  Route,
+  NavLink,
+  useLocation,
+  withRouter,
+} from 'react-router-dom'
+import { CSSTransition } from 'react-transition-group'
 import onClickOutside from 'react-onclickoutside'
 import GuideBook from '../GuideBook/GuideBook'
+import { GUIDE_IS_OPEN } from '../GuideBook/guideIsOpen'
 import './Header.css'
 import Avatar from '../Avatar/Avatar'
 import Icon from '../Icon/Icon'
 import ListExport from '../ListExport/ListExport'
+import Modal from '../Modal/Modal'
 
 function ActiveEntryPoint({ entryPoint, activeEntryPointAddresses }) {
   const location = useLocation()
@@ -33,7 +42,6 @@ class Header extends React.Component {
     super(props)
     this.handleClickOutside = this.handleClickOutside.bind(this)
     this.clickAvatar = this.clickAvatar.bind(this)
-    this.clickBook = this.clickBook.bind(this)
     this.clickStatus = this.clickStatus.bind(this)
     this.changeStatus = this.changeStatus.bind(this)
     this.clickProfile = this.clickProfile.bind(this)
@@ -43,9 +51,9 @@ class Header extends React.Component {
     this.hover = this.hover.bind(this)
     this.handleStatusEnter = this.handleStatusEnter.bind(this)
     this.handleStatusLeave = this.handleStatusLeave.bind(this)
+    this.closeGuidebook = this.closeGuidebook.bind(this)
 
     this.state = {
-      isGuideOpen: false,
       online: {},
       isStatusHover: false,
       isStatusOpen: false,
@@ -61,6 +69,7 @@ class Header extends React.Component {
     this.changeStatus(
       this.props.whoami ? this.props.whoami.entry.status : 'Online'
     )
+
     this.setState({
       lista: [
         { color: 'green', img: 'checkmark-circle.svg', title: 'Online' },
@@ -81,7 +90,6 @@ class Header extends React.Component {
       isProfileOpen: false,
       isExportOpen: false,
       isStatusOpen: false,
-      isGuideOpen: false,
     })
   }
   clickProfile(e) {
@@ -90,7 +98,6 @@ class Header extends React.Component {
       isProfileOpen: false,
       isExportOpen: false,
       isStatusOpen: false,
-      isGuideOpen: false,
     })
   }
   clickAvatar(e) {
@@ -98,7 +105,6 @@ class Header extends React.Component {
       isProfileOpen: !this.state.isProfileOpen,
       isExportOpen: false,
       isStatusOpen: false,
-      isGuideOpen: false,
     })
   }
   hover(bool) {
@@ -109,7 +115,6 @@ class Header extends React.Component {
     this.setState({
       isStatusOpen: !this.state.isStatusOpen,
       isExportOpen: false,
-      isGuideOpen: false,
       isProfileOpen: false,
     })
   }
@@ -117,7 +122,6 @@ class Header extends React.Component {
     this.setState({
       isExportOpen: !this.state.isExportOpen,
       isStatusOpen: false,
-      isGuideOpen: false,
       isProfileOpen: false,
     })
   }
@@ -150,14 +154,6 @@ class Header extends React.Component {
     this.setState({
       isProfileOpen: false,
       isStatusOpen: false,
-      isGuideOpen: false,
-    })
-  }
-  clickBook(e) {
-    this.setState({
-      isGuideOpen: !this.state.isGuideOpen,
-      isStatusOpen: false,
-      isProfileOpen: false,
     })
   }
   handleStatusEnter() {
@@ -166,10 +162,20 @@ class Header extends React.Component {
   handleStatusLeave() {
     this.setState({ isStatusHover: false })
   }
+  closeGuidebook() {
+    const pathWithoutGuidebook = this.props.location.pathname
+    this.props.history.push(pathWithoutGuidebook)
+  }
   render() {
     const activeEntryPointAddresses = this.props.activeEntryPoints.map(
       entryPoint => entryPoint.address
     )
+
+    // check the url for GUIDE_IS_OPEN
+    // and affect the state
+    const searchParams = new URLSearchParams(this.props.location.search)
+    const isGuideOpen = !!searchParams.get(GUIDE_IS_OPEN)
+
     return (
       <div className='header-wrapper'>
         <div className='header'>
@@ -246,11 +252,15 @@ class Header extends React.Component {
             <div className='top-right-panel'>
               {/* <Icon name="search-line.svg" onClick={this.clickSearch}/> */}
               <Route path='/project'>
-                <Icon
-                  name='guidebook.svg'
-                  onClick={this.clickBook}
+                {/* open or close the guidebook, depending on if it */}
+                {/* is currently open or closed */}
+                <NavLink
                   className='top-right-panel-icon'
-                />
+                  to={`${this.props.location.pathname}${
+                    isGuideOpen ? '' : '?' + GUIDE_IS_OPEN + '=1'
+                  }`}>
+                  <Icon name='guidebook.svg' className='top-right-panel-icon' />
+                </NavLink>
               </Route>
               <div
                 className={`avatar-and-status-wrapper ${this.state.online.color}`}>
@@ -292,20 +302,15 @@ class Header extends React.Component {
                   )}
                 </span>
               </div>
+              {/* Guidebook */}
               <Route path='/project'>
-                {this.state.isGuideOpen && (
-                  <div className='guidebook-outer-wrapper'>
-                    <GuideBook />
-                    <Icon
-                      name='x.svg'
-                      size='small-close'
-                      className='grey'
-                      onClick={() => {
-                        this.setState({ isGuideOpen: false })
-                      }}
-                    />
-                  </div>
-                )}
+                <Modal
+                  className='guidebook-modal'
+                  white
+                  active={isGuideOpen}
+                  onClose={this.closeGuidebook}>
+                  <GuideBook />
+                </Modal>
               </Route>
               {this.state.isProfileOpen && (
                 <div className='profile-wrapper'>
@@ -358,4 +363,4 @@ const ListProfile = props => {
   )
 }
 
-export default onClickOutside(Header)
+export default withRouter(onClickOutside(Header))

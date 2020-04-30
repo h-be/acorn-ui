@@ -1,3 +1,10 @@
+.guidebook-outer-wrapper {
+}
+
+.guidebook-outer-wrapper button {
+  margin: 0;
+}
+
 .guidebook-wrapper {
   position: relative;
 }
@@ -11,15 +18,31 @@
   margin-top: -2px;
 }
 
+.howtos {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.how-tos-nav {
+  width: 290px;
+  margin-right: 20px;
+  height: 100%;
+  overflow-y: scroll;
+}
+
 .guidebook-wrapper .nav-item {
   cursor: pointer;
-  font-size: 20px;
+  font-size: 16px;
   font-family: 'CircularStd-Bold', Helvetica, sans-serif;
+  margin-bottom: 16px;
   display: flex;
   flex-direction: row;
   align-items: center;
   transition: color 0.2s ease-in-out;
-  margin-bottom: 26px;
+  margin-bottom: 8px;
+  -webkit-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
 }
 
 .guidebook-wrapper .nav-item:hover {
@@ -28,54 +51,63 @@
 
 .guidebook-wrapper .nav-item .icon {
   margin-right: 10px;
+  height: 14px;
+  width: 14px;
 }
 
 .guidebook-wrapper .sidebar-submenu {
-  height: 0;
-  transition: all 0.3s;
+  max-height: 0;
   overflow: hidden;
+  -webkit-transition: max-height 0.5s ease-in-out;
+  transition: max-height 0.5s ease-in-out;
+  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
+  margin-bottom: 20px;
+  margin-left: 30px;
+}
+
+.guidebook-wrapper .sidebar-submenu.active {
+  max-height: 1000px;
 }
 
 .guidebook-wrapper .sidebar-submenu ul {
   margin: 0;
   list-style: none;
-  padding-left: 35px;
+  padding-left: 0px;
 }
 
-.guidebook-wrapper .sidebar-submenu {
-  height: 0;
-  transition: ease-in-out 0.2s;
+.guidebook-wrapper .sidebar-submenu ul li {
+  margin-bottom: 6px;
 }
 
-.guidebook-wrapper .sidebar-submenu.active {
-  border-bottom: 1px solid #efefef;
-  height: auto;
-  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
-  margin-bottom: 20px;
-}
-
-.guidebook-wrapper .sidebar-submenu.active ul li {
-  margin-bottom: 26px;
-}
-
-.guidebook-wrapper .sidebar-submenu.active ul li button {
+.guidebook-wrapper .sidebar-submenu ul li a {
+  text-align: left;
   background: none;
   margin: 0;
   display: inline-block;
   border: none;
   cursor: pointer;
-  font-size: 17px;
-  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
+  font-size: 13px;
+  font-family: 'CircularStd-Book', Helvetica, sans-serif;
   transition: color 0.2s ease-in-out;
+  text-decoration: none;
+  color: #222222;
+}
+
+.guidebook-wrapper .sidebar-submenu ul li a:hover {
+  color: #00afa4;
+}
+
+.guidebook-wrapper .sidebar-submenu ul li a.active {
+  color: #5f65ff;
 }
 
 .guidebook-wrapper .guidebook-section {
   display: flex;
   flex-direction: column;
-}
-
-.guidebook-wrapper .sidebar-submenu.active ul li button:hover {
-  color: #5f65ff;
+  width: 500px;
+  padding: 0 10px;
+  overflow-y: scroll;
+  height: 100%;
 }
 
 .guidebook-section-description {
@@ -86,6 +118,7 @@
 
 .guidebook-wrapper .guidebook-section ol {
   margin-top: 0;
+  padding-left: 0;
 }
 
 .guidebook-description-section {
@@ -99,7 +132,6 @@
 .guidebook-separate-line {
   margin-bottom: 16px;
   padding-left: 0;
-  margin-left: -14px;
 }
 
 .guidebook-separate-line.sub-heading {
@@ -114,6 +146,7 @@
 .guidebook-section-title {
   font-size: 20px;
   font-family: 'CircularStd-Bold', Helvetica, sans-serif;
+  margin-bottom: 20px;
 }
 
 .guidebook-wrapper button {
