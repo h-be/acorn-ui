@@ -1,3 +1,43 @@
+.guidebook-outer-wrapper {
+  position: absolute;
+  right: 0;
+  top: 54px;
+  border-radius: 10px;
+  /* margin-right: 12px; */
+  background-color: #ffffff;
+  padding: 30px 20px;
+  box-shadow: 0px 0px 6px #00000029;
+  width: 600px;
+  height: calc(100vh - 192px);
+}
+
+.guidebook-outer-wrapper.enter {
+  opacity: 0;
+}
+.guidebook-outer-wrapper.enter-active {
+  opacity: 1;
+  transition: opacity 0.1s ease-in;
+}
+
+.guidebook-outer-wrapper.exit {
+  opacity: 1;
+}
+.guidebook-outer-wrapper.exit-active {
+  opacity: 0;
+  transition: opacity 0.1s ease-out;
+}
+
+.guidebook-outer-wrapper .small-close {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  cursor: pointer;
+}
+
+.guidebook-outer-wrapper button {
+  margin: 0;
+}
+
 .guidebook-wrapper {
   position: relative;
 }
@@ -11,6 +51,15 @@
   margin-top: -2px;
 }
 
+.howtos {
+  display: flex;
+  flex-direction: row;
+}
+
+.how-tos-nav {
+  width: 280px;
+}
+
 .guidebook-wrapper .nav-item {
   cursor: pointer;
   font-size: 20px;
@@ -19,7 +68,9 @@
   flex-direction: row;
   align-items: center;
   transition: color 0.2s ease-in-out;
-  margin-bottom: 26px;
+  margin-bottom: 8px;
+  -webkit-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
 }
 
 .guidebook-wrapper .nav-item:hover {
@@ -32,19 +83,10 @@
 
 .guidebook-wrapper .sidebar-submenu {
   height: 0;
-  transition: all 0.3s;
+  /* transition: all 0.3s; */
   overflow: hidden;
-}
-
-.guidebook-wrapper .sidebar-submenu ul {
-  margin: 0;
-  list-style: none;
-  padding-left: 35px;
-}
-
-.guidebook-wrapper .sidebar-submenu {
-  height: 0;
-  transition: ease-in-out 0.2s;
+  -webkit-transition: height 0.5s ease-in-out;
+  transition: height 0.5s ease-in-out;
 }
 
 .guidebook-wrapper .sidebar-submenu.active {
@@ -54,17 +96,24 @@
   margin-bottom: 20px;
 }
 
+.guidebook-wrapper .sidebar-submenu ul {
+  margin: 0;
+  list-style: none;
+  padding-left: 8px;
+}
+
 .guidebook-wrapper .sidebar-submenu.active ul li {
-  margin-bottom: 26px;
+  margin-bottom: 6px;
 }
 
 .guidebook-wrapper .sidebar-submenu.active ul li button {
+  text-align: left;
   background: none;
   margin: 0;
   display: inline-block;
   border: none;
   cursor: pointer;
-  font-size: 17px;
+  font-size: 13px;
   font-family: 'CircularStd-Medium', Helvetica, sans-serif;
   transition: color 0.2s ease-in-out;
 }
