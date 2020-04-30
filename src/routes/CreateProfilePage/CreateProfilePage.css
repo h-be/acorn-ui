@@ -12,6 +12,7 @@
   min-width: 556px;
   display: flex;
   align-items: center;
+  padding: 20px;
 }
 
 .create_profile_splash_image {
