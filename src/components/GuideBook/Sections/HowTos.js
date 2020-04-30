@@ -724,7 +724,7 @@ function HowTosNav({ navList, openNav }) {
   // only one can be expanded at a time this way
   const [expanded, setExpanded] = useState(false)
 
-  // run a once off (on mount) check
+  // run a check any time the 'openNav' section key changes
   // to expand the nav item who has a currently showing
   // open entry, if any
   useEffect(() => {
