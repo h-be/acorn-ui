@@ -226,6 +226,13 @@
   display: block;
 }
 
+/* Guidebook */
+
+.guidebook-modal.modal-wrapper {
+  width: 700px;
+  padding: 40px;
+}
+
 /* profile section on header */
 
 .top-right-panel icon {

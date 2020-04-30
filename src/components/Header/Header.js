@@ -14,6 +14,7 @@ import './Header.css'
 import Avatar from '../Avatar/Avatar'
 import Icon from '../Icon/Icon'
 import ListExport from '../ListExport/ListExport'
+import Modal from '../Modal/Modal'
 
 function ActiveEntryPoint({ entryPoint, activeEntryPointAddresses }) {
   const location = useLocation()
@@ -50,6 +51,7 @@ class Header extends React.Component {
     this.hover = this.hover.bind(this)
     this.handleStatusEnter = this.handleStatusEnter.bind(this)
     this.handleStatusLeave = this.handleStatusLeave.bind(this)
+    this.closeGuidebook = this.closeGuidebook.bind(this)
 
     this.state = {
       online: {},
@@ -159,6 +161,10 @@ class Header extends React.Component {
   }
   handleStatusLeave() {
     this.setState({ isStatusHover: false })
+  }
+  closeGuidebook() {
+    const pathWithoutGuidebook = this.props.location.pathname
+    this.props.history.push(pathWithoutGuidebook)
   }
   render() {
     const activeEntryPointAddresses = this.props.activeEntryPoints.map(
@@ -296,18 +302,15 @@ class Header extends React.Component {
                   )}
                 </span>
               </div>
+              {/* Guidebook */}
               <Route path='/project'>
-                {/* Guidebook */}
-                {/* has animated open/close */}
-                <CSSTransition in={isGuideOpen} timeout={100} unmountOnExit>
-                  <div className='guidebook-outer-wrapper'>
-                    <GuideBook />
-                    {/* Close Button */}
-                    <NavLink to={this.props.location.pathname}>
-                      <Icon name='x.svg' size='small-close' className='grey' />
-                    </NavLink>
-                  </div>
-                </CSSTransition>
+                <Modal
+                  className='guidebook-modal'
+                  white
+                  active={isGuideOpen}
+                  onClose={this.closeGuidebook}>
+                  <GuideBook />
+                </Modal>
               </Route>
               {this.state.isProfileOpen && (
                 <div className='profile-wrapper'>

@@ -1,37 +1,4 @@
 .guidebook-outer-wrapper {
-  position: absolute;
-  right: 0;
-  top: 54px;
-  border-radius: 10px;
-  /* margin-right: 12px; */
-  background-color: #ffffff;
-  padding: 30px 20px;
-  box-shadow: 0px 0px 6px #00000029;
-  width: 600px;
-  height: calc(100vh - 192px);
-}
-
-.guidebook-outer-wrapper.enter {
-  opacity: 0;
-}
-.guidebook-outer-wrapper.enter-active {
-  opacity: 1;
-  transition: opacity 0.1s ease-in;
-}
-
-.guidebook-outer-wrapper.exit {
-  opacity: 1;
-}
-.guidebook-outer-wrapper.exit-active {
-  opacity: 0;
-  transition: opacity 0.1s ease-out;
-}
-
-.guidebook-outer-wrapper .small-close {
-  position: absolute;
-  top: 30px;
-  right: 30px;
-  cursor: pointer;
 }
 
 .guidebook-outer-wrapper button {
@@ -54,16 +21,21 @@
 .howtos {
   display: flex;
   flex-direction: row;
+  height: 100%;
 }
 
 .how-tos-nav {
-  width: 280px;
+  width: 290px;
+  margin-right: 20px;
+  height: 100%;
+  overflow-y: scroll;
 }
 
 .guidebook-wrapper .nav-item {
   cursor: pointer;
-  font-size: 20px;
+  font-size: 16px;
   font-family: 'CircularStd-Bold', Helvetica, sans-serif;
+  margin-bottom: 16px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -79,34 +51,35 @@
 
 .guidebook-wrapper .nav-item .icon {
   margin-right: 10px;
+  height: 14px;
+  width: 14px;
 }
 
 .guidebook-wrapper .sidebar-submenu {
-  height: 0;
-  /* transition: all 0.3s; */
+  max-height: 0;
   overflow: hidden;
-  -webkit-transition: height 0.5s ease-in-out;
-  transition: height 0.5s ease-in-out;
+  -webkit-transition: max-height 0.5s ease-in-out;
+  transition: max-height 0.5s ease-in-out;
+  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
+  margin-bottom: 20px;
+  margin-left: 30px;
 }
 
 .guidebook-wrapper .sidebar-submenu.active {
-  border-bottom: 1px solid #efefef;
-  height: auto;
-  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
-  margin-bottom: 20px;
+  max-height: 1000px;
 }
 
 .guidebook-wrapper .sidebar-submenu ul {
   margin: 0;
   list-style: none;
-  padding-left: 8px;
+  padding-left: 0px;
 }
 
-.guidebook-wrapper .sidebar-submenu.active ul li {
+.guidebook-wrapper .sidebar-submenu ul li {
   margin-bottom: 6px;
 }
 
-.guidebook-wrapper .sidebar-submenu.active ul li a {
+.guidebook-wrapper .sidebar-submenu ul li a {
   text-align: left;
   background: none;
   margin: 0;
@@ -114,18 +87,27 @@
   border: none;
   cursor: pointer;
   font-size: 13px;
-  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
+  font-family: 'CircularStd-Book', Helvetica, sans-serif;
   transition: color 0.2s ease-in-out;
   text-decoration: none;
+  color: #222222;
+}
+
+.guidebook-wrapper .sidebar-submenu ul li a:hover {
+  color: #00afa4;
+}
+
+.guidebook-wrapper .sidebar-submenu ul li a.active {
+  color: #5f65ff;
 }
 
 .guidebook-wrapper .guidebook-section {
   display: flex;
   flex-direction: column;
-}
-
-.guidebook-wrapper .sidebar-submenu.active ul li a:hover {
-  color: #5f65ff;
+  width: 500px;
+  padding: 0 10px;
+  overflow-y: scroll;
+  height: 100%;
 }
 
 .guidebook-section-description {
@@ -136,6 +118,7 @@
 
 .guidebook-wrapper .guidebook-section ol {
   margin-top: 0;
+  padding-left: 0;
 }
 
 .guidebook-description-section {
@@ -149,7 +132,6 @@
 .guidebook-separate-line {
   margin-bottom: 16px;
   padding-left: 0;
-  margin-left: -14px;
 }
 
 .guidebook-separate-line.sub-heading {
@@ -164,6 +146,7 @@
 .guidebook-section-title {
   font-size: 20px;
   font-family: 'CircularStd-Bold', Helvetica, sans-serif;
+  margin-bottom: 20px;
 }
 
 .guidebook-wrapper button {
