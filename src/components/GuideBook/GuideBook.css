@@ -106,7 +106,7 @@
   margin-bottom: 6px;
 }
 
-.guidebook-wrapper .sidebar-submenu.active ul li button {
+.guidebook-wrapper .sidebar-submenu.active ul li a {
   text-align: left;
   background: none;
   margin: 0;
@@ -116,6 +116,7 @@
   font-size: 13px;
   font-family: 'CircularStd-Medium', Helvetica, sans-serif;
   transition: color 0.2s ease-in-out;
+  text-decoration: none;
 }
 
 .guidebook-wrapper .guidebook-section {
@@ -123,7 +124,7 @@
   flex-direction: column;
 }
 
-.guidebook-wrapper .sidebar-submenu.active ul li button:hover {
+.guidebook-wrapper .sidebar-submenu.active ul li a:hover {
   color: #5f65ff;
 }
 
