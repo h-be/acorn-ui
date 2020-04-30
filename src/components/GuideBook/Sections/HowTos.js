@@ -690,6 +690,8 @@ const Content = ({ title, description }) => (
 
 function NavItem({ navItem: { submenu, title }, expanded, expand }) {
   const location = useLocation()
+  const searchParams = new URLSearchParams(location.search)
+  const openEntry = searchParams.get(GUIDE_IS_OPEN)
   return (
     <section>
       <div className='nav-item' onClick={expand}>
@@ -705,7 +707,8 @@ function NavItem({ navItem: { submenu, title }, expanded, expand }) {
           {submenu.map((subNavItem, i) => (
             <li key={i}>
               <NavLink
-                to={`${location.pathname}?${GUIDE_IS_OPEN}=${subNavItem.guide_id}`}>
+                to={`${location.pathname}?${GUIDE_IS_OPEN}=${subNavItem.guide_id}`}
+                isActive={match => match && subNavItem.guide_id === openEntry}>
                 {subNavItem.title}
               </NavLink>
             </li>
@@ -725,12 +728,14 @@ function HowTosNav({ navList, openNav }) {
   // to expand the nav item who has a currently showing
   // open entry, if any
   useEffect(() => {
-    navList.forEach((navItem, index) => {
-      if (navItem.title === openNav.title) {
-        setExpanded(index)
-      }
-    })
-  }, [])
+    if (openNav) {
+      navList.forEach((navItem, index) => {
+        if (navItem.title === openNav.title) {
+          setExpanded(index)
+        }
+      })
+    }
+  }, [openNav])
   return (
     <nav className='how-tos-nav'>
       {navList.map((navItem, i) => (

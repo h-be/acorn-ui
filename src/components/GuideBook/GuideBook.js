@@ -14,12 +14,14 @@ export default function GuideBook() {
     // { title: 'FAQ' },
   ]
   return (
-    <div className='guidebook-wrapper'>
-      <h2 className='guidebook-title'>Guidebook</h2>
-      <Tabs tabs={tabs} selected={tabSelected} toSelectTab={setTabSelected}>
-        <HowTos />
-        <Shortcuts />
-      </Tabs>
+    <div className='guidebook-outer-wrapper'>
+      <div className='guidebook-wrapper'>
+        <h2 className='guidebook-title'>Guidebook</h2>
+        <Tabs tabs={tabs} selected={tabSelected} toSelectTab={setTabSelected}>
+          <HowTos />
+          <Shortcuts />
+        </Tabs>
+      </div>
     </div>
   )
 }
