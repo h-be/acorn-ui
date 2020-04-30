@@ -9,20 +9,24 @@ import PickerTemplate from '../PickerTemplate/PickerTemplate'
 import Icon from '../Icon/Icon'
 import selectEntryPoints from '../../projects/entry-points/select'
 import { NavLink } from 'react-router-dom'
+import { GUIDE_IS_OPEN } from '../GuideBook/guideIsOpen'
 
 function EntryPointPickerItem({ entryPoint, isActive, activeEntryPoints }) {
   const dotStyle = {
     backgroundColor: entryPoint.color,
   }
   const location = useLocation()
+
   const pathWithEntryPoint = `${
     location.pathname
   }?entryPoints=${activeEntryPoints.concat([entryPoint.address]).join(',')}`
+
   const pathWithoutEntryPoint = `${
     location.pathname
   }?entryPoints=${activeEntryPoints
     .filter(address => address !== entryPoint.address)
     .join(',')}`
+
   return (
     <li>
       <NavLink
@@ -50,6 +54,8 @@ function EntryPointPickerItem({ entryPoint, isActive, activeEntryPoints }) {
 
 function EntryPointPicker({ entryPoints, isOpen, onClose, activeEntryPoints }) {
   const [filterText, setFilterText] = useState('')
+
+  const location = useLocation()
 
   // filter people out if there's filter text defined, and don't bother case matching
   const filteredEntryPoints = entryPoints.filter(entryPoint => {
@@ -115,9 +121,12 @@ function EntryPointPicker({ entryPoints, isOpen, onClose, activeEntryPoints }) {
               <div className='entry-points-empty-state-image-circle'></div>
               <span>
                 You currently have no entry points for this project.{' '}
-                <a className='entry-points-empty-state-content-link'>
+                <NavLink
+                  to={`${location.pathname}?${GUIDE_IS_OPEN}=creating_entry_points`}
+                  onClick={onClose}
+                  className='entry-points-empty-state-content-link'>
                   Learn how to create one
-                </a>
+                </NavLink>
                 .
               </span>
             </li>

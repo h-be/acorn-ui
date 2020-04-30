@@ -1,5 +1,4 @@
 import React from 'react'
-import { NavItemsGroup } from '../NavItems/NavItems'
 import Icon from '../../Icon/Icon'
 
 const shortcutsItems = [
@@ -101,5 +100,3 @@ export default function Shortcuts() {
     )
   })
 }
-
-// return <NavItemsGroup items={shortcutsItems} selectSection={selectSection} />
