@@ -24,8 +24,6 @@
   border: none;
   text-decoration: none;
   cursor: pointer;
-  display: flex;
-  align-items: center;
   margin: 0;
   font-family: 'CircularStd-Medium';
   font-size: 11px;

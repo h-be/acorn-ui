@@ -1,6 +1,7 @@
-import React from 'react'
-import { NavItemsGroup } from '../NavItems/NavItems'
+import React, { useState, useEffect } from 'react'
+import { useLocation, NavLink } from 'react-router-dom'
 import Icon from '../../Icon/Icon'
+import { GUIDE_IS_OPEN, CREATE_ENTRY_POINT_KEY } from '../guideIsOpen'
 
 const howTosItems = [
   /* Cards */
@@ -9,8 +10,7 @@ const howTosItems = [
     submenu: [
       {
         title: 'Create a card',
-        url: 'create_a_card',
-        tab: 'How To',
+        guide_id: 'create_a_card',
         description: (
           <ol>
             <li>
@@ -27,8 +27,7 @@ const howTosItems = [
       },
       {
         title: 'Add a child card to an existing card',
-        url: 'add_child_card',
-        tab: 'How To',
+        guide_id: 'add_child_card',
         description: (
           <ol>
             <li>
@@ -49,8 +48,7 @@ const howTosItems = [
       },
       {
         title: 'Select multiple cards',
-        url: 'select_multiple_cards',
-        tab: 'How To',
+        guide_id: 'select_multiple_cards',
         description: (
           <ol>
             <div className='guidebook-separate-line'>Either:</div>
@@ -67,8 +65,8 @@ const howTosItems = [
       },
       {
         title: 'Deselect cards',
-        url: 'deselect_cards',
-        tab: 'How To',
+        guide_id: 'deselect_cards',
+
         description: (
           <ol>
             <div className='guidebook-separate-line'>
@@ -84,8 +82,8 @@ const howTosItems = [
       },
       {
         title: 'Title: Change card title',
-        url: 'change_card_title',
-        tab: 'How To',
+        guide_id: 'change_card_title',
+
         description: (
           <ol>
             <div className='guidebook-separate-line'>
@@ -111,8 +109,7 @@ const howTosItems = [
       },
       {
         title: 'Status: Change card status',
-        url: 'change_card_status',
-        tab: 'How To',
+        guide_id: 'change_card_status',
         description: (
           <ol>
             <div className='guidebook-description-section'>
@@ -149,8 +146,7 @@ const howTosItems = [
       },
       {
         title: 'Squirrels: Associate members with cards',
-        url: 'associate_members_with_cards',
-        tab: 'How To',
+        guide_id: 'associate_members_with_cards',
         description: (
           <ol>
             <div className='guidebook-description-section'>
@@ -199,8 +195,7 @@ const howTosItems = [
       },
       {
         title: 'Timeframe: Add or edit timeframe of cards',
-        url: 'edit_timeframe_of_cards',
-        tab: 'How To',
+        guide_id: 'edit_timeframe_of_cards',
         description: (
           <ol>
             <div className='guidebook-description-section'>
@@ -243,8 +238,7 @@ const howTosItems = [
       },
       {
         title: 'Hierarchy: Set hierarchy level of cards',
-        url: 'set_hierarchy_level_of_cards',
-        tab: 'How To',
+        guide_id: 'set_hierarchy_level_of_cards',
         description: (
           <ol>
             <div className='guidebook-description-section'>
@@ -298,8 +292,7 @@ const howTosItems = [
       },
       {
         title: 'Priority: See aggregated priority of a card',
-        url: 'setting_hierarchy_of_cards',
-        tab: 'How To',
+        guide_id: 'aggregated_priority',
         description: (
           <ol>
             <div className='guidebook-description-section'>
@@ -339,8 +332,7 @@ const howTosItems = [
       },
       {
         title: 'Priority: Vote for priority of a card',
-        url: 'vote_for_priority_of_a_card',
-        tab: 'How To',
+        guide_id: 'vote_for_priority_of_a_card',
         description: (
           <ol>
             <div className='guidebook-description-section'>
@@ -380,8 +372,8 @@ const howTosItems = [
       // TODO: enable this section when the multi view location gets built-in
       // {
       //   title: 'Locate a goal in different view modes',
-      //   url: 'locate_a_goal_in_different_view_modes',
-      //   tab: 'How To',
+      //   guide_id: 'locate_a_goal_in_different_view_modes',
+      //
       //   description: (
       //     <ol>
       //       <div className='guidebook-description-section'>
@@ -403,8 +395,7 @@ const howTosItems = [
     submenu: [
       {
         title: 'Pan around in Map View Mode',
-        url: 'pan_around',
-        tab: 'How To',
+        guide_id: 'pan_around',
         description: (
           <ol>
             <div className='guidebook-description-section'>
@@ -437,8 +428,7 @@ const howTosItems = [
       },
       {
         title: 'Zoom in and out in Map View Mode',
-        url: 'zooming_in_and_out',
-        tab: 'How To',
+        guide_id: 'zooming_in_and_out',
         description: (
           <ol>
             <div className='guidebook-description-section'>
@@ -480,8 +470,7 @@ const howTosItems = [
       },
       {
         title: 'Switch between Map & Priority View modes',
-        url: 'switch_between_view_modes',
-        tab: 'How To',
+        guide_id: 'switch_between_view_modes',
         description: (
           <ol>
             <div className='guidebook-description-section'>
@@ -516,8 +505,7 @@ const howTosItems = [
     submenu: [
       {
         title: 'Introduction to Priority View Mode',
-        url: 'introduction_to_priority_view_mode',
-        tab: 'Getting Started',
+        guide_id: 'introduction_to_priority_view_mode',
         description: (
           <ol>
             <div className='guidebook-description-section'>
@@ -582,8 +570,7 @@ const howTosItems = [
       },
       {
         title: 'Indented Tree View',
-        url: 'indented_tree_view',
-        tab: 'Getting Started',
+        guide_id: 'indented_tree_view',
         description: (
           <ol>
             <div className='guidebook-description-section'>
@@ -597,8 +584,7 @@ const howTosItems = [
       },
       {
         title: 'Priority Metrics tabs',
-        url: 'priority_metrics_tabs',
-        tab: 'Getting Started',
+        guide_id: 'priority_metrics_tabs',
         description: (
           <ol>
             <div className='guidebook-description-section'>
@@ -613,8 +599,7 @@ const howTosItems = [
       },
       {
         title: 'Weign In and See My Vote buttons',
-        url: 'weigh_in_and_see_my_votes_buttons',
-        tab: 'Getting Started',
+        guide_id: 'weigh_in_and_see_my_votes_buttons',
         description: (
           <ol>
             <div className='guidebook-description-section'>
@@ -631,14 +616,56 @@ const howTosItems = [
       },
     ],
   },
+  /* Entry Points */
+  {
+    title: 'Entry Points',
+    submenu: [
+      {
+        title: 'Introduction to Entry Points',
+        guide_id: 'introduction_to_entry_points',
+        description: (
+          <ol>
+            <div className='guidebook-description-section'>
+              <div className='guidebook-separate-line'>
+                Entry points (shown as open door icons) are like openings to
+                different parts of your project's tree. You can set any card on
+                your tree as an entry point. You can then access them either in
+                your dahsboard under the project's name, or when clicked on the
+                project, on bottom left corner of your screen, shown as an open
+                door icon. When selected an entry point, you are able to
+                selectively see only that entry point and its children cards.
+              </div>
+            </div>
+          </ol>
+        ),
+      },
+      {
+        title: 'Creating Entry Points',
+        guide_id: 'creating_entry_points',
+        description: (
+          <ol>
+            <div className='guidebook-description-section'>
+              <div className='guidebook-separate-line'>
+                To set a card as an entry point to your project's tree, hover
+                over the card, and click on the expanded view icon. In the
+                expanded view mode, you'll see a closed door icon on the top
+                bar. That means the card in NOT an entry point. By clicking on
+                the door, you can change it to an open door icon, which means
+                the card is an entry point now.
+              </div>
+            </div>
+          </ol>
+        ),
+      },
+    ],
+  },
   /* My Data */
   {
     title: 'My Data',
     submenu: [
       {
         title: 'Export my data',
-        url: 'export_my_data',
-        tab: 'How To',
+        guide_id: 'export_my_data',
         description: (
           <ol>
             <div className='guidebook-description-section'>
@@ -654,31 +681,94 @@ const howTosItems = [
   },
 ]
 
-// component
-const Content = ({ goBack, title, description }) => (
+const Content = ({ title, description }) => (
   <div className='guidebook-section'>
-    <div className='nav-item'>
-      <Icon
-        name='back.svg'
-        size='very-small'
-        className='grey'
-        onClick={goBack}
-      />
-      <div className='guidebook-section-title'>{title}</div>
-    </div>
+    <div className='guidebook-section-title'>{title}</div>
     <div className='guidebook-section-description'>{description}</div>
   </div>
 )
 
-export default function HowTos({ sectionSelected, goBack, selectSection }) {
-  if (sectionSelected) {
-    return (
-      <Content
-        goBack={goBack}
-        title={sectionSelected.title}
-        description={sectionSelected.description}
-      />
-    )
+function NavItem({ navItem: { submenu, title }, expanded, expand }) {
+  const location = useLocation()
+  const searchParams = new URLSearchParams(location.search)
+  const openEntry = searchParams.get(GUIDE_IS_OPEN)
+  return (
+    <section>
+      <div className='nav-item' onClick={expand}>
+        <Icon
+          name={expanded ? 'line-angle-down.svg' : 'line-angle-right.svg'}
+          size='very-small'
+          className='grey'
+        />
+        {title}
+      </div>
+      <div className={`sidebar-submenu ${expanded ? 'active' : ''}`}>
+        <ul>
+          {submenu.map((subNavItem, i) => (
+            <li key={i}>
+              <NavLink
+                to={`${location.pathname}?${GUIDE_IS_OPEN}=${subNavItem.guide_id}`}
+                isActive={match => match && subNavItem.guide_id === openEntry}>
+                {subNavItem.title}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+function HowTosNav({ navList, openNav }) {
+  // store false, or the index of the currently expanded nav item
+  // only one can be expanded at a time this way
+  const [expanded, setExpanded] = useState(false)
+
+  // run a check any time the 'openNav' section key changes
+  // to expand the nav item who has a currently showing
+  // open entry, if any
+  useEffect(() => {
+    if (openNav) {
+      navList.forEach((navItem, index) => {
+        if (navItem.title === openNav.title) {
+          setExpanded(index)
+        }
+      })
+    }
+  }, [openNav])
+  return (
+    <nav className='how-tos-nav'>
+      {navList.map((navItem, i) => (
+        <NavItem
+          key={i}
+          navItem={navItem}
+          expanded={expanded === i}
+          expand={() => (expanded === i ? setExpanded(false) : setExpanded(i))}
+        />
+      ))}
+    </nav>
+  )
+}
+
+// DEFAULT / TOP LEVEL EXPORT
+export default function HowTos() {
+  const location = useLocation()
+  const searchParams = new URLSearchParams(location.search)
+  const openEntryKey = searchParams.get(GUIDE_IS_OPEN)
+  function isOpenEntry(subItem) {
+    return subItem.guide_id === openEntryKey
   }
-  return <NavItemsGroup items={howTosItems} selectSection={selectSection} />
+  const openNav = howTosItems.find(navItem => {
+    return navItem.submenu.find(isOpenEntry)
+  })
+  const openEntry = openNav && openNav.submenu.find(isOpenEntry)
+
+  return (
+    <div className='howtos'>
+      <HowTosNav navList={howTosItems} openNav={openNav} />
+      {openEntry && (
+        <Content title={openEntry.title} description={openEntry.description} />
+      )}
+    </div>
+  )
 }
