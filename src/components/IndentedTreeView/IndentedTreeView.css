@@ -4,8 +4,16 @@
   padding: 5px 8px;
   border-radius: 10px;
   background: #ffffff;
-  width: 183px;
   margin: 15px;
+}
+
+.indented-view-resizer {
+  position: absolute;
+  height: 100%;
+  right: 0;
+  width: 5px;
+  /* background: black; */
+  cursor: ew-resize;
 }
 
 .indented-view-search input {
@@ -17,7 +25,7 @@
   padding: 2px;
   margin-left: 6px;
   font-family: 'CircularStd-book', Helvetica, Sans-Serif;
-  width: 136px;
+  flex: 1;
 }
 
 .indented-view-search input::placeholder {
@@ -26,8 +34,6 @@
 
 .indented-view-goals {
   margin-left: 15px;
-  padding-right: 15px;
-  overflow: scroll;
 }
 
 .indented-view-goal {
@@ -47,21 +53,17 @@
 .indented-view-goal-content {
   margin-left: 6px;
   cursor: pointer;
-  padding: 7px;
+  padding: 11px;
   border-radius: 10px;
   text-decoration: none;
   flex: 1;
-  color: #4d4d4d;
-  transition: all 0.2s;
-}
-
-.indented-view-goal-iconANDtext {
-  text-decoration: none;
-  padding-left: 4px;
-  transition: all 0.2s;
   display: flex;
   align-items: center;
   flex-direction: row;
+  color: #4d4d4d;
+  transition: all 0.2s;
+  overflow: hidden;
+  min-width: 0;
 }
 
 .indented-view-goal-content-status-color {
@@ -73,6 +75,10 @@
 
 .indented-view-goal-text {
   margin-left: 6px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  flex: 1;
 }
 
 .indented-view-goal-content:hover {
