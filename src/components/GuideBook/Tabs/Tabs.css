@@ -58,8 +58,8 @@ a.tab-link {
 .tab-content.active {
   display: block;
   overflow-y: scroll;
-  height: calc(100vh - 334px);
-  margin-top: 24px;
+  height: calc(100vh - 370px);
+  margin-top: 36px;
   position: relative;
 }
 
