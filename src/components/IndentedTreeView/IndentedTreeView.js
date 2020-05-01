@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useLocation, NavLink } from 'react-router-dom'
 import Icon from '../Icon/Icon'
 import StatusIcon from '../StatusIcon/StatusIcon'
@@ -43,23 +43,21 @@ function NestedTreeGoal({ goal, level, filterText }) {
             }
             className='indented-view-goal-content'
             isActive={match => match && isUsingGoalAsContext}>
-            <div className='indented-view-goal-iconANDtext'>
-              {goal.hierarchy === 'NoHierarchy' ? (
-                <StatusIcon
-                  status={goal.status}
-                  notHoverable
-                  hideTooltip
-                  className='indented-view-goal-content-status-color'
-                />
-              ) : (
-                <HierarchyIcon
-                  size='very-small'
-                  hierarchy={goal.hierarchy}
-                  status={goal.status}
-                />
-              )}
-              <div className='indented-view-goal-text'>{goal.content}</div>
-            </div>
+            {goal.hierarchy === 'NoHierarchy' ? (
+              <StatusIcon
+                status={goal.status}
+                notHoverable
+                hideTooltip
+                className='indented-view-goal-content-status-color'
+              />
+            ) : (
+              <HierarchyIcon
+                size='very-small'
+                hierarchy={goal.hierarchy}
+                status={goal.status}
+              />
+            )}
+            <div className='indented-view-goal-text'>{goal.content}</div>
           </NavLink>
         </div>
       )}
@@ -99,11 +97,54 @@ const testGoalTrees = [
   },
 ]
 
+const DEFAULT_WIDTH = 300
+const MIN_WIDTH = 230
+const MAX_WIDTH = 600
+
 export default function IndentedTreeView({ goalTrees }) {
   const [filterText, setFilterText] = useState('')
+  const [isResizing, setIsResizing] = useState(false)
+  const [width, setWidth] = useState(DEFAULT_WIDTH)
+  const [lastMouseXPosition, setLastMouseXPosition] = useState()
+
+  useEffect(() => {
+    const isNotResizing = () => setIsResizing(false)
+    document.body.addEventListener('mouseup', isNotResizing)
+    // for teardown, unbind event listeners
+    return () => {
+      document.body.removeEventListener('mouseup', isNotResizing)
+    }
+  }, [])
+
+  // mouse move effect
+  useEffect(() => {
+    const resize = event => {
+      if (isResizing) {
+        if (lastMouseXPosition) {
+          // clientX and clientY are standard properties
+          // of mouse events, indicating position of the mouse on the screen
+          // relative to the top left corner of the browser window
+          const mouseXDiff = event.clientX - lastMouseXPosition
+          const newWidth = width + mouseXDiff
+          // check if the new width would be within a set of reasonable
+          // boundaries, max and min
+          if (MIN_WIDTH < newWidth && newWidth < MAX_WIDTH) {
+            setWidth(newWidth)
+          }
+        }
+      }
+      setLastMouseXPosition(event.clientX)
+    }
+    document.body.addEventListener('mousemove', resize)
+
+    // for teardown, unbind event listeners
+    return () => {
+      document.body.removeEventListener('mousemove', resize)
+    }
+  }, [width, isResizing, lastMouseXPosition])
 
   return (
-    <div className='indented-view-wrapper'>
+    <div className='indented-view-wrapper' style={{ width: `${width}px` }}>
       <div className='indented-view-search'>
         <Icon name='search.svg' size='very-small' />
         <input
@@ -123,7 +164,7 @@ export default function IndentedTreeView({ goalTrees }) {
           </button>
         )}
       </div>
-      <div className='indented-view-goals'>
+      <div className='indented-view-goals' style={{ width: `${width - 15}px` }}>
         {/* {testGoalTrees.map(goal => (
           <NestedTreeGoal goal={goal} />
         ))} */}
@@ -131,6 +172,10 @@ export default function IndentedTreeView({ goalTrees }) {
           <NestedTreeGoal filterText={filterText} goal={goal} key={index} />
         ))}
       </div>
+      <div
+        className='indented-view-resizer'
+        onMouseDown={() => setIsResizing(true)}
+      />
     </div>
   )
 }

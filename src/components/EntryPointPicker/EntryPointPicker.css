@@ -161,4 +161,5 @@
 .entry-points-empty-state-content-link {
   text-decoration: underline;
   cursor: pointer;
+  color: #4d4d4d;
 }

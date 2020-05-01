@@ -68,8 +68,6 @@
 
 @media only screen and (max-height: 800px) {
   .profile_edit_form {
-    width: 510px;
-    padding: 40px 40px;
     text-align: center;
     margin: 0 auto;
   }

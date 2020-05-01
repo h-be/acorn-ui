@@ -159,7 +159,7 @@ export default function CreateProjectModal({
     <Modal
       white
       active={showModal}
-      onClose={onClose}
+      onClose={projectCreated ? onDone : onClose}
       className='create-project-modal-wrapper'>
       <ProjectCreatedModal
         projectSecret={projectSecret}
