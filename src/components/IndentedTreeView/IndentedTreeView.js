@@ -100,6 +100,8 @@ const testGoalTrees = [
 const DEFAULT_WIDTH = 300
 const MIN_WIDTH = 230
 const MAX_WIDTH = 600
+// associated with .indented-view-goals class
+const INDENTED_VIEW_GOALS_MARGIN = 15
 
 export default function IndentedTreeView({ goalTrees }) {
   const [filterText, setFilterText] = useState('')
@@ -164,7 +166,9 @@ export default function IndentedTreeView({ goalTrees }) {
           </button>
         )}
       </div>
-      <div className='indented-view-goals' style={{ width: `${width - 15}px` }}>
+      <div
+        className='indented-view-goals'
+        style={{ width: `${width - INDENTED_VIEW_GOALS_MARGIN}px` }}>
         {/* {testGoalTrees.map(goal => (
           <NestedTreeGoal goal={goal} />
         ))} */}
