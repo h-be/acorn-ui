@@ -6,19 +6,32 @@
 */
 import _ from 'lodash'
 
-import { CREATE_EDGE, FETCH_EDGES, ARCHIVE_EDGE } from './actions'
+import { CREATE_EDGE, UPDATE_EDGE, FETCH_EDGES, ARCHIVE_EDGE } from './actions'
 import { CREATE_GOAL, ARCHIVE_GOAL } from '../goals/actions'
 import { typeSuccess, instanceIdFromActionType } from '../action_type_checker'
 
 const defaultState = {}
 
-export default function(state = defaultState, action) {
+export default function (state = defaultState, action) {
   const { payload, type } = action
 
   const instanceId = instanceIdFromActionType(type)
 
   // CREATE_EDGE
   if (typeSuccess(type, CREATE_EDGE)) {
+    return {
+      ...state,
+      [instanceId]: {
+        ...state[instanceId],
+        [payload.address]: {
+          ...payload.entry,
+          address: payload.address,
+        },
+      },
+    }
+  }
+  // UPDATE_EDGE
+  if (typeSuccess(type, UPDATE_EDGE)) {
     return {
       ...state,
       [instanceId]: {
