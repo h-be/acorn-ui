@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
-import { connect } from 'react-redux'
 import './Preferences.css'
 
 import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
+import Modal from '../Modal/Modal'
 
-export default function Preferences() {
+const TRACKPAD = 'trackpad'
+const MOUSE = 'mouse'
+
+function Internal({ navigation, setNavigationSelected, save }) {
   return (
     <div className='preferences-content-wrapper'>
       <div className='preferences-title'>Preferences</div>
@@ -23,7 +26,11 @@ export default function Preferences() {
           pointer device{' '}
         </div>
         <div className='navigation-mode-options-wrapper'>
-          <div className='navigation-mode-option'>
+          <div
+            className={`navigation-mode-option ${
+              navigation === TRACKPAD ? 'active' : ''
+            }`}
+            onClick={() => setNavigationSelected(TRACKPAD)}>
             <div className='navigation-mode-option-content'>
               <div className='navigation-mode-option-icon-trackpad'>
                 <Icon
@@ -35,7 +42,11 @@ export default function Preferences() {
               <div className='navigation-mode-option-text'>Trackpad</div>
             </div>
           </div>
-          <div className='navigation-mode-option'>
+          <div
+            className={`navigation-mode-option ${
+              navigation === MOUSE ? 'active' : ''
+            }`}
+            onClick={() => setNavigationSelected(MOUSE)}>
             <div className='navigation-mode-option-content'>
               <div className='navigation-mode-option-icon-mouse'>
                 <Icon name='mouse.svg' size='large' className='not-hoverable' />
@@ -76,8 +87,40 @@ export default function Preferences() {
         </div>
       </div>
       <div className='preferences-save-button'>
-        <Button onClick='' text='Save Changes' />
+        <Button onClick={save} text='Save Changes' />
       </div>
     </div>
+  )
+}
+
+export default function Preferences({
+  navigation,
+  setNavigationPreference,
+  showPreferences,
+  setShowPreferences,
+}) {
+  // hold an internal version of the preferences state, so that we can toggle it, before saving it
+  const [navigationSelected, setNavigationSelected] = useState(navigation)
+
+  const save = () => {
+    setNavigationPreference(navigationSelected)
+    setShowPreferences(false)
+  }
+  const close = () => {
+    // reset navigation selected to
+    // whatever the canonical state of navigation preference
+    // is equal to
+    setNavigationSelected(navigation)
+    setShowPreferences(false)
+  }
+
+  return (
+    <Modal white active={showPreferences} onClose={close}>
+      <Internal
+        navigation={navigationSelected}
+        setNavigationSelected={setNavigationSelected}
+        save={save}
+      />
+    </Modal>
   )
 }
