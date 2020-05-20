@@ -16,9 +16,11 @@ const setLocalItem = (key, value) => {
 }
 
 const NAV_KEY = 'navigationPreference'
+export const MOUSE = 'mouse'
+export const TRACKPAD = 'trackpad'
 
 const defaultState = {
-  navigation: getLocalItem(NAV_KEY) || 'trackpad', // other option = 'mouse'
+  navigation: getLocalItem(NAV_KEY) || TRACKPAD,
 }
 
 export default function (state = defaultState, action) {

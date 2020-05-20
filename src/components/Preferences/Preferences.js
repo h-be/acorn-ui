@@ -4,9 +4,7 @@ import './Preferences.css'
 import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
 import Modal from '../Modal/Modal'
-
-const TRACKPAD = 'trackpad'
-const MOUSE = 'mouse'
+import { MOUSE, TRACKPAD } from '../../local-preferences/reducer'
 
 function Internal({ navigation, setNavigationSelected, save }) {
   return (
@@ -67,7 +65,10 @@ function Internal({ navigation, setNavigationSelected, save }) {
             <div className='navigation-mode-description-title'>Zooming</div>
           </div>
           <div className='navigation-mode-description-text'>
-            Pinch in and out, or hold cmd/ctrl + scroll wheel
+            {navigation === TRACKPAD &&
+              'Pinch in and out, or hold cmd/ctrl + scroll wheel'}
+            {navigation === MOUSE &&
+              'Use mouse wheel, or slide with two fingers up and down, or pinch in and out'}
           </div>
         </div>
         <div className='navigation-mode-description-wrapper'>
@@ -82,7 +83,9 @@ function Internal({ navigation, setNavigationSelected, save }) {
             <div className='navigation-mode-description-title'>Panning</div>
           </div>
           <div className='navigation-mode-description-text'>
-            Slide on trackpad with two fingers, or click and drag with mouse
+            {navigation === TRACKPAD &&
+              'Slide on trackpad with two fingers, or click and drag with mouse'}
+            {navigation === MOUSE && 'Click and drag the canvas'}
           </div>
         </div>
       </div>
