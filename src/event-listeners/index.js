@@ -35,6 +35,7 @@ import { archiveGoal } from '../projects/goals/actions'
 import { setScreenDimensions } from '../screensize/actions'
 import { changeTranslate, changeScale } from '../viewport/actions'
 import { openExpandedView } from '../expanded-view/actions'
+import { MOUSE, TRACKPAD } from '../local-preferences/reducer'
 
 import layoutFormula from '../drawing/layoutFormula'
 import { setGoalClone } from '../goal-clone/actions'
@@ -152,7 +153,6 @@ export default function setupEventListeners(store, canvas) {
     let convertedMouse, goalAddressesToSelect
     const {
       ui: {
-        activeProject,
         viewport: { translate, scale },
         mouse: {
           coordinate: { x, y },
@@ -161,8 +161,6 @@ export default function setupEventListeners(store, canvas) {
         screensize: { width },
       },
     } = state
-    const goals = state.projects.goals[activeProject] || {}
-    const edges = state.projects.edges[activeProject] || {}
     if (state.ui.mouse.mousedown) {
       if (event.shiftKey) {
         convertedMouse = coordsPageToCanvas(
@@ -212,10 +210,19 @@ export default function setupEventListeners(store, canvas) {
   const debouncedWheelHandler = _.debounce(
     event => {
       const state = store.getState()
+      const {
+        ui: {
+          localPreferences: { navigation },
+        },
+      } = state
+      console.log(navigation, MOUSE, TRACKPAD)
       if (!state.ui.goalForm.isOpen) {
         // from https://medium.com/@auchenberg/detecting-multi-touch-trackpad-gestures-in-javascript-a2505babb10e
         // and https://stackoverflow.com/questions/2916081/zoom-in-on-a-point-using-scale-and-translate
-        if (event.ctrlKey) {
+        if (
+          navigation === MOUSE ||
+          (navigation === TRACKPAD && event.ctrlKey)
+        ) {
           // Normalize wheel to +1 or -1.
           const wheel = event.deltaY < 0 ? 1 : -1
           const zoomIntensity = 0.05
@@ -282,13 +289,10 @@ export default function setupEventListeners(store, canvas) {
       // select it if so
       const {
         ui: {
-          activeProject,
           viewport: { translate, scale },
           screensize: { width },
         },
       } = state
-      const goals = state.projects.goals[activeProject] || {}
-      const edges = state.projects.edges[activeProject] || {}
       const clickedAddress = checkForGoalAtCoordinates(
         canvas.getContext('2d'),
         translate,
