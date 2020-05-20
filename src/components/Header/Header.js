@@ -14,6 +14,7 @@ import './Header.css'
 import Avatar from '../Avatar/Avatar'
 import Icon from '../Icon/Icon'
 import ListExport from '../ListExport/ListExport'
+import Preferences from '../Preferences/Preferences'
 import Modal from '../Modal/Modal'
 
 function ActiveEntryPoint({ entryPoint, activeEntryPointAddresses }) {
@@ -45,6 +46,7 @@ class Header extends React.Component {
     this.clickStatus = this.clickStatus.bind(this)
     this.changeStatus = this.changeStatus.bind(this)
     this.clickProfile = this.clickProfile.bind(this)
+    this.clickPreferences = this.clickPreferences.bind(this)
     this.clickSearch = this.clickSearch.bind(this)
     this.clickExport = this.clickExport.bind(this)
     this.saveStatus = this.saveStatus.bind(this)
@@ -77,7 +79,10 @@ class Header extends React.Component {
         { color: 'gray', img: 'user-status-offline.svg', title: 'Offline' },
       ],
       avatar: false,
-      listaProfile: [{ title: 'Profile Settings', click: this.clickProfile }],
+      listaProfile: [
+        { title: 'Profile Settings', click: this.clickProfile },
+        { title: 'Preferences', click: this.clickPreferences },
+      ],
       listaExport: [
         { title: 'Export as JSON', type: 'json', download: 'table.json' },
         { title: 'Export as CSV', type: 'csv', download: 'table.csv' },
@@ -98,6 +103,15 @@ class Header extends React.Component {
       isProfileOpen: false,
       isExportOpen: false,
       isStatusOpen: false,
+    })
+  }
+  clickPreferences(e) {
+    this.props.setShowPreferences(true)
+    this.setState({
+      isProfileOpen: false,
+      isExportOpen: false,
+      isStatusOpen: false,
+      isGuideOpen: false,
     })
   }
   clickAvatar(e) {
