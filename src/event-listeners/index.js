@@ -215,7 +215,6 @@ export default function setupEventListeners(store, canvas) {
           localPreferences: { navigation },
         },
       } = state
-      console.log(navigation, MOUSE, TRACKPAD)
       if (!state.ui.goalForm.isOpen) {
         // from https://medium.com/@auchenberg/detecting-multi-touch-trackpad-gestures-in-javascript-a2505babb10e
         // and https://stackoverflow.com/questions/2916081/zoom-in-on-a-point-using-scale-and-translate

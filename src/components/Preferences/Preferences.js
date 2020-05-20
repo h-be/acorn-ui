@@ -68,7 +68,7 @@ function Internal({ navigation, setNavigationSelected, save }) {
             {navigation === TRACKPAD &&
               'Pinch in and out, or hold cmd/ctrl + scroll wheel'}
             {navigation === MOUSE &&
-              'Use mouse wheel, or slide with two fingers up and down, or pinch in and out'}
+              'Use mouse wheel, or slide with two fingers up/down, or pinch in/out'}
           </div>
         </div>
         <div className='navigation-mode-description-wrapper'>
