@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import './App.css'
 
 import { updateWhoami, updateStatus } from '../who-am-i/actions'
+import { setNavigationPreference } from '../local-preferences/actions'
 
 // import components here
 import Header from '../components/Header/Header'
@@ -30,6 +31,8 @@ function App(props) {
     agentAddress,
     whoami, // .entry and .address
     updateWhoami,
+    navigationPreference,
+    setNavigationPreference,
   } = props
   const [showProfileEditForm, setShowProfileEditForm] = useState(false)
   const [showPreferences, setShowPreferences] = useState(false)
@@ -76,12 +79,12 @@ function App(props) {
           />
         </Modal>
         {/* Modal for Preferences */}
-        <Modal
-          white
-          active={showPreferences}
-          onClose={() => setShowPreferences(false)}>
-          <Preferences />
-        </Modal>
+        <Preferences
+          navigation={navigationPreference}
+          setNavigationPreference={setNavigationPreference}
+          showPreferences={showPreferences}
+          setShowPreferences={setShowPreferences}
+        />
         {!agentAddress && <LoadingScreen />}
         {agentAddress && !whoami && <Redirect to='/intro' />}
         {agentAddress && whoami && <Footer />}
@@ -111,12 +114,19 @@ function mapDispatchToProps(dispatch) {
     updateStatus: status => {
       return dispatch(updateStatus.create({ status }))
     },
+    setNavigationPreference: preference => {
+      return dispatch(setNavigationPreference(preference))
+    },
   }
 }
 
 function mapStateToProps(state) {
   const {
-    ui: { activeProject, activeEntryPoints },
+    ui: {
+      activeProject,
+      activeEntryPoints,
+      localPreferences: { navigation },
+    },
   } = state
   // defensive coding for loading phase
   const activeProjectMeta = state.projects.projectMeta[activeProject] || {}
@@ -139,6 +149,7 @@ function mapStateToProps(state) {
     projectName,
     whoami: state.whoami,
     agentAddress: state.agentAddress,
+    navigationPreference: navigation,
   }
 }
 
