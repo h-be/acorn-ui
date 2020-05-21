@@ -248,9 +248,9 @@ function Priority({
   const priorityTabClassname = 'priority_tab'
   let aggClassName = priorityTabClassname
   let myVoteClassName = priorityTabClassname
-  if (!myVote) {
-    myVoteClassName += ' disabled'
-  }
+  // if (!myVote) {
+  //   myVoteClassName += ' disabled'
+  // }
   if (openMyVote) {
     myVoteClassName += ' active'
   } else {
@@ -270,64 +270,74 @@ function Priority({
       className='priority_picker_wrapper'
       heading='priority'
       onClose={onClose}>
+      {/* Weigh In / Vote */}
       <div className='priority_tabs'>
-        <div className={aggClassName} onClick={() => setOpenMyVote(false)}>
-          Aggregated Priority
-        </div>
         <div
+          className={myVoteClassName}
+          onClick={myVote ? () => setOpenMyVote(true) : createVote}>
+          {myVote ? 'My Vote' : 'Weigh In'}
+        </div>
+        {openMyVote && myVote && (
+          <div className='my_vote'>
+            <WeighIn myVote={myVote} onUpdate={onUpdateVote} />
+            {/* remove my vote */}
+            {openMyVote && (
+              <div className='' onClick={handleArchive}>
+                remove my vote
+              </div>
+            )}
+            {/* my vote info footer */}
+            <div className='my_vote_info priority_wrapper_footer'>
+              Last Modified{' '}
+              {moment.unix(myVote.unix_timestamp).calendar(null, {
+                lastDay: '[Yesterday at] LT',
+                sameDay: '[Today at] LT',
+                nextDay: '[Tomorrow at] LT',
+                lastWeek: '[last] dddd LT',
+                nextWeek: 'dddd LT',
+                sameElse: 'L LT',
+              })}
+            </div>
+          </div>
+        )}
+        {/* <div
+          // myVote &&
+          className={myVoteClassName}
+          onClick={() => setOpenMyVote(true)}>
+          {myVote ? 'My Vote' : 'Weigh In'}
+        </div> */}
+      </div>
+      {/* {!hideWeighIn && (
+        <div
+          className='priority_wrapper_button'
+          onClick={myVote ? () => setOpenMyVote(true) : createVote}>
+          {myVote ? 'My Vote' : 'Weigh In'}
+        </div>
+      )} */}
+
+      <div className='priority_tabs'>
+        {/* <div
           className={myVoteClassName}
           onClick={() => myVote && setOpenMyVote(true)}>
           My Vote
+        </div> */}
+        <div className={aggClassName} onClick={() => setOpenMyVote(false)}>
+          Aggregated Priority
+          <div className='aggregated_priority_inputs'>
+            {votes.length} inputs
+          </div>
         </div>
       </div>
       {/* Aggregated Priority */}
       {!openMyVote && (
         <div className='aggregated_priority'>
-          <div className='aggregated_priority_inputs'>
-            Based on {votes.length} inputs
-          </div>
           <Aggregated votes={votes} />
-          {!hideWeighIn && (
-            <div className='priority_wrapper_button'>
-              <Button
-                size='small'
-                color='purple'
-                text={myVote ? 'See My Vote' : 'Weigh In'}
-                onClick={myVote ? () => setOpenMyVote(true) : createVote}
-              />
-            </div>
-          )}
+
           {/* TODO: built this locate card on view feature */}
           {/* <div className='priority_wrapper_footer'>
             <Icon size='small' name='priority.svg' />
             Locate this card on priority view mode
           </div> */}
-        </div>
-      )}
-
-      {/* Weigh In / Vote */}
-      {openMyVote && myVote && (
-        <div className='my_vote'>
-          <WeighIn myVote={myVote} onUpdate={onUpdateVote} />
-          <div className='priority_wrapper_button'>
-            <Button
-              size='small'
-              color='purple'
-              text='Remove My Input'
-              onClick={handleArchive}
-            />
-          </div>
-          <div className='my_vote_info priority_wrapper_footer'>
-            Last Modified{' '}
-            {moment.unix(myVote.unix_timestamp).calendar(null, {
-              lastDay: '[Yesterday at] LT',
-              sameDay: '[Today at] LT',
-              nextDay: '[Tomorrow at] LT',
-              lastWeek: '[last] dddd LT',
-              nextWeek: 'dddd LT',
-              sameElse: 'L LT',
-            })}
-          </div>
         </div>
       )}
     </PickerTemplate>
@@ -340,7 +350,7 @@ function mapStateToProps(state, ownProps) {
   // of only the Votes on the selected Goal
   const goalVotes = state.projects.goalVotes[projectId] || {}
   const allVotesArray = Object.values(goalVotes)
-  const votes = allVotesArray.filter(function(goalVote) {
+  const votes = allVotesArray.filter(function (goalVote) {
     return goalVote.goal_address === goalAddress
   })
   return {
