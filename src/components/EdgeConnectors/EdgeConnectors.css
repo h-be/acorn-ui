@@ -15,6 +15,7 @@
   margin: 10px;
 }
 
-.edge-connector:hover .edge-connector-blue-dot {
+.edge-connector:hover .edge-connector-blue-dot,
+.edge-connector.active .edge-connector-blue-dot {
   background-color: #6772ff;
 }

@@ -11,7 +11,11 @@ import drawEdge, { calculateEdgeCoordsByGoalCoords } from './drawEdge'
 import drawOverlay from './drawOverlay'
 import drawSelectBox from '../drawing/drawSelectBox'
 import drawEntryPoints from './drawEntryPoints'
-import { RELATION_AS_PARENT } from '../edge-connector/actions'
+import {
+  RELATION_AS_PARENT,
+  RELATION_AS_CHILD,
+} from '../edge-connector/actions'
+import { CONNECTOR_VERTICAL_SPACING } from './dimensions'
 
 function setupCanvas(canvas) {
   // Get the device pixel ratio, falling back to 1.
@@ -250,16 +254,30 @@ function render(store, canvas) {
 
     // in drawEdge, it draws at exactly the two coordinates given,
     // so we could pass them in either order/position
-    drawEdge(
-      relation === RELATION_AS_PARENT ? fromAsParentCoord : fromAsChildCoord,
-      toAddress
-        ? relation === RELATION_AS_PARENT
-          ? toAsChildCoord
-          : toAsParentCoord
-        : // fall back on the current mouse coordinate position, liveCoordinate
-          liveCoordinate,
-      ctx
-    )
+    const fromEdgeCoord =
+      relation === RELATION_AS_PARENT ? fromAsParentCoord : fromAsChildCoord
+
+    // use the current mouse coordinate position, liveCoordinate, by default
+    let toEdgeCoord = liveCoordinate
+
+    // use the coordinates relating to a Goal which it is pending that
+    // this edge will connect the "from" Goal "to"
+    if (toAddress) {
+      toEdgeCoord =
+        relation === RELATION_AS_PARENT ? toAsChildCoord : toAsParentCoord
+    }
+
+    if (relation === RELATION_AS_CHILD) {
+      fromEdgeCoord.y = fromEdgeCoord.y - CONNECTOR_VERTICAL_SPACING
+      // only modify if we're dealing with an actual goal being connected to
+      if (toAddress) toEdgeCoord.y = toEdgeCoord.y + CONNECTOR_VERTICAL_SPACING
+    } else if (relation === RELATION_AS_PARENT) {
+      fromEdgeCoord.y = fromEdgeCoord.y + CONNECTOR_VERTICAL_SPACING
+      // only modify if we're dealing with an actual goal being connected to
+      if (toAddress) toEdgeCoord.y = toEdgeCoord.y - CONNECTOR_VERTICAL_SPACING
+    }
+
+    drawEdge(fromEdgeCoord, toEdgeCoord, ctx)
   }
 
   // draw the editing goal in front of the overlay as well
