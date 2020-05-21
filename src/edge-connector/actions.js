@@ -6,12 +6,13 @@ const RELATION_AS_PARENT = 'relation_as_parent'
 const RELATION_AS_CHILD = 'relation_as_child'
 
 // relation should be RELATION_AS_PARENT or RELATION_AS_CHILD
-function setEdgeConnectorFrom(address, relation) {
+function setEdgeConnectorFrom(address, relation, validToAddresses) {
   return {
     type: SET_EDGE_CONNECTOR_FROM,
     payload: {
       address,
       relation,
+      validToAddresses,
     },
   }
 }
