@@ -1,3 +1,4 @@
+export const CONNECTOR_VERTICAL_SPACING = 30
 export const avatarSpace = 14
 export const avatarWidth = 24
 export const avatarHeight = 24

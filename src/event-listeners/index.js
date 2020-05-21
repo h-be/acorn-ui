@@ -42,7 +42,11 @@ import layoutFormula from '../drawing/layoutFormula'
 import { setGoalClone } from '../goal-clone/actions'
 
 import cloneGoals from './cloneGoals'
-import { resetEdgeConnector } from '../edge-connector/actions'
+import {
+  resetEdgeConnector,
+  setEdgeConnectorTo,
+} from '../edge-connector/actions'
+import handleEdgeConnectMouseUp from '../edge-connector/handler'
 
 export default function setupEventListeners(store, canvas) {
   function windowResize(event) {
@@ -173,6 +177,10 @@ export default function setupEventListeners(store, canvas) {
       scale
     )
     store.dispatch(setLiveCoordinate(convertedMouse))
+
+    // this only is true if the CANVAS was clicked
+    // meaning it is not true if e.g. an EdgeConnector html element
+    // was clicked
     if (state.ui.mouse.mousedown) {
       if (event.shiftKey) {
         if (!goalsAddresses) {
@@ -204,8 +212,18 @@ export default function setupEventListeners(store, canvas) {
     )
     if (goalAddress && state.ui.hover.hoveredGoal !== goalAddress) {
       store.dispatch(hoverGoal(goalAddress))
+      // hook up if the edge connector to a new Goal
+      // if we are using the edge connector
+      // and IMPORTANTLY if Goal is in the list of `validToAddresses`
+      if (
+        state.ui.edgeConnector.fromAddress &&
+        state.ui.edgeConnector.validToAddresses.includes(goalAddress)
+      ) {
+        store.dispatch(setEdgeConnectorTo(goalAddress))
+      }
     } else if (!goalAddress && state.ui.hover.hoveredGoal) {
       store.dispatch(unhoverGoal())
+      store.dispatch(setEdgeConnectorTo(null))
     }
   }
 
@@ -325,6 +343,9 @@ export default function setupEventListeners(store, canvas) {
         store.dispatch(unselectAll())
       }
     }
+
+    handleEdgeConnectMouseUp(store)
+
     // clear box selection vars
     store.dispatch(unsetCoordinate())
     store.dispatch(unsetGoals())

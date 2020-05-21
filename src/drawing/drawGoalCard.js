@@ -12,8 +12,6 @@ import {
   lineSpacing,
   getGoalHeight,
   getLinesForParagraphs,
-  edgeConnectorRadius,
-  edgeConnectorSpace,
 } from './dimensions'
 
 import { colors, pickColorForString } from '../styles'
@@ -92,33 +90,6 @@ export default function render(
     true,
     '2'
   )
-
-  // edge connectors
-  // const EDGE_CONNECTOR_COLOR_FADED = '#B1B9FF'
-  // const EDGE_CONNECTOR_COLOR_HIGHLIGHT = '#6772FF'
-  // function drawConnector(x, y, color) {
-  //   ctx.save()
-  //   ctx.beginPath()
-  //   ctx.arc(x, y, edgeConnectorRadius, 0, Math.PI * 2, true)
-  //   ctx.closePath()
-  //   ctx.fillStyle = color
-  //   ctx.fill()
-  //   ctx.restore()
-  // }
-  // if (isHovered) {
-  // }
-  // // top connector
-  // drawConnector(
-  //   x + goalWidth / 2 + edgeConnectorRadius,
-  //   y - edgeConnectorSpace,
-  //   isHovered ? EDGE_CONNECTOR_COLOR_HIGHLIGHT : EDGE_CONNECTOR_COLOR_FADED
-  // )
-  // // bottom connector
-  // drawConnector(
-  //   x + goalWidth / 2 + edgeConnectorRadius,
-  //   y + goalHeight + edgeConnectorSpace,
-  //   isHovered ? EDGE_CONNECTOR_COLOR_HIGHLIGHT : EDGE_CONNECTOR_COLOR_FADED
-  // )
 
   // selection outline
   if (isSelected) {

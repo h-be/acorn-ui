@@ -7,6 +7,7 @@ import {
 const defaultState = {
   fromAddress: null,
   relation: null,
+  validToAddresses: [],
   toAddress: null,
 }
 
@@ -18,6 +19,7 @@ export default function reducer(state = defaultState, action) {
         ...state,
         fromAddress: payload.address,
         relation: payload.relation,
+        validToAddresses: payload.validToAddresses,
       }
     case SET_EDGE_CONNECTOR_TO:
       return {

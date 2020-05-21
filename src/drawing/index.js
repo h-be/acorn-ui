@@ -11,10 +11,8 @@ import drawEdge, { calculateEdgeCoordsByGoalCoords } from './drawEdge'
 import drawOverlay from './drawOverlay'
 import drawSelectBox from '../drawing/drawSelectBox'
 import drawEntryPoints from './drawEntryPoints'
-import {
-  RELATION_AS_CHILD,
-  RELATION_AS_PARENT,
-} from '../edge-connector/actions'
+import { RELATION_AS_PARENT } from '../edge-connector/actions'
+
 function setupCanvas(canvas) {
   // Get the device pixel ratio, falling back to 1.
   const dpr = window.devicePixelRatio || 1
@@ -105,50 +103,6 @@ function render(store, canvas) {
     }
   })
 
-  // render the edge that is pending to be created to the open goal form
-  if (state.ui.goalForm.isOpen) {
-    if (state.ui.goalForm.parentAddress) {
-      const parentCoords = coordinates[state.ui.goalForm.parentAddress]
-      const newGoalCoords = {
-        x: state.ui.goalForm.xLoc,
-        y: state.ui.goalForm.yLoc,
-      }
-      const parentGoalText = state.projects.goals[
-        state.ui.goalForm.parentAddress
-      ]
-        ? goals[state.ui.goalForm.parentAddress].content
-        : ''
-      const [edge1port, edge2port] = calculateEdgeCoordsByGoalCoords(
-        newGoalCoords,
-        parentCoords,
-        parentGoalText,
-        ctx
-      )
-      drawEdge(edge1port, edge2port, ctx)
-    }
-  }
-
-  // render the edge that is pending to be created between existing Goals
-  if (state.ui.edgeConnector.fromAddress) {
-    const { fromAddress, relation } = state.ui.edgeConnector
-    const { liveCoordinate } = state.ui.mouse
-    const fromCoords = coordinates[fromAddress]
-    const fromContent = goals[fromAddress].content
-    // edge1 is child, edge2 is parent
-    const [edge1port, edge2port] = calculateEdgeCoordsByGoalCoords(
-      fromCoords,
-      fromCoords,
-      fromContent,
-      ctx
-    )
-    // for now just draw to current mouse pos
-    drawEdge(
-      relation === RELATION_AS_PARENT ? edge2port : edge1port,
-      liveCoordinate,
-      ctx
-    )
-  }
-
   // create layers behind and in front of the editing highlight overlay
   const unselectedGoals = goalsAsArray.filter(goal => {
     return (
@@ -238,6 +192,75 @@ function render(store, canvas) {
       ctx
     )
   })
+
+  // render the edge that is pending to be created to the open goal form
+  if (state.ui.goalForm.isOpen) {
+    if (state.ui.goalForm.parentAddress) {
+      const parentCoords = coordinates[state.ui.goalForm.parentAddress]
+      const newGoalCoords = {
+        x: state.ui.goalForm.xLoc,
+        y: state.ui.goalForm.yLoc,
+      }
+      const parentGoalText = state.projects.goals[
+        state.ui.goalForm.parentAddress
+      ]
+        ? goals[state.ui.goalForm.parentAddress].content
+        : ''
+      const [edge1port, edge2port] = calculateEdgeCoordsByGoalCoords(
+        newGoalCoords,
+        parentCoords,
+        parentGoalText,
+        ctx
+      )
+      drawEdge(edge1port, edge2port, ctx)
+    }
+  }
+
+  // render the edge that is pending to be created between existing Goals
+  if (state.ui.edgeConnector.fromAddress) {
+    const { fromAddress, relation, toAddress } = state.ui.edgeConnector
+    const { liveCoordinate } = state.ui.mouse
+    const fromCoords = coordinates[fromAddress]
+    const fromContent = goals[fromAddress].content
+    const [
+      fromAsChildCoord,
+      fromAsParentCoord,
+    ] = calculateEdgeCoordsByGoalCoords(
+      fromCoords,
+      fromCoords,
+      fromContent,
+      ctx
+    )
+
+    // if there's a goal this is pending
+    // as being "to", then we will be drawing the edge to its correct
+    // upper or lower port
+    // the opposite of whichever the "from" port is connected to
+    let toCoords, toContent, toAsChildCoord, toAsParentCoord
+    if (toAddress) {
+      toCoords = coordinates[toAddress]
+      toContent = goals[toAddress].content
+      ;[toAsChildCoord, toAsParentCoord] = calculateEdgeCoordsByGoalCoords(
+        toCoords,
+        toCoords,
+        toContent,
+        ctx
+      )
+    }
+
+    // in drawEdge, it draws at exactly the two coordinates given,
+    // so we could pass them in either order/position
+    drawEdge(
+      relation === RELATION_AS_PARENT ? fromAsParentCoord : fromAsChildCoord,
+      toAddress
+        ? relation === RELATION_AS_PARENT
+          ? toAsChildCoord
+          : toAsParentCoord
+        : // fall back on the current mouse coordinate position, liveCoordinate
+          liveCoordinate,
+      ctx
+    )
+  }
 
   // draw the editing goal in front of the overlay as well
   if (state.ui.goalForm.editAddress) {
