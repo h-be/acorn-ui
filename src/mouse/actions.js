@@ -8,6 +8,7 @@
 /* constants */
 const SET_MOUSEDOWN = 'SET_MOUSEDOWN'
 const UNSET_MOUSEDOWN = 'UNSET_MOUSEDOWN'
+const SET_LIVE_COORDINATE = 'SET_LIVE_COORDINATE'
 const SET_COORDINATE = 'SET_COORDINATE'
 const UNSET_COORDINATE = 'UNSET_COORDINATE'
 const SET_SIZE = 'SET_SIZE'
@@ -28,6 +29,14 @@ function unsetMousedown() {
     type: UNSET_MOUSEDOWN,
   }
 }
+
+function setLiveCoordinate(coordinate) {
+  return {
+    type: SET_LIVE_COORDINATE,
+    coordinate,
+  }
+}
+
 function setCoordinate(coordinate) {
   return {
     type: SET_COORDINATE,
@@ -68,6 +77,7 @@ function unsetGoals() {
 export {
   SET_MOUSEDOWN,
   UNSET_MOUSEDOWN,
+  SET_LIVE_COORDINATE,
   SET_COORDINATE,
   UNSET_COORDINATE,
   SET_SIZE,
@@ -76,6 +86,7 @@ export {
   UNSET_GOALS,
   setMousedown,
   unsetMousedown,
+  setLiveCoordinate,
   setCoordinate,
   unsetCoordinate,
   setSize,

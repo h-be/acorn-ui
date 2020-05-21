@@ -19,6 +19,7 @@ import {
 import {
   setMousedown,
   unsetMousedown,
+  setLiveCoordinate,
   setCoordinate,
   unsetCoordinate,
   unsetGoals,
@@ -41,6 +42,7 @@ import layoutFormula from '../drawing/layoutFormula'
 import { setGoalClone } from '../goal-clone/actions'
 
 import cloneGoals from './cloneGoals'
+import { resetEdgeConnector } from '../edge-connector/actions'
 
 export default function setupEventListeners(store, canvas) {
   function windowResize(event) {
@@ -84,6 +86,7 @@ export default function setupEventListeners(store, canvas) {
       case 'Escape':
         store.dispatch(closeGoalForm())
         store.dispatch(unselectAll())
+        store.dispatch(resetEdgeConnector())
         break
       case 'Backspace':
         // archives one goal for now FIXME: should be able to archive many goals
@@ -150,7 +153,7 @@ export default function setupEventListeners(store, canvas) {
 
   function canvasMousemove(event) {
     const state = store.getState()
-    let convertedMouse, goalAddressesToSelect
+    let goalAddressesToSelect
     const {
       ui: {
         viewport: { translate, scale },
@@ -161,17 +164,17 @@ export default function setupEventListeners(store, canvas) {
         screensize: { width },
       },
     } = state
+    const convertedMouse = coordsPageToCanvas(
+      {
+        x: event.clientX,
+        y: event.clientY,
+      },
+      translate,
+      scale
+    )
+    store.dispatch(setLiveCoordinate(convertedMouse))
     if (state.ui.mouse.mousedown) {
       if (event.shiftKey) {
-        convertedMouse = coordsPageToCanvas(
-          {
-            x: event.clientX,
-            y: event.clientY,
-          },
-          translate,
-          scale
-        )
-
         if (!goalsAddresses) {
           store.dispatch(setCoordinate(convertedMouse))
         }

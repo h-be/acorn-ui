@@ -50,6 +50,7 @@ export function checkForGoalAtCoordinates(
     })
   return clickedAddress
 }
+
 export function checkForGoalAtCoordinatesInBox(
   width,
   state,

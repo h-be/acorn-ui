@@ -1,0 +1,12 @@
+.edge-connector {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: #b1b9ff;
+  border-radius: 4px;
+  transform: translate(-4px, -4px);
+}
+
+.edge-connector:hover {
+  background-color: #6772ff;
+}
