@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import './EdgeConnectors.css'
 import layoutFormula from '../../drawing/layoutFormula'
@@ -10,9 +10,11 @@ import {
 } from '../../drawing/dimensions'
 import {
   setEdgeConnectorFrom,
+  setEdgeConnectorTo,
   RELATION_AS_CHILD,
   RELATION_AS_PARENT,
 } from '../../edge-connector/actions'
+import handleEdgeConnectMouseUp from '../../edge-connector/handler'
 
 // checks if 'checkAddress' is an ancestor of 'descendantAddress', by looking through 'edges'
 // is relatively easy because each Goal only has ONE parent
@@ -81,17 +83,43 @@ function calculateValidChildren(fromAddress, edges, goalAddresses) {
   })
 }
 
+const EdgeConnectorHtml = ({
+  active,
+  pixelTop,
+  pixelLeft,
+  onClick,
+  onMouseOver,
+  onMouseOut,
+}) => {
+  return (
+    <div
+      className={`edge-connector ${active ? 'active' : ''}`}
+      style={{ top: `${pixelTop}px`, left: `${pixelLeft}px` }}
+      onClick={onClick}
+      onMouseOver={onMouseOver}
+      onMouseOut={onMouseOut}>
+      <div className='edge-connector-blue-dot' />
+    </div>
+  )
+}
+
 const EdgeConnector = ({
   state,
+  activeProject,
   goal,
   hasParent,
+  fromAddress,
   relation,
+  toAddress,
   address,
   goalCoordinates,
   canvas,
   setEdgeConnectorFrom,
+  setEdgeConnectorTo,
+  setHoveredEdgeConnector,
   edges,
   goalAddresses,
+  dispatch,
 }) => {
   const ctx = canvas.getContext('2d')
   const goalHeight = getGoalHeight(ctx, goal.content)
@@ -103,66 +131,112 @@ const EdgeConnector = ({
   const bottomConnectorTop =
     goalCoordinates.y + goalHeight + CONNECTOR_VERTICAL_SPACING
 
+  const topConnectorActive =
+    (address === fromAddress && relation === RELATION_AS_CHILD) ||
+    (toAddress && address === toAddress && relation === RELATION_AS_PARENT)
+  const bottomConnectorActive =
+    (address === fromAddress && relation === RELATION_AS_PARENT) ||
+    (toAddress && address === toAddress && relation === RELATION_AS_CHILD)
+
   // should only show when the Goal has no parent, since it can only have one
   // a connection to this upper port would make this Goal a child of the current 'from' Goal of the edge connector
   // if there is one
   const canShowTopConnector =
-    !hasParent && (!relation || relation === RELATION_AS_PARENT)
+    !bottomConnectorActive &&
+    !hasParent &&
+    (!relation || relation === RELATION_AS_PARENT)
 
   // a connection to this lower port would make this Goal a parent of the current 'from' Goal of the edge connector
   // if there is one
-  const canShowBottomConnector = !relation || relation === RELATION_AS_CHILD
+  const canShowBottomConnector =
+    !topConnectorActive && (!relation || relation === RELATION_AS_CHILD)
+
+  // shared code for click handlers
+  const edgeConnectClick = (direction, validity) => () => {
+    if (!fromAddress) {
+      setEdgeConnectorFrom(
+        address,
+        direction,
+        validity(address, edges, goalAddresses)
+      )
+    } else {
+      handleEdgeConnectMouseUp(
+        fromAddress,
+        relation,
+        toAddress,
+        activeProject,
+        dispatch
+      )
+    }
+  }
+  const topConnectorOnClick = edgeConnectClick(
+    RELATION_AS_CHILD,
+    calculateValidParents
+  )
+  const bottomConnectorOnClick = edgeConnectClick(
+    RELATION_AS_PARENT,
+    calculateValidChildren
+  )
+  const connectorOnMouseOver = () => {
+    setHoveredEdgeConnector(address)
+    // cannot set 'to' the very same Goal
+    if (fromAddress && address !== fromAddress) setEdgeConnectorTo(address)
+  }
+  const connectorOnMouseOut = () => {
+    setHoveredEdgeConnector(null)
+    setEdgeConnectorTo(null)
+  }
 
   return (
     <>
       {/* top connector */}
-      {canShowTopConnector && (
-        <div
-          className='edge-connector'
-          style={{ top: `${topConnectorTop}px`, left: `${topConnectorLeft}px` }}
-          onClick={() =>
-            setEdgeConnectorFrom(
-              address,
-              RELATION_AS_CHILD,
-              calculateValidParents(address, edges, goalAddresses)
-            )
-          }>
-          <div className='edge-connector-blue-dot' />
-        </div>
+      {(canShowTopConnector || topConnectorActive) && (
+        <EdgeConnectorHtml
+          active={topConnectorActive}
+          pixelTop={topConnectorTop}
+          pixelLeft={topConnectorLeft}
+          onClick={topConnectorOnClick}
+          onMouseOver={connectorOnMouseOver}
+          onMouseOut={connectorOnMouseOut}
+        />
       )}
 
       {/* bottom connector */}
-      {canShowBottomConnector && (
-        <div
-          className='edge-connector'
-          style={{
-            top: `${bottomConnectorTop}px`,
-            left: `${bottomConnectorLeft}px`,
-          }}
-          onClick={() =>
-            setEdgeConnectorFrom(
-              address,
-              RELATION_AS_PARENT,
-              calculateValidChildren(address, edges, goalAddresses)
-            )
-          }>
-          <div className='edge-connector-blue-dot' />
-        </div>
+      {(canShowBottomConnector || bottomConnectorActive) && (
+        <EdgeConnectorHtml
+          active={bottomConnectorActive}
+          pixelTop={bottomConnectorTop}
+          pixelLeft={bottomConnectorLeft}
+          onClick={bottomConnectorOnClick}
+          onMouseOver={connectorOnMouseOver}
+          onMouseOut={connectorOnMouseOut}
+        />
       )}
     </>
   )
 }
 
 const EdgeConnectors = ({
+  activeProject,
   goals,
   edges,
   goalAddresses,
   coordinates,
+  fromAddress,
   relation,
+  toAddress,
   connectorAddresses,
   canvas,
   setEdgeConnectorFrom,
+  setEdgeConnectorTo,
+  dispatch,
 }) => {
+  const [hoveredEdgeConnector, setHoveredEdgeConnector] = useState(null)
+  // work in the one currently being hovered over, if there is one
+  // to the list of edge connectors that are eligible to stay
+  connectorAddresses = connectorAddresses.concat(
+    hoveredEdgeConnector ? [hoveredEdgeConnector] : []
+  )
   return (
     <TransitionGroup>
       {connectorAddresses.map(connectorAddress => {
@@ -176,15 +250,21 @@ const EdgeConnectors = ({
             {state => (
               <EdgeConnector
                 state={state}
+                activeProject={activeProject}
                 goal={goal}
                 edges={edges}
                 goalAddresses={goalAddresses}
+                fromAddress={fromAddress}
                 relation={relation}
+                toAddress={toAddress}
                 hasParent={hasParent}
                 address={connectorAddress}
                 setEdgeConnectorFrom={setEdgeConnectorFrom}
+                setEdgeConnectorTo={setEdgeConnectorTo}
+                setHoveredEdgeConnector={setHoveredEdgeConnector}
                 goalCoordinates={goalCoordinates}
                 canvas={canvas}
+                dispatch={dispatch}
               />
             )}
           </Transition>
@@ -203,26 +283,35 @@ function mapStateToProps(state) {
   const coordinates = layoutFormula(state.ui.screensize.width, state)
   const selectedGoalAddresses = state.ui.selection.selectedGoals
   const hoveredGoalAddress = state.ui.hover.hoveredGoal
-  const { fromAddress, relation } = state.ui.edgeConnector
-  let validToAddresses
+  const { fromAddress, relation, toAddress } = state.ui.edgeConnector
+  let connectorAddresses
   // only set validToAddresses if we are actually utilizing the edge connector right now
   if (fromAddress) {
-    validToAddresses = state.ui.edgeConnector.validToAddresses
+    // connector addresses includes the goal we are connecting from
+    // to all the possible goals we can connect to validly
+    connectorAddresses = [fromAddress].concat(
+      state.ui.edgeConnector.validToAddresses
+    )
+  } else if (hoveredGoalAddress) {
+    connectorAddresses = selectedGoalAddresses
+      .concat([hoveredGoalAddress])
+      // deduplicate
+      .filter((v, i, a) => a.indexOf(v) === i)
+  } else {
+    // fall back is to show the dots on any currently selected goals
+    connectorAddresses = selectedGoalAddresses
   }
+
   return {
+    activeProject,
     coordinates,
     goals,
     edges: Object.values(edges), // convert from object to array
     goalAddresses: Object.keys(goals), // convert from object to array
+    fromAddress,
     relation,
-    connectorAddresses: validToAddresses
-      ? validToAddresses
-      : hoveredGoalAddress
-      ? selectedGoalAddresses
-          .concat([hoveredGoalAddress])
-          // deduplicate
-          .filter((v, i, a) => a.indexOf(v) === i)
-      : selectedGoalAddresses,
+    toAddress,
+    connectorAddresses,
   }
 }
 
@@ -231,6 +320,10 @@ function mapDispatchToProps(dispatch) {
     setEdgeConnectorFrom: (address, relation, validToAddresses) => {
       return dispatch(setEdgeConnectorFrom(address, relation, validToAddresses))
     },
+    setEdgeConnectorTo: address => {
+      return dispatch(setEdgeConnectorTo(address))
+    },
+    dispatch,
   }
 }
 

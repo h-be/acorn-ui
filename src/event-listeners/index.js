@@ -344,7 +344,15 @@ export default function setupEventListeners(store, canvas) {
       }
     }
 
-    handleEdgeConnectMouseUp(store)
+    const { fromAddress, relation, toAddress } = state.ui.edgeConnector
+    const { activeProject } = state.ui
+    handleEdgeConnectMouseUp(
+      fromAddress,
+      relation,
+      toAddress,
+      activeProject,
+      store.dispatch
+    )
 
     // clear box selection vars
     store.dispatch(unsetCoordinate())
