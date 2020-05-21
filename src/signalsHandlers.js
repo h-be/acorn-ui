@@ -6,6 +6,7 @@ the same events types, because their payload signatures match,
 and the reducers handle them the same way
 */
 
+import { createEdge, archiveEdge } from './projects/edges/actions'
 import { createGoal, archiveGoal } from './projects/goals/actions'
 import { addVoteOfGoal, archiveVoteOfGoal } from './projects/goal-votes/actions'
 import {
@@ -28,7 +29,7 @@ function createSignalAction(holochainAction, instanceId, payload) {
   }
 }
 
-export default function(store, onSignal) {
+export default function (store, onSignal) {
   onSignal(rawSignal => {
     if (rawSignal.type !== 'InstanceSignal') {
       // swallow InstanceStats signals
@@ -70,6 +71,16 @@ export default function(store, onSignal) {
       case 'goal_archived':
         const { archived } = signalArgs
         store.dispatch(createSignalAction(archiveGoal, instanceId, archived))
+        break
+      // covers create and update cases
+      case 'edge':
+        const { edge } = signalArgs
+        store.dispatch(createSignalAction(createEdge, instanceId, edge))
+        break
+      case 'edge_archived':
+        store.dispatch(
+          createSignalAction(archiveEdge, instanceId, signalArgs.address)
+        )
         break
       case 'goal_comment':
         const { goalComment } = signalArgs
