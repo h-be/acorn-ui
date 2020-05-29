@@ -13,25 +13,40 @@ import {
   archiveVoteOfGoal,
   updateGoalVote,
 } from '../../projects/goal-votes/actions'
+import { CSSTransition } from 'react-transition-group'
 const useStyles = makeStyles({
   root: {
     color: '#6600FF',
-    height: 4,
+    height: 8,
     borderRadius: 10,
     border: 0,
     padding: '10px 0',
-    margin: '10px 20px 10px 20px',
-    width: '150px',
+    margin: '14px 0 10px',
+    width: '166px',
   },
   rail: {
-    height: 4,
+    height: 5,
     borderRadius: 10,
+    color: '#D9D9D9',
+    opacity: 1,
   },
   mark: {
-    height: 4,
-    width: 4,
+    height: 9,
+    width: 1,
     borderRadius: 4,
-    margin: '0 0 0 -2px',
+    margin: '-2px 0 0 0px',
+    color: '#A3A3A3',
+    opacity: 1,
+    backgroundColor: '#A3A3A3',
+  },
+  markActive: {
+    height: 9,
+    width: 1,
+    borderRadius: 4,
+    margin: '-2px 0 0 0px',
+    color: '#A3A3A3',
+    opacity: 1,
+    backgroundColor: '#A3A3A3',
   },
   markLabel: {
     top: '-18px',
@@ -39,11 +54,22 @@ const useStyles = makeStyles({
     fontSize: '12px',
     fontFamily: '"CircularStd-book", "Helvetica", "Arial", "sans-serif"',
     lineHeight: '1',
-    color: '#4d4d4d',
+    color: '#A3A3A3',
   },
   track: {
-    height: 4,
+    height: 5,
     borderRadius: 10,
+  },
+  thumb: {
+    height: 16,
+    width: 16,
+    border: '1.5px solid #FFFFFF',
+    marginTop: -6,
+    marginLeft: -6,
+    boxShadow: '0 1.5px 3px 0 RGB(0, 0 , 0, 0.5)',
+  },
+  disabled: {
+    color: '#6600FF',
   },
 })
 
@@ -58,7 +84,7 @@ const marksWithLabels = [
   },
   {
     value: 50,
-    label: 'medium',
+    label: '',
   },
   {
     value: 75,
@@ -97,8 +123,8 @@ function valuetext(value) {
 }
 
 const priorityItems = [
-  { icon: 'importance.svg', title: 'Importance' },
   { icon: 'urgency.svg', title: 'Urgency' },
+  { icon: 'importance.svg', title: 'Importance' },
   { icon: 'impact.svg', title: 'Impact' },
   { icon: 'effort.png', title: 'Effort' },
 ]
@@ -108,18 +134,19 @@ function PrioritySlider({
   title,
   withLabels,
   value,
+  disabled = false,
   onChange = () => {},
   onChangeCommitted = () => {},
 }) {
   const classes = useStyles()
   return (
-    <div className='priority_item'>
+    <div className='priority-item'>
       <Icon
-        className='priority_item_icon not-hoverable'
+        className='priority-item-icon not-hoverable grey'
         name={icon}
-        size='small'
+        size='very-small'
       />
-      <div className='priority_item_title'>{title}</div>
+      <div className='priority-item-title'>{title}</div>
       <Slider
         onChange={onChange}
         onChangeCommitted={onChangeCommitted}
@@ -130,6 +157,7 @@ function PrioritySlider({
         step={25}
         valueLabelDisplay='auto'
         marks={withLabels ? marksWithLabels : marksWithoutLabels}
+        disabled={disabled}
         classes={{
           root: classes.root, // class name, e.g. `classes-nesting-root-x`
           label: classes.label, // class name, e.g. `classes-nesting-label-x`
@@ -138,6 +166,8 @@ function PrioritySlider({
           markLabel: classes.markLabel,
           offset: classes.offset,
           track: classes.track,
+          thumb: classes.thumb,
+          disabled: classes.disabled,
         }}
       />
     </div>
@@ -168,19 +198,13 @@ function Aggregated({ votes }) {
         title={title}
         withLabels={index === 0}
         value={averageValues[index]}
+        disabled
       />
     )
   })
 }
 
-function WeighIn({ myVote, onUpdate }) {
-  myVote = myVote || {
-    urgency: 0.5,
-    importance: 0.5,
-    impact: 0.5,
-    effort: 0.5,
-  }
-  const [values, setValues] = useState(myVote)
+function WeighIn({ values, onUpdate }) {
   const indexToKey = {
     0: 'urgency',
     1: 'importance',
@@ -189,14 +213,19 @@ function WeighIn({ myVote, onUpdate }) {
   }
   return priorityItems.map(({ icon, title }, index) => {
     const key = indexToKey[index]
+    const onChange = (e, value) => {
+      // override just this value
+      const newValues = { ...values, [key]: value / 100 }
+      // update parent state
+      onUpdate(newValues)
+    }
     return (
       <PrioritySlider
         icon={icon}
         title={title}
         withLabels={index === 0}
         value={values[key] * 100}
-        onChange={(e, value) => setValues({ ...values, [key]: value / 100 })}
-        onChangeCommitted={() => onUpdate(values)}
+        onChange={onChange}
       />
     )
   })
@@ -205,7 +234,6 @@ function WeighIn({ myVote, onUpdate }) {
 function Priority({
   goalAddress,
   onClose,
-  hideWeighIn,
   createGoalVote,
   openToMyVote,
   whoami,
@@ -218,14 +246,22 @@ function Priority({
   const myVote = votes.find(value => {
     return value.agent_address === whoami.entry.address
   })
-  const onUpdateVote = vote => {
+
+  const defaultValues = {
+    urgency: 0.5,
+    importance: 0.5,
+    impact: 0.5,
+    effort: 0.5,
+  }
+  const [values, setValues] = useState(myVote || defaultValues)
+  const onUpdateVote = () => {
     const goal_vote = {
-      ...vote,
+      ...values,
       goal_address: goalAddress,
       agent_address: whoami.entry.address,
       unix_timestamp: moment().unix(),
     }
-    updateGoalVote(goal_vote, vote.address)
+    updateGoalVote(goal_vote, myVote.address)
   }
 
   const createVote = async () => {
@@ -243,9 +279,9 @@ function Priority({
     setOpenMyVote(true)
   }
 
-  // aggregated_priority_title
-  // my_vote_title
-  const priorityTabClassname = 'priority_tab'
+  // aggregated-priority-title
+  // my-vote-title
+  const priorityTabClassname = 'priority-tab'
   let aggClassName = priorityTabClassname
   let myVoteClassName = priorityTabClassname
   // if (!myVote) {
@@ -263,83 +299,103 @@ function Priority({
     if (!vote) return
     setOpenMyVote(false)
     archiveVoteOfGoal(vote.address)
+    setValues(defaultValues)
   }
 
   return (
+    // className={myVoteClassName}
     <PickerTemplate
-      className='priority_picker_wrapper'
+      className='priority-picker-wrapper'
       heading='priority'
       onClose={onClose}>
       {/* Weigh In / Vote */}
-      <div className='priority_tabs'>
-        <div
-          className={myVoteClassName}
-          onClick={myVote ? () => setOpenMyVote(true) : createVote}>
-          {myVote ? 'My Vote' : 'Weigh In'}
-        </div>
-        {openMyVote && myVote && (
-          <div className='my_vote'>
-            <WeighIn myVote={myVote} onUpdate={onUpdateVote} />
-            {/* remove my vote */}
-            {openMyVote && (
-              <div className='' onClick={handleArchive}>
-                remove my vote
+      <div className='priority-tabs'>
+        <div className='my-vote-tab-wrapper'>
+          <div className='my-vote-tab-header'>
+            <div
+              className={`${myVoteClassName} priority-tab-with-icon`}
+              onClick={() => setOpenMyVote(!openMyVote)}>
+              {myVote ? 'My Vote' : 'Weigh In'}
+              <Icon
+                name='arrow-enter.svg'
+                size='very-small'
+                className='enter-icon'
+              />
+            </div>
+            {/* my vote info */}
+            {myVote && (
+              <div className='my-vote-info'>
+                Last Modified{' '}
+                {moment.unix((myVote || {}).unix_timestamp).calendar(null, {
+                  lastDay: '[Yesterday at] LT',
+                  sameDay: '[Today at] LT',
+                  nextDay: '[Tomorrow at] LT',
+                  lastWeek: '[last] dddd LT',
+                  nextWeek: 'dddd LT',
+                  sameElse: 'L LT',
+                })}
               </div>
             )}
-            {/* my vote info footer */}
-            <div className='my_vote_info priority_wrapper_footer'>
-              Last Modified{' '}
-              {moment.unix(myVote.unix_timestamp).calendar(null, {
-                lastDay: '[Yesterday at] LT',
-                sameDay: '[Today at] LT',
-                nextDay: '[Tomorrow at] LT',
-                lastWeek: '[last] dddd LT',
-                nextWeek: 'dddd LT',
-                sameElse: 'L LT',
-              })}
-            </div>
           </div>
-        )}
-        {/* <div
-          // myVote &&
-          className={myVoteClassName}
-          onClick={() => setOpenMyVote(true)}>
-          {myVote ? 'My Vote' : 'Weigh In'}
-        </div> */}
-      </div>
-      {/* {!hideWeighIn && (
-        <div
-          className='priority_wrapper_button'
-          onClick={myVote ? () => setOpenMyVote(true) : createVote}>
-          {myVote ? 'My Vote' : 'Weigh In'}
+          <div className={`my-vote ${openMyVote ? 'active' : ''}`}>
+            <>
+              {/* weigh in items */}
+              <WeighIn values={values} onUpdate={setValues} />
+              <div className='my-vote-buttons'>
+                <div
+                  className='save-my-vote'
+                  onClick={myVote ? onUpdateVote : createVote}>
+                  save my vote
+                </div>
+                {/* remove my vote */}
+                {myVote && (
+                  <div className='remove-my-vote' onClick={handleArchive}>
+                    remove my vote
+                  </div>
+                )}
+              </div>
+            </>
+          </div>
         </div>
-      )} */}
+      </div>
 
-      <div className='priority_tabs'>
-        {/* <div
-          className={myVoteClassName}
-          onClick={() => myVote && setOpenMyVote(true)}>
-          My Vote
-        </div> */}
-        <div className={aggClassName} onClick={() => setOpenMyVote(false)}>
-          Aggregated Priority
-          <div className='aggregated_priority_inputs'>
+      <CSSTransition
+        in={!openMyVote}
+        timeout={400}
+        className={`aggregated-votes-animation priority-tabs aggregated-priority-wrapper ${
+          openMyVote ? 'closed' : ''
+        }`}>
+        <div>
+          <div
+            className={`${aggClassName} priority-tab-with-icon`}
+            onClick={() => setOpenMyVote(!openMyVote)}>
+            Aggregated Priority
+            <Icon
+              name='arrow-enter.svg'
+              size='very-small'
+              className='enter-icon'
+            />
+          </div>
+          <div className='aggregated-priority-inputs'>
             {votes.length} inputs
           </div>
+          {/* Aggregated Priority */}
+          <CSSTransition
+            in={!openMyVote}
+            timeout={400}
+            className='aggregated-votes-wrapper'
+            unmountOnExit>
+            <div>
+              <Aggregated votes={votes} />
+              {/* TODO: built this locate card on view feature */}
+              {/* <div className='priority-wrapper-footer'>
+              <Icon size='small' name='priority.svg' />
+              Locate this card on priority view mode
+            </div> */}
+            </div>
+          </CSSTransition>
         </div>
-      </div>
-      {/* Aggregated Priority */}
-      {!openMyVote && (
-        <div className='aggregated_priority'>
-          <Aggregated votes={votes} />
-
-          {/* TODO: built this locate card on view feature */}
-          {/* <div className='priority_wrapper_footer'>
-            <Icon size='small' name='priority.svg' />
-            Locate this card on priority view mode
-          </div> */}
-        </div>
-      )}
+      </CSSTransition>
     </PickerTemplate>
   )
 }
