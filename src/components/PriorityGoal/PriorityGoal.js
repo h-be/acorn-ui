@@ -2,17 +2,13 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import './PriorityGoal.css'
-import { NavLink } from 'react-router-dom'
 
 import Avatar from '../Avatar/Avatar'
 import Icon from '../Icon/Icon'
 import HierarchyIcon from '../HierarchyIcon/HierarchyIcon'
 import Button from '../Button/Button'
-import { addVoteOfGoal } from '../../projects/goal-votes/actions'
 
-import PriorityPicker from '../PriorityPicker/PriorityPicker'
-
-function PriorityGoal({ projectId, whoami, goal, votes, createGoalVote }) {
+function PriorityGoal({ whoami, goal, votes, setPriorityPickerAddress }) {
   const fromDate = goal.time_frame
     ? moment.unix(goal.time_frame.from_date)
     : null
@@ -25,23 +21,6 @@ function PriorityGoal({ projectId, whoami, goal, votes, createGoalVote }) {
   //  { avatar_url: 'img/profile.png' },
   //  { avatar_url: 'img/profile.png' },
   //]
-
-  const [priorityPickerOpen, setPriorityPickerOpen] = useState(false)
-
-  const handleWeighIn = async () => {
-    await createGoalVote({
-      goal_vote: {
-        urgency: 0.5,
-        importance: 0.5,
-        impact: 0.5,
-        effort: 0.5,
-        goal_address: goal.address,
-        agent_address: whoami.entry.address,
-        unix_timestamp: moment().unix(),
-      },
-    })
-    setPriorityPickerOpen(true)
-  }
 
   const myVote =
     whoami &&
@@ -99,9 +78,7 @@ function PriorityGoal({ projectId, whoami, goal, votes, createGoalVote }) {
               size='small'
               color='purple'
               text={myVote ? 'See My Vote' : 'Weigh In'}
-              onClick={
-                myVote ? () => setPriorityPickerOpen(true) : handleWeighIn
-              }
+              onClick={() => setPriorityPickerAddress(goal.address)}
             />
           </div>
 
@@ -121,14 +98,6 @@ function PriorityGoal({ projectId, whoami, goal, votes, createGoalVote }) {
             />
           </div> */}
         </div>
-        {priorityPickerOpen && (
-          <PriorityPicker
-            projectId={projectId}
-            openToMyVote
-            goalAddress={goal.address}
-            onClose={() => setPriorityPickerOpen(false)}
-          />
-        )}
       </div>
     </div>
   )
@@ -140,7 +109,7 @@ function mapStateToProps(state, ownProps) {
   // of only the Votes on the selected Goal
   const goalVotes = state.projects.goalVotes[projectId] || {}
   const allVotesArray = Object.values(goalVotes)
-  const votes = allVotesArray.filter(function(goalVote) {
+  const votes = allVotesArray.filter(function (goalVote) {
     return goalVote.goal_address === goal.address
   })
   return {
@@ -152,12 +121,8 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
-  const { projectId } = ownProps
-  return {
-    createGoalVote: goal_vote => {
-      return dispatch(addVoteOfGoal(projectId).create(goal_vote))
-    },
-  }
+  // const { projectId } = ownProps
+  return {}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PriorityGoal)

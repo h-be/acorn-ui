@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   NavLink,
   useLocation,
@@ -14,7 +14,9 @@ import IndentedTreeView from '../../../components/IndentedTreeView/IndentedTreeV
 
 import './PriorityView.css'
 import PriorityQuadrant from '../../../components/PriorityQuadrant/PriorityQuadrant'
+import PriorityPicker from '../../../components/PriorityPicker/PriorityPicker'
 import goalsAsTree from '../../../projects/goals/goalsAsTrees'
+import { CSSTransition } from 'react-transition-group'
 
 function Quadrants({
   projectId,
@@ -23,6 +25,7 @@ function Quadrants({
   bottomLeft,
   bottomRight,
   whoami,
+  setPriorityPickerAddress,
 }) {
   return (
     <div className='priority-quadrants-wrapper'>
@@ -34,6 +37,7 @@ function Quadrants({
             titleClassname='top-left'
             goals={topLeft.goals}
             whoami={whoami}
+            setPriorityPickerAddress={setPriorityPickerAddress}
           />
           <div className='priority-quadrants-vertical-divider'></div>
           <PriorityQuadrant
@@ -42,6 +46,7 @@ function Quadrants({
             titleClassname='top-right'
             goals={topRight.goals}
             whoami={whoami}
+            setPriorityPickerAddress={setPriorityPickerAddress}
           />
         </div>
         <div className='priority-quadrants-horizontal-divider'></div>
@@ -52,6 +57,7 @@ function Quadrants({
             titleClassname='bottom-left'
             goals={bottomLeft.goals}
             whoami={whoami}
+            setPriorityPickerAddress={setPriorityPickerAddress}
           />
           <div className='priority-quadrants-vertical-divider'></div>
           <PriorityQuadrant
@@ -60,6 +66,7 @@ function Quadrants({
             titleClassname='bottom-right'
             goals={bottomRight.goals}
             whoami={whoami}
+            setPriorityPickerAddress={setPriorityPickerAddress}
           />
         </div>
       </div>
@@ -100,7 +107,12 @@ function getSubsetOfGoalsBasedOnContext(goalTrees, contextGoalAddress) {
   }
 }
 
-function UrgencyImportanceQuadrants({ projectId, goalTrees, goalVotes }) {
+function UrgencyImportanceQuadrants({
+  projectId,
+  goalTrees,
+  goalVotes,
+  setPriorityPickerAddress,
+}) {
   const location = useLocation()
   const contextGoalAddress = new URLSearchParams(location.search).get(
     'contextGoal'
@@ -130,11 +142,25 @@ function UrgencyImportanceQuadrants({ projectId, goalTrees, goalVotes }) {
     goals: goalLists[3],
   }
   return (
-    <Quadrants {...{ projectId, topLeft, topRight, bottomLeft, bottomRight }} />
+    <Quadrants
+      {...{
+        projectId,
+        topLeft,
+        topRight,
+        bottomLeft,
+        bottomRight,
+        setPriorityPickerAddress,
+      }}
+    />
   )
 }
 
-function ImpactEffortQuadrants({ projectId, goalTrees, goalVotes }) {
+function ImpactEffortQuadrants({
+  projectId,
+  goalTrees,
+  goalVotes,
+  setPriorityPickerAddress,
+}) {
   const location = useLocation()
   const contextGoalAddress = new URLSearchParams(location.search).get(
     'contextGoal'
@@ -164,11 +190,25 @@ function ImpactEffortQuadrants({ projectId, goalTrees, goalVotes }) {
     goals: goalLists[3],
   }
   return (
-    <Quadrants {...{ projectId, topLeft, topRight, bottomLeft, bottomRight }} />
+    <Quadrants
+      {...{
+        projectId,
+        topLeft,
+        topRight,
+        bottomLeft,
+        bottomRight,
+        setPriorityPickerAddress,
+      }}
+    />
   )
 }
 
-function Uncategorized({ projectId, goalTrees, goalVotes }) {
+function Uncategorized({
+  projectId,
+  goalTrees,
+  goalVotes,
+  setPriorityPickerAddress,
+}) {
   const location = useLocation()
   const contextGoalAddress = new URLSearchParams(location.search).get(
     'contextGoal'
@@ -185,6 +225,7 @@ function Uncategorized({ projectId, goalTrees, goalVotes }) {
         title='uncategorized'
         titleClassname='bottom-left'
         goals={goalList}
+        setPriorityPickerAddress={setPriorityPickerAddress}
       />
     </div>
   )
@@ -213,6 +254,15 @@ function PriorityView({ projectId, goalTrees, goalVotes }) {
     ['Uncategorized', '/project/:projectId/priority/uncategorized'],
   ]
 
+  const [priorityPickerAddress, setPriorityPickerAddress] = useState(null)
+  const [priorityPickerOpen, setPriorityPickerOpen] = useState(false)
+
+  useEffect(() => {
+    if (priorityPickerAddress) {
+      setPriorityPickerOpen(true)
+    }
+  }, [priorityPickerAddress])
+
   return (
     <div className='priority-view-wrapper'>
       <IndentedTreeView goalTrees={goalTrees} />
@@ -236,6 +286,7 @@ function PriorityView({ projectId, goalTrees, goalVotes }) {
             projectId={projectId}
             goalTrees={goalTrees}
             goalVotes={goalVotes}
+            setPriorityPickerAddress={setPriorityPickerAddress}
           />
         </Route>
         {/* uncategorized */}
@@ -245,6 +296,7 @@ function PriorityView({ projectId, goalTrees, goalVotes }) {
             projectId={projectId}
             goalTrees={goalTrees}
             goalVotes={goalVotes}
+            setPriorityPickerAddress={setPriorityPickerAddress}
           />
         </Route>
         {/* urgency - importance */}
@@ -253,6 +305,7 @@ function PriorityView({ projectId, goalTrees, goalVotes }) {
             projectId={projectId}
             goalTrees={goalTrees}
             goalVotes={goalVotes}
+            setPriorityPickerAddress={setPriorityPickerAddress}
           />
         </Route>
         <Route
@@ -261,6 +314,21 @@ function PriorityView({ projectId, goalTrees, goalVotes }) {
           component={PriorityRedirect}
         />
       </Switch>
+      <CSSTransition
+        in={priorityPickerOpen}
+        timeout={300}
+        unmountOnExit
+        className='priority-view-picker-animation'
+        onExited={() => setPriorityPickerAddress(null)}>
+        <div>
+          <PriorityPicker
+            projectId={projectId}
+            openToMyVote
+            goalAddress={priorityPickerAddress}
+            onClose={() => setPriorityPickerOpen(false)}
+          />
+        </div>
+      </CSSTransition>
     </div>
   )
 }

@@ -132,6 +132,7 @@
 .guidebook-separate-line {
   margin-bottom: 16px;
   padding-left: 0;
+  line-height: 1.4;
 }
 
 .guidebook-separate-line.sub-heading {
