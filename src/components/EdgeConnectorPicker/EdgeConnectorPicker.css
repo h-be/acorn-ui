@@ -19,21 +19,22 @@
 }
 
 .edge-connector-content {
-  padding: 0 30px;
+  padding: 20px 30px;
 }
 
 .edge-connector-dropdown-wrapper {
-  margin-bottom: 20px;
+  margin-bottom: 22px;
   justify-content: space-between;
   display: flex;
   align-items: center;
 }
 
 .edge-connector-dropdown-wrapper label {
-  margin-right: 10px;
+  margin-right: 16px;
+  font-size: 16px;
 }
 
-.edge-connector-dropdown-wrapper select {
+/* .edge-connector-dropdown-wrapper select {
   width: 180px;
   padding: 6px;
   -moz-appearance: none;
@@ -49,4 +50,10 @@
   font-family: 'CircularStd-Book', sans-serif;
   font-size: 14px;
   padding: 6px;
+} */
+
+.edge-connector-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
 }

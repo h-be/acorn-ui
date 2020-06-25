@@ -42,6 +42,9 @@
 .multi-edit-bar .picker-popup {
   bottom: 60px;
   top: unset;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 /* classes ralated to status picker on MultiEditBar */
