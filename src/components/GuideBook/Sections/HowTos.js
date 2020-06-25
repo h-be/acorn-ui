@@ -369,6 +369,75 @@ const howTosItems = [
           </ol>
         ),
       },
+      {
+        title: 'Edge Connector',
+        guide_id: 'edge-connector',
+        description: (
+          <ol>
+            <div className='guidebook-description-section'>
+              <div className='guidebook-separate-line'>
+                Edge Connector is a feature that lets you connect your existing
+                cards. You can connect the cards in parent-child relationship.
+                In Acorn cards can only have one parent at once, but can have as
+                many children. There are two ways to create these relationships:
+              </div>
+            </div>
+            <div className='guidebook-description-section'>
+              <div className='guidebook-separate-line sub-heading'>
+                In Map View Mode
+              </div>
+              <div className='guidebook-separate-line'>
+                When you hover over or select an existing card, you will see the
+                Edge Connector dots near the top and/or bottom of the card. In
+                order to connect the chosen card to another card simply click on
+                one of the purple dots and drag the created line to near another
+                card which you want to connect your cards to. Edge Connector
+                dots will apear near the second card if any new connection to
+                that card is available. Now release the trackpad/mouse on the
+                dot you want. The cards in the map will rearrange automatically
+                based on the newly built connection. Using the top dot of a card
+                means that card will be the child in the relationship. Using the
+                bottom dot of the card means that it will be the parent in the
+                relationship.
+              </div>
+            </div>
+            <div className='guidebook-description-section'>
+              <div className='guidebook-separate-line sub-heading'>
+                In Multi Edit Mode
+              </div>
+              <div className='guidebook-separate-line'>
+                If you would like to connect multiple cards to another card at
+                once, you can use the Edge Connector feature in Multi Edit Mode:
+                <br />
+                <li>
+                  1. Select all the cards you want to connect, then click on the
+                  Edge Connector Icon on the Multi Edit Bar at the bottom of the
+                  screen.
+                </li>
+                <li>
+                  2. You will see three drop downs: For the "Connect" dropdown
+                  select all the children cards or the parent card of your
+                  choice. For the "As" drop down chose the relationship these
+                  cards will have with the follwing card(s). For the "To" choose
+                  the car(d) that you want connected to the chosen cards in
+                  "Connect" dropdown.
+                </li>
+                <li>
+                  3. Click Preview to see how the new connection will look like
+                  on the map. If happy with the results, click on "Save
+                  Changes".
+                </li>
+                <b>
+                  Please note, the avaliblity of these selections depend on
+                  exisitng realtionship(s) of your selected cards. You might
+                  need to remove some exisitng connections first, to comply with
+                  the one-parent-only rules in Acorn.
+                </b>
+              </div>
+            </div>
+          </ol>
+        ),
+      },
       // TODO: enable this section when the multi view location gets built-in
       // {
       //   title: 'Locate a goal in different view modes',
