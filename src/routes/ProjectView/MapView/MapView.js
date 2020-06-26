@@ -70,12 +70,12 @@ function MapView({
       </div>
       <canvas ref={refCanvas} />
       {showEmptyState && <EmptyState />}
-      <MultiEditBar projectId={projectId} hasSelection={hasSelection} />
       <div className='transform-container' style={transform}>
         {goalFormIsOpen && <GoalForm projectId={projectId} />}
         {hasHover && <HoverOverlay onExpandClick={openExpandedView} />}
         <EdgeConnectors canvas={refCanvas.current} />
       </div>
+      <MultiEditBar projectId={projectId} hasSelection={hasSelection} />
       <ExpandedViewMode projectId={projectId} onClose={closeExpandedView} />
     </>
   )

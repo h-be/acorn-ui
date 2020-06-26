@@ -70,7 +70,7 @@ relation as parent, other node MUST
 - have no parent
 - not be the root ancestor of 'from' node, to prevent cycles in the tree
 */
-function calculateValidChildren(fromAddress, edges, goalAddresses) {
+export function calculateValidChildren(fromAddress, edges, goalAddresses) {
   return goalAddresses.filter(goalAddress => {
     return (
       // filter out self-address in the process
