@@ -103,7 +103,9 @@ function render(store, canvas) {
         parentGoalText,
         ctx
       )
-      drawEdge(edge1port, edge2port, ctx)
+      const isHovered = state.ui.hover.hoveredEdge === edge.address
+      const isSelected = state.ui.selection.selectedEdges.includes(edge.address)
+      drawEdge(edge1port, edge2port, ctx, isHovered, isSelected)
     }
   })
 

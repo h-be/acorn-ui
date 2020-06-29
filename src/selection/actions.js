@@ -6,11 +6,27 @@
 */
 
 /* constants */
+const SELECT_EDGE = 'SELECT_EDGE'
+const UNSELECT_EDGE = 'UNSELECT_EDGE'
 const SELECT_GOAL = 'SELECT_GOAL'
 const UNSELECT_GOAL = 'UNSELECT_GOAL'
 const UNSELECT_ALL = 'UNSELECT_ALL'
 
 /* action creator functions */
+
+function selectEdge(address) {
+  return {
+    type: SELECT_EDGE,
+    payload: address,
+  }
+}
+
+function unselectEdge(address) {
+  return {
+    type: UNSELECT_EDGE,
+    payload: address,
+  }
+}
 
 function selectGoal(address) {
   return {
@@ -33,9 +49,13 @@ function unselectAll() {
 }
 
 export {
+  SELECT_EDGE,
+  UNSELECT_EDGE,
   SELECT_GOAL,
   UNSELECT_ALL,
   UNSELECT_GOAL,
+  selectEdge,
+  unselectEdge,
   selectGoal,
   unselectAll,
   unselectGoal,

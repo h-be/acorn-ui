@@ -2,12 +2,22 @@ import _ from 'lodash'
 
 import { coordsPageToCanvas } from '../drawing/coordinateSystems'
 import {
+  checkForEdgeAtCoordinates,
   checkForGoalAtCoordinates,
   checkForGoalAtCoordinatesInBox,
 } from '../drawing/eventDetection'
-
-import { selectGoal, unselectGoal, unselectAll } from '../selection/actions'
-import { hoverGoal, unhoverGoal } from '../hover/actions'
+import {
+  selectEdge,
+  selectGoal,
+  unselectGoal,
+  unselectAll,
+} from '../selection/actions'
+import {
+  hoverGoal,
+  unhoverGoal,
+  hoverEdge,
+  unhoverEdge,
+} from '../hover/actions'
 import {
   setGKeyDown,
   unsetGKeyDown,
@@ -33,6 +43,7 @@ import {
   updateContent,
 } from '../goal-form/actions'
 import { archiveGoal } from '../projects/goals/actions'
+import { archiveEdge } from '../projects/edges/actions'
 import { setScreenDimensions } from '../screensize/actions'
 import { changeTranslate, changeScale } from '../viewport/actions'
 import { openExpandedView } from '../expanded-view/actions'
@@ -98,6 +109,18 @@ export default function setupEventListeners(store, canvas) {
         // only dispatch if something's selected and the createGoal window is
         // not open
         if (
+          selection.selectedEdges.length > 0 &&
+          !state.ui.goalForm.isOpen &&
+          !state.ui.expandedView.isOpen
+        ) {
+          let firstOfSelection = selection.selectedEdges[0]
+          store.dispatch(
+            archiveEdge(activeProject).create({ address: firstOfSelection })
+          )
+          // if on firefox, and matched this case
+          // prevent the browser from navigating back to the last page
+          event.preventDefault()
+        } else if (
           selection.selectedGoals.length > 0 &&
           !state.ui.goalForm.isOpen &&
           !state.ui.expandedView.isOpen
@@ -168,6 +191,7 @@ export default function setupEventListeners(store, canvas) {
         screensize: { width },
       },
     } = state
+    const goalCoordinates = layoutFormula(width, state)
     const convertedMouse = coordsPageToCanvas(
       {
         x: event.clientX,
@@ -190,7 +214,7 @@ export default function setupEventListeners(store, canvas) {
           setSize({ w: convertedMouse.x - x, h: convertedMouse.y - y })
         )
         goalAddressesToSelect = checkForGoalAtCoordinatesInBox(
-          width,
+          goalCoordinates,
           state,
           convertedMouse,
           { x, y }
@@ -205,11 +229,26 @@ export default function setupEventListeners(store, canvas) {
       canvas.getContext('2d'),
       translate,
       scale,
-      width,
+      goalCoordinates,
       state,
       event.clientX,
       event.clientY
     )
+    const edgeAddress = checkForEdgeAtCoordinates(
+      canvas.getContext('2d'),
+      translate,
+      scale,
+      goalCoordinates,
+      state,
+      event.clientX,
+      event.clientY
+    )
+    if (edgeAddress && state.ui.hover.hoveredGoal !== edgeAddress) {
+      store.dispatch(hoverEdge(edgeAddress))
+    } else if (!goalAddress && state.ui.hover.hoveredEdge) {
+      store.dispatch(unhoverEdge())
+    }
+
     if (goalAddress && state.ui.hover.hoveredGoal !== goalAddress) {
       store.dispatch(hoverGoal(goalAddress))
       // hook up if the edge connector to a new Goal
@@ -313,16 +352,30 @@ export default function setupEventListeners(store, canvas) {
           screensize: { width },
         },
       } = state
-      const clickedAddress = checkForGoalAtCoordinates(
+      const goalCoordinates = layoutFormula(width, state)
+
+      const clickedEdgeAddress = checkForEdgeAtCoordinates(
         canvas.getContext('2d'),
         translate,
         scale,
-        width,
+        goalCoordinates,
         state,
         event.clientX,
         event.clientY
       )
-      if (clickedAddress) {
+      const clickedGoalAddress = checkForGoalAtCoordinates(
+        canvas.getContext('2d'),
+        translate,
+        scale,
+        goalCoordinates,
+        state,
+        event.clientX,
+        event.clientY
+      )
+      if (clickedEdgeAddress) {
+        store.dispatch(unselectAll())
+        store.dispatch(selectEdge(clickedEdgeAddress))
+      } else if (clickedGoalAddress) {
         // if the shift key is being use, do an 'additive' select
         // where you add the Goal to the list of selected
         if (!event.shiftKey) {
@@ -331,11 +384,11 @@ export default function setupEventListeners(store, canvas) {
         // if using shift, and Goal is already selected, unselect it
         if (
           event.shiftKey &&
-          state.ui.selection.selectedGoals.indexOf(clickedAddress) > -1
+          state.ui.selection.selectedGoals.indexOf(clickedGoalAddress) > -1
         ) {
-          store.dispatch(unselectGoal(clickedAddress))
+          store.dispatch(unselectGoal(clickedGoalAddress))
         } else {
-          store.dispatch(selectGoal(clickedAddress))
+          store.dispatch(selectGoal(clickedGoalAddress))
         }
       } else {
         // If nothing was selected, that means empty
@@ -378,17 +431,18 @@ export default function setupEventListeners(store, canvas) {
       },
     } = state
     const goals = state.projects.goals[activeProject] || {}
+    const goalCoordinates = layoutFormula(width, state)
     const goalAddress = checkForGoalAtCoordinates(
       canvas.getContext('2d'),
       translate,
       scale,
-      width,
+      goalCoordinates,
       state,
       event.clientX,
       event.clientY
     )
     if (goalAddress) {
-      let goalCoord = layoutFormula(width, state)[goalAddress]
+      let goalCoord = goalCoordinates[goalAddress]
       store.dispatch(unselectAll())
       store.dispatch(openGoalForm(goalCoord.x, goalCoord.y, goalAddress))
       store.dispatch(updateContent(goals[goalAddress].content))

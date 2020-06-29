@@ -42,4 +42,6 @@ const colors = {
   InReview: '#00E2FF',
 }
 
-export { colors, pickColorForString }
+const selectedColor = '#5F65FF'
+
+export { colors, pickColorForString, selectedColor }
