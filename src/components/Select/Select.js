@@ -57,7 +57,7 @@ function Select({ toggleSelectOption, multiple, children, toggleLabel }) {
       <div
         className={`select-toggle-wrapper ${selectOpen ? 'active' : ''}`}
         onClick={() => setSelectOpen(!selectOpen)}>
-        {toggleLabel}
+        <div className='select-toggle-label-text'>{toggleLabel}</div>
         <Icon
           name='line-angle-down.svg'
           size='very-small'

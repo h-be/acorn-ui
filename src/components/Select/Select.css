@@ -30,6 +30,13 @@
   -webkit-transform: rotate(180deg);
 }
 
+.select-toggle-label-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
 .select-options-wrapper {
   position: absolute;
   width: 230px;
@@ -68,7 +75,7 @@
 .select-option-item {
   padding: 10px 12px;
   cursor: pointer;
-  overflow-x: hidden;
+  overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   background-color: #ffffff;

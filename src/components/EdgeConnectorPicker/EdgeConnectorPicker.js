@@ -29,11 +29,13 @@ function EdgeConnectorPicker({
     resetChildren()
   }, [parentAddress])
 
-  const validChildrenAddresses = calculateValidChildren(
-    parentAddress,
-    edges,
-    selectedGoals.map(g => g.address)
-  )
+  const validChildrenAddresses = parentAddress
+    ? calculateValidChildren(
+        parentAddress,
+        edges,
+        selectedGoals.map(g => g.address)
+      )
+    : []
 
   const save = async () => {
     if (!parentAddress || !childrenAddresses.length) return

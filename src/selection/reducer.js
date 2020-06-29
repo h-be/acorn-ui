@@ -5,12 +5,20 @@
   a new state.
 */
 
-import { SELECT_GOAL, UNSELECT_GOAL, UNSELECT_ALL } from './actions'
+import {
+  SELECT_EDGE,
+  UNSELECT_EDGE,
+  SELECT_GOAL,
+  UNSELECT_GOAL,
+  UNSELECT_ALL,
+} from './actions'
 import { ARCHIVE_GOAL } from '../projects/goals/actions'
+import { ARCHIVE_EDGE } from '../projects/edges/actions'
 import { typeSuccess } from '../projects/action_type_checker'
 
 const defaultState = {
   selectedGoals: [],
+  selectedEdges: [],
 }
 
 // removes an item from an array without mutating original array
@@ -23,7 +31,7 @@ function arrayWithoutElement(array, elem) {
   return newArray
 }
 
-export default function(state = defaultState, action) {
+export default function (state = defaultState, action) {
   const { payload, type } = action
 
   if (typeSuccess(type, ARCHIVE_GOAL)) {
@@ -37,9 +45,35 @@ export default function(state = defaultState, action) {
           ),
         }
       : { ...state }
+  } else if (typeSuccess(type, ARCHIVE_EDGE)) {
+    // unselect if the archived Goal was selected
+    return state.selectedEdges.includes(payload.address)
+      ? {
+          ...state,
+          selectedEdges: arrayWithoutElement(
+            state.selectedEdges,
+            payload.address
+          ),
+        }
+      : { ...state }
   }
 
   switch (type) {
+    case SELECT_EDGE:
+      return {
+        ...state,
+        selectedEdges:
+          state.selectedEdges.indexOf(payload) > -1
+            ? state.selectedEdges.slice() // you should create a new copy of the array, regardless, because redux
+            : state.selectedEdges.concat([payload]), // combine the existing list of selected with the new one to add
+      }
+    case UNSELECT_EDGE:
+      return {
+        ...state,
+        selectedEdges: state.selectedEdges.filter(
+          address => address !== payload
+        ),
+      }
     case SELECT_GOAL:
       return {
         ...state,
@@ -59,6 +93,7 @@ export default function(state = defaultState, action) {
       return {
         ...state,
         selectedGoals: [],
+        selectedEdges: [],
       }
     default:
       return state

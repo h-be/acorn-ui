@@ -14,11 +14,10 @@ import {
   getLinesForParagraphs,
 } from './dimensions'
 
-import { colors, pickColorForString } from '../styles'
+import { selectedColor, colors, pickColorForString } from '../styles'
 import { getOrSetImageForUrl } from './imageCache'
 import moment from 'moment'
 
-import { iconForHierarchy } from '../components/HierarchyIcon/HierarchyIcon'
 import roundRect from './drawRoundRect'
 
 // render a goal card
@@ -39,8 +38,6 @@ export default function render(
 
   // set up border color
   let borderColor = colors[goal.status]
-
-  let selectedColor = '#5F65FF'
 
   let backgroundColor = '#FFFFFF'
   if (isHovered) {
