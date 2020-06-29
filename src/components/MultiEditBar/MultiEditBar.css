@@ -42,8 +42,24 @@
 .multi-edit-bar .picker-popup {
   bottom: 60px;
   top: unset;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
+/* classes ralated to status picker on MultiEditBar */
 .status-popup.modal-wrapper .modal-header .inner-icon {
   background-color: #ff5d36;
+}
+
+.multi-edit-bar.has-selection .status-color.can-click.not-hoverable {
+  width: 22px;
+  height: 22px;
+  margin: 6px;
+}
+
+.multi-edit-bar.has-selection .status-color.can-click.not-hoverable:hover {
+  width: 22px;
+  height: 22px;
+  margin: 6px;
 }

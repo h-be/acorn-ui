@@ -5,15 +5,17 @@
   a new state.
 */
 
-import { HOVER_GOAL, UNHOVER_GOAL } from './actions'
+import { HOVER_EDGE, UNHOVER_EDGE, HOVER_GOAL, UNHOVER_GOAL } from './actions'
 import { ARCHIVE_GOAL } from '../projects/goals/actions'
+import { ARCHIVE_EDGE } from '../projects/edges/actions'
 import { typeSuccess } from '../projects/action_type_checker'
 
 const defaultState = {
   hoveredGoal: null,
+  hoveredEdge: null,
 }
 
-export default function(state = defaultState, action) {
+export default function (state = defaultState, action) {
   const { payload, type } = action
 
   if (typeSuccess(type, ARCHIVE_GOAL)) {
@@ -24,9 +26,27 @@ export default function(state = defaultState, action) {
           hoveredGoal: null,
         }
       : { ...state }
+  } else if (typeSuccess(type, ARCHIVE_EDGE)) {
+    // unhover if the archived edge was hovered over
+    return state.hoveredEdge === payload.address
+      ? {
+          ...state,
+          hoveredEdge: null,
+        }
+      : { ...state }
   }
 
   switch (type) {
+    case HOVER_EDGE:
+      return {
+        ...state,
+        hoveredEdge: payload,
+      }
+    case UNHOVER_EDGE:
+      return {
+        ...state,
+        hoveredEdge: null,
+      }
     case HOVER_GOAL:
       return {
         ...state,

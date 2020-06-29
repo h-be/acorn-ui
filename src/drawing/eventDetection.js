@@ -1,18 +1,83 @@
 import { goalWidth, getGoalHeight, goalHeight } from './dimensions'
 import layoutFormula from './layoutFormula'
 import { coordsPageToCanvas } from './coordinateSystems'
+import linePoint from 'intersects/line-point'
+import { calculateEdgeCoordsByGoalCoords } from './drawEdge'
+
+export function checkForEdgeAtCoordinates(
+  ctx,
+  translate,
+  scale,
+  goalCoordinates,
+  state,
+  mouseX,
+  mouseY
+) {
+  // get coordinates of all goals
+
+  const {
+    ui: { activeProject },
+  } = state
+  const edges = state.projects.edges[activeProject] || {}
+  const goals = state.projects.goals[activeProject] || {}
+  // convert the coordinates of the click to canvas space
+  const convertedMouse = coordsPageToCanvas(
+    {
+      x: mouseX,
+      y: mouseY,
+    },
+    translate,
+    scale
+  )
+
+  // keep track of whether an edge intersects the mouse
+  let overEdgeAddress
+  Object.keys(edges)
+    .map(address => edges[address])
+    .forEach(edge => {
+      const parentGoalCoords = goalCoordinates[edge.parent_address]
+      const childGoalCoords = goalCoordinates[edge.child_address]
+      const parentGoalText = goals[edge.parent_address]
+        ? goals[edge.parent_address].content
+        : ''
+
+      // get the coordinates for the edge end points
+      const [
+        childEdgeCoords,
+        parentEdgeCoords,
+      ] = calculateEdgeCoordsByGoalCoords(
+        childGoalCoords,
+        parentGoalCoords,
+        parentGoalText,
+        ctx
+      )
+      // if mouse intersects with the line
+      if (
+        linePoint(
+          childEdgeCoords.x,
+          childEdgeCoords.y,
+          parentEdgeCoords.x,
+          parentEdgeCoords.y,
+          convertedMouse.x,
+          convertedMouse.y
+        )
+      ) {
+        // set the overEdgeAddress to this edge address
+        overEdgeAddress = edge.address
+      }
+    })
+  return overEdgeAddress
+}
 
 export function checkForGoalAtCoordinates(
   ctx,
   translate,
   scale,
-  width,
+  goalCoordinates,
   state,
   clickX,
   clickY
 ) {
-  // get coordinates of all goals
-  const coordinates = layoutFormula(width, state)
   const {
     ui: { activeProject },
   } = state
@@ -33,7 +98,7 @@ export function checkForGoalAtCoordinates(
     .map(address => goals[address])
     .forEach(goal => {
       // convert the topLeft and bottomRight points of the goal to canvas
-      const coords = coordinates[goal.address]
+      const coords = goalCoordinates[goal.address]
       const bottomRight = {
         x: coords.x + goalWidth,
         y: coords.y + getGoalHeight(ctx, goal.content),
@@ -50,14 +115,13 @@ export function checkForGoalAtCoordinates(
     })
   return clickedAddress
 }
+
 export function checkForGoalAtCoordinatesInBox(
-  width,
+  goalCoordinates,
   state,
   convertedClick,
   convertedIni
 ) {
-  // get coordinates of all goals
-  const coordinates = layoutFormula(width, state)
   const {
     ui: { activeProject },
   } = state
@@ -69,7 +133,7 @@ export function checkForGoalAtCoordinatesInBox(
     .map(address => goals[address])
     .forEach(goal => {
       // convert the topLeft and bottomRight points of the goal to canvas
-      const coords = coordinates[goal.address]
+      const coords = goalCoordinates[goal.address]
       const bottomRight = {
         x: coords.x + goalWidth,
         y: coords.y + goalHeight,

@@ -12,6 +12,8 @@ export default function roundRect(
   const r = x + w
   const b = y + h
 
+  ctx.save()
+
   ctx.beginPath()
 
   if (stroke) ctx.strokeStyle = color
@@ -30,4 +32,6 @@ export default function roundRect(
 
   if (stroke) ctx.stroke()
   else ctx.fill()
+
+  ctx.restore()
 }

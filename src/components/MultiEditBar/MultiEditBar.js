@@ -14,6 +14,7 @@ import StatusPicker from '../StatusPicker'
 import PeoplePicker from '../PeoplePicker/PeoplePicker'
 import DatePicker from '../DatePicker/DatePicker'
 import HierarchyPicker from '../HierarchyPicker/HierarchyPicker'
+import EdgeConnectorPicker from '../EdgeConnectorPicker/EdgeConnectorPicker'
 import Modal, { ModalContent } from '../Modal/Modal'
 
 function MultiEditBar({
@@ -27,6 +28,7 @@ function MultiEditBar({
     squirrels: false,
     timeframe: false,
     hierarchy: false,
+    edgeConnector: false,
     archive: false,
   }
   const [popup, setPopup] = useState(false)
@@ -69,6 +71,7 @@ function MultiEditBar({
   const multiEditBarSquirrelsClass = viewsOpen.squirrels ? 'active' : ''
   const multiEditBarHierarchyClass = viewsOpen.hierarchy ? 'active' : ''
   const multiEditBarTimeframeClass = viewsOpen.timeframe ? 'active' : ''
+  const multiEditBarEdgeConnectorClass = viewsOpen.edgeConnector ? 'active' : ''
   const multiEditBarArchiveClass = viewsOpen.archive ? 'active' : ''
 
   const toggleView = key => {
@@ -115,7 +118,7 @@ function MultiEditBar({
       You're about to archive the following {selectedGoals.length} card(s):
       <div className='modal-goals-list'>
         {selectedGoals.map(goal => (
-          <div>{goal.content}</div>
+          <div key={goal.address}>{goal.content}</div>
         ))}
       </div>
       You will be able to see these cards in the archive view mode in the
@@ -227,6 +230,17 @@ function MultiEditBar({
             hierarchyClicked={updateGoals('hierarchy')}
             onClose={() => setViews({ ...defaultViews })}
           />
+        )}
+        {/* edge connector */}
+        <Icon
+          name='edge-connector.svg'
+          size='medium-MultiEditBar'
+          className={multiEditBarEdgeConnectorClass}
+          key='edgeConnector'
+          onClick={() => toggleView('edgeConnector')}
+        />
+        {viewsOpen.edgeConnector && (
+          <EdgeConnectorPicker onClose={() => setViews({ ...defaultViews })} />
         )}
         {/* archive */}
         <Icon
