@@ -1,5 +1,5 @@
 .hierarchy_picker {
-  min-width: 253px;
+  min-width: 300px;
 }
 
 .hierarchy_option_container {
@@ -59,7 +59,7 @@
 
 .hierarchy_option_item li {
   color: #4d4d4d;
-  padding: 6px 20px;
+  padding: 6px 30px;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -90,13 +90,13 @@
 }
 
 .radio_button {
-  right: 20px;
+  right: 30px;
   position: absolute;
 }
 
 .hierarchy_wrapper_footer {
   color: #898989;
   font-size: 12px;
-  padding: 6px 20px;
+  padding: 6px 30px;
   margin-bottom: 0;
 }

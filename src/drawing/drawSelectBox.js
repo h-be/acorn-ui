@@ -2,6 +2,7 @@ function SelectBox(ctx, x, y, w, h, radius, color, stroke, strokeWidth) {
   const r = x + w
   const b = y + h
 
+  ctx.save()
   ctx.beginPath()
 
   if (stroke) ctx.strokeStyle = color
@@ -20,6 +21,8 @@ function SelectBox(ctx, x, y, w, h, radius, color, stroke, strokeWidth) {
 
   if (stroke) ctx.stroke()
   else ctx.fill()
+
+  ctx.restore()
 }
 
 // render a goal card

@@ -14,11 +14,10 @@ import {
   getLinesForParagraphs,
 } from './dimensions'
 
-import { colors, pickColorForString } from '../styles'
+import { selectedColor, colors, pickColorForString } from '../styles'
 import { getOrSetImageForUrl } from './imageCache'
 import moment from 'moment'
 
-import { iconForHierarchy } from '../components/HierarchyIcon/HierarchyIcon'
 import roundRect from './drawRoundRect'
 
 // render a goal card
@@ -39,8 +38,6 @@ export default function render(
 
   // set up border color
   let borderColor = colors[goal.status]
-
-  let selectedColor = '#5F65FF'
 
   let backgroundColor = '#FFFFFF'
   if (isHovered) {
@@ -122,6 +119,8 @@ export default function render(
   }
 
   // render text, if not in edit mode
+  // in which case the text is being rendered in the textarea
+  // html element being overlaid on top of this Goal
   if (!isEditing) {
     const textBoxLeft = x + textBoxMarginLeft
     const textBoxTop = y + textBoxMarginTop
@@ -159,6 +158,7 @@ export default function render(
     ctx.restore()
   }
 
+  // draw members avatars
   members.forEach((member, index) => {
     // adjust the x position according to the index of this member
     // since there can be many

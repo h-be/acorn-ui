@@ -24,6 +24,7 @@ import goalClone from './goal-clone/reducer'
 import activeProject from './active-project/reducer'
 import activeEntryPoints from './active-entry-points/reducer'
 import localPreferences from './local-preferences/reducer'
+import edgeConnector from './edge-connector/reducer'
 // import anotherone from './another/path'
 
 // combine reducers from each feature to create the top-level reducer
@@ -33,6 +34,7 @@ export default combineReducers({
   whoami,
   agentAddress,
   ui: combineReducers({
+    edgeConnector,
     localPreferences,
     goalForm,
     selection,

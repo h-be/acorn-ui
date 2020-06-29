@@ -12,6 +12,7 @@ import { PROJECTS_ZOME_NAME } from '../../holochainConfig'
 /* action creator functions */
 
 const CREATE_EDGE = 'create_edge'
+const UPDATE_EDGE = 'update_edge'
 const FETCH_EDGES = 'fetch_edges'
 const ARCHIVE_EDGE = 'archive_edge'
 
@@ -20,6 +21,13 @@ const createEdge = instanceId =>
     instanceId,
     PROJECTS_ZOME_NAME,
     CREATE_EDGE
+  )
+
+const updateEdge = instanceId =>
+  createHolochainZomeCallAsyncAction(
+    instanceId,
+    PROJECTS_ZOME_NAME,
+    UPDATE_EDGE
   )
 
 const fetchEdges = instanceId =>
@@ -38,9 +46,11 @@ const archiveEdge = instanceId =>
 
 export {
   CREATE_EDGE,
+  UPDATE_EDGE,
   FETCH_EDGES,
   ARCHIVE_EDGE,
   createEdge,
+  updateEdge,
   fetchEdges,
   archiveEdge,
 }

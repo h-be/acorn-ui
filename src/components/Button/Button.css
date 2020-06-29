@@ -83,8 +83,9 @@
 
 .button.stroke {
   background: transparent;
-  border: 1px solid black;
-  color: black;
+  border: 1px solid #4d4d4d;
+  color: #4d4d4d;
+  transition: color 0.2s ease-in-out, border 0.2s ease-in-out;
 }
 
 .button.stroke:hover {
