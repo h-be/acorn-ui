@@ -17,7 +17,7 @@ workflows:
     jobs:
       - github-zip:
           filters:
-            # branches:
-            # ignore: /.*/
+            branches:
+              ignore: /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
