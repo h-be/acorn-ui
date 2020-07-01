@@ -67,8 +67,8 @@ echo "All finished!!!"
   # the previous version will be scanned/bumped by release scripts
   # the current version is what the release scripts bump *to*
   version = {
-   current = "0.0.1";
-   previous = "_._._";
+   current = "0.3.5";
+   previous = "0.3.4";
   };
 
   github = {
@@ -78,14 +78,7 @@ echo "All finished!!!"
    template = ''
 {{ changelog }}
 
-# Installation
-
-Use Holonix to work with this repository.
-
-See:
-
-- https://github.com/holochain/holonix
-- https://nixos.org/
+This UI is useful only for the purposes of of running within acorn-release distribution, or Holoscape distribution. Do not download these files and try to run them directly, or standalone.
 '';
 
    # owner of the github repository that release are deployed to
