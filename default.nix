@@ -31,6 +31,10 @@ with holonix.pkgs;
   holonix.shell.shellHook
   ];
 
+  nativeBuildInputs = [
+    zip
+  ];
+
   buildInputs = [
   holonix.pkgs.nodejs
   ]
