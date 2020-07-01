@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { CSSTransition } from 'react-transition-group'
 
 import './EdgeConnectorPicker.css'
@@ -6,7 +6,11 @@ import './EdgeConnectorPicker.css'
 import PickerTemplate from '../PickerTemplate/PickerTemplate'
 import { Select, Option, useSelect } from '../Select/Select'
 import { calculateValidChildren } from '../EdgeConnectors/EdgeConnectors'
-import { createEdge } from '../../projects/edges/actions'
+import {
+  previewEdges,
+  clearEdgesPreview,
+  createEdge,
+} from '../../projects/edges/actions'
 
 import Button from '../Button/Button'
 import { connect } from 'react-redux'
@@ -16,7 +20,9 @@ function EdgeConnectorPicker({
   selectedGoals,
   edges,
   activeProject,
+  previewConnections,
   saveConnections,
+  clearPreview,
 }) {
   const isOpen = true
 
@@ -25,9 +31,21 @@ function EdgeConnectorPicker({
   // multi select
   const [childrenAddresses, toggleChild, resetChildren] = useSelect(true)
 
+  // on unmount
+  useEffect(() => {
+    return () => {
+      clearPreview(activeProject)
+    }
+  }, [])
+
   useEffect(() => {
     resetChildren()
+    clearPreview(activeProject)
   }, [parentAddress])
+
+  useEffect(() => {
+    clearPreview(activeProject)
+  }, [JSON.stringify(childrenAddresses)])
 
   const validChildrenAddresses = parentAddress
     ? calculateValidChildren(
@@ -37,12 +55,20 @@ function EdgeConnectorPicker({
       )
     : []
 
+  const preview = () => {
+    if (!parentAddress || !childrenAddresses.length) return
+    previewConnections(parentAddress, childrenAddresses, activeProject)
+  }
+
   const save = async () => {
     if (!parentAddress || !childrenAddresses.length) return
     try {
       await saveConnections(parentAddress, childrenAddresses, activeProject)
       onClose()
-    } catch (e) {}
+    } catch (e) {
+      console.log(e)
+    }
+    clearPreview(activeProject)
   }
 
   return (
@@ -101,7 +127,13 @@ function EdgeConnectorPicker({
             </Select>
           </div>
           <div className='edge-connector-buttons'>
-            <Button text='Preview' size='small' className='green' stroke />
+            <Button
+              onClick={preview}
+              text='Preview'
+              size='small'
+              className='green'
+              stroke
+            />
             <Button
               onClick={save}
               text='Save Changes'
@@ -131,6 +163,16 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    previewConnections: (parentAddress, childrenAddresses, activeProject) => {
+      const edges = childrenAddresses.map(childAddress => ({
+        child_address: childAddress,
+        parent_address: parentAddress,
+      }))
+      return dispatch(previewEdges(activeProject, edges))
+    },
+    clearPreview: activeProject => {
+      return dispatch(clearEdgesPreview(activeProject))
+    },
     saveConnections: (parentAddress, childrenAddresses, activeProject) => {
       // loop over childrenAddresses
       // use createEdge each time

@@ -6,19 +6,55 @@
 */
 import _ from 'lodash'
 
-import { CREATE_EDGE, UPDATE_EDGE, FETCH_EDGES, ARCHIVE_EDGE } from './actions'
+import {
+  PREVIEW_EDGES,
+  CLEAR_EDGES_PREVIEW,
+  CREATE_EDGE,
+  UPDATE_EDGE,
+  FETCH_EDGES,
+  ARCHIVE_EDGE,
+} from './actions'
 import { CREATE_GOAL, ARCHIVE_GOAL } from '../goals/actions'
 import { typeSuccess, instanceIdFromActionType } from '../action_type_checker'
 
 const defaultState = {}
 
+const PREVIEW_KEY_STRING = 'preview'
+
 export default function (state = defaultState, action) {
   const { payload, type } = action
 
-  const instanceId = instanceIdFromActionType(type)
+  let instanceId
+  const simpleActionTypes = [PREVIEW_EDGES, CLEAR_EDGES_PREVIEW]
+  if (simpleActionTypes.includes(type)) {
+    instanceId = payload.instanceId
+  } else {
+    instanceId = instanceIdFromActionType(type)
+  }
 
   // CREATE_EDGE
-  if (typeSuccess(type, CREATE_EDGE)) {
+  if (type === PREVIEW_EDGES) {
+    const previews = {}
+    payload.edges.forEach(edge => {
+      const rand = Math.random()
+      previews[`${PREVIEW_KEY_STRING}${rand}`] = edge
+    })
+    return {
+      ...state,
+      [instanceId]: {
+        ...state[instanceId],
+        ...previews,
+      },
+    }
+  } else if (type === CLEAR_EDGES_PREVIEW) {
+    return {
+      ...state,
+      [instanceId]: _.pickBy(
+        state[instanceId],
+        (value, key) => !key.startsWith(PREVIEW_KEY_STRING)
+      ),
+    }
+  } else if (typeSuccess(type, CREATE_EDGE)) {
     return {
       ...state,
       [instanceId]: {
@@ -31,7 +67,7 @@ export default function (state = defaultState, action) {
     }
   }
   // UPDATE_EDGE
-  if (typeSuccess(type, UPDATE_EDGE)) {
+  else if (typeSuccess(type, UPDATE_EDGE)) {
     return {
       ...state,
       [instanceId]: {
