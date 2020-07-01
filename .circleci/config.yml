@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run:
           no_output_timeout: 20m
-          command: nix-shell --run acorn-build
+          command: nix-shell --run release-github-zip
 
 workflows:
   version: 2.1
