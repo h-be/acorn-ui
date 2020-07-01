@@ -11,10 +11,31 @@ import { PROJECTS_ZOME_NAME } from '../../holochainConfig'
 
 /* action creator functions */
 
+const PREVIEW_EDGES = 'preview_edges'
+const CLEAR_EDGES_PREVIEW = 'clear_edges_preview'
 const CREATE_EDGE = 'create_edge'
 const UPDATE_EDGE = 'update_edge'
 const FETCH_EDGES = 'fetch_edges'
 const ARCHIVE_EDGE = 'archive_edge'
+
+const previewEdges = (instanceId, edges) => {
+  return {
+    type: PREVIEW_EDGES,
+    payload: {
+      instanceId,
+      edges,
+    },
+  }
+}
+
+const clearEdgesPreview = instanceId => {
+  return {
+    type: CLEAR_EDGES_PREVIEW,
+    payload: {
+      instanceId,
+    },
+  }
+}
 
 const createEdge = instanceId =>
   createHolochainZomeCallAsyncAction(
@@ -45,10 +66,14 @@ const archiveEdge = instanceId =>
   )
 
 export {
+  PREVIEW_EDGES,
+  CLEAR_EDGES_PREVIEW,
   CREATE_EDGE,
   UPDATE_EDGE,
   FETCH_EDGES,
   ARCHIVE_EDGE,
+  previewEdges,
+  clearEdgesPreview,
   createEdge,
   updateEdge,
   fetchEdges,

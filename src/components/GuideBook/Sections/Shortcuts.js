@@ -14,12 +14,16 @@ const shortcutsItems = [
         shortcutTitle: 'Create a child card',
       },
       {
+        shortcutKey: 'escape',
+        shortcutTitle: 'Cancel card/connection creation',
+      },
+      {
         shortcutKey: 'e',
         shortcutTitle: 'Enter expanded view (on a selected card)',
       },
       {
         shortcutKey: 'delete',
-        shortcutTitle: 'Archive',
+        shortcutTitle: 'Archive card or connection',
       },
     ],
   },
