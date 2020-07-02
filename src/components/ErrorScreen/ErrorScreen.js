@@ -16,7 +16,7 @@ function ErrorScreen({ stackTrace }) {
           <div className='error-screen-title'>Sorry...</div>
           <div className='error-screen-subtitle'>Acorn has crashed</div>
           <div className='error-screen-description'>
-            Please help us improve the app’s performance by{' '}
+            Please help us improve the app's performance by{' '}
             <a
               href='https://github.com/h-be/acorn-release/issues/new?assignees=&labels=bug&template=bug_report.md&title='
               target='_blank'>
