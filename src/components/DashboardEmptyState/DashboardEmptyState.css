@@ -18,7 +18,7 @@
 
 .dashboard-empty-state-heading {
   font-size: 40px;
-  font-family: 'CircularStd-Bold', Helvetica, sans-serif;
+  font-family: 'gilroyextrabold', Helvetica, sans-serif;
   margin-bottom: 20px;
   margin-top: 30px;
   color: #535353;
@@ -31,7 +31,7 @@
   font-size: 22px;
   line-height: 34px;
   letter-spacing: 0.3px;
-  font-family: 'CircularStd-Book', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-medium', Helvetica, sans-serif;
 }
 
 .dashboard-empty-state-description a {

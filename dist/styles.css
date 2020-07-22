@@ -15,7 +15,7 @@ canvas {
 
 body {
   background-color: #ebe9e2;
-  font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
+  font-family: 'hk-grotesk-medium', Helvetica, Sans-Serif;
 }
 
 div.react {
@@ -27,36 +27,46 @@ div.react {
 
 /* Fonts */
 
-/* Circular-STD Font */
+/* HK Grotesk */
 
 @font-face {
-  font-family: 'CircularStd-Book';
-  src: url('fonts/circular-std/CircularStd-Book.woff2') format('woff2'),
-    url('fonts/circular-std/CircularStd-Book.woff') format('woff');
+  font-family: 'hk-grotesk-regular';
+  src: url('fonts/hk-grotesk/hkgrotesk-regular-webfont.woff2') format('woff2'),
+    url('fonts/hk-grotesk/hkgrotesk-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  margin-bottom: 1px;
+}
+
+@font-face {
+  font-family: 'hk-grotesk-medium';
+  src: url('fonts/hk-grotesk/hkgrotesk-medium-webfont.woff2') format('woff2'),
+    url('fonts/hk-grotesk/hkgrotesk-medium-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  margin-bottom: 1px;
+}
+
+@font-face {
+  font-family: 'hk-grotesk-semibold';
+  src: url('fonts/hk-grotesk/hkgrotesk-semibold-webfont.woff2') format('woff2'),
+    url('fonts/hk-grotesk/hkgrotesk-semibold-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'CircularStd-Bold';
-  src: url('fonts/circular-std/CircularStd-Bold.ttf') format('woff2'),
-    url('fonts/circular-std/CircularStd-Bold.woff') format('woff');
+  font-family: 'hk-grotesk-bold';
+  src: url('fonts/hk-grotesk/hkgrotesk-bold-webfont.woff2') format('woff2'),
+    url('fonts/hk-grotesk/hkgrotesk-bold-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'CircularStd-Medium';
-  src: url('fonts/circular-std/CircularStd-Medium.ttf') format('woff2'),
-    url('fonts/circular-std/CircularStd-Medium.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'CircularStd-Black';
-  src: url('fonts/circular-std/CircularStd-Black.woff2') format('woff2'),
-    url('fonts/circular-std/CircularStd-Black.woff') format('woff');
+  font-family: 'hk-grotesk-extrabold';
+  src: url('fonts/hk-grotesk/hkgrotesk-extrabold-webfont.woff2') format('woff2'),
+    url('fonts/hk-grotesk/hkgrotesk-extrabold-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -79,154 +89,6 @@ div.react {
   font-style: normal;
 }
 
-/* Renner Font */
-
-@font-face {
-  font-family: 'rennerbook';
-  src: url('fonts/renner/renner-book-webfont.woff2') format('woff2'),
-    url('fonts/renner/renner-book-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'renner_blackblack';
-  src: url('fonts/renner/renner-black-webfont.woff2') format('woff2'),
-    url('fonts/renner/renner-black-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'renner_blackblack_italic';
-  src: url('fonts/renner/renner-blackitalic-webfont.woff2') format('woff2'),
-    url('fonts/renner/renner-blackitalic-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'rennerbold';
-  src: url('fonts/renner/renner-bold-webfont.woff2') format('woff2'),
-    url('fonts/renner/renner-bold-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'rennerbook_italic';
-  src: url('fonts/renner/renner-bolditalic-webfont.woff2') format('woff2'),
-    url('fonts/renner/renner-bolditalic-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'rennerbook_italic';
-  src: url('fonts/renner/renner-bookitalic-webfont.woff2') format('woff2'),
-    url('fonts/renner/renner-bookitalic-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'renner_lightlight';
-  src: url('fonts/renner/renner-light-webfont.woff2') format('woff2'),
-    url('fonts/renner/renner-light-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'renner_lightlight_italic';
-  src: url('fonts/renner/renner-lightitalic-webfont.woff2') format('woff2'),
-    url('fonts/renner/renner-lightitalic-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'rennermedium';
-  src: url('fonts/renner/renner-medium-webfont.woff2') format('woff2'),
-    url('fonts/renner/renner-medium-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'rennermedium_italic';
-  src: url('fonts/renner/renner-mediumitalic-webfont.woff2') format('woff2'),
-    url('fonts/renner/renner-mediumitalic-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-/* Quebec Font */
-
-@font-face {
-  font-family: 'quebecbold';
-  src: url('fonts/quebec/quebec-bold-webfont.woff2') format('woff2'),
-    url('fonts/quebec/quebec-bold-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'quebecbold_italic';
-  src: url('fonts/quebec/quebec-bolditalic-webfont.woff2') format('woff2'),
-    url('fonts/quebec/quebec-bolditalic-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'quebecitalic';
-  src: url('fonts/quebec/quebec-italic-webfont.woff2') format('woff2'),
-    url('fonts/quebec/quebec-italic-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'quebeclight';
-  src: url('fonts/quebec/quebec-light-webfont.woff2') format('woff2'),
-    url('fonts/quebec/quebec-light-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'quebeclight_italic';
-  src: url('fonts/quebec/quebec-lightitalic-webfont.woff2') format('woff2'),
-    url('fonts/quebec/quebec-lightitalic-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'quebecregular';
-  src: url('fonts/quebec/quebec-regular-webfont.woff2') format('woff2'),
-    url('fonts/quebec/quebec-regular-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'quebecsemibold';
-  src: url('fonts/quebec/quebec-semibold-webfont.woff2') format('woff2'),
-    url('fonts/quebec/quebec-semibold-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'quebecsemibold_italic';
-  src: url('fonts/quebec/quebec-semibolditalic-webfont.woff2') format('woff2'),
-    url('fonts/quebec/quebec-semibolditalic-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
 /* features in development */
 
 .feature-in-development {
@@ -238,28 +100,28 @@ div.react {
 h1 {
   font-size: 26px;
   line-height: 32px;
-  font-family: 'CircularStd-Bold', Helvetica, sans-serif;
+  font-family: 'now-Bold', Helvetica, sans-serif;
   font-weight: normal;
 }
 
 h2 {
   font-size: 22px;
   line-height: 28px;
-  font-family: 'CircularStd-Bold', Helvetica, sans-serif;
+  font-family: 'now-Bold', Helvetica, sans-serif;
   font-weight: normal;
 }
 
 h3 {
   font-size: 20px;
   line-height: 24px;
-  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
+  font-family: 'now-Medium', Helvetica, sans-serif;
   font-weight: normal;
 }
 
 h4 {
   font-size: 16px;
   line-height: 20px;
-  font-family: 'CircularStd-Book', Helvetica, sans-serif;
+  font-family: 'now-Medium', Helvetica, sans-serif;
   font-weight: normal;
   color: #717171;
 }
@@ -289,7 +151,7 @@ h4 {
   height: 70px;
   resize: none;
   color: #4d4d4d;
-  font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
+  font-family: 'hk-grotesk-medium', Helvetica, Sans-Serif;
   font-size: 20px;
   line-height: 24px;
 }
@@ -335,7 +197,7 @@ h4 {
   background-color: rgba(134, 134, 134, 0.95);
   border: 1px solid rgba(134, 134, 134, 0.95);
   border-radius: 16px;
-  font-family: 'CircularStd-Book', Helvetica, Sans-Serif;
+  font-family: 'hk-grotesk-medium', Helvetica, Sans-Serif;
   padding: 5px 25px 5px 15px;
   outline: 0;
   font-size: 16px;

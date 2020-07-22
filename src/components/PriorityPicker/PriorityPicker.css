@@ -14,7 +14,7 @@
 
 .priority-tab {
   padding: 10px;
-  font-family: 'CircularStd-Black', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-bold', Helvetica, sans-serif;
   cursor: pointer;
   align-items: center;
   color: #4d4d4d;
@@ -98,7 +98,7 @@
 .remove-my-vote,
 .save-my-vote {
   cursor: pointer;
-  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-semibold', Helvetica, sans-serif;
   color: #00a599;
   transition: color 0.2s ease;
   padding: 4px 0;
@@ -110,7 +110,7 @@
 }
 
 .aggregated-priority-title {
-  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-medium', Helvetica, sans-serif;
   margin-bottom: 10px;
 }
 
@@ -133,7 +133,7 @@
 .priority-item-title {
   width: 90px;
   font-size: 14px;
-  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-medium', Helvetica, sans-serif;
   color: #4d4d4d;
 }
 

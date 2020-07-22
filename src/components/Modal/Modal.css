@@ -102,6 +102,8 @@
   overflow-y: scroll;
   overflow-x: hidden;
   font-size: 12px;
-  font-family: 'CircularStd-Bold', Helvetica, sans-serif;
+  font-family: 'gilroyextrabold', Helvetica, sans-serif;
   margin-bottom: 10px;
+  margin-top: 10px;
+  line-height: 16px;
 }
