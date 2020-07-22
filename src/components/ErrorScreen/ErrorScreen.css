@@ -21,7 +21,7 @@
 }
 
 .error-screen-title {
-  font-family: 'CircularStd-Bold', Helvetica, sans-serif;
+  font-family: 'gilroyextrabold', Helvetica, sans-serif;
   font-size: 48px;
   line-height: 60px;
   margin-bottom: 24px;
@@ -29,7 +29,7 @@
 }
 
 .error-screen-subtitle {
-  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-medium', Helvetica, sans-serif;
   font-size: 28px;
   line-height: 34px;
   color: #535353;
@@ -37,7 +37,7 @@
 }
 
 .error-screen-description {
-  font-family: 'CircularStd-Book', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-medium', Helvetica, sans-serif;
   font-size: 16px;
   line-height: 30px;
   color: #535353;
@@ -57,7 +57,7 @@
 }
 
 .show-stack-trace-button {
-  font-family: 'CircularStd-Book', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-medium', Helvetica, sans-serif;
   font-size: 14px;
   line-height: 18px;
   color: #8e8e8e;

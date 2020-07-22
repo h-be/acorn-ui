@@ -52,7 +52,7 @@ const useStyles = makeStyles({
     top: '-18px',
     position: 'absolute',
     fontSize: '12px',
-    fontFamily: '"CircularStd-book", "Helvetica", "Arial", "sans-serif"',
+    fontFamily: '"hk-grotesk-medium", "Helvetica", "Arial", "sans-serif"',
     lineHeight: '1',
     color: '#A3A3A3',
   },

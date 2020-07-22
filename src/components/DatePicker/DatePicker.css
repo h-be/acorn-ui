@@ -46,8 +46,12 @@
   border-radius: 10px;
   padding: 5px 4px 4px 10px;
   width: 95%;
-  font-family: 'CircularStd-book', Helvetica, sans-serif;
-  font-weight: normal;
+  font-family: 'hk-grotesk-medium', Helvetica, sans-serif;
+  line-height: 29px;
+}
+
+.DateInput_fang {
+  display: none;
 }
 
 .DateRangePickerInput_arrow {
@@ -74,7 +78,7 @@
   display: flex;
   align-items: center;
   margin: 0;
-  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-medium', Helvetica, sans-serif;
   font-size: 11px;
   padding: 0;
   color: #00beb0;
@@ -136,13 +140,13 @@
 
 .CalendarMonth_caption {
   font-size: 14px;
-  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-medium', Helvetica, sans-serif;
   font-weight: normal;
   padding-bottom: 42px;
 }
 
 .DayPicker_weekHeader {
-  font-family: 'CircularStd-book', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-medium', Helvetica, sans-serif;
   font-weight: normal;
 }
 

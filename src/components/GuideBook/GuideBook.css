@@ -34,13 +34,12 @@
 .guidebook-wrapper .nav-item {
   cursor: pointer;
   font-size: 16px;
-  font-family: 'CircularStd-Bold', Helvetica, sans-serif;
-  margin-bottom: 16px;
+  font-family: 'hk-grotesk-bold', Helvetica, sans-serif;
+  margin-bottom: 14px;
   display: flex;
   flex-direction: row;
   align-items: center;
   transition: color 0.2s ease-in-out;
-  margin-bottom: 8px;
   -webkit-transition: all 0.2s ease-in;
   transition: all 0.2s ease-in;
 }
@@ -60,8 +59,8 @@
   overflow: hidden;
   -webkit-transition: max-height 0.5s ease-in-out;
   transition: max-height 0.5s ease-in-out;
-  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
-  margin-bottom: 20px;
+  font-family: 'hk-grotesk-bold', Helvetica, sans-serif;
+  margin-bottom: 18px;
   margin-left: 30px;
 }
 
@@ -76,7 +75,7 @@
 }
 
 .guidebook-wrapper .sidebar-submenu ul li {
-  margin-bottom: 6px;
+  margin-bottom: 10px;
 }
 
 .guidebook-wrapper .sidebar-submenu ul li a {
@@ -87,7 +86,7 @@
   border: none;
   cursor: pointer;
   font-size: 13px;
-  font-family: 'CircularStd-Book', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-semibold', Helvetica, sans-serif;
   transition: color 0.2s ease-in-out;
   text-decoration: none;
   color: #222222;
@@ -126,7 +125,7 @@
 }
 
 .guidebook-description-bold {
-  font-family: 'CircularStd-bold', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-bold', Helvetica, sans-serif;
 }
 
 .guidebook-separate-line {
@@ -137,17 +136,18 @@
 }
 
 .guidebook-separate-line.sub-heading {
-  font-family: 'CircularStd-bold', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-bold', Helvetica, sans-serif;
   font-size: 18px;
 }
 
 .guidebook-section-description li {
   margin-bottom: 20px;
+  list-style: none;
 }
 
 .guidebook-section-title {
   font-size: 24px;
-  font-family: 'CircularStd-Bold', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-bold', Helvetica, sans-serif;
   margin-bottom: 30px;
 }
 
@@ -167,7 +167,7 @@
 
 .guidebook-shortcut-category-title {
   font-size: 20px;
-  font-family: 'CircularStd-Bold', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-bold', Helvetica, sans-serif;
   margin-bottom: 24px;
   margin-left: 10px;
 }
@@ -182,7 +182,7 @@
 }
 
 .guidebook-shortcut-key {
-  font-family: 'CircularStd-Bold', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-bold', Helvetica, sans-serif;
 }
 
 .guidebook-shortcut-title {

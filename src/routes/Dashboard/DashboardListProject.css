@@ -34,8 +34,8 @@
 }
 
 .dashboard-list-project-name {
-  font-size: 24px;
-  font-family: 'CircularStd-Bold', Helvetica, sans-serif;
+  font-size: 22px;
+  font-family: 'hk-grotesk-extrabold', Helvetica, sans-serif;
   text-decoration: none;
   color: #535353;
   display: block;
@@ -49,7 +49,7 @@
 }
 
 .dashboard-list-project-member-count {
-  font-family: 'CircularStd-Book', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-medium', Helvetica, sans-serif;
   font-size: 16px;
   color: #bcbcbc;
 }
@@ -58,7 +58,7 @@
 
 .dashboard-list-project-entry-points {
   margin-top: 10px;
-  font-family: 'CircularStd-Book', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-medium', Helvetica, sans-serif;
   margin-left: 82px;
 }
 
@@ -129,7 +129,7 @@
   border: 1.5px solid #d0d0d0;
   border-radius: 30px;
   font-size: 12px;
-  padding: 6px 14px;
+  padding: 6px 14px 8px;
   text-align: center;
   cursor: pointer;
   margin-bottom: 10px;

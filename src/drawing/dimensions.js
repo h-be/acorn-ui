@@ -1,5 +1,5 @@
 export const CONNECTOR_VERTICAL_SPACING = 20
-export const avatarSpace = 14
+export const avatarSpace = 10
 export const avatarWidth = 24
 export const avatarHeight = 24
 export const avatarRadius = 12
@@ -14,7 +14,7 @@ export const textBoxWidth = 310
 export const fontSize = '20px'
 export const fontSizeInt = 20
 export const lineSpacing = fontSizeInt / 5 // slice off px from font size to get font height as number
-export const fontFamily = 'CircularStd-book'
+export const fontFamily = 'hk-grotesk-medium'
 
 // line wrapping code from https://stackoverflow.com/questions/2936112/
 function getLines(ctx, text, maxWidth) {
