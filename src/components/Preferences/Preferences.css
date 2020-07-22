@@ -2,7 +2,7 @@
   font-size: 20px;
   line-height: 28px;
   color: #4d4d4d;
-  font-family: 'gilroyextrabold', 'CircularStd-Bold', Helvetica, sans-serif;
+  font-family: 'gilroyextrabold', 'gilroyextrabold', Helvetica, sans-serif;
   text-align: center;
   margin-bottom: 20px;
 }
@@ -28,7 +28,7 @@
 .preferences-section-title {
   font-size: 18px;
   line-height: 24px;
-  font-family: 'CircularStd-Bold', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-bold', Helvetica, sans-serif;
   color: #222222;
   display: flex;
   flex-direction: row;
@@ -51,9 +51,9 @@
 }
 
 .navigation-mode-option {
-  font-size: 18px;
+  font-size: 16px;
   line-height: 22px;
-  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-medium', Helvetica, sans-serif;
   color: #222222;
   text-align: center;
   border: 1px solid #e3e3e3;
@@ -121,7 +121,7 @@
 .navigation-mode-description-title {
   font-size: 16px;
   line-height: 20px;
-  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-semibold', Helvetica, sans-serif;
   color: #222222;
   margin-left: 10px;
 }

@@ -153,7 +153,7 @@ export default function render(
     ctx.drawImage(img, xImgDraw, yImgDraw, calendarWidth, calendarHeight)
     ctx.save()
     ctx.fillStyle = '#898989'
-    ctx.font = '13px CircularStd-book'
+    ctx.font = '13px hk-grotesk-medium'
     ctx.fillText(text, textBoxLeft, textBoxTop)
     ctx.restore()
   }
@@ -187,7 +187,7 @@ export default function render(
       ctx.restore()
       ctx.save()
       ctx.fillStyle = '#FFF'
-      ctx.font = '11px CircularStd-book'
+      ctx.font = '11px hk-grotesk-medium'
       ctx.fillText(initials, xAvatarDraw + 5, yAvatarDraw + 7)
       ctx.restore()
       return
