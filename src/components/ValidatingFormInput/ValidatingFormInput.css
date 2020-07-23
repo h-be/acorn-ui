@@ -9,7 +9,7 @@
   display: flex;
   flex-direction: column;
   text-align: left;
-  font-family: 'CircularStd-book', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-medium', Helvetica, sans-serif;
 }
 
 .validating_form_input label {
@@ -18,7 +18,7 @@
   font-size: 14px;
   margin-bottom: 7px;
   display: block;
-  font-family: 'CircularStd-Medium';
+  font-family: 'hk-grotesk-bold';
 }
 
 .validating_form_input .help_text {
@@ -39,13 +39,13 @@
   border: 1.2px solid #e2e2e2;
   outline: none;
   font-size: 14px;
-  line-height: 16px;
+  line-height: 21px;
   color: #222222;
   padding: 11px;
   border-radius: 8px;
   display: block;
   flex: 1;
-  font-family: 'CircularStd-book', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-medium', Helvetica, sans-serif;
   height: 16px;
   transition: border 0.1s ease-in;
 }
@@ -59,14 +59,15 @@
 }
 
 .validating_form_input input.with_at_symbol {
-  padding-left: 24px;
+  padding-left: 26px;
 }
 
 .validating_form_input .at_symbol {
   position: absolute;
-  top: 11px;
+  top: 8px;
   left: 11px;
 }
+
 .error_text {
   color: #ff5d36;
   font-size: 12px;

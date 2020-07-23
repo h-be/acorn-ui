@@ -1,5 +1,5 @@
 .comments {
-  font-family: 'CircularStd-book', Helvetica, Sans-Serif;
+  font-family: 'hk-grotesk-medium', Helvetica, Sans-Serif;
 }
 
 .comments_avatarANDInput_wrapper {
@@ -45,9 +45,10 @@
   padding: 10px 10px 10px 14px;
   flex: 1;
   font-size: 13.5px;
-  font-family: 'CircularStd-book', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-medium', Helvetica, sans-serif;
   resize: none;
   background: transparent;
+  line-height: 16px;
 }
 
 .input_comment_wrapper {
@@ -73,6 +74,7 @@
 
 .comment_save_button > .icon .inner-icon {
   background: #00beb0;
+  transition: background 0.2s ease;
 }
 
 .avatar_commenet_container {
@@ -105,7 +107,7 @@
   color: #4e566f;
   font-size: 11px;
   line-height: 13px;
-  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-medium', Helvetica, sans-serif;
   margin-right: 10px;
 }
 

@@ -15,19 +15,10 @@
   margin: 0 auto;
 }
 
-.project-empty-state h1 {
-  font-family: 'gilroyextrabold', Helvetica, Sans-Serif;
-  font-weight: normal;
-  font-size: 27px;
-  letter-spacing: 1.05px;
-  margin-top: 25px;
-}
-
 .project-empty-state-text {
-  font-family: 'CircularStd-Book', Helvetica, sans-serif;
-  font-weight: normal;
+  font-family: 'hk-grotesk-medium', Helvetica, sans-serif;
   margin: 20px auto;
   color: #4d4d4d;
-  width: 350px;
-  line-height: 32px;
+  width: 300px;
+  line-height: 28px;
 }

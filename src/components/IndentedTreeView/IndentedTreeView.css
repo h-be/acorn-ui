@@ -23,7 +23,7 @@
   outline: 0;
   padding: 2px;
   margin-left: 6px;
-  font-family: 'CircularStd-book', Helvetica, Sans-Serif;
+  font-family: 'hk-grotesk-medium', Helvetica, Sans-Serif;
   flex: 1;
 }
 
@@ -37,7 +37,7 @@
 
 .indented-view-goal {
   margin-top: 8px;
-  font-family: 'CircularStd-Medium', Helvetica, sans-serif;
+  font-family: 'hk-grotesk-medium', Helvetica, sans-serif;
   font-size: 13px;
   line-height: 17px;
   color: #4d4d4d;
@@ -94,7 +94,7 @@
 .indented-view-goal-content:focus {
   color: #5f65ff;
   background: #f9f9f9;
-  font-family: 'CircularStd-Bold';
+  font-family: 'gilroyextrabold';
 }
 
 .indented-view-nested-goal {

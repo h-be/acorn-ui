@@ -26,7 +26,7 @@ function Footer() {
     <div className='footer' ref={ref}>
       <div className='bottom-left-panel'>
         <a
-          href='https://github.com/h-be/acorn-release/issues/new'
+          href='https://github.com/h-be/acorn-release/issues/new?assignees=&labels=bug&template=bug_report.md&title='
           target='_blank'>
           <Button text='Report Issue' size='small' className='green' />
         </a>
