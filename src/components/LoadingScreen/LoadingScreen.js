@@ -2,7 +2,6 @@ import React from 'react'
 import './LoadingScreen.css'
 
 function LoadingScreen() {
-  throw new Error('eh')
   return (
     <div className='loading_screen_wrapper'>
       <div className='loading_screen'>
