@@ -73,7 +73,8 @@ function MapView({
       <div className='transform-container' style={transform}>
         {goalFormIsOpen && <GoalForm projectId={projectId} />}
         {hasHover && <HoverOverlay onExpandClick={openExpandedView} />}
-        <EdgeConnectors canvas={refCanvas.current} />
+        {/* an undefined value of refCanvas.current was causing a crash, due to canvas prop being undefined */}
+        {refCanvas.current && <EdgeConnectors canvas={refCanvas.current} />}
       </div>
       <MultiEditBar projectId={projectId} hasSelection={hasSelection} />
       <ExpandedViewMode projectId={projectId} onClose={closeExpandedView} />
