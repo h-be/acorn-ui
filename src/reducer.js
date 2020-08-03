@@ -9,7 +9,7 @@ of how ACTIONS affect STATE
 import { combineReducers } from 'redux'
 
 import agents from './agents/reducer'
-import whoami from './who-am-i/reducer'
+import whoami, { hasFetchedForWhoami } from './who-am-i/reducer'
 import agentAddress from './agent-address/reducer'
 import projects from './projects/reducer'
 import goalForm from './goal-form/reducer'
@@ -34,6 +34,7 @@ export default combineReducers({
   whoami,
   agentAddress,
   ui: combineReducers({
+    hasFetchedForWhoami,
     edgeConnector,
     localPreferences,
     goalForm,

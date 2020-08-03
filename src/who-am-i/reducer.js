@@ -22,3 +22,13 @@ export default function(state = defaultState, action) {
       return state
   }
 }
+
+export function hasFetchedForWhoami(state = false, action) {
+  const { type } = action
+  switch (type) {
+    case whoami.success().type:
+      return true
+    default:
+      return state
+  }
+}
