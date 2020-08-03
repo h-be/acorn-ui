@@ -30,6 +30,7 @@ function App(props) {
     projectName,
     agentAddress,
     whoami, // .entry and .address
+    hasFetchedForWhoami,
     updateWhoami,
     navigationPreference,
     setNavigationPreference,
@@ -86,7 +87,7 @@ function App(props) {
           setShowPreferences={setShowPreferences}
         />
         {!agentAddress && <LoadingScreen />}
-        {agentAddress && !whoami && <Redirect to='/intro' />}
+        {agentAddress && hasFetchedForWhoami && !whoami && <Redirect to='/intro' />}
         {agentAddress && whoami && <Footer />}
       </Router>
     </ErrorBoundaryScreen>
@@ -123,6 +124,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
   const {
     ui: {
+      hasFetchedForWhoami,
       activeProject,
       activeEntryPoints,
       localPreferences: { navigation },
@@ -148,6 +150,7 @@ function mapStateToProps(state) {
     activeEntryPoints: activeEntryPointsObjects,
     projectName,
     whoami: state.whoami,
+    hasFetchedForWhoami,
     agentAddress: state.agentAddress,
     navigationPreference: navigation,
   }
