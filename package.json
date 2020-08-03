@@ -1,6 +1,6 @@
 {
   "name": "acorn-ui",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "description": "the most wonderful state of affairs tree",
   "scripts": {
     "start": "webpack-dev-server --open --config webpack.dev.js",
