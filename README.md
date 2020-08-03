@@ -46,7 +46,7 @@ nix-shell --run acorn-build
 Pass a version of acorn-hc release to build for that specific one (there is a default fallback)
 
 ```shell
-nix-shell --run 'acorn-build 0.3.3'
+nix-shell --run 'acorn-build 0.3.5'
 ```
 
 This will produce a file under `dist/acorn-ui.zip` with all the assets
