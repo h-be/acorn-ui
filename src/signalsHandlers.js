@@ -36,7 +36,7 @@ export default function (store, onSignal) {
       // rawSignal.type === 'InstanceStats'
       return
     }
-    if (typeof rawSignal.signal === 'object') {
+    if (rawSignal.signal.signal_type !== 'User') {
       // this is the case with 'trace' type
       // signals that come from the conductor
       return

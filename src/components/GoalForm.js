@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import TextareaAutosize from 'react-textarea-autosize'
 
 import { createGoal, updateGoal } from '../projects/goals/actions'
-import { createEdge } from '../projects/edges/actions'
 import { closeGoalForm, updateContent } from '../goal-form/actions'
 import layoutFormula from '../drawing/layoutFormula'
 import { goalWidth } from '../drawing/dimensions'
@@ -95,7 +94,10 @@ class GoalForm extends Component {
         status: 'Uncertain',
         description: '',
       },
-      this.props.parentAddress
+      this.props.parentAddress ? {
+        parent_address: this.props.parentAddress,
+        randomizer: Date.now()
+      } : null
     )
   }
   updateGoal() {
@@ -172,7 +174,6 @@ GoalForm.propTypes = {
   yLoc: PropTypes.number.isRequired,
   createGoal: PropTypes.func.isRequired,
   updateGoal: PropTypes.func.isRequired,
-  createEdge: PropTypes.func.isRequired,
   closeGoalForm: PropTypes.func.isRequired,
 }
 
@@ -229,16 +230,13 @@ function mapDispatchToProps(dispatch, ownProps) {
     updateContent: content => {
       dispatch(updateContent(content))
     },
-    createGoal: (goal, maybe_parent_address) => {
+    createGoal: (goal, maybe_goal_edge_input) => {
       return dispatch(
-        createGoal(projectId).create({ goal, maybe_parent_address })
+        createGoal(projectId).create({ goal, maybe_goal_edge_input })
       )
     },
     updateGoal: (goal, address) => {
       return dispatch(updateGoal(projectId).create({ goal, address }))
-    },
-    createEdge: edge => {
-      return dispatch(createEdge(projectId).create({ edge }))
     },
     closeGoalForm: () => {
       dispatch(closeGoalForm())

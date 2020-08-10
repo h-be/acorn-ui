@@ -183,6 +183,7 @@ function mapDispatchToProps(dispatch) {
               edge: {
                 child_address: childAddress,
                 parent_address: parentAddress,
+                randomizer: Date.now(),
               },
             })
           )
