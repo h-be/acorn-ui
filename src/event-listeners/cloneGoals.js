@@ -25,7 +25,7 @@ export default function cloneGoals(store) {
             ...goals[value],
             timestamp_created: moment().unix(),
           },
-          maybe_parent_address: null,
+          maybe_goal_edge_input: null,
         })
       )
       .then(value => {
