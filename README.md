@@ -37,6 +37,10 @@ nix-shell --run acorn-ui
 
 #### Building For Release
 
+To set the version number for the release:
+1. update the `version.current` and `version.previous` properties of `config.nix`
+2. update the `version` property of `package.json` to the same thing as `version.current`
+
 Use the nix shell.
 
 ```shell
