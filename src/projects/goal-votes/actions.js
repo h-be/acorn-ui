@@ -5,7 +5,7 @@
   that can be taken within that feature.
 */
 
-import { createHolochainZomeCallAsyncAction } from 'connoropolous-hc-redux-middleware'
+import { createZomeCallAsyncAction } from 'connoropolous-hc-redux-middleware'
 
 import { PROJECTS_ZOME_NAME } from '../../holochainConfig'
 
@@ -16,28 +16,28 @@ const FETCH_GOAL_VOTES = 'fetch_goal_votes'
 const UPDATE_GOAL_VOTE = 'update_goal_vote'
 
 const addVoteOfGoal = instanceId =>
-  createHolochainZomeCallAsyncAction(
+  createZomeCallAsyncAction(
     instanceId,
     PROJECTS_ZOME_NAME,
     ADD_VOTE_OF_GOAL
   )
 
 const archiveVoteOfGoal = instanceId =>
-  createHolochainZomeCallAsyncAction(
+  createZomeCallAsyncAction(
     instanceId,
     PROJECTS_ZOME_NAME,
     ARCHIVE_VOTE_OF_GOAL
   )
 
 const fetchGoalVotes = instanceId =>
-  createHolochainZomeCallAsyncAction(
+  createZomeCallAsyncAction(
     instanceId,
     PROJECTS_ZOME_NAME,
     FETCH_GOAL_VOTES
   )
 
 const updateGoalVote = instanceId =>
-  createHolochainZomeCallAsyncAction(
+  createZomeCallAsyncAction(
     instanceId,
     PROJECTS_ZOME_NAME,
     UPDATE_GOAL_VOTE

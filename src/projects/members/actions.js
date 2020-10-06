@@ -5,7 +5,7 @@
   that can be taken within that feature.
 */
 
-import { createHolochainZomeCallAsyncAction } from 'connoropolous-hc-redux-middleware'
+import { createZomeCallAsyncAction } from 'connoropolous-hc-redux-middleware'
 
 import { PROJECTS_ZOME_NAME } from '../../holochainConfig'
 
@@ -26,7 +26,7 @@ const setMember = (instanceId, member) => {
 }
 
 const fetchMembers = instanceId =>
-  createHolochainZomeCallAsyncAction(
+  createZomeCallAsyncAction(
     instanceId,
     PROJECTS_ZOME_NAME,
     FETCH_MEMBERS

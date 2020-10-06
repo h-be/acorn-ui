@@ -1,4 +1,4 @@
-import { createHolochainZomeCallAsyncAction } from 'connoropolous-hc-redux-middleware'
+import { createZomeCallAsyncAction } from 'connoropolous-hc-redux-middleware'
 
 import { PROJECTS_ZOME_NAME } from '../../holochainConfig'
 
@@ -6,7 +6,7 @@ import { PROJECTS_ZOME_NAME } from '../../holochainConfig'
 const HISTORY_OF_GOAL = 'history_of_goal'
 
 const fetchGoalHistory = instanceId =>
-  createHolochainZomeCallAsyncAction(
+  createZomeCallAsyncAction(
     instanceId,
     PROJECTS_ZOME_NAME,
     HISTORY_OF_GOAL

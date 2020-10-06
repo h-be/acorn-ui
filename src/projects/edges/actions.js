@@ -5,7 +5,7 @@
   that can be taken within that feature.
 */
 
-import { createHolochainZomeCallAsyncAction } from 'connoropolous-hc-redux-middleware'
+import { createZomeCallAsyncAction } from 'connoropolous-hc-redux-middleware'
 
 import { PROJECTS_ZOME_NAME } from '../../holochainConfig'
 
@@ -38,28 +38,28 @@ const clearEdgesPreview = instanceId => {
 }
 
 const createEdge = instanceId =>
-  createHolochainZomeCallAsyncAction(
+  createZomeCallAsyncAction(
     instanceId,
     PROJECTS_ZOME_NAME,
     CREATE_EDGE
   )
 
 const updateEdge = instanceId =>
-  createHolochainZomeCallAsyncAction(
+  createZomeCallAsyncAction(
     instanceId,
     PROJECTS_ZOME_NAME,
     UPDATE_EDGE
   )
 
 const fetchEdges = instanceId =>
-  createHolochainZomeCallAsyncAction(
+  createZomeCallAsyncAction(
     instanceId,
     PROJECTS_ZOME_NAME,
     FETCH_EDGES
   )
 
 const archiveEdge = instanceId =>
-  createHolochainZomeCallAsyncAction(
+  createZomeCallAsyncAction(
     instanceId,
     PROJECTS_ZOME_NAME,
     ARCHIVE_EDGE

@@ -5,16 +5,17 @@
   that can be taken within that feature.
 */
 
-import { createHolochainZomeCallAsyncAction } from 'connoropolous-hc-redux-middleware'
+import { createZomeCallAsyncAction } from 'connoropolous-hc-redux-middleware'
 
-import { PROFILES_INSTANCE_NAME, PROFILES_ZOME_NAME } from '../holochainConfig'
+import { PROFILES_INSTANCE_NAME, PROFILES_ZOME_NAME, cell_id } from '../holochainConfig'
 
 /* action creator functions */
 
-const fetchAgentAddress = createHolochainZomeCallAsyncAction(
-  PROFILES_INSTANCE_NAME,
+const fetchAgentAddress = createZomeCallAsyncAction(
+  cell_id,
   PROFILES_ZOME_NAME,
-  'fetch_agent_address'
+  'fetch_agent_address',
+  cell_id[1]
 )
 
 export { fetchAgentAddress }

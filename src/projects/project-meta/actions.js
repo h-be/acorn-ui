@@ -1,4 +1,4 @@
-import { createHolochainZomeCallAsyncAction } from 'connoropolous-hc-redux-middleware'
+import { createZomeCallAsyncAction } from 'connoropolous-hc-redux-middleware'
 
 import { PROJECTS_ZOME_NAME } from '../../holochainConfig'
 
@@ -7,21 +7,21 @@ const UPDATE_PROJECT_META = 'update_project_meta'
 const FETCH_PROJECT_META = 'fetch_project_meta'
 
 const createProjectMeta = instanceId =>
-  createHolochainZomeCallAsyncAction(
+  createZomeCallAsyncAction(
     instanceId,
     PROJECTS_ZOME_NAME,
     CREATE_PROJECT_META
   )
 
 const updateProjectMeta = instanceId =>
-  createHolochainZomeCallAsyncAction(
+  createZomeCallAsyncAction(
     instanceId,
     PROJECTS_ZOME_NAME,
     UPDATE_PROJECT_META
   )
 
 const fetchProjectMeta = instanceId =>
-  createHolochainZomeCallAsyncAction(
+  createZomeCallAsyncAction(
     instanceId,
     PROJECTS_ZOME_NAME,
     FETCH_PROJECT_META

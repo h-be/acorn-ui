@@ -5,7 +5,7 @@
   that can be taken within that feature.
 */
 
-import { createHolochainZomeCallAsyncAction } from 'connoropolous-hc-redux-middleware'
+import { createZomeCallAsyncAction } from 'connoropolous-hc-redux-middleware'
 
 import { PROJECTS_ZOME_NAME } from '../../holochainConfig'
 
@@ -17,21 +17,21 @@ const ARCHIVE_ENTRY_POINT = 'archive_entry_point'
 /* action creator functions */
 
 const createEntryPoint = instanceId =>
-  createHolochainZomeCallAsyncAction(
+  createZomeCallAsyncAction(
     instanceId,
     PROJECTS_ZOME_NAME,
     CREATE_ENTRY_POINT
   )
 
 const fetchEntryPoints = instanceId =>
-  createHolochainZomeCallAsyncAction(
+  createZomeCallAsyncAction(
     instanceId,
     PROJECTS_ZOME_NAME,
     FETCH_ENTRY_POINTS
   )
 
 const archiveEntryPoint = instanceId =>
-  createHolochainZomeCallAsyncAction(
+  createZomeCallAsyncAction(
     instanceId,
     PROJECTS_ZOME_NAME,
     ARCHIVE_ENTRY_POINT
