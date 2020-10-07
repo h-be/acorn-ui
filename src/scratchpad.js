@@ -17,3 +17,20 @@
 
 
 */
+
+
+
+/*
+
+Refactfor for RSM TODO
+
+
+Decsribe the problem...
+
+createZomeCallAsyncAction requires being called KNOWING the CellId, which includes
+knowing the DNA hash, and the AgentPubKey
+
+during "compile-time" we don't know these details...
+
+
+*/

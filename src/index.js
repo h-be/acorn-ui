@@ -14,15 +14,14 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
 import { holochainMiddleware } from 'connoropolous-hc-redux-middleware'
+import { cellIdToString } from 'connoropolous-hc-redux-middleware/build/main/lib/actionCreator'
+import { AppWebsocket } from '@holochain/conductor-api'
 
 // Local Imports
-import {
-  DEVELOPMENT_HOLOCHAIN_PORT,
-  PRODUCTION_HOLOCHAIN_PORT,
-  DEFAULT_HOLOCHAIN_HOST,
-} from './holochainConfig'
+import { TEST_APP_ID, PROFILES_DNA_NAME } from './holochainConfig'
 import acorn from './reducer'
 import signalsHandlers from './signalsHandlers'
+import { setProfilesCellId } from './cells/actions'
 import { fetchAgents } from './agents/actions'
 import {
   fetchProjectsDnas,
@@ -32,13 +31,14 @@ import { whoami } from './who-am-i/actions'
 import { fetchAgentAddress } from './agent-address/actions'
 import App from './routes/App'
 
+// TODO: place this elsewhere
+// and make it differentiate between production and
+// development modes
 const urlConfig = {
   appUrl: 'ws://localhost:8888',
   adminUrl: 'ws://localhost:1234',
 }
 
-// holochainMiddleware takes in the hc-web-client websocket connection
-// and uses it to facilitate the calls to Holochain
 const middleware = [holochainMiddleware(urlConfig)]
 
 // This enables the redux-devtools browser extension
@@ -57,11 +57,20 @@ let store = createStore(
 //   signalsHandlers(store, onSignal)
 // })
 
+AppWebsocket.connect(urlConfig.appUrl).then(async client => {
+  const info = await client.appInfo({ app_id: TEST_APP_ID })
+  const [cellId, _] = info.cell_data.find(
+    ([cellId, dnaName]) => dnaName === PROFILES_DNA_NAME
+  )
+  const cellIdString = cellIdToString(cellId)
+  store.dispatch(setProfilesCellId(cellIdString))
+  store.dispatch(fetchAgents.create({ cellIdString, payload: null }))
+  store.dispatch(whoami.create({ cellIdString, payload: null }))
+  store.dispatch(fetchAgentAddress.create({ cellIdString, payload: null }))
+})
+
 // store.dispatch(fetchProjectsDnas.create(null))
 // store.dispatch(fetchProjectsInstances.create(null))
-store.dispatch(fetchAgents.create(null))
-store.dispatch(whoami.create(null))
-store.dispatch(fetchAgentAddress.create(null))
 
 // By passing the `store` in as a wrapper around our React component
 // we make the state available throughout it

@@ -7,7 +7,7 @@
 
 import { createZomeCallAsyncAction } from 'connoropolous-hc-redux-middleware'
 
-import { PROFILES_INSTANCE_NAME, PROFILES_ZOME_NAME, cell_id } from '../holochainConfig'
+import { PROFILES_ZOME_NAME } from '../holochainConfig'
 
 // SET because it could be brand new, or an update, but treat it the same way
 const SET_AGENT = 'set_agent'
@@ -22,10 +22,8 @@ const setAgent = agent => {
 }
 
 const fetchAgents = createZomeCallAsyncAction(
-  cell_id,
   PROFILES_ZOME_NAME,
-  'fetch_agents',
-  cell_id[1]
+  'fetch_agents'
 )
 
 export { SET_AGENT, setAgent, fetchAgents }

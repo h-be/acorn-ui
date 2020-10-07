@@ -41,16 +41,35 @@ CreateProfilePage.propTypes = {
 
 function mapDispatchToProps(dispatch) {
   return {
-    createWhoami: profile => {
-      return dispatch(createWhoami.create({ profile }))
-    },
+    dispatch,
   }
 }
 
 function mapStateToProps(state) {
   return {
     agentAddress: state.agentAddress,
+    profileCellIdString: state.cells.profiles,
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateProfilePage)
+function mergeProps(stateProps, dispatchProps, _ownProps) {
+  const { agentAddress, profileCellIdString } = stateProps
+  const { dispatch } = dispatchProps
+  return {
+    agentAddress,
+    createWhoami: profile => {
+      return dispatch(
+        createWhoami.create({
+          payload: profile,
+          cellIdString: profileCellIdString,
+        })
+      )
+    },
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps
+)(CreateProfilePage)

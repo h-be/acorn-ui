@@ -7,40 +7,20 @@
 
 import { createZomeCallAsyncAction } from 'connoropolous-hc-redux-middleware'
 
-import {
-  PROFILES_ZOME_NAME,
-  cell_id,
-} from '../holochainConfig'
+import { PROFILES_ZOME_NAME } from '../holochainConfig'
 
 /* action creator functions */
 
-const whoami = createZomeCallAsyncAction(
-  cell_id,
-  PROFILES_ZOME_NAME,
-  'whoami',
-  cell_id[1]
-)
+const whoami = createZomeCallAsyncAction(PROFILES_ZOME_NAME, 'whoami')
 
 const createWhoami = createZomeCallAsyncAction(
-  cell_id,
   PROFILES_ZOME_NAME,
-  'create_whoami',
-  cell_id[1]
+  'create_whoami'
 )
 
 const updateWhoami = createZomeCallAsyncAction(
-  cell_id,
   PROFILES_ZOME_NAME,
-  'update_whoami',
-  cell_id[1]
+  'update_whoami'
 )
 
-// TODO: remove me
-const updateStatus = createZomeCallAsyncAction(
-  cell_id,
-  PROFILES_ZOME_NAME,
-  'update_status',
-  cell_id[1]
-)
-
-export { whoami, createWhoami, updateWhoami, updateStatus }
+export { whoami, createWhoami, updateWhoami }
