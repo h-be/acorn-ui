@@ -8,6 +8,7 @@ of how ACTIONS affect STATE
 
 import { combineReducers } from 'redux'
 
+import cells from './cells/reducer'
 import agents from './agents/reducer'
 import whoami, { hasFetchedForWhoami } from './who-am-i/reducer'
 import agentAddress from './agent-address/reducer'
@@ -29,6 +30,7 @@ import edgeConnector from './edge-connector/reducer'
 
 // combine reducers from each feature to create the top-level reducer
 export default combineReducers({
+  cells,
   agents,
   projects,
   whoami,

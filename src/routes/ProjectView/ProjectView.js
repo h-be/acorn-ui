@@ -92,14 +92,32 @@ function mapDispatchToProps(dispatch, ownProps) {
       dispatch(unselectAll())
       dispatch(resetTranslateAndScale())
     },
-    fetchProjectMeta: () => dispatch(fetchProjectMeta(projectId).create({})),
-    fetchEntryPoints: () => dispatch(fetchEntryPoints(projectId).create({})),
-    fetchMembers: () => dispatch(fetchMembers(projectId).create({})),
-    fetchGoals: () => dispatch(fetchGoals(projectId).create({})),
-    fetchEdges: () => dispatch(fetchEdges(projectId).create({})),
-    fetchGoalMembers: () => dispatch(fetchGoalMembers(projectId).create({})),
-    fetchGoalVotes: () => dispatch(fetchGoalVotes(projectId).create({})),
-    fetchGoalComments: () => dispatch(fetchGoalComments(projectId).create({})),
+    fetchProjectMeta: () =>
+      dispatch(
+        fetchProjectMeta.create({ cellIdString: projectId, payload: null })
+      ),
+    fetchEntryPoints: () =>
+      dispatch(
+        fetchEntryPoints.create({ cellIdString: projectId, payload: null })
+      ),
+    fetchMembers: () =>
+      dispatch(fetchMembers.create({ cellIdString: projectId, payload: null })),
+    fetchGoals: () =>
+      dispatch(fetchGoals.create({ cellIdString: projectId, payload: null })),
+    fetchEdges: () =>
+      dispatch(fetchEdges.create({ cellIdString: projectId, payload: null })),
+    fetchGoalMembers: () =>
+      dispatch(
+        fetchGoalMembers.create({ cellIdString: projectId, payload: null })
+      ),
+    fetchGoalVotes: () =>
+      dispatch(
+        fetchGoalVotes.create({ cellIdString: projectId, payload: null })
+      ),
+    fetchGoalComments: () =>
+      dispatch(
+        fetchGoalComments.create({ cellIdString: projectId, payload: null })
+      ),
   }
 }
 

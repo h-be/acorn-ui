@@ -1,13 +1,15 @@
 import path from 'path'
 
-// defined in conductor-config.json and bundle.toml (for holoscape)
-export const INTERFACE_ID = 'Acorn-interface'
+// defined in conductor-config.json and bundle.toml
 export const PROFILES_INSTANCE_NAME = 'acorn-profiles-instance'
 export const PROFILES_ZOME_NAME = 'acorn_profiles'
 export const PROJECTS_ZOME_NAME = 'acorn_projects'
-export const DEFAULT_HOLOCHAIN_HOST = 'localhost'
 
-export const AGENT_ID = 'acorn-profiles-instance-agent'
+export const PROFILES_DNA_NAME = 'profiles.dna.gz'
+
+// THIS IS DEFINED IN holochain-run-dna
+// lib in use by acorn-hc
+export const PROFILES_APP_ID = 'test-app'
 
 // this will error if not in a nodejs/electron runtime
 // which is the desired behaviour
@@ -32,14 +34,11 @@ const getProjectsDnaPath = () => {
     // as is the case during development
     const appDataDir = getAppDataDir()
     // replaced by webpack based on build environment variables
-    const PROJECTS_DNA_ADDRESS = __PROJECTS_DNA_ADDRESS__
-    // this is based on the behaviour of Holoscape
-    // and then mirrored as behaviour within standalone
-    dna_path = path.join(appDataDir, 'dna', `${PROJECTS_DNA_ADDRESS}.dna.json`)
+    dna_path = path.join(appDataDir, 'dna', `projects.dna.gz`)
   } catch (e) {
     // associated with acorn-hc and a development
     // environment
-    dna_path = './dnas/projects/dist/projects.dna.json'
+    dna_path = './dnas/projects/projects.dna.gz'
     console.log(
       'Not within an electron environment, falling back to default PROJECTS_DNA_PATH: ' +
         dna_path

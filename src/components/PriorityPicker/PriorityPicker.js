@@ -9,8 +9,8 @@ import moment from 'moment'
 import Slider from '@material-ui/core/Slider'
 import { makeStyles } from '@material-ui/core/styles'
 import {
-  addVoteOfGoal,
-  archiveVoteOfGoal,
+  createGoalVote,
+  archiveGoalVote,
   updateGoalVote,
 } from '../../projects/goal-votes/actions'
 import { CSSTransition } from 'react-transition-group'
@@ -239,7 +239,7 @@ function Priority({
   whoami,
   updateGoalVote,
   votes,
-  archiveVoteOfGoal,
+  archiveGoalVote,
 }) {
   const [openMyVote, setOpenMyVote] = useState(openToMyVote)
 
@@ -298,7 +298,7 @@ function Priority({
     })
     if (!vote) return
     setOpenMyVote(false)
-    archiveVoteOfGoal(vote.address)
+    archiveGoalVote(vote.address)
     setValues(defaultValues)
   }
 
@@ -420,13 +420,13 @@ function mapDispatchToProps(dispatch, ownProps) {
   const { projectId } = ownProps
   return {
     createGoalVote: goal_vote => {
-      return dispatch(addVoteOfGoal(projectId).create(goal_vote))
+      return dispatch(createGoalVote(projectId).create(goal_vote))
     },
     updateGoalVote: (goal_vote, address) => {
       return dispatch(updateGoalVote(projectId).create({ goal_vote, address }))
     },
-    archiveVoteOfGoal: address => {
-      return dispatch(archiveVoteOfGoal(projectId).create({ address }))
+    archiveGoalVote: address => {
+      return dispatch(archiveGoalVote(projectId).create({ address }))
     },
   }
 }

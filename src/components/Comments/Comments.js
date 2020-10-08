@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import {
-  addCommentOfGoal,
+  createGoalComment,
   fetchGoalComments,
-  archiveCommentOfGoal,
+  archiveGoalComment,
   updateGoalComment,
 } from '../../projects/goal-comments/actions'
 
@@ -56,7 +56,7 @@ function Comments({
   lastName,
   agents,
   comments,
-  addCommentOfGoal,
+  createGoalComment,
   avatarAddress,
 }) {
   const [value, setValue] = useState('')
@@ -65,7 +65,7 @@ function Comments({
     if (value === '') {
       return
     }
-    addCommentOfGoal({
+    createGoalComment({
       goal_address: goalAddress,
       content: value,
       agent_address: avatarAddress,
@@ -136,11 +136,11 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch, ownProps) {
   const { projectId } = ownProps
   return {
-    addCommentOfGoal: goal_comment => {
-      return dispatch(addCommentOfGoal(projectId).create({ goal_comment }))
+    createGoalComment: goal_comment => {
+      return dispatch(createGoalComment(projectId).create({ goal_comment }))
     },
-    archiveCommentOfGoal: address => {
-      return dispatch(archiveCommentOfGoal(projectId).create({ address }))
+    archiveGoalComment: address => {
+      return dispatch(archiveGoalComment(projectId).create({ address }))
     },
     updateGoalComment: (goal_comment, address) => {
       return dispatch(

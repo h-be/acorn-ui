@@ -2,38 +2,34 @@ import React, { useState, useEffect } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
+
 import './Dashboard.css'
 import Icon from '../../components/Icon/Icon'
 import DashboardEmptyState from '../../components/DashboardEmptyState/DashboardEmptyState'
-
-import { passphraseToUuid } from '../../secrets'
 
 import CreateProjectModal from '../../components/CreateProjectModal/CreateProjectModal'
 import JoinProjectModal from '../../components/JoinProjectModal/JoinProjectModal'
 import InviteMembersModal from '../../components/InviteMembersModal/InviteMembersModal'
 // import new modals here
 
+import { PROJECTS_DNA_PATH } from '../../holochainConfig'
+import { passphraseToUuid } from '../../secrets'
+import { getAdminWs, getAgentPubKey } from '../../hcWebsockets'
 import { fetchEntryPoints } from '../../projects/entry-points/actions'
 import { fetchMembers } from '../../projects/members/actions'
 import {
   createProjectMeta,
   fetchProjectMeta,
 } from '../../projects/project-meta/actions'
-import {
-  createProjectDna,
-  createProjectInstance,
-  removeProjectInstance,
-  addInstanceToInterface,
-  startInstance,
-  fetchProjectsInstances,
-} from '../../projects/conductor-admin/actions'
 import selectEntryPoints from '../../projects/entry-points/select'
 
 import DashboardListProject from './DashboardListProject'
+import { addApp, addProjectAppId, getAllApps } from '../../projectAppIds'
+import { setProjectsCellIds } from '../../cells/actions'
 
 function Dashboard({
   agentAddress,
-  instances,
+  cells,
   projects,
   fetchEntryPoints,
   fetchMembers,
@@ -41,14 +37,14 @@ function Dashboard({
   createProject,
   joinProject,
 }) {
-  // instances is an array of instanceId strings
+  // cells is an array of cellId strings
   useEffect(() => {
-    instances.forEach(instanceId => {
-      fetchProjectMeta(instanceId)
-      fetchMembers(instanceId)
-      fetchEntryPoints(instanceId)
+    cells.forEach(cellId => {
+      fetchProjectMeta(cellId)
+      fetchMembers(cellId)
+      fetchEntryPoints(cellId)
     })
-  }, [JSON.stringify(instances)])
+  }, [JSON.stringify(cells)])
 
   // created_at, name
   const [selectedSort, setSelectedSort] = useState('created_at')
@@ -142,6 +138,7 @@ function Dashboard({
           <div className='my-projects-content'>
             {sortedProjects.map(project => (
               <DashboardListProject
+                key={project.cellId}
                 project={project}
                 setShowInviteMembersModal={setShowInviteMembersModal}
               />
@@ -175,136 +172,117 @@ function Dashboard({
   )
 }
 
-function timeoutCatcher(promise, namespace) {
-  // admin/instance/add and admin/interface/add_instance will trigger a refresh of the websocket connection, as it shuts down and restarts
-  // swallow the error if it is the to-be-expected timeout from this call
-  return promise.catch(error => {
-    if (typeof error === 'string') {
-      if (error.startsWith('Timeout occurred during ws call.')) {
-        return Promise.resolve()
-      } else {
-        Promise.reject(new Error(namespace + ': ' + error))
-      }
-    } else {
-      error.message = namespace + ': ' + error.message
-      return Promise.reject(error)
-    }
-  })
-}
-
-async function addDnaAndInstance(dispatch, passphrase) {
-  const random = Math.random()
-  const dnaId = `_acorn_projects_dna_${random}`
-  const instanceId = `_acorn_projects_instance_${random}`
+async function createProject(passphrase, projectMeta, dispatch) {
+  // const random = Math.random()
+  // const dnaId = `_acorn_projects_dna_${random}`
+  // const cellId = `_acorn_projects_instance_${random}`
   const uuid = passphraseToUuid(passphrase)
+  const app_id = uuid
+  const adminWs = await getAdminWs()
+  // PERSIST THIS TO LOCAL STORAGE
+  addProjectAppId(app_id)
+  const agent_key = getAgentPubKey()
+  if (!agent_key) {
+    throw new Error(
+      'Cannot create a new project because no AgentPubKey is known locally'
+    )
+  }
+  // INSTALL
+  const installedApp = await adminWs.installApp({
+    agent_key,
+    app_id,
+    dnas: [
+      {
+        nick: uuid,
+        path: PROJECTS_DNA_PATH,
+        properties: { uuid },
+      },
+    ],
+  })
+  // ACTIVATE
+  await adminWs.activateApp({ app_id })
+  // PERSIST THIS TO THE MEMORY CACHE OF INSTALLED APPS
+  const appInfo = addApp(installedApp)
+  const { cellIdString } = appInfo
+  await dispatch(
+    createProjectMeta.create({ cellIdString, payload: projectMeta })
+  )
 
-  const LOW_TIMEOUT = 3000
-  const HIGH_TIMEOUT = 20000
-
-  return dispatch(createProjectDna.create(dnaId, uuid))
-    .then(() =>
-      timeoutCatcher(
-        dispatch(createProjectInstance.create(instanceId, dnaId, HIGH_TIMEOUT)),
-        'creating project instance'
-      )
-    )
-    .then(() =>
-      timeoutCatcher(
-        dispatch(startInstance.create(instanceId, LOW_TIMEOUT)),
-        'starting project instance'
-      )
-    )
-    .then(() =>
-      timeoutCatcher(
-        dispatch(addInstanceToInterface.create(instanceId, LOW_TIMEOUT)),
-        'adding instance to interface'
-      )
-    )
-    .then(() => ({
-      dnaId,
-      instanceId,
-      uuid,
-    }))
+  // update the redux state
+  const allApps = await getAllApps()
+  const projectCellIds = Object.keys(allApps).map(
+    appId => allApps[appId].cellIdString
+  )
+  dispatch(setProjectsCellIds(projectCellIds))
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchEntryPoints: instanceId => {
-      return dispatch(fetchEntryPoints(instanceId).create({}))
+    fetchEntryPoints: cellIdString => {
+      return dispatch(fetchEntryPoints.create({ cellIdString, payload: null }))
     },
-    fetchMembers: instanceId => {
-      return dispatch(fetchMembers(instanceId).create({}))
+    fetchMembers: cellIdString => {
+      return dispatch(fetchMembers.create({ cellIdString, payload: null }))
     },
-    fetchProjectMeta: instanceId => {
-      return dispatch(fetchProjectMeta(instanceId).create({}))
+    fetchProjectMeta: cellIdString => {
+      return dispatch(fetchProjectMeta.create({ cellIdString, payload: null }))
     },
-    createProject: (agentAddress, project, passphrase) => {
+    createProject: async (agentAddress, project, passphrase) => {
       // matches the createProjectMeta fn and type signature
       const projectMeta = {
-        projectmeta: {
-          ...project, // name and image
-          passphrase,
-          creator_address: agentAddress,
-          created_at: Date.now(),
-        },
+        ...project, // name and image
+        passphrase,
+        creator_address: agentAddress,
+        created_at: Date.now(),
       }
-      return (
-        addDnaAndInstance(dispatch, passphrase)
-          .then(({ instanceId }) =>
-            dispatch(createProjectMeta(instanceId).create(projectMeta))
-          )
-          // this will cause the eventual refetch of Project Members and Entry Points,
-          // due to useEffect within Dashboard
-          .then(() => dispatch(fetchProjectsInstances.create({})))
-      )
+      await createProject(passphrase, projectMeta, dispatch)
     },
-    joinProject: passphrase => {
-      // joinProject
-      // join a DNA
-      // then try to get the project metadata
-      // if that DOESN'T work, the attempt is INVALID
-      // remove the instance again immediately
-      // we can't remove the DNA itself, but that's fine
-      return addDnaAndInstance(dispatch, passphrase).then(({ instanceId }) => {
-        const HIGH_TIMEOUT = 20000 // ms
-        return dispatch(
-          fetchProjectMeta(instanceId).create({}, HIGH_TIMEOUT)
-        ).catch(async e => {
-          if (
-            e &&
-            e.Err &&
-            e.Err.Internal &&
-            e.Err.Internal === 'no project meta exists'
-          ) {
-            // remove the instance again immediately, let the resolver know we did this, by returning false
-            await dispatch(removeProjectInstance.create(instanceId))
-            return false
-          } else {
-            dispatch(removeProjectInstance.create(instanceId))
-            // some unintended error
-            throw e
-          }
-        })
-      })
-    },
+    // joinProject: passphrase => {
+    //   // joinProject
+    //   // join a DNA
+    //   // then try to get the project metadata
+    //   // if that DOESN'T work, the attempt is INVALID
+    //   // remove the instance again immediately
+    //   // we can't remove the DNA itself, but that's fine
+    //   return addDnaAndInstance(dispatch, passphrase).then(({ cellId }) => {
+    //     const HIGH_TIMEOUT = 20000 // ms
+    //     return dispatch(
+    //       fetchProjectMeta(cellId).create({}, HIGH_TIMEOUT)
+    //     ).catch(async e => {
+    //       if (
+    //         e &&
+    //         e.Err &&
+    //         e.Err.Internal &&
+    //         e.Err.Internal === 'no project meta exists'
+    //       ) {
+    //         // remove the instance again immediately, let the resolver know we did this, by returning false
+    //         await dispatch(removeProjectInstance.create(cellId))
+    //         return false
+    //       } else {
+    //         dispatch(removeProjectInstance.create(cellId))
+    //         // some unintended error
+    //         throw e
+    //       }
+    //     })
+    //   })
+    // },
   }
 }
 
 function mapStateToProps(state) {
   return {
     agentAddress: state.agentAddress,
-    instances: Object.keys(state.projects.instances),
-    projects: Object.keys(state.projects.projectMeta).map(instanceId => {
-      const project = state.projects.projectMeta[instanceId]
-      const members = state.projects.members[instanceId] || {}
+    cells: state.cells.projects,
+    projects: Object.keys(state.projects.projectMeta).map(cellId => {
+      const project = state.projects.projectMeta[cellId]
+      const members = state.projects.members[cellId] || {}
       const memberProfiles = Object.keys(members).map(
         agentAddress => state.agents[agentAddress]
       )
-      const entryPoints = selectEntryPoints(state, instanceId)
+      const entryPoints = selectEntryPoints(state, cellId)
       return {
         ...project,
-        image: project.image,
-        instanceId: instanceId,
+        cellId,
         members: memberProfiles,
         entryPoints,
       }

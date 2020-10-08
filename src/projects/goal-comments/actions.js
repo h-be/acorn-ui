@@ -1,48 +1,16 @@
-import { createHolochainZomeCallAsyncAction } from 'connoropolous-hc-redux-middleware'
-
 import { PROJECTS_ZOME_NAME } from '../../holochainConfig'
+import { createCrudActionCreators } from '../../crudRedux'
 
-/* action creator functions */
-const ADD_COMMENT_OF_GOAL = 'add_comment_of_goal'
-const ARCHIVE_COMMENT_OF_GOAL = 'archive_comment_of_goal'
-const FETCH_GOAL_COMMENTS = 'fetch_goal_comments'
-const UPDATE_GOAL_COMMENT = 'update_goal_comment'
-
-const addCommentOfGoal = instanceId =>
-  createHolochainZomeCallAsyncAction(
-    instanceId,
-    PROJECTS_ZOME_NAME,
-    ADD_COMMENT_OF_GOAL
-  )
-
-const archiveCommentOfGoal = instanceId =>
-  createHolochainZomeCallAsyncAction(
-    instanceId,
-    PROJECTS_ZOME_NAME,
-    ARCHIVE_COMMENT_OF_GOAL
-  )
-
-const fetchGoalComments = instanceId =>
-  createHolochainZomeCallAsyncAction(
-    instanceId,
-    PROJECTS_ZOME_NAME,
-    FETCH_GOAL_COMMENTS
-  )
-
-const updateGoalComment = instanceId =>
-  createHolochainZomeCallAsyncAction(
-    instanceId,
-    PROJECTS_ZOME_NAME,
-    UPDATE_GOAL_COMMENT
-  )
+const [
+  createGoalComment,
+  fetchGoalComments,
+  updateGoalComment,
+  archiveGoalComment,
+] = createCrudActionCreators(PROJECTS_ZOME_NAME, 'goal_comment')
 
 export {
-  ADD_COMMENT_OF_GOAL,
-  ARCHIVE_COMMENT_OF_GOAL,
-  FETCH_GOAL_COMMENTS,
-  UPDATE_GOAL_COMMENT,
-  addCommentOfGoal,
+  createGoalComment,
   fetchGoalComments,
-  archiveCommentOfGoal,
   updateGoalComment,
+  archiveGoalComment,
 }

@@ -1,27 +1,29 @@
 import _ from 'lodash'
 
-import { HISTORY_OF_GOAL } from './actions'
-import { typeSuccess, instanceIdFromActionType } from '../action_type_checker'
+import { fetchGoalHistory } from './actions'
 
 const defaultState = {}
 
-export default function(state = defaultState, action) {
+export default function (state = defaultState, action) {
   const { payload, type } = action
 
-  const instanceId = instanceIdFromActionType(type)
-
-  // HISTORY_OF_GOAL
-  if (typeSuccess(type, HISTORY_OF_GOAL)) {
-    return {
-      ...state,
-      [instanceId]: {
-        ...state[instanceId],
-        [payload.address]: payload,
-      },
-    }
+  let cellId
+  if (action.meta && action.meta.cellIdString) {
+    cellId = action.meta.cellIdString
   }
-  // DEFAULT
-  else {
-    return state
+
+  switch (type) {
+    // HISTORY_OF_GOAL
+    case fetchGoalHistory.success().type:
+      return {
+        ...state,
+        [cellId]: {
+          ...state[cellId],
+          [payload.address]: payload,
+        },
+      }
+    // DEFAULT
+    default:
+      return state
   }
 }

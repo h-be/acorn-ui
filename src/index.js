@@ -7,43 +7,36 @@
 */
 
 // Library Imports
+import 'core-js/stable'
+import 'regenerator-runtime/runtime'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
-import { connect } from 'connoropolous-hc-web-client'
 import { holochainMiddleware } from 'connoropolous-hc-redux-middleware'
+import { cellIdToString } from 'connoropolous-hc-redux-middleware/build/main/lib/actionCreator'
 
 // Local Imports
-import {
-  DEVELOPMENT_HOLOCHAIN_PORT,
-  PRODUCTION_HOLOCHAIN_PORT,
-  DEFAULT_HOLOCHAIN_HOST,
-} from './holochainConfig'
+import { PROFILES_APP_ID, PROFILES_DNA_NAME } from './holochainConfig'
 import acorn from './reducer'
 import signalsHandlers from './signalsHandlers'
+import { setProfilesCellId, setProjectsCellIds } from './cells/actions'
 import { fetchAgents } from './agents/actions'
-import {
-  fetchProjectsDnas,
-  fetchProjectsInstances,
-} from './projects/conductor-admin/actions'
 import { whoami } from './who-am-i/actions'
 import { fetchAgentAddress } from './agent-address/actions'
 import App from './routes/App'
+import {
+  getAppWs,
+  getAdminWs,
+  setAgentPubKey,
+  APP_WS_URL,
+} from './hcWebsockets'
+import { getAllApps } from './projectAppIds'
 
-const DEFAULT_TIMEOUT = 60000 // give Holochain lotsa time
-const connectOpts = { timeout: DEFAULT_TIMEOUT }
+// trigger caching of adminWs connection
+getAdminWs()
 
-// being able to call `connect` without passing it the `url` property is
-// dependent on a hidden path called `/_dna_connections.json` being exposed
-// on the same endpoint that this UI is served over.
-// without proxying that path and serving the correctly formatted response
-// this connect call will fail
-const hcWebClient = connect(connectOpts)
-
-// holochainMiddleware takes in the hc-web-client websocket connection
-// and uses it to facilitate the calls to Holochain
-const middleware = [holochainMiddleware(hcWebClient)]
+const middleware = [holochainMiddleware(APP_WS_URL)]
 
 // This enables the redux-devtools browser extension
 // which gives really awesome debugging for apps that use redux
@@ -55,17 +48,28 @@ let store = createStore(
   /* preloadedState, */ composeEnhancers(applyMiddleware(...middleware))
 )
 
-// set up a "signal" or "events" listener, once
-// there is a connection to the Holochain Conductor
-hcWebClient.then(({ onSignal }) => {
-  signalsHandlers(store, onSignal)
+getAppWs(signalsHandlers(store)).then(async client => {
+  const profilesInfo = await client.appInfo({ app_id: PROFILES_APP_ID })
+  const [cellId, _] = profilesInfo.cell_data.find(
+    ([cellId, dnaName]) => dnaName === PROFILES_DNA_NAME
+  )
+  const [_dnaHash, agentPubKey] = cellId
+  // cache buffer version of agentPubKey
+  setAgentPubKey(agentPubKey)
+  const cellIdString = cellIdToString(cellId)
+  store.dispatch(setProfilesCellId(cellIdString))
+  // all functions of the Profiles DNA
+  store.dispatch(fetchAgents.create({ cellIdString, payload: null }))
+  store.dispatch(whoami.create({ cellIdString, payload: null }))
+  store.dispatch(fetchAgentAddress.create({ cellIdString, payload: null }))
+  // trigger the fetching and caching of all the app infos
+  const allApps = await getAllApps()
+  const projectCellIds = Object.keys(allApps).map(
+    appId => allApps[appId].cellIdString
+  )
+  // similar to the idea of setProfilesCellId
+  store.dispatch(setProjectsCellIds(projectCellIds))
 })
-
-store.dispatch(fetchProjectsDnas.create({}))
-store.dispatch(fetchProjectsInstances.create({}))
-store.dispatch(fetchAgents.create({}))
-store.dispatch(whoami.create({}))
-store.dispatch(fetchAgentAddress.create({}))
 
 // By passing the `store` in as a wrapper around our React component
 // we make the state available throughout it

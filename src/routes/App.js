@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import './App.css'
 
-import { updateWhoami, updateStatus } from '../who-am-i/actions'
+import { updateWhoami } from '../who-am-i/actions'
 import { setNavigationPreference } from '../local-preferences/actions'
 
 // import components here
@@ -38,10 +38,18 @@ function App(props) {
   const [showProfileEditForm, setShowProfileEditForm] = useState(false)
   const [showPreferences, setShowPreferences] = useState(false)
 
-  const onProfileSubmit = profile => {
-    updateWhoami(profile, whoami.address)
+  const onProfileSubmit = async profile => {
+    await updateWhoami(profile, whoami.address)
     setShowProfileEditForm(false)
   }
+  const updateStatus = async statusString => {
+    await updateWhoami({
+      ...whoami.entry,
+      status: statusString
+    }, whoami.address)
+  }
+
+
   const titleText = 'Profile Settings'
   const subText = ''
   const submitText = 'Save Changes'
@@ -62,7 +70,7 @@ function App(props) {
             activeEntryPoints={activeEntryPoints}
             projectName={projectName}
             whoami={whoami}
-            updateStatus={props.updateStatus}
+            updateStatus={updateStatus}
             setShowProfileEditForm={setShowProfileEditForm}
             setShowPreferences={setShowPreferences}
           />
@@ -87,7 +95,9 @@ function App(props) {
           setShowPreferences={setShowPreferences}
         />
         {!agentAddress && <LoadingScreen />}
-        {agentAddress && hasFetchedForWhoami && !whoami && <Redirect to='/intro' />}
+        {agentAddress && hasFetchedForWhoami && !whoami && (
+          <Redirect to='/intro' />
+        )}
         {agentAddress && whoami && <Footer />}
       </Router>
     </ErrorBoundaryScreen>
@@ -109,12 +119,7 @@ App.propTypes = {
 
 function mapDispatchToProps(dispatch) {
   return {
-    updateWhoami: (profile, address) => {
-      return dispatch(updateWhoami.create({ profile, address }))
-    },
-    updateStatus: status => {
-      return dispatch(updateStatus.create({ status }))
-    },
+    dispatch,
     setNavigationPreference: preference => {
       return dispatch(setNavigationPreference(preference))
     },
@@ -129,6 +134,7 @@ function mapStateToProps(state) {
       activeEntryPoints,
       localPreferences: { navigation },
     },
+    cells: { profiles: profilesCellIdString },
   } = state
   // defensive coding for loading phase
   const activeProjectMeta = state.projects.projectMeta[activeProject] || {}
@@ -147,6 +153,7 @@ function mapStateToProps(state) {
     .filter(e => e)
 
   return {
+    profilesCellIdString,
     activeEntryPoints: activeEntryPointsObjects,
     projectName,
     whoami: state.whoami,
@@ -156,4 +163,21 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+function mergeProps(stateProps, dispatchProps, _ownProps) {
+  const { profilesCellIdString } = stateProps
+  const { dispatch } = dispatchProps
+  return {
+    ...stateProps,
+    ...dispatchProps,
+    updateWhoami: (entry, address) => {
+      return dispatch(
+        updateWhoami.create({
+          payload: { entry, address },
+          cellIdString: profilesCellIdString,
+        })
+      )
+    },
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(App)

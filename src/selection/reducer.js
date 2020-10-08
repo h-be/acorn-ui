@@ -1,9 +1,4 @@
-/*
-  There should be a reducer.js file in every feature folder.
-  It should define and export a function which takes a state
-  and an action, applies that action to the state, and return
-  a new state.
-*/
+
 
 import {
   SELECT_EDGE,
@@ -12,9 +7,8 @@ import {
   UNSELECT_GOAL,
   UNSELECT_ALL,
 } from './actions'
-import { ARCHIVE_GOAL } from '../projects/goals/actions'
-import { ARCHIVE_EDGE } from '../projects/edges/actions'
-import { typeSuccess } from '../projects/action_type_checker'
+import { archiveGoal } from '../projects/goals/actions'
+import { archiveEdge } from '../projects/edges/actions'
 
 const defaultState = {
   selectedGoals: [],
@@ -34,31 +28,29 @@ function arrayWithoutElement(array, elem) {
 export default function (state = defaultState, action) {
   const { payload, type } = action
 
-  if (typeSuccess(type, ARCHIVE_GOAL)) {
-    // unselect if the archived Goal was selected
-    return state.selectedGoals.includes(payload.address)
-      ? {
-          ...state,
-          selectedGoals: arrayWithoutElement(
-            state.selectedGoals,
-            payload.address
-          ),
-        }
-      : { ...state }
-  } else if (typeSuccess(type, ARCHIVE_EDGE)) {
-    // unselect if the archived Goal was selected
-    return state.selectedEdges.includes(payload.address)
-      ? {
-          ...state,
-          selectedEdges: arrayWithoutElement(
-            state.selectedEdges,
-            payload.address
-          ),
-        }
-      : { ...state }
-  }
-
   switch (type) {
+    case archiveGoal.success().type:
+      // unselect if the archived Goal was selected
+      return state.selectedGoals.includes(payload.address)
+        ? {
+            ...state,
+            selectedGoals: arrayWithoutElement(
+              state.selectedGoals,
+              payload.address
+            ),
+          }
+        : { ...state }
+    case archiveEdge.success().type:
+      // unselect if the archived Goal was selected
+      return state.selectedEdges.includes(payload.address)
+        ? {
+            ...state,
+            selectedEdges: arrayWithoutElement(
+              state.selectedEdges,
+              payload.address
+            ),
+          }
+        : { ...state }
     case SELECT_EDGE:
       return {
         ...state,

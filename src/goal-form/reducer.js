@@ -1,14 +1,8 @@
-/*
-  There should be a reducer.js file in every feature folder.
-  It should define and export a function which takes a state
-  and an action, applies that action to the state, and return
-  a new state.
-*/
+
 
 import { OPEN_GOAL_FORM, CLOSE_GOAL_FORM, UPDATE_CONTENT } from './actions'
 
-import { ARCHIVE_GOAL } from '../projects/goals/actions'
-import { typeSuccess } from '../projects/action_type_checker'
+import { archiveGoal } from '../projects/goals/actions'
 
 const defaultState = {
   editAddress: null,
@@ -19,7 +13,7 @@ const defaultState = {
   yLoc: 0,
 }
 
-export default function(state = defaultState, action) {
+export default function (state = defaultState, action) {
   const { payload, type } = action
 
   const resetVersion = {
@@ -30,11 +24,9 @@ export default function(state = defaultState, action) {
     editAddress: null,
   }
 
-  if (typeSuccess(type, ARCHIVE_GOAL)) {
-    return resetVersion
-  }
-
   switch (type) {
+    case archiveGoal.success().type:
+      return resetVersion
     case UPDATE_CONTENT:
       return {
         ...state,

@@ -7,8 +7,8 @@ import './PeoplePicker.css'
 import Icon from '../Icon/Icon'
 import PickerTemplate from '../PickerTemplate/PickerTemplate'
 import {
-  addMemberOfGoal,
-  archiveMemberOfGoal,
+  createGoalMember,
+  archiveGoalMember,
 } from '../../projects/goal-members/actions'
 import Avatar from '../Avatar/Avatar'
 import moment from 'moment'
@@ -16,8 +16,8 @@ import moment from 'moment'
 function PeoplePicker({
   people,
   goalAddress,
-  addMemberOfGoal,
-  archiveMemberOfGoal,
+  createGoalMember,
+  archiveGoalMember,
   onClose,
 }) {
   const [filterText, setFilterText] = useState('')
@@ -67,8 +67,8 @@ function PeoplePicker({
           .map((person, index) => {
             const onClick = () => {
               if (person.is_member)
-                archiveMemberOfGoal(person.goal_member_address)
-              else addMemberOfGoal(goalAddress, person.address)
+                archiveGoalMember(person.goal_member_address)
+              else createGoalMember(goalAddress, person.address)
             }
             return (
               <li
@@ -123,8 +123,8 @@ PeoplePicker.propTypes = {
     })
   ).isRequired,
   goalAddress: PropTypes.string.isRequired,
-  addMemberOfGoal: PropTypes.func.isRequired,
-  archiveMemberOfGoal: PropTypes.func.isRequired,
+  createGoalMember: PropTypes.func.isRequired,
+  archiveGoalMember: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 }
 
@@ -158,9 +158,9 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch, ownProps) {
   const { projectId } = ownProps
   return {
-    addMemberOfGoal: (goal_address, agent_address) => {
+    createGoalMember: (goal_address, agent_address) => {
       return dispatch(
-        addMemberOfGoal(projectId).create({
+        createGoalMember(projectId).create({
           goal_member: {
             goal_address,
             agent_address,
@@ -169,8 +169,8 @@ function mapDispatchToProps(dispatch, ownProps) {
         })
       )
     },
-    archiveMemberOfGoal: address => {
-      return dispatch(archiveMemberOfGoal(projectId).create({ address }))
+    archiveGoalMember: address => {
+      return dispatch(archiveGoalMember(projectId).create({ address }))
     },
   }
 }

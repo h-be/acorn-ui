@@ -4,74 +4,43 @@
   of constants defining all the types of actions
   that can be taken within that feature.
 */
-
-import { createHolochainZomeCallAsyncAction } from 'connoropolous-hc-redux-middleware'
-
 import { PROJECTS_ZOME_NAME } from '../../holochainConfig'
+import { createCrudActionCreators } from '../../crudRedux'
 
 /* action creator functions */
 
 const PREVIEW_EDGES = 'preview_edges'
 const CLEAR_EDGES_PREVIEW = 'clear_edges_preview'
-const CREATE_EDGE = 'create_edge'
-const UPDATE_EDGE = 'update_edge'
-const FETCH_EDGES = 'fetch_edges'
-const ARCHIVE_EDGE = 'archive_edge'
 
-const previewEdges = (instanceId, edges) => {
+const previewEdges = (cellId, edges) => {
   return {
     type: PREVIEW_EDGES,
     payload: {
-      instanceId,
+      cellId,
       edges,
     },
   }
 }
 
-const clearEdgesPreview = instanceId => {
+const clearEdgesPreview = cellId => {
   return {
     type: CLEAR_EDGES_PREVIEW,
     payload: {
-      instanceId,
+      cellId,
     },
   }
 }
 
-const createEdge = instanceId =>
-  createHolochainZomeCallAsyncAction(
-    instanceId,
-    PROJECTS_ZOME_NAME,
-    CREATE_EDGE
-  )
-
-const updateEdge = instanceId =>
-  createHolochainZomeCallAsyncAction(
-    instanceId,
-    PROJECTS_ZOME_NAME,
-    UPDATE_EDGE
-  )
-
-const fetchEdges = instanceId =>
-  createHolochainZomeCallAsyncAction(
-    instanceId,
-    PROJECTS_ZOME_NAME,
-    FETCH_EDGES
-  )
-
-const archiveEdge = instanceId =>
-  createHolochainZomeCallAsyncAction(
-    instanceId,
-    PROJECTS_ZOME_NAME,
-    ARCHIVE_EDGE
-  )
+const [
+  createEdge,
+  fetchEdges,
+  updateEdge,
+  archiveEdge,
+] = createCrudActionCreators(PROJECTS_ZOME_NAME, 'edge')
 
 export {
   PREVIEW_EDGES,
   CLEAR_EDGES_PREVIEW,
-  CREATE_EDGE,
-  UPDATE_EDGE,
-  FETCH_EDGES,
-  ARCHIVE_EDGE,
   previewEdges,
   clearEdgesPreview,
   createEdge,

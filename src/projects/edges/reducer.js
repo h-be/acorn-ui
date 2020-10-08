@@ -1,146 +1,92 @@
-/*
-  There should be a reducer.js file in every feature folder.
-  It should define and export a function which takes a state
-  and an action, applies that action to the state, and return
-  a new state.
-*/
+
 import _ from 'lodash'
 
 import {
   PREVIEW_EDGES,
   CLEAR_EDGES_PREVIEW,
-  CREATE_EDGE,
-  UPDATE_EDGE,
-  FETCH_EDGES,
-  ARCHIVE_EDGE,
+  createEdge,
+  fetchEdges,
+  updateEdge,
+  archiveEdge,
 } from './actions'
-import { CREATE_GOAL, ARCHIVE_GOAL } from '../goals/actions'
-import { typeSuccess, instanceIdFromActionType } from '../action_type_checker'
+import { createGoalWithEdge, archiveGoal } from '../goals/actions'
+import { isCrud, crudReducer } from '../../crudRedux'
 
 const defaultState = {}
 
 const PREVIEW_KEY_STRING = 'preview'
 
 export default function (state = defaultState, action) {
+
+  // start out by checking whether this a standard CRUD operation
+  if (isCrud(action, createEdge, fetchEdges, updateEdge, archiveEdge)) {
+    return crudReducer(
+      state,
+      action,
+      createEdge,
+      fetchEdges,
+      updateEdge,
+      archiveEdge
+    )
+  }
+
   const { payload, type } = action
+  let cellId
 
-  let instanceId
-  const simpleActionTypes = [PREVIEW_EDGES, CLEAR_EDGES_PREVIEW]
-  if (simpleActionTypes.includes(type)) {
-    instanceId = payload.instanceId
-  } else {
-    instanceId = instanceIdFromActionType(type)
-  }
-
-  // CREATE_EDGE
-  if (type === PREVIEW_EDGES) {
-    const previews = {}
-    payload.edges.forEach(edge => {
-      const rand = Math.random()
-      previews[`${PREVIEW_KEY_STRING}${rand}`] = edge
-    })
-    return {
-      ...state,
-      [instanceId]: {
-        ...state[instanceId],
-        ...previews,
-      },
-    }
-  } else if (type === CLEAR_EDGES_PREVIEW) {
-    return {
-      ...state,
-      [instanceId]: _.pickBy(
-        state[instanceId],
-        (value, key) => !key.startsWith(PREVIEW_KEY_STRING)
-      ),
-    }
-  } else if (typeSuccess(type, CREATE_EDGE)) {
-    return {
-      ...state,
-      [instanceId]: {
-        ...state[instanceId],
-        [payload.address]: {
-          ...payload.entry,
-          address: payload.address,
-        },
-      },
-    }
-  }
-  // UPDATE_EDGE
-  else if (typeSuccess(type, UPDATE_EDGE)) {
-    return {
-      ...state,
-      [instanceId]: {
-        ...state[instanceId],
-        [payload.address]: {
-          ...payload.entry,
-          address: payload.address,
-        },
-      },
-    }
-  }
-  // FETCH_EDGES
-  else if (typeSuccess(type, FETCH_EDGES)) {
-    // payload is [ { entry: { key: val }, address: 'QmAsdFg' }, ... ]
-    const mapped = payload.map(r => {
-      return {
-        ...r.entry,
-        address: r.address,
-      }
-    })
-    // mapped is [ { key: val, address: 'QmAsdFg' }, ...]
-    const newVals = _.keyBy(mapped, 'address')
-    // combines pre-existing values of the object with new values from
-    // Holochain fetch
-    return {
-      ...state,
-      [instanceId]: {
-        ...state[instanceId],
-        ...newVals,
-      },
-    }
-  }
-  // ARCHIVE_EDGE
-  else if (typeSuccess(type, ARCHIVE_EDGE)) {
-    return {
-      ...state,
-      [instanceId]: _.pickBy(
-        state[instanceId],
-        (value, key) => key !== payload
-      ),
-    }
-  }
-  // ARCHIVE_GOAL
-  else if (typeSuccess(type, ARCHIVE_GOAL)) {
-    // filter out the Edges whose addresses are listed as having been
-    // archived on account of having archived one of the Goals it links
-    return {
-      ...state,
-      [instanceId]: _.pickBy(
-        state[instanceId],
-        (value, key) => payload.archived_edges.indexOf(key) === -1
-      ),
-    }
-  }
-  // CREATE_GOAL
-  else if (typeSuccess(type, CREATE_GOAL)) {
-    if (payload.maybe_edge) {
+  // handle additional cases
+  switch (type) {
+    case PREVIEW_EDGES:
+      cellId = payload.cellId
+      const previews = {}
+      payload.edges.forEach(edge => {
+        const rand = Math.random()
+        previews[`${PREVIEW_KEY_STRING}${rand}`] = edge
+      })
       return {
         ...state,
-        [instanceId]: {
-          ...state[instanceId],
-          [payload.maybe_edge.address]: {
-            ...payload.maybe_edge.entry,
-            address: payload.maybe_edge.address,
-          },
+        [cellId]: {
+          ...state[cellId],
+          ...previews,
         },
       }
-    } else {
+    case CLEAR_EDGES_PREVIEW:
+      cellId = payload.cellId
+      return {
+        ...state,
+        [cellId]: _.pickBy(
+          state[cellId],
+          (value, key) => !key.startsWith(PREVIEW_KEY_STRING)
+        ),
+      }
+    // ARCHIVE GOAL
+    case archiveGoal.success().type:
+      // filter out the Edges whose addresses are listed as having been
+      // archived on account of having archived one of the Goals it links
+      return {
+        ...state,
+        [cellId]: _.pickBy(
+          state[cellId],
+          (value, key) => payload.archived_edges.indexOf(key) === -1
+        ),
+      }
+    // CREATE GOAL WITH EDGE
+    case createGoalWithEdge.success().type:
+      cellId = action.meta.cellIdString
+      if (payload.maybe_edge) {
+        return {
+          ...state,
+          [cellId]: {
+            ...state[cellId],
+            [payload.maybe_edge.address]: {
+              ...payload.maybe_edge.entry,
+              address: payload.maybe_edge.address,
+            },
+          },
+        }
+      } else {
+        return state
+      }
+    default:
       return state
-    }
-  }
-  // DEFAULT
-  else {
-    return state
   }
 }
