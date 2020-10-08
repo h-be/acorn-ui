@@ -6,44 +6,28 @@ import {
   updateProjectMeta,
   archiveProjectMeta,
 } from './actions'
-import { isCrud, crudReducer } from '../../crudRedux'
+// import { isCrud, crudReducer } from '../../crudRedux'
 
 const defaultState = {}
 
 export default function (state = defaultState, action) {
-  const { payload, type } = action
-
-  // start out by checking whether this a standard CRUD operation
-  if (
-    isCrud(
-      action,
-      createProjectMeta,
-      fetchProjectMetas,
-      updateProjectMeta,
-      archiveProjectMeta
-    )
-  ) {
-    return crudReducer(
-      state,
-      action,
-      createProjectMeta,
-      fetchProjectMetas,
-      updateProjectMeta,
-      archiveProjectMeta
-    )
-  }
+  const {
+    payload,
+    type,
+  } = action
 
   switch (type) {
+    case createProjectMeta.success().type:
     case fetchProjectMeta.success().type:
-      const cellId = action.meta.cellIdString
+    case updateProjectMeta.success().type:
+      let { cellIdString } = action.meta
       return {
         ...state,
-        [cellId]: {
+        [cellIdString]: {
           ...payload.entry,
           address: payload.address,
         },
       }
-    // DEFAULT
     default:
       return state
   }

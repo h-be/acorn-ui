@@ -138,6 +138,7 @@ function Dashboard({
           <div className='my-projects-content'>
             {sortedProjects.map(project => (
               <DashboardListProject
+                key={project.cellId}
                 project={project}
                 setShowInviteMembersModal={setShowInviteMembersModal}
               />
@@ -281,8 +282,7 @@ function mapStateToProps(state) {
       const entryPoints = selectEntryPoints(state, cellId)
       return {
         ...project,
-        image: project.image,
-        cellId: cellId,
+        cellId,
         members: memberProfiles,
         entryPoints,
       }
