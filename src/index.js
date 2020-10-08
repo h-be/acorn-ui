@@ -44,13 +44,7 @@ let store = createStore(
   /* preloadedState, */ composeEnhancers(applyMiddleware(...middleware))
 )
 
-// set up a "signal" or "events" listener, once
-// there is a connection to the Holochain Conductor
-// hcWebClient.then(({ onSignal }) => {
-//   signalsHandlers(store, onSignal)
-// })
-
-AppWebsocket.connect(APP_URL_CONFIG).then(async client => {
+AppWebsocket.connect(APP_URL_CONFIG, signalsHandlers(store)).then(async client => {
   const info = await client.appInfo({ app_id: TEST_APP_ID })
   const [cellId, _] = info.cell_data.find(
     ([cellId, dnaName]) => dnaName === PROFILES_DNA_NAME
