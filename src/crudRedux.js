@@ -11,7 +11,7 @@ export function crudReducer(state, action, create, fetch, update, archive) {
   const {
     payload,
     type,
-    meta: { cell_id: cellId },
+    meta: { cellIdString },
   } = action
 
   switch (type) {
@@ -20,8 +20,8 @@ export function crudReducer(state, action, create, fetch, update, archive) {
     case update.success().type:
       return {
         ...state,
-        [cellId]: {
-          ...state[cellId],
+        [cellIdString]: {
+          ...state[cellIdString],
           [payload.address]: {
             ...payload.entry,
             address: payload.address,
@@ -44,8 +44,8 @@ export function crudReducer(state, action, create, fetch, update, archive) {
       // Holochain fetch
       return {
         ...state,
-        [cellId]: {
-          ...state[cellId],
+        [cellIdString]: {
+          ...state[cellIdString],
           ...newVals,
         },
       }
@@ -54,7 +54,7 @@ export function crudReducer(state, action, create, fetch, update, archive) {
     case archive.success().type:
       return {
         ...state,
-        [cellId]: _.pickBy(state[cellId], (value, key) => key !== payload),
+        [cellIdString]: _.pickBy(state[cellIdString], (value, key) => key !== payload),
       }
     default:
       return state

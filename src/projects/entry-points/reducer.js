@@ -42,7 +42,7 @@ export default function (state = defaultState, action) {
   const { payload, type } = action
   switch (type) {
     case archiveGoal.success().type:
-      const cellId = action.meta.cell_id
+      const cellId = action.meta.cellIdString
       // filter out the entry points whose addresses are listed as having been
       // archived on account of having archived its associated Goal
       return {

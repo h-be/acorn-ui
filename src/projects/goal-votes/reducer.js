@@ -35,8 +35,8 @@ export default function (state = defaultState, action) {
   }
 
   let cellId
-  if (action.meta && action.meta.cell_id) {
-    cellId = action.meta.cell_id
+  if (action.meta && action.meta.cellIdString) {
+    cellId = action.meta.cellIdString
   }
 
   switch (type) {

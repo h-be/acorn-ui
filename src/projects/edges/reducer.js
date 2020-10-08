@@ -9,7 +9,7 @@ import {
   updateEdge,
   archiveEdge,
 } from './actions'
-import { createGoal, archiveGoal } from '../goals/actions'
+import { createGoalWithEdge, archiveGoal } from '../goals/actions'
 import { isCrud, crudReducer } from '../../crudRedux'
 
 const defaultState = {}
@@ -69,8 +69,9 @@ export default function (state = defaultState, action) {
           (value, key) => payload.archived_edges.indexOf(key) === -1
         ),
       }
-    // CREATE GOAL
-    case createGoal.success().type:
+    // CREATE GOAL WITH EDGE
+    case createGoalWithEdge.success().type:
+      cellId = action.meta.cellIdString
       if (payload.maybe_edge) {
         return {
           ...state,

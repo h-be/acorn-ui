@@ -9,18 +9,7 @@ export const PROFILES_DNA_NAME = 'profiles.dna.gz'
 
 // THIS IS DEFINED IN holochain-run-dna
 // lib in use by acorn-hc
-export const TEST_APP_ID = 'test-app'
-
-export const cell_id = [
- {
-   hash: Buffer.from([0x50]),
-   hash_type: Buffer.from([0x50])
- },
- {
-   hash: Buffer.from([0x50]),
-   hash_type: Buffer.from([0x50])
- },
-]
+export const PROFILES_APP_ID = 'test-app'
 
 // this will error if not in a nodejs/electron runtime
 // which is the desired behaviour

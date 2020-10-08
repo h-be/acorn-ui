@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import TextareaAutosize from 'react-textarea-autosize'
 
-import { createGoal, updateGoal } from '../projects/goals/actions'
+import { createGoalWithEdge, updateGoal } from '../projects/goals/actions'
 import { closeGoalForm, updateContent } from '../goal-form/actions'
 import layoutFormula from '../drawing/layoutFormula'
 import { goalWidth } from '../drawing/dimensions'
@@ -30,7 +30,7 @@ class GoalForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.createGoal = this.createGoal.bind(this)
     this.updateGoal = this.updateGoal.bind(this)
-    this.hadleBlur = this.hadleBlur.bind(this)
+    this.handleBlur = this.handleBlur.bind(this)
   }
 
   /*
@@ -49,7 +49,7 @@ class GoalForm extends Component {
     }
   }
 
-  hadleBlur(event) {
+  handleBlur(event) {
     if (!this.props.editAddress) {
       event.preventDefault()
       this.handleSubmit()
@@ -81,11 +81,12 @@ class GoalForm extends Component {
     this.props.updateContent('')
     this.props.closeGoalForm()
   }
+
   async createGoal() {
     // dispatch the action to create a goal
     // with the contents from the form
     // inserted into it
-    this.props.createGoal(
+    this.props.createGoalWithEdge(
       {
         content: this.props.content,
         user_hash: this.props.whoami.entry.address,
@@ -94,12 +95,10 @@ class GoalForm extends Component {
         status: 'Uncertain',
         description: '',
       },
-      this.props.parentAddress ? {
-        parent_address: this.props.parentAddress,
-        randomizer: Date.now()
-      } : null
+      this.props.parentAddress
     )
   }
+
   updateGoal() {
     this.props.updateGoal(
       {
@@ -144,7 +143,7 @@ class GoalForm extends Component {
               onKeyDown={this.handleKeyDown}
               autoFocus
               onFocus={this.handleFocus}
-              onBlur={this.hadleBlur}
+              onBlur={this.handleBlur}
             />
           </form>
         </div>
@@ -172,7 +171,7 @@ GoalForm.propTypes = {
   content: PropTypes.string.isRequired,
   xLoc: PropTypes.number.isRequired,
   yLoc: PropTypes.number.isRequired,
-  createGoal: PropTypes.func.isRequired,
+  createGoalWithEdge: PropTypes.func.isRequired,
   updateGoal: PropTypes.func.isRequired,
   closeGoalForm: PropTypes.func.isRequired,
 }
@@ -225,18 +224,23 @@ function mapStateToProps(state) {
 // Designed to pass functions into components which are already wrapped as
 // action dispatchers for redux action types
 function mapDispatchToProps(dispatch, ownProps) {
-  const { projectId } = ownProps
+  const { projectId: cellIdString } = ownProps
   return {
     updateContent: content => {
       dispatch(updateContent(content))
     },
-    createGoal: (goal, maybe_goal_edge_input) => {
+    createGoalWithEdge: (entry, maybe_parent_address) => {
       return dispatch(
-        createGoal(projectId).create({ goal, maybe_goal_edge_input })
+        createGoalWithEdge.create({
+          cellIdString,
+          payload: { entry, maybe_parent_address },
+        })
       )
     },
-    updateGoal: (goal, address) => {
-      return dispatch(updateGoal(projectId).create({ goal, address }))
+    updateGoal: (entry, address) => {
+      return dispatch(
+        updateGoal.create({ cellIdString, payload: { entry, address } })
+      )
     },
     closeGoalForm: () => {
       dispatch(closeGoalForm())

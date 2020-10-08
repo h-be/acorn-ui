@@ -12,7 +12,7 @@ export default function (state = defaultState, action) {
   switch (type) {
     // FETCH_MEMBERS
     case fetchMembers.success().type:
-      cellId = action.meta.cell_id
+      cellId = action.meta.cellIdString
       return {
         ...state,
         [cellId]: _.keyBy(payload, 'address'),

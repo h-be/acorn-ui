@@ -35,7 +35,7 @@ export default function (state = defaultState, action) {
 
   switch (type) {
     case fetchProjectMeta.success().type:
-      const cellId = action.meta.cell_id
+      const cellId = action.meta.cellIdString
       return {
         ...state,
         [cellId]: {
