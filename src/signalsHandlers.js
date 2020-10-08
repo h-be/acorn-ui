@@ -8,23 +8,23 @@ and the reducers handle them the same way
 
 import { createEdge, archiveEdge } from './projects/edges/actions'
 import { createGoal, archiveGoal } from './projects/goals/actions'
-import { addVoteOfGoal, archiveVoteOfGoal } from './projects/goal-votes/actions'
+import { createGoalVote, archiveGoalVote } from './projects/goal-votes/actions'
 import {
-  addMemberOfGoal,
-  archiveMemberOfGoal,
+  createGoalMember,
+  archiveGoalMember,
 } from './projects/goal-members/actions'
 import {
-  addCommentOfGoal,
-  archiveCommentOfGoal,
+  createGoalComment,
+  archiveGoalComment,
 } from './projects/goal-comments/actions'
 import { setMember } from './projects/members/actions'
 import { setAgent } from './agents/actions'
 
 // We directly use the 'success' type, since these actions
 // have already succeeded on another machine, and we're just reflecting them locally
-function createSignalAction(holochainAction, instanceId, payload) {
+function createSignalAction(holochainAction, cellId, payload) {
   return {
-    type: holochainAction(instanceId).success().type,
+    type: holochainAction(cellId).success().type,
     payload,
   }
 }
@@ -42,7 +42,7 @@ export default function (store, onSignal) {
       return
     }
 
-    const instanceId = rawSignal.instance_id
+    const cellId = rawSignal.instance_id
     const signalContent = rawSignal.signal
     let signalArgs
     try {
@@ -62,37 +62,37 @@ export default function (store, onSignal) {
         const { member } = signalArgs
         // this one is different than the rest on purpose
         // there's no "local action" equivalent
-        store.dispatch(setMember(instanceId, member))
+        store.dispatch(setMember(cellId, member))
         break
       case 'goal_maybe_with_edge':
         const { goal } = signalArgs
-        store.dispatch(createSignalAction(createGoal, instanceId, goal))
+        store.dispatch(createSignalAction(createGoal, cellId, goal))
         break
       case 'goal_archived':
         const { archived } = signalArgs
-        store.dispatch(createSignalAction(archiveGoal, instanceId, archived))
+        store.dispatch(createSignalAction(archiveGoal, cellId, archived))
         break
       // covers create and update cases
       case 'edge':
         const { edge } = signalArgs
-        store.dispatch(createSignalAction(createEdge, instanceId, edge))
+        store.dispatch(createSignalAction(createEdge, cellId, edge))
         break
       case 'edge_archived':
         store.dispatch(
-          createSignalAction(archiveEdge, instanceId, signalArgs.address)
+          createSignalAction(archiveEdge, cellId, signalArgs.address)
         )
         break
       case 'goal_comment':
         const { goalComment } = signalArgs
         store.dispatch(
-          createSignalAction(addCommentOfGoal, instanceId, goalComment)
+          createSignalAction(createGoalComment, cellId, goalComment)
         )
         break
       case 'goal_comment_archived':
         store.dispatch(
           createSignalAction(
-            archiveCommentOfGoal,
-            instanceId,
+            archiveGoalComment,
+            cellId,
             signalArgs.address
           )
         )
@@ -100,25 +100,25 @@ export default function (store, onSignal) {
       case 'goal_member':
         const { goalMember } = signalArgs
         store.dispatch(
-          createSignalAction(addMemberOfGoal, instanceId, goalMember)
+          createSignalAction(createGoalMember, cellId, goalMember)
         )
         break
       case 'goal_member_archived':
         store.dispatch(
           createSignalAction(
-            archiveMemberOfGoal,
-            instanceId,
+            archiveGoalMember,
+            cellId,
             signalArgs.address
           )
         )
         break
       case 'goal_vote':
         const { goalVote } = signalArgs
-        store.dispatch(createSignalAction(addVoteOfGoal, instanceId, goalVote))
+        store.dispatch(createSignalAction(createGoalVote, cellId, goalVote))
         break
       case 'goal_vote_archived':
         store.dispatch(
-          createSignalAction(archiveVoteOfGoal, instanceId, signalArgs.address)
+          createSignalAction(archiveGoalVote, cellId, signalArgs.address)
         )
         break
       default:

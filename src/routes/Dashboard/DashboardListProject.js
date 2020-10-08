@@ -24,7 +24,7 @@ export default function DashboardListProject({
     <div className='dashboard-list-project-wrapper'>
       <div className='dashboard-list-project'>
         <NavLink
-          to={`/project/${project.instanceId}`}
+          to={`/project/${project.cellId}`}
           className='dashboard-list-project-image'>
           <div className='dashboard-list-project-image-bg' style={imageStyles}>
             {project.image ? '' : projectInitials}
@@ -32,7 +32,7 @@ export default function DashboardListProject({
         </NavLink>
         <div className='dashboard-list-project-content'>
           <NavLink
-            to={`/project/${project.instanceId}`}
+            to={`/project/${project.cellId}`}
             className='dashboard-list-project-name'>
             {project.name}
           </NavLink>
@@ -86,7 +86,7 @@ export default function DashboardListProject({
               }
               return (
                 <NavLink
-                  to={`/project/${project.instanceId}/map?entryPoints=${entryPoint.address}`}
+                  to={`/project/${project.cellId}/map?entryPoints=${entryPoint.address}`}
                   className='entry-point-item'>
                   <div className='entry-point-color-dot' style={dotStyle} />
                   <div className='entry-point-name'>{entryPoint.content}</div>

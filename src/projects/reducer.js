@@ -6,7 +6,6 @@
 */
 import { combineReducers } from 'redux'
 
-import { dnas, instances } from './conductor-admin/reducer'
 import members from './members/reducer'
 import goals from './goals/reducer'
 import edges from './edges/reducer'
@@ -19,8 +18,6 @@ import projectMeta from './project-meta/reducer'
 
 export default combineReducers({
   projectMeta,
-  dnas,
-  instances,
   members,
   goals,
   edges,

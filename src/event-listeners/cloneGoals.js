@@ -1,6 +1,6 @@
 import { selectGoal } from '../selection/actions'
 import { createGoal } from '../projects/goals/actions'
-import { addMemberOfGoal } from '../projects/goal-members/actions'
+import { createGoalMember } from '../projects/goal-members/actions'
 import moment from 'moment'
 
 export default function cloneGoals(store) {
@@ -33,7 +33,7 @@ export default function cloneGoals(store) {
         store.dispatch(selectGoal(value.goal.address))
         members.map(member => {
           store.dispatch(
-            addMemberOfGoal(activeProject).create({
+            createGoalMember(activeProject).create({
               goal_member: {
                 goal_address: newGoalAddress,
                 agent_address: member.agent_address,

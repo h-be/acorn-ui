@@ -6,35 +6,34 @@
 */
 import _ from 'lodash'
 
-import { SET_MEMBER, FETCH_MEMBERS } from './actions'
-import { typeSuccess, instanceIdFromActionType } from '../action_type_checker'
+import { SET_MEMBER, fetchMembers } from './actions'
 
 const defaultState = {}
 
-export default function(state = defaultState, action) {
+export default function (state = defaultState, action) {
   const { payload, type } = action
 
-  const instanceId = instanceIdFromActionType(type)
-
-  // FETCH_MEMBERS
-  if (typeSuccess(type, FETCH_MEMBERS)) {
-    return {
-      ...state,
-      [instanceId]: _.keyBy(payload, 'address'),
-    }
-  }
-  // SET_MEMBER
-  else if (type === SET_MEMBER) {
-    return {
-      ...state,
-      [instanceId]: {
-        ...state[instanceId],
-        [payload.member.address]: payload.member,
-      },
-    }
-  }
-  // DEFAULT
-  else {
-    return state
+  let cellId
+  switch (type) {
+    // FETCH_MEMBERS
+    case fetchMembers.success().type:
+      cellId = action.meta.cell_id
+      return {
+        ...state,
+        [cellId]: _.keyBy(payload, 'address'),
+      }
+    // SET_MEMBER
+    case SET_MEMBER:
+      cellId = payload.cellId
+      return {
+        ...state,
+        [cellId]: {
+          ...state[cellId],
+          [payload.member.address]: payload.member,
+        },
+      }
+    // DEFAULT
+    default:
+      return state
   }
 }

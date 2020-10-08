@@ -23,10 +23,6 @@ import acorn from './reducer'
 import signalsHandlers from './signalsHandlers'
 import { setProfilesCellId } from './cells/actions'
 import { fetchAgents } from './agents/actions'
-import {
-  fetchProjectsDnas,
-  fetchProjectsInstances,
-} from './projects/conductor-admin/actions'
 import { whoami } from './who-am-i/actions'
 import { fetchAgentAddress } from './agent-address/actions'
 import App from './routes/App'
@@ -34,12 +30,9 @@ import App from './routes/App'
 // TODO: place this elsewhere
 // and make it differentiate between production and
 // development modes
-const urlConfig = {
-  appUrl: 'ws://localhost:8888',
-  adminUrl: 'ws://localhost:1234',
-}
+const APP_URL_CONFIG = 'ws://localhost:8888'
 
-const middleware = [holochainMiddleware(urlConfig)]
+const middleware = [holochainMiddleware(APP_URL_CONFIG)]
 
 // This enables the redux-devtools browser extension
 // which gives really awesome debugging for apps that use redux
@@ -57,7 +50,7 @@ let store = createStore(
 //   signalsHandlers(store, onSignal)
 // })
 
-AppWebsocket.connect(urlConfig.appUrl).then(async client => {
+AppWebsocket.connect(APP_URL_CONFIG).then(async client => {
   const info = await client.appInfo({ app_id: TEST_APP_ID })
   const [cellId, _] = info.cell_data.find(
     ([cellId, dnaName]) => dnaName === PROFILES_DNA_NAME

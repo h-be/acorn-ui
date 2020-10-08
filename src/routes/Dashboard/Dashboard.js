@@ -19,14 +19,6 @@ import {
   createProjectMeta,
   fetchProjectMeta,
 } from '../../projects/project-meta/actions'
-import {
-  createProjectDna,
-  createProjectInstance,
-  removeProjectInstance,
-  addInstanceToInterface,
-  startInstance,
-  fetchProjectsInstances,
-} from '../../projects/conductor-admin/actions'
 import selectEntryPoints from '../../projects/entry-points/select'
 
 import DashboardListProject from './DashboardListProject'
@@ -41,12 +33,12 @@ function Dashboard({
   createProject,
   joinProject,
 }) {
-  // instances is an array of instanceId strings
+  // instances is an array of cellId strings
   useEffect(() => {
-    instances.forEach(instanceId => {
-      fetchProjectMeta(instanceId)
-      fetchMembers(instanceId)
-      fetchEntryPoints(instanceId)
+    instances.forEach(cellId => {
+      fetchProjectMeta(cellId)
+      fetchMembers(cellId)
+      fetchEntryPoints(cellId)
     })
   }, [JSON.stringify(instances)])
 
@@ -195,7 +187,7 @@ function timeoutCatcher(promise, namespace) {
 async function addDnaAndInstance(dispatch, passphrase) {
   const random = Math.random()
   const dnaId = `_acorn_projects_dna_${random}`
-  const instanceId = `_acorn_projects_instance_${random}`
+  const cellId = `_acorn_projects_instance_${random}`
   const uuid = passphraseToUuid(passphrase)
 
   const LOW_TIMEOUT = 3000
@@ -204,107 +196,107 @@ async function addDnaAndInstance(dispatch, passphrase) {
   return dispatch(createProjectDna.create(dnaId, uuid))
     .then(() =>
       timeoutCatcher(
-        dispatch(createProjectInstance.create(instanceId, dnaId, HIGH_TIMEOUT)),
+        dispatch(createProjectInstance.create(cellId, dnaId, HIGH_TIMEOUT)),
         'creating project instance'
       )
     )
     .then(() =>
       timeoutCatcher(
-        dispatch(startInstance.create(instanceId, LOW_TIMEOUT)),
+        dispatch(startInstance.create(cellId, LOW_TIMEOUT)),
         'starting project instance'
       )
     )
     .then(() =>
       timeoutCatcher(
-        dispatch(addInstanceToInterface.create(instanceId, LOW_TIMEOUT)),
+        dispatch(addInstanceToInterface.create(cellId, LOW_TIMEOUT)),
         'adding instance to interface'
       )
     )
     .then(() => ({
       dnaId,
-      instanceId,
+      cellId,
       uuid,
     }))
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchEntryPoints: instanceId => {
-      return dispatch(fetchEntryPoints(instanceId).create({}))
+    fetchEntryPoints: cellId => {
+      return dispatch(fetchEntryPoints(cellId).create({}))
     },
-    fetchMembers: instanceId => {
-      return dispatch(fetchMembers(instanceId).create({}))
+    fetchMembers: cellId => {
+      return dispatch(fetchMembers(cellId).create({}))
     },
-    fetchProjectMeta: instanceId => {
-      return dispatch(fetchProjectMeta(instanceId).create({}))
+    fetchProjectMeta: cellId => {
+      return dispatch(fetchProjectMeta(cellId).create({}))
     },
-    createProject: (agentAddress, project, passphrase) => {
-      // matches the createProjectMeta fn and type signature
-      const projectMeta = {
-        projectmeta: {
-          ...project, // name and image
-          passphrase,
-          creator_address: agentAddress,
-          created_at: Date.now(),
-        },
-      }
-      return (
-        addDnaAndInstance(dispatch, passphrase)
-          .then(({ instanceId }) =>
-            dispatch(createProjectMeta(instanceId).create(projectMeta))
-          )
-          // this will cause the eventual refetch of Project Members and Entry Points,
-          // due to useEffect within Dashboard
-          .then(() => dispatch(fetchProjectsInstances.create({})))
-      )
-    },
-    joinProject: passphrase => {
-      // joinProject
-      // join a DNA
-      // then try to get the project metadata
-      // if that DOESN'T work, the attempt is INVALID
-      // remove the instance again immediately
-      // we can't remove the DNA itself, but that's fine
-      return addDnaAndInstance(dispatch, passphrase).then(({ instanceId }) => {
-        const HIGH_TIMEOUT = 20000 // ms
-        return dispatch(
-          fetchProjectMeta(instanceId).create({}, HIGH_TIMEOUT)
-        ).catch(async e => {
-          if (
-            e &&
-            e.Err &&
-            e.Err.Internal &&
-            e.Err.Internal === 'no project meta exists'
-          ) {
-            // remove the instance again immediately, let the resolver know we did this, by returning false
-            await dispatch(removeProjectInstance.create(instanceId))
-            return false
-          } else {
-            dispatch(removeProjectInstance.create(instanceId))
-            // some unintended error
-            throw e
-          }
-        })
-      })
-    },
+    // createProject: (agentAddress, project, passphrase) => {
+    //   // matches the createProjectMeta fn and type signature
+    //   const projectMeta = {
+    //     projectmeta: {
+    //       ...project, // name and image
+    //       passphrase,
+    //       creator_address: agentAddress,
+    //       created_at: Date.now(),
+    //     },
+    //   }
+    //   return (
+    //     addDnaAndInstance(dispatch, passphrase)
+    //       .then(({ cellId }) =>
+    //         dispatch(createProjectMeta(cellId).create(projectMeta))
+    //       )
+    //       // this will cause the eventual refetch of Project Members and Entry Points,
+    //       // due to useEffect within Dashboard
+    //       .then(() => dispatch(fetchProjectsInstances.create({})))
+    //   )
+    // },
+    // joinProject: passphrase => {
+    //   // joinProject
+    //   // join a DNA
+    //   // then try to get the project metadata
+    //   // if that DOESN'T work, the attempt is INVALID
+    //   // remove the instance again immediately
+    //   // we can't remove the DNA itself, but that's fine
+    //   return addDnaAndInstance(dispatch, passphrase).then(({ cellId }) => {
+    //     const HIGH_TIMEOUT = 20000 // ms
+    //     return dispatch(
+    //       fetchProjectMeta(cellId).create({}, HIGH_TIMEOUT)
+    //     ).catch(async e => {
+    //       if (
+    //         e &&
+    //         e.Err &&
+    //         e.Err.Internal &&
+    //         e.Err.Internal === 'no project meta exists'
+    //       ) {
+    //         // remove the instance again immediately, let the resolver know we did this, by returning false
+    //         await dispatch(removeProjectInstance.create(cellId))
+    //         return false
+    //       } else {
+    //         dispatch(removeProjectInstance.create(cellId))
+    //         // some unintended error
+    //         throw e
+    //       }
+    //     })
+    //   })
+    // },
   }
 }
 
 function mapStateToProps(state) {
   return {
     agentAddress: state.agentAddress,
-    instances: Object.keys(state.projects.instances),
-    projects: Object.keys(state.projects.projectMeta).map(instanceId => {
-      const project = state.projects.projectMeta[instanceId]
-      const members = state.projects.members[instanceId] || {}
+    instances: [], //Object.keys(state.projects.instances),
+    projects: Object.keys(state.projects.projectMeta).map(cellId => {
+      const project = state.projects.projectMeta[cellId]
+      const members = state.projects.members[cellId] || {}
       const memberProfiles = Object.keys(members).map(
         agentAddress => state.agents[agentAddress]
       )
-      const entryPoints = selectEntryPoints(state, instanceId)
+      const entryPoints = selectEntryPoints(state, cellId)
       return {
         ...project,
         image: project.image,
-        instanceId: instanceId,
+        cellId: cellId,
         members: memberProfiles,
         entryPoints,
       }

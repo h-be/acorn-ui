@@ -15,19 +15,17 @@ const FETCH_MEMBERS = 'fetch_members'
 
 /* action creator functions */
 
-const setMember = (instanceId, member) => {
+const setMember = (cellId, member) => {
   return {
     type: SET_MEMBER,
     payload: {
-      instanceId,
+      cellId,
       member,
     },
   }
 }
 
-const fetchMembers = instanceId =>
-  createZomeCallAsyncAction(
-    instanceId,
+const fetchMembers = createZomeCallAsyncAction(
     PROJECTS_ZOME_NAME,
     FETCH_MEMBERS
   )

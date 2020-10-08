@@ -18,7 +18,7 @@ import ActivityHistory from './ActivityHistory/ActivityHistory'
 import Attachments from './Attachments/Attachments'
 import ExpandedViewNavBar from './ExpandedViewNavBar/ExpandedViewNavBar'
 
-function SquirrelInfoPopup({ squirrel, onClose, archiveMemberOfGoal }) {
+function SquirrelInfoPopup({ squirrel, onClose, archiveGoalMember }) {
   const ref = useRef()
   useOnClickOutside(ref, onClose)
 
@@ -36,7 +36,7 @@ function SquirrelInfoPopup({ squirrel, onClose, archiveMemberOfGoal }) {
         className='remove-squirrel-btn'
         onClick={e => {
           onClose()
-          archiveMemberOfGoal(squirrel.goalMemberAddress)
+          archiveGoalMember(squirrel.goalMemberAddress)
         }}>
         remove from goal
       </div>
@@ -52,7 +52,7 @@ export default function ExpandedViewModeContent({
   goalDescription,
   updateGoal,
   squirrels,
-  archiveMemberOfGoal,
+  archiveGoalMember,
 }) {
   // you can use these as values for
   // testing/ development, instead of `squirrels`
@@ -174,7 +174,7 @@ export default function ExpandedViewModeContent({
               <SquirrelInfoPopup
                 onClose={() => setSquirrelInfoPopup(null)}
                 squirrel={squirrelInfoPopup}
-                archiveMemberOfGoal={archiveMemberOfGoal}
+                archiveGoalMember={archiveGoalMember}
               />
             )}
             <div className='expanded_view_squirrels_add_wrapper'>

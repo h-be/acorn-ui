@@ -1,37 +1,50 @@
 import _ from 'lodash'
 import {
-  CREATE_PROJECT_META,
-  UPDATE_PROJECT_META,
-  FETCH_PROJECT_META,
+  createProjectMeta,
+  fetchProjectMetas,
+  fetchProjectMeta,
+  updateProjectMeta,
+  archiveProjectMeta,
 } from './actions'
-import { typeSuccess, instanceIdFromActionType } from '../action_type_checker'
+import { isCrud, crudReducer } from '../../crudRedux'
 
 const defaultState = {}
 
-export default function(state = defaultState, action) {
+export default function (state = defaultState, action) {
   const { payload, type } = action
 
-  const instanceId = instanceIdFromActionType(type)
-
-  // all three share the same result type signature
-  // CREATE_PROJECT_META
-  // UPDATE_PROJECT_META
-  // FETCH_PROJECT_META
+  // start out by checking whether this a standard CRUD operation
   if (
-    typeSuccess(type, CREATE_PROJECT_META) ||
-    typeSuccess(type, UPDATE_PROJECT_META) ||
-    typeSuccess(type, FETCH_PROJECT_META)
+    isCrud(
+      action,
+      createProjectMeta,
+      fetchProjectMetas,
+      updateProjectMeta,
+      archiveProjectMeta
+    )
   ) {
-    return {
-      ...state,
-      [instanceId]: {
-        ...payload.entry,
-        address: payload.address,
-      },
-    }
+    return crudReducer(
+      state,
+      action,
+      createProjectMeta,
+      fetchProjectMetas,
+      updateProjectMeta,
+      archiveProjectMeta
+    )
   }
-  // DEFAULT
-  else {
-    return state
+
+  switch (type) {
+    case fetchProjectMeta.success().type:
+      const cellId = action.meta.cell_id
+      return {
+        ...state,
+        [cellId]: {
+          ...payload.entry,
+          address: payload.address,
+        },
+      }
+    // DEFAULT
+    default:
+      return state
   }
 }

@@ -14,7 +14,7 @@ import ExpandedViewModeHeader from './ExpandedViewModeHeader/ExpandedViewModeHea
 import RightMenu from './RightMenu/RightMenu'
 import ExpandedViewModeContent from './ExpandedViewModeContent/ExpandedViewModeContent'
 
-import { archiveMemberOfGoal } from '../../projects/goal-members/actions'
+import { archiveGoalMember } from '../../projects/goal-members/actions'
 
 import ExpandedViewModeFooter from './ExpandedViewModeFooter/ExpandedViewModeFooter'
 import { pickColorForString } from '../../styles'
@@ -28,7 +28,7 @@ function ExpandedViewMode({
   onClose,
   creator,
   squirrels,
-  archiveMemberOfGoal,
+  archiveGoalMember,
   createEntryPoint,
   archiveEntryPoint,
   isEntryPoint,
@@ -118,7 +118,7 @@ function ExpandedViewMode({
                 goal={goalState}
                 goalContent={goalState.content}
                 goalDescription={goalState.description}
-                archiveMemberOfGoal={archiveMemberOfGoal}
+                archiveGoalMember={archiveGoalMember}
               />
               <RightMenu
                 projectId={projectId}
@@ -193,8 +193,8 @@ function mapDispatchToProps(dispatch, ownProps) {
     updateGoal: (goal, address) => {
       return dispatch(updateGoal(projectId).create({ address, goal }))
     },
-    archiveMemberOfGoal: address => {
-      return dispatch(archiveMemberOfGoal(projectId).create({ address }))
+    archiveGoalMember: address => {
+      return dispatch(archiveGoalMember(projectId).create({ address }))
     },
   }
 }

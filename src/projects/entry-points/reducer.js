@@ -7,14 +7,15 @@
 import _ from 'lodash'
 
 import {
-  CREATE_ENTRY_POINT,
-  FETCH_ENTRY_POINTS,
-  ARCHIVE_ENTRY_POINT,
+  createEntryPoint,
+  fetchEntryPoints,
+  updateEntryPoint,
+  archiveEntryPoint,
 } from './actions'
-import { ARCHIVE_GOAL } from '../goals/actions'
-import { typeSuccess, instanceIdFromActionType } from '../action_type_checker'
+import { archiveGoal } from '../goals/actions'
+import { isCrud, crudReducer } from '../../crudRedux'
 
-// state is at the highest level an object with instanceIds
+// state is at the highest level an object with cellIds
 // which are like Projects... EntryPoints exist within Projects
 // so they are contained per project in the top level state
 
@@ -23,67 +24,40 @@ import { typeSuccess, instanceIdFromActionType } from '../action_type_checker'
 // also contain their address on those objects
 const defaultState = {}
 
-export default function(state = defaultState, action) {
+export default function (state = defaultState, action) {
+  if (
+    isCrud(
+      action,
+      createEntryPoint,
+      fetchEntryPoints,
+      updateEntryPoint,
+      archiveEntryPoint
+    )
+  ) {
+    return crudReducer(
+      state,
+      action,
+      createEntryPoint,
+      fetchEntryPoints,
+      updateEntryPoint,
+      archiveEntryPoint
+    )
+  }
+
   const { payload, type } = action
-
-  const instanceId = instanceIdFromActionType(type)
-
-  // CREATE_ENTRY_POINT
-  if (typeSuccess(type, CREATE_ENTRY_POINT)) {
-    return {
-      ...state,
-      [instanceId]: {
-        ...state[instanceId],
-        [payload.entry_point_address]: {
-          ...payload.entry_point,
-          address: payload.entry_point_address,
-        },
-      },
-    }
-  }
-  // FETCH_ENTRY_POINTS
-  else if (typeSuccess(type, FETCH_ENTRY_POINTS)) {
-    const mapped = payload.map(r => {
+  switch (type) {
+    case archiveGoal.success().type:
+      const cellId = action.meta.cell_id
+      // filter out the entry points whose addresses are listed as having been
+      // archived on account of having archived its associated Goal
       return {
-        ...r.entry_point,
-        address: r.entry_point_address,
+        ...state,
+        [cellId]: _.pickBy(
+          state[cellId],
+          (value, key) => payload.archived_entry_points.indexOf(key) === -1
+        ),
       }
-    })
-    const newVals = _.keyBy(mapped, 'address')
-    // combines pre-existing values of the object with new values from
-    // Holochain fetch
-    return {
-      ...state,
-      [instanceId]: {
-        ...state[instanceId],
-        ...newVals,
-      },
-    }
-  }
-  // ARCHIVE_GOAL
-  else if (typeSuccess(type, ARCHIVE_GOAL)) {
-    // filter out the entry points whose addresses are listed as having been
-    // archived on account of having archived its associated Goal
-    return {
-      ...state,
-      [instanceId]: _.pickBy(
-        state[instanceId],
-        (value, key) => payload.archived_entry_points.indexOf(key) === -1
-      ),
-    }
-  }
-  // ARCHIVE_ENTRY_POINT
-  else if (typeSuccess(type, ARCHIVE_ENTRY_POINT)) {
-    return {
-      ...state,
-      [instanceId]: _.pickBy(
-        state[instanceId],
-        (value, key) => key !== payload
-      ),
-    }
-  }
-  // DEFAULT
-  else {
-    return state
+    default:
+      return state
   }
 }
