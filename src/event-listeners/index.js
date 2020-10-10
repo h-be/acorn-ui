@@ -115,7 +115,10 @@ export default function setupEventListeners(store, canvas) {
         ) {
           let firstOfSelection = selection.selectedEdges[0]
           store.dispatch(
-            archiveEdge(activeProject).create({ address: firstOfSelection })
+            archiveEdge.create({
+              cellIdString: activeProject,
+              payload: firstOfSelection,
+            })
           )
           // if on firefox, and matched this case
           // prevent the browser from navigating back to the last page
@@ -127,7 +130,10 @@ export default function setupEventListeners(store, canvas) {
         ) {
           let firstOfSelection = selection.selectedGoals[0]
           store.dispatch(
-            archiveGoal(activeProject).create({ address: firstOfSelection })
+            archiveGoal.create({
+              cellIdString: activeProject,
+              payload: firstOfSelection,
+            })
           )
           // if on firefox, and matched this case
           // prevent the browser from navigating back to the last page

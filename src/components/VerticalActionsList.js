@@ -209,13 +209,15 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
-  const { projectId } = ownProps
+  const { projectId: cellIdString } = ownProps
   return {
-    onArchiveClick: address => {
-      return dispatch(archiveGoal(projectId).create({ address }))
+    onArchiveClick: payload => {
+      return dispatch(archiveGoal.create({ cellIdString, payload }))
     },
-    updateGoal: (goal, address) => {
-      return dispatch(updateGoal(projectId).create({ address, goal }))
+    updateGoal: (entry, address) => {
+      return dispatch(
+        updateGoal.create({ cellIdString, payload: { address, entry } })
+      )
     },
   }
 }

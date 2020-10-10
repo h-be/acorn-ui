@@ -81,7 +81,7 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
-  const { projectId } = ownProps
+  const { projectId: cellIdString } = ownProps
   return {
     setActiveProject: projectId => dispatch(setActiveProject(projectId)),
     setActiveEntryPoints: entryPointAddresses =>
@@ -93,31 +93,21 @@ function mapDispatchToProps(dispatch, ownProps) {
       dispatch(resetTranslateAndScale())
     },
     fetchProjectMeta: () =>
-      dispatch(
-        fetchProjectMeta.create({ cellIdString: projectId, payload: null })
-      ),
+      dispatch(fetchProjectMeta.create({ cellIdString, payload: null })),
     fetchEntryPoints: () =>
-      dispatch(
-        fetchEntryPoints.create({ cellIdString: projectId, payload: null })
-      ),
+      dispatch(fetchEntryPoints.create({ cellIdString, payload: null })),
     fetchMembers: () =>
-      dispatch(fetchMembers.create({ cellIdString: projectId, payload: null })),
+      dispatch(fetchMembers.create({ cellIdString, payload: null })),
     fetchGoals: () =>
-      dispatch(fetchGoals.create({ cellIdString: projectId, payload: null })),
+      dispatch(fetchGoals.create({ cellIdString, payload: null })),
     fetchEdges: () =>
-      dispatch(fetchEdges.create({ cellIdString: projectId, payload: null })),
+      dispatch(fetchEdges.create({ cellIdString, payload: null })),
     fetchGoalMembers: () =>
-      dispatch(
-        fetchGoalMembers.create({ cellIdString: projectId, payload: null })
-      ),
+      dispatch(fetchGoalMembers.create({ cellIdString, payload: null })),
     fetchGoalVotes: () =>
-      dispatch(
-        fetchGoalVotes.create({ cellIdString: projectId, payload: null })
-      ),
+      dispatch(fetchGoalVotes.create({ cellIdString, payload: null })),
     fetchGoalComments: () =>
-      dispatch(
-        fetchGoalComments.create({ cellIdString: projectId, payload: null })
-      ),
+      dispatch(fetchGoalComments.create({ cellIdString, payload: null })),
   }
 }
 

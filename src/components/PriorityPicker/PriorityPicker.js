@@ -266,15 +266,13 @@ function Priority({
 
   const createVote = async () => {
     await createGoalVote({
-      goal_vote: {
-        urgency: 0.5,
-        importance: 0.5,
-        impact: 0.5,
-        effort: 0.5,
-        goal_address: goalAddress,
-        agent_address: whoami.entry.address,
-        unix_timestamp: moment().unix(),
-      },
+      urgency: 0.5,
+      importance: 0.5,
+      impact: 0.5,
+      effort: 0.5,
+      goal_address: goalAddress,
+      agent_address: whoami.entry.address,
+      unix_timestamp: moment().unix(),
     })
     setOpenMyVote(true)
   }
@@ -417,16 +415,18 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
-  const { projectId } = ownProps
+  const { projectId: cellIdString } = ownProps
   return {
-    createGoalVote: goal_vote => {
-      return dispatch(createGoalVote(projectId).create(goal_vote))
+    createGoalVote: payload => {
+      return dispatch(createGoalVote.create({ cellIdString, payload }))
     },
-    updateGoalVote: (goal_vote, address) => {
-      return dispatch(updateGoalVote(projectId).create({ goal_vote, address }))
+    updateGoalVote: (entry, address) => {
+      return dispatch(
+        updateGoalVote.create({ cellIdString, payload: { entry, address } })
+      )
     },
-    archiveGoalVote: address => {
-      return dispatch(archiveGoalVote(projectId).create({ address }))
+    archiveGoalVote: payload => {
+      return dispatch(archiveGoalVote.create({ cellIdString, payload }))
     },
   }
 }

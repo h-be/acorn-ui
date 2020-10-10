@@ -180,21 +180,21 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
-  const { projectId } = ownProps
+  const { projectId: cellIdString } = ownProps
   return {
-    createEntryPoint: entryPoint => {
+    createEntryPoint: payload => {
+      return dispatch(createEntryPoint.create({ cellIdString, payload }))
+    },
+    archiveEntryPoint: payload => {
+      return dispatch(archiveEntryPoint.create({ cellIdString, payload }))
+    },
+    updateGoal: (entry, address) => {
       return dispatch(
-        createEntryPoint(projectId).create({ entry_point: entryPoint })
+        updateGoal.create({ cellIdString, payload: { address, entry } })
       )
     },
-    archiveEntryPoint: address => {
-      return dispatch(archiveEntryPoint(projectId).create({ address }))
-    },
-    updateGoal: (goal, address) => {
-      return dispatch(updateGoal(projectId).create({ address, goal }))
-    },
-    archiveGoalMember: address => {
-      return dispatch(archiveGoalMember(projectId).create({ address }))
+    archiveGoalMember: payload => {
+      return dispatch(archiveGoalMember.create({ cellIdString, payload }))
     },
   }
 }
