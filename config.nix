@@ -67,8 +67,8 @@ echo "All finished!!!"
   # the previous version will be scanned/bumped by release scripts
   # the current version is what the release scripts bump *to*
   version = {
-   current = "0.3.11";
-   previous = "0.3.10";
+   current = "0.4.0";
+   previous = "0.3.11";
   };
 
   github = {
@@ -78,7 +78,7 @@ echo "All finished!!!"
    template = ''
 {{ changelog }}
 
-This UI is useful only for the purposes of of running within acorn-release distribution, or Holoscape distribution. Do not download these files and try to run them directly, or standalone.
+This UI is useful only for the purposes of of running within acorn-release distribution. Do not download these files and try to run them directly, or standalone.
 '';
 
    # owner of the github repository that release are deployed to
