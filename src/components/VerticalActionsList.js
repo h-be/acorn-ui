@@ -11,7 +11,7 @@ import HierarchyPicker from './HierarchyPicker/HierarchyPicker'
 import PriorityPicker from './PriorityPicker/PriorityPicker'
 import StatusIcon from './StatusIcon/StatusIcon'
 
-import { archiveGoal, updateGoal } from '../projects/goals/actions'
+import { archiveGoalFully, updateGoal } from '../projects/goals/actions'
 import { closeGoalForm } from '../goal-form/actions'
 import Modal, { ModalContent } from './Modal/Modal'
 
@@ -212,7 +212,7 @@ function mapDispatchToProps(dispatch, ownProps) {
   const { projectId: cellIdString } = ownProps
   return {
     onArchiveClick: payload => {
-      return dispatch(archiveGoal.create({ cellIdString, payload }))
+      return dispatch(archiveGoalFully.create({ cellIdString, payload }))
     },
     updateGoal: (entry, address) => {
       return dispatch(

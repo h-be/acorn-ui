@@ -7,7 +7,7 @@ import {
   UNSELECT_GOAL,
   UNSELECT_ALL,
 } from './actions'
-import { archiveGoal } from '../projects/goals/actions'
+import { archiveGoalFully } from '../projects/goals/actions'
 import { archiveEdge } from '../projects/edges/actions'
 
 const defaultState = {
@@ -29,7 +29,7 @@ export default function (state = defaultState, action) {
   const { payload, type } = action
 
   switch (type) {
-    case archiveGoal.success().type:
+    case archiveGoalFully.success().type:
       // unselect if the archived Goal was selected
       return state.selectedGoals.includes(payload.address)
         ? {

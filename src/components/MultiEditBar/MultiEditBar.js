@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { archiveGoal, updateGoal } from '../../projects/goals/actions'
+import { archiveGoalFully, updateGoal } from '../../projects/goals/actions'
 import moment from 'moment'
 
 import './MultiEditBar.css'
@@ -21,7 +21,7 @@ function MultiEditBar({
   selectedGoals = [],
   updateGoal,
   hasSelection,
-  archiveGoal,
+  archiveGoalFully,
 }) {
   const defaultViews = {
     status: false,
@@ -65,7 +65,7 @@ function MultiEditBar({
   }
 
   const archiveGoals = () => {
-    selectedGoals.forEach(goal => archiveGoal(goal.address))
+    selectedGoals.forEach(goal => archiveGoalFully(goal.address))
   }
 
   const multiEditBarSquirrelsClass = viewsOpen.squirrels ? 'active' : ''
@@ -316,8 +316,8 @@ function mapDispatchToProps(dispatch, ownProps) {
         updateGoal.create({ cellIdString, payload: { address, entry } })
       )
     },
-    archiveGoal: payload => {
-      return dispatch(archiveGoal.create({ cellIdString, payload }))
+    archiveGoalFully: payload => {
+      return dispatch(archiveGoalFully.create({ cellIdString, payload }))
     },
   }
 }

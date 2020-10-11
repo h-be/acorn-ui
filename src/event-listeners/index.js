@@ -42,7 +42,7 @@ import {
   closeGoalForm,
   updateContent,
 } from '../goal-form/actions'
-import { archiveGoal } from '../projects/goals/actions'
+import { archiveGoalFully } from '../projects/goals/actions'
 import { archiveEdge } from '../projects/edges/actions'
 import { setScreenDimensions } from '../screensize/actions'
 import { changeTranslate, changeScale } from '../viewport/actions'
@@ -130,7 +130,7 @@ export default function setupEventListeners(store, canvas) {
         ) {
           let firstOfSelection = selection.selectedGoals[0]
           store.dispatch(
-            archiveGoal.create({
+            archiveGoalFully.create({
               cellIdString: activeProject,
               payload: firstOfSelection,
             })

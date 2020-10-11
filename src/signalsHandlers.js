@@ -7,7 +7,7 @@ and the reducers handle them the same way
 */
 
 import { createEdge, archiveEdge } from './projects/edges/actions'
-import { createGoal, archiveGoal } from './projects/goals/actions'
+import { createGoal, archiveGoalFully } from './projects/goals/actions'
 import { createGoalVote, archiveGoalVote } from './projects/goal-votes/actions'
 import {
   createGoalMember,
@@ -61,7 +61,7 @@ export default store => signal => {
       break
     case 'goal_archived':
       const { archived } = signalArgs
-      store.dispatch(createSignalAction(archiveGoal, cellId, archived))
+      store.dispatch(createSignalAction(archiveGoalFully, cellId, archived))
       break
     // covers create and update cases
     case 'edge':

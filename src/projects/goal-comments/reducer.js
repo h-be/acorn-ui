@@ -6,7 +6,7 @@ import {
   updateGoalComment,
   archiveGoalComment,
 } from './actions'
-import { archiveGoal } from '../goals/actions'
+import { archiveGoalFully } from '../goals/actions'
 import { isCrud, crudReducer } from '../../crudRedux'
 
 const defaultState = {}
@@ -40,14 +40,14 @@ export default function (state = defaultState, action) {
 
   switch (type) {
     // ARCHIVE_GOAL
-    case archiveGoal.success().type:
-      // filter out the Goalmembers whose addresses are listed as having been
+    case archiveGoalFully.success().type:
+      // filter out the GoalComments whose addresses are listed as having been
       // archived on account of having archived the Goal it relates to
       return {
         ...state,
         [cellId]: _.pickBy(
           state[cellId],
-          (value, key) => payload.archived_goal_votes.indexOf(key) === -1
+          (_value, key) => payload.archived_goal_comments.indexOf(key) === -1
         ),
       }
     // DEFAULT
