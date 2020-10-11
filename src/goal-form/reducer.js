@@ -2,7 +2,7 @@
 
 import { OPEN_GOAL_FORM, CLOSE_GOAL_FORM, UPDATE_CONTENT } from './actions'
 
-import { archiveGoal } from '../projects/goals/actions'
+import { archiveGoalFully } from '../projects/goals/actions'
 
 const defaultState = {
   editAddress: null,
@@ -25,7 +25,7 @@ export default function (state = defaultState, action) {
   }
 
   switch (type) {
-    case archiveGoal.success().type:
+    case archiveGoalFully.success().type:
       return resetVersion
     case UPDATE_CONTENT:
       return {

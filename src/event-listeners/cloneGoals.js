@@ -20,12 +20,12 @@ export default function cloneGoals(store) {
 
     store
       .dispatch(
-        createGoal(activeProject).create({
-          goal: {
+        createGoal.create({
+          cellIdString: activeProject,
+          payload: {
             ...goals[value],
             timestamp_created: moment().unix(),
           },
-          maybe_goal_edge_input: null,
         })
       )
       .then(value => {
@@ -33,8 +33,9 @@ export default function cloneGoals(store) {
         store.dispatch(selectGoal(value.goal.address))
         members.map(member => {
           store.dispatch(
-            createGoalMember(activeProject).create({
-              goal_member: {
+            createGoalMember.create({
+              cellIdString: activeProject,
+              payload: {
                 goal_address: newGoalAddress,
                 agent_address: member.agent_address,
                 user_edit_hash: member.user_edit_hash,

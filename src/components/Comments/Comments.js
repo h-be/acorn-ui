@@ -134,17 +134,17 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
-  const { projectId } = ownProps
+  const { projectId: cellIdString } = ownProps
   return {
-    createGoalComment: goal_comment => {
-      return dispatch(createGoalComment(projectId).create({ goal_comment }))
+    createGoalComment: payload => {
+      return dispatch(createGoalComment.create({ cellIdString, payload }))
     },
-    archiveGoalComment: address => {
-      return dispatch(archiveGoalComment(projectId).create({ address }))
+    archiveGoalComment: payload => {
+      return dispatch(archiveGoalComment.create({ cellIdString, payload }))
     },
-    updateGoalComment: (goal_comment, address) => {
+    updateGoalComment: (entry, address) => {
       return dispatch(
-        updateGoalComment(projectId).create({ goal_comment, address })
+        updateGoalComment.create({ cellIdString, payload: { entry, address } })
       )
     },
   }

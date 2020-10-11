@@ -7,7 +7,7 @@ import {
   updateEntryPoint,
   archiveEntryPoint,
 } from './actions'
-import { archiveGoal } from '../goals/actions'
+import { archiveGoalFully } from '../goals/actions'
 import { isCrud, crudReducer } from '../../crudRedux'
 
 // state is at the highest level an object with cellIds
@@ -41,7 +41,7 @@ export default function (state = defaultState, action) {
 
   const { payload, type } = action
   switch (type) {
-    case archiveGoal.success().type:
+    case archiveGoalFully.success().type:
       const cellId = action.meta.cellIdString
       // filter out the entry points whose addresses are listed as having been
       // archived on account of having archived its associated Goal
@@ -49,7 +49,7 @@ export default function (state = defaultState, action) {
         ...state,
         [cellId]: _.pickBy(
           state[cellId],
-          (value, key) => payload.archived_entry_points.indexOf(key) === -1
+          (_value, key) => payload.archived_entry_points.indexOf(key) === -1
         ),
       }
     default:

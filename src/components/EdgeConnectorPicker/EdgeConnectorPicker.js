@@ -173,14 +173,15 @@ function mapDispatchToProps(dispatch) {
     clearPreview: activeProject => {
       return dispatch(clearEdgesPreview(activeProject))
     },
-    saveConnections: (parentAddress, childrenAddresses, activeProject) => {
+    saveConnections: (parentAddress, childrenAddresses, cellIdString) => {
       // loop over childrenAddresses
       // use createEdge each time
       return Promise.all(
         childrenAddresses.map(childAddress =>
           dispatch(
-            createEdge(activeProject).create({
-              edge: {
+            createEdge.create({
+              cellIdString,
+              payload: {
                 child_address: childAddress,
                 parent_address: parentAddress,
                 randomizer: Date.now(),

@@ -283,10 +283,10 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
-  const { projectId } = ownProps
+  const { projectId: cellIdString } = ownProps
   return {
-    fetchGoalHistory: address => {
-      return dispatch(fetchGoalHistory(projectId).create(address))
+    fetchGoalHistory: payload => {
+      return dispatch(fetchGoalHistory.create({ cellIdString, payload }))
     },
   }
 }

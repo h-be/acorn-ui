@@ -4,10 +4,16 @@ import { PROJECTS_ZOME_NAME } from '../../holochainConfig'
 import { createCrudActionCreators } from '../../crudRedux'
 
 const CREATE_GOAL_WITH_EDGE = 'create_goal_with_edge'
+const ARCHIVE_GOAL_FULLY = 'archive_goal_fully'
 
 const createGoalWithEdge = createZomeCallAsyncAction(
   PROJECTS_ZOME_NAME,
   CREATE_GOAL_WITH_EDGE
+)
+
+const archiveGoalFully = createZomeCallAsyncAction(
+  PROJECTS_ZOME_NAME,
+  ARCHIVE_GOAL_FULLY
 )
 
 const [
@@ -23,4 +29,5 @@ export {
   fetchGoals,
   updateGoal,
   archiveGoal,
+  archiveGoalFully,
 }

@@ -1,7 +1,7 @@
 
 
 import { HOVER_EDGE, UNHOVER_EDGE, HOVER_GOAL, UNHOVER_GOAL } from './actions'
-import { archiveGoal } from '../projects/goals/actions'
+import { archiveGoalFully } from '../projects/goals/actions'
 import { archiveEdge } from '../projects/edges/actions'
 
 const defaultState = {
@@ -13,7 +13,7 @@ export default function (state = defaultState, action) {
   const { payload, type } = action
 
   switch (type) {
-    case archiveGoal.success().type:
+    case archiveGoalFully.success().type:
       // unhover if the archived Goal was hovered over
       return state.hoveredGoal === payload.address
         ? {

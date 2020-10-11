@@ -1,21 +1,19 @@
-
 import _ from 'lodash'
 
-import { createGoal, createGoalWithEdge, fetchGoals, updateGoal, archiveGoal } from './actions'
+import {
+  createGoal,
+  createGoalWithEdge,
+  fetchGoals,
+  updateGoal,
+  archiveGoal,
+  archiveGoalFully,
+} from './actions'
 import { isCrud, crudReducer } from '../../crudRedux'
 
 const defaultState = {}
 
 export default function (state = defaultState, action) {
-  if (
-    isCrud(
-      action,
-      createGoal,
-      fetchGoals,
-      updateGoal,
-      archiveGoal
-    )
-  ) {
+  if (isCrud(action, createGoal, fetchGoals, updateGoal, archiveGoal)) {
     return crudReducer(
       state,
       action,
@@ -27,9 +25,11 @@ export default function (state = defaultState, action) {
   }
 
   const { payload, type } = action
+  let cellIdString
+
   switch (type) {
     case createGoalWithEdge.success().type:
-      const { meta: { cellIdString } } = action
+      cellIdString = action.meta.cellIdString
       return {
         ...state,
         [cellIdString]: {
@@ -39,6 +39,15 @@ export default function (state = defaultState, action) {
             address: payload.goal.address,
           },
         },
+      }
+    case archiveGoalFully.success().type:
+      cellIdString = action.meta.cellIdString
+      return {
+        ...state,
+        [cellIdString]: _.pickBy(
+          state[cellIdString],
+          (_value, key) => key !== payload.address
+        ),
       }
     default:
       return state

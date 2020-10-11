@@ -1,4 +1,3 @@
-
 import _ from 'lodash'
 
 import {
@@ -9,7 +8,7 @@ import {
   updateEdge,
   archiveEdge,
 } from './actions'
-import { createGoalWithEdge, archiveGoal } from '../goals/actions'
+import { createGoalWithEdge, archiveGoalFully } from '../goals/actions'
 import { isCrud, crudReducer } from '../../crudRedux'
 
 const defaultState = {}
@@ -17,7 +16,6 @@ const defaultState = {}
 const PREVIEW_KEY_STRING = 'preview'
 
 export default function (state = defaultState, action) {
-
   // start out by checking whether this a standard CRUD operation
   if (isCrud(action, createEdge, fetchEdges, updateEdge, archiveEdge)) {
     return crudReducer(
@@ -58,17 +56,6 @@ export default function (state = defaultState, action) {
           (value, key) => !key.startsWith(PREVIEW_KEY_STRING)
         ),
       }
-    // ARCHIVE GOAL
-    case archiveGoal.success().type:
-      // filter out the Edges whose addresses are listed as having been
-      // archived on account of having archived one of the Goals it links
-      return {
-        ...state,
-        [cellId]: _.pickBy(
-          state[cellId],
-          (value, key) => payload.archived_edges.indexOf(key) === -1
-        ),
-      }
     // CREATE GOAL WITH EDGE
     case createGoalWithEdge.success().type:
       cellId = action.meta.cellIdString
@@ -85,6 +72,18 @@ export default function (state = defaultState, action) {
         }
       } else {
         return state
+      }
+    // ARCHIVE GOAL
+    case archiveGoalFully.success().type:
+      cellId = action.meta.cellIdString
+      // filter out the Edges whose addresses are listed as having been
+      // archived on account of having archived one of the Goals it links
+      return {
+        ...state,
+        [cellId]: _.pickBy(
+          state[cellId],
+          (_value, key) => payload.archived_edges.indexOf(key) === -1
+        ),
       }
     default:
       return state

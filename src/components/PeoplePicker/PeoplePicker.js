@@ -156,12 +156,13 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
-  const { projectId } = ownProps
+  const { projectId: cellIdString } = ownProps
   return {
     createGoalMember: (goal_address, agent_address) => {
       return dispatch(
-        createGoalMember(projectId).create({
-          goal_member: {
+        createGoalMember.create({
+          cellIdString,
+          payload: {
             goal_address,
             agent_address,
             unix_timestamp: moment().unix(),
@@ -169,8 +170,8 @@ function mapDispatchToProps(dispatch, ownProps) {
         })
       )
     },
-    archiveGoalMember: address => {
-      return dispatch(archiveGoalMember(projectId).create({ address }))
+    archiveGoalMember: payload => {
+      return dispatch(archiveGoalMember.create({ cellIdString, payload }))
     },
   }
 }

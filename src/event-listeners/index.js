@@ -42,7 +42,7 @@ import {
   closeGoalForm,
   updateContent,
 } from '../goal-form/actions'
-import { archiveGoal } from '../projects/goals/actions'
+import { archiveGoalFully } from '../projects/goals/actions'
 import { archiveEdge } from '../projects/edges/actions'
 import { setScreenDimensions } from '../screensize/actions'
 import { changeTranslate, changeScale } from '../viewport/actions'
@@ -115,7 +115,10 @@ export default function setupEventListeners(store, canvas) {
         ) {
           let firstOfSelection = selection.selectedEdges[0]
           store.dispatch(
-            archiveEdge(activeProject).create({ address: firstOfSelection })
+            archiveEdge.create({
+              cellIdString: activeProject,
+              payload: firstOfSelection,
+            })
           )
           // if on firefox, and matched this case
           // prevent the browser from navigating back to the last page
@@ -127,7 +130,10 @@ export default function setupEventListeners(store, canvas) {
         ) {
           let firstOfSelection = selection.selectedGoals[0]
           store.dispatch(
-            archiveGoal(activeProject).create({ address: firstOfSelection })
+            archiveGoalFully.create({
+              cellIdString: activeProject,
+              payload: firstOfSelection,
+            })
           )
           // if on firefox, and matched this case
           // prevent the browser from navigating back to the last page
