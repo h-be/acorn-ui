@@ -1,8 +1,8 @@
 import { AdminWebsocket, AppWebsocket } from '@holochain/conductor-api'
 
 // export for use by holochainMiddleware (redux)
-export const APP_WS_URL = 'ws://localhost:8888'
-const ADMIN_WS_URL = 'ws://localhost:1234'
+export const APP_WS_URL = `ws://localhost:${__APP_PORT__}`
+const ADMIN_WS_URL = `ws://localhost:${__ADMIN_PORT__}`
 
 let appWs
 let adminWs

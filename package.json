@@ -43,7 +43,6 @@
     "core-js": "^3.6.5",
     "dagre": "^0.8.5",
     "diceware-word": "^1.0.0",
-    "electron": "8.5.2",
     "intersects": "^2.7.2",
     "lodash": "^4.17.19",
     "moment": "^2.24.0",
