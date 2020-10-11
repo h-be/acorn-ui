@@ -6,8 +6,8 @@ module.exports = merge(common, {
   devtool: 'inline-source-map',
   devServer: {
     contentBase: './dist',
-    proxy: {
-      '/_dna_connections.json': 'http://localhost:3111',
-    },
+    // proxy: {
+    //   '/_dna_connections.json': 'http://localhost:3111',
+    // },
   },
 })

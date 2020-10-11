@@ -3,8 +3,6 @@ let
  acorn-build = pkgs.writeShellScriptBin "acorn-build"
  ''
  set -euxo pipefail
- curl -O -L https://github.com/h-be/acorn-hc/releases/download/v''${1:-0.3.6}/projects.dna.json
- export PROJECTS_DNA_ADDRESS="'$(hc hash --path projects.dna.json | awk '/DNA Hash: /{print $NF}' | tr -d '\n')'"
  ${pkgs.nodejs}/bin/npm run build
  cd dist && zip acorn-ui -r . && cd ..
  '';
