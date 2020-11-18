@@ -13,9 +13,9 @@ import JoinProjectModal from '../../components/JoinProjectModal/JoinProjectModal
 import InviteMembersModal from '../../components/InviteMembersModal/InviteMembersModal'
 // import new modals here
 
-import { PROJECTS_DNA_PATH } from '../../holochainConfig'
+import { PROJECTS_DNA_PATH, PROJECTS_ZOME_NAME } from '../../holochainConfig'
 import { passphraseToUuid } from '../../secrets'
-import { getAdminWs, getAgentPubKey } from '../../hcWebsockets'
+import { getAdminWs, getAppWs, getAgentPubKey } from '../../hcWebsockets'
 import { fetchEntryPoints } from '../../projects/entry-points/actions'
 import { fetchMembers } from '../../projects/members/actions'
 import {
@@ -173,17 +173,20 @@ function Dashboard({
   )
 }
 
-async function createProject(passphrase, projectMeta, dispatch) {
-  // const random = Math.random()
-  // const dnaId = `_acorn_projects_dna_${random}`
-  // const cellId = `_acorn_projects_instance_${random}`
+async function installProjectApp(passphrase) {
   const uuid = passphraseToUuid(passphrase)
-  const app_id = uuid
+  // add a bit of randomness so that
+  // the same passphrase can be tried multiple different times
+  // without conflicting
+  // in order to eventually find their peers
+  // note that this will leave a graveyard of deactivated apps for attempted
+  // joins
+  const app_id = `${Math.random().toString().slice(-6)}-${uuid}`
   const adminWs = await getAdminWs()
   const agent_key = getAgentPubKey()
   if (!agent_key) {
     throw new Error(
-      'Cannot create a new project because no AgentPubKey is known locally'
+      'Cannot install a new project because no AgentPubKey is known locally'
     )
   }
   // INSTALL
@@ -200,10 +203,53 @@ async function createProject(passphrase, projectMeta, dispatch) {
   })
   // ACTIVATE
   await adminWs.activateApp({ app_id })
+  return installedApp
+}
+
+async function createProject(passphrase, projectMeta, dispatch) {
+  const installedApp = await installProjectApp(passphrase)
   const cellIdString = cellIdToString(installedApp.cell_data[0][0])
   await dispatch(
     createProjectMeta.create({ cellIdString, payload: projectMeta })
   )
+}
+
+async function joinProject(passphrase, dispatch) {
+  // joinProject
+  // join a DNA
+  // then try to get the project metadata
+  // if that DOESN'T work, the attempt is INVALID
+  // remove the instance again immediately
+  const installedApp = await installProjectApp(passphrase)
+  const cellId = installedApp.cell_data[0][0]
+  const appWs = await getAppWs()
+  // await new Promise((resolve) => setTimeout(resolve, 3000))
+  try {
+    const projectMeta = await appWs.callZome({
+      cap: null,
+      cell_id: cellId,
+      zome_name: PROJECTS_ZOME_NAME,
+      fn_name: 'fetch_project_meta',
+      payload: null,
+      provenance: getAgentPubKey(), // FIXME: this will need correcting after holochain changes this
+    })
+    const cellIdString = cellIdToString(cellId)
+    await dispatch(
+      createProjectMeta.create({ cellIdString, payload: projectMeta })
+    )
+    return true
+  } catch (e) {
+    // deactivate app
+    const adminWs = await getAdminWs()
+    await adminWs.deactivateApp({ app_id: installedApp.app_id })
+    if (e.type === 'error'
+          && e.data.type === 'ribosome_error'
+          && e.data.data.includes('no project meta exists')) {
+      return false
+    } else {
+      throw e
+    }
+  }
 }
 
 function mapDispatchToProps(dispatch) {
@@ -227,35 +273,9 @@ function mapDispatchToProps(dispatch) {
       }
       await createProject(passphrase, projectMeta, dispatch)
     },
-    // joinProject: passphrase => {
-    //   // joinProject
-    //   // join a DNA
-    //   // then try to get the project metadata
-    //   // if that DOESN'T work, the attempt is INVALID
-    //   // remove the instance again immediately
-    //   // we can't remove the DNA itself, but that's fine
-    //   return addDnaAndInstance(dispatch, passphrase).then(({ cellId }) => {
-    //     const HIGH_TIMEOUT = 20000 // ms
-    //     return dispatch(
-    //       fetchProjectMeta(cellId).create({}, HIGH_TIMEOUT)
-    //     ).catch(async e => {
-    //       if (
-    //         e &&
-    //         e.Err &&
-    //         e.Err.Internal &&
-    //         e.Err.Internal === 'no project meta exists'
-    //       ) {
-    //         // remove the instance again immediately, let the resolver know we did this, by returning false
-    //         await dispatch(removeProjectInstance.create(cellId))
-    //         return false
-    //       } else {
-    //         dispatch(removeProjectInstance.create(cellId))
-    //         // some unintended error
-    //         throw e
-    //       }
-    //     })
-    //   })
-    // },
+    joinProject: async passphrase => {
+      await joinProject(passphrase, dispatch)
+    },
   }
 }
 

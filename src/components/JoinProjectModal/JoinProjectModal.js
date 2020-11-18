@@ -28,7 +28,7 @@ export default function JoinProjectModal({
     try {
       const projectExists = await onJoinProject(projectSecret)
       if (!projectExists) {
-        setInvalidText('project does not exist')
+        setInvalidText('project does not exist or peers could not be found')
       } else {
         // it worked! reset and close
         onDone()

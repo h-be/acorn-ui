@@ -20,7 +20,6 @@ export async function getAllApps() {
 
 export async function getProjectCellIdStrings() {
   const allApps = await getAllApps()
-  console.log(allApps)
   return Object
     .keys(allApps)
     // the PROFILES app is not a PROJECTS app so rule it out
