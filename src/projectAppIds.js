@@ -1,5 +1,6 @@
 import { cellIdToString } from 'connoropolous-hc-redux-middleware/build/main/lib/actionCreator'
 import { getAppWs, getAdminWs } from './hcWebsockets'
+import { PROFILES_APP_ID } from './holochainConfig'
 
 export async function getAllApps() {
   const adminWs = await getAdminWs()
@@ -22,7 +23,8 @@ export async function getProjectCellIdStrings() {
   console.log(allApps)
   return Object
     .keys(allApps)
-    .filter(appId => appId !== "test-app")
+    // the PROFILES app is not a PROJECTS app so rule it out
+    .filter(appId => appId !== PROFILES_APP_ID)
     .map(appId => allApps[appId].cellIdString)
 }
 
