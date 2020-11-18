@@ -13,6 +13,7 @@ export default function(state = defaultState, action) {
   const { payload, type } = action
   switch (type) {
     case fetchAgents.success().type:
+      console.log('FETCH_AGENTS_SUCCESS', payload)
       return _.keyBy(payload, 'address')
     case SET_AGENT:
       return {

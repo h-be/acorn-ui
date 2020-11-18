@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { cellIdToString } from 'connoropolous-hc-redux-middleware/build/main/lib/actionCreator'
 import { CSSTransition } from 'react-transition-group'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -24,7 +25,7 @@ import {
 import selectEntryPoints from '../../projects/entry-points/select'
 
 import DashboardListProject from './DashboardListProject'
-import { addApp, addProjectAppId, getAllApps } from '../../projectAppIds'
+import { getProjectCellIdStrings } from '../../projectAppIds'
 import { setProjectsCellIds } from '../../cells/actions'
 
 function Dashboard({
@@ -179,8 +180,6 @@ async function createProject(passphrase, projectMeta, dispatch) {
   const uuid = passphraseToUuid(passphrase)
   const app_id = uuid
   const adminWs = await getAdminWs()
-  // PERSIST THIS TO LOCAL STORAGE
-  addProjectAppId(app_id)
   const agent_key = getAgentPubKey()
   if (!agent_key) {
     throw new Error(
@@ -201,19 +200,10 @@ async function createProject(passphrase, projectMeta, dispatch) {
   })
   // ACTIVATE
   await adminWs.activateApp({ app_id })
-  // PERSIST THIS TO THE MEMORY CACHE OF INSTALLED APPS
-  const appInfo = addApp(installedApp)
-  const { cellIdString } = appInfo
+  const cellIdString = cellIdToString(installedApp.cell_data[0][0])
   await dispatch(
     createProjectMeta.create({ cellIdString, payload: projectMeta })
   )
-
-  // update the redux state
-  const allApps = await getAllApps()
-  const projectCellIds = Object.keys(allApps).map(
-    appId => allApps[appId].cellIdString
-  )
-  dispatch(setProjectsCellIds(projectCellIds))
 }
 
 function mapDispatchToProps(dispatch) {

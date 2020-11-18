@@ -31,7 +31,7 @@ import {
   setAgentPubKey,
   APP_WS_URL,
 } from './hcWebsockets'
-import { getAllApps } from './projectAppIds'
+import { getProjectCellIdStrings } from './projectAppIds'
 
 // trigger caching of adminWs connection
 getAdminWs()
@@ -51,7 +51,7 @@ let store = createStore(
 getAppWs(signalsHandlers(store)).then(async client => {
   const profilesInfo = await client.appInfo({ app_id: PROFILES_APP_ID })
   const [cellId, _] = profilesInfo.cell_data.find(
-    ([cellId, dnaName]) => dnaName === PROFILES_DNA_NAME
+    ([_cellId, dnaName]) => dnaName === PROFILES_DNA_NAME
   )
   const [_dnaHash, agentPubKey] = cellId
   // cache buffer version of agentPubKey
@@ -62,12 +62,8 @@ getAppWs(signalsHandlers(store)).then(async client => {
   store.dispatch(fetchAgents.create({ cellIdString, payload: null }))
   store.dispatch(whoami.create({ cellIdString, payload: null }))
   store.dispatch(fetchAgentAddress.create({ cellIdString, payload: null }))
-  // trigger the fetching and caching of all the app infos
-  const allApps = await getAllApps()
-  const projectCellIds = Object.keys(allApps).map(
-    appId => allApps[appId].cellIdString
-  )
-  // similar to the idea of setProfilesCellId
+  // which projects do we have installed?
+  const projectCellIds = await getProjectCellIdStrings()
   store.dispatch(setProjectsCellIds(projectCellIds))
 })
 

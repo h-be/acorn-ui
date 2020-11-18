@@ -1,5 +1,7 @@
 import _ from 'lodash'
-
+import {
+  createProjectMeta,
+} from '../projects/project-meta/actions'
 import { SET_PROFILES_CELL_ID, SET_PROJECTS_CELL_IDS } from './actions'
 
 const defaultState = {
@@ -8,7 +10,7 @@ const defaultState = {
 }
 
 export default function (state = defaultState, action) {
-  const { payload, type } = action
+  const { payload, type, meta } = action
   switch (type) {
     case SET_PROFILES_CELL_ID:
       return {
@@ -19,6 +21,11 @@ export default function (state = defaultState, action) {
       return {
         ...state,
         projects: payload,
+      }
+    case createProjectMeta.success().type:
+      return {
+        ...state,
+        projects: [...state.projects, meta.cellIdString],
       }
     default:
       return state
