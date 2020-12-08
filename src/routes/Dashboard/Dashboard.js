@@ -223,7 +223,8 @@ async function joinProject(passphrase, dispatch) {
   const installedApp = await installProjectApp(passphrase)
   const cellId = installedApp.cell_data[0][0]
   const appWs = await getAppWs()
-  // await new Promise((resolve) => setTimeout(resolve, 3000))
+  // wait 10 seconds for initial sync
+  await new Promise((resolve) => setTimeout(resolve, 10000))
   try {
     const projectMeta = await appWs.callZome({
       cap: null,
@@ -233,12 +234,10 @@ async function joinProject(passphrase, dispatch) {
       payload: null,
       provenance: getAgentPubKey(), // FIXME: this will need correcting after holochain changes this
     })
-    const cellIdString = cellIdToString(cellId)
-    await dispatch(
-      createProjectMeta.create({ cellIdString, payload: projectMeta })
-    )
+    console.log(projectMeta)
     return true
   } catch (e) {
+    console.log(e)
     // deactivate app
     const adminWs = await getAdminWs()
     await adminWs.deactivateApp({ installed_app_id: installedApp.installed_app_id })
