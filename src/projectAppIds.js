@@ -5,17 +5,17 @@ import { PROFILES_APP_ID } from './holochainConfig'
 export async function getAllApps() {
   const adminWs = await getAdminWs()
   const appWs = await getAppWs()
-  const appIds = await adminWs.listActiveAppIds()
+  const appIds = await adminWs.listActiveApps()
   const appProjects = await Promise.all(
-    appIds.map(async app_id => {
-      const appInfo = await appWs.appInfo({ app_id })
+    appIds.map(async installed_app_id => {
+      const appInfo = await appWs.appInfo({ installed_app_id })
       return {
         ...appInfo,
         cellIdString: cellIdToString(appInfo.cell_data[0][0])
       }
     })
   )
-  return _.keyBy(appProjects,'app_id')
+  return _.keyBy(appProjects,'installed_app_id')
 }
 
 export async function getProjectCellIdStrings() {

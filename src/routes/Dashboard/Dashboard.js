@@ -181,7 +181,7 @@ async function installProjectApp(passphrase) {
   // in order to eventually find their peers
   // note that this will leave a graveyard of deactivated apps for attempted
   // joins
-  const app_id = `${Math.random().toString().slice(-6)}-${uuid}`
+  const installed_app_id = `${Math.random().toString().slice(-6)}-${uuid}`
   const adminWs = await getAdminWs()
   const agent_key = getAgentPubKey()
   if (!agent_key) {
@@ -192,7 +192,7 @@ async function installProjectApp(passphrase) {
   // INSTALL
   const installedApp = await adminWs.installApp({
     agent_key,
-    app_id,
+    installed_app_id,
     dnas: [
       {
         nick: uuid,
@@ -202,7 +202,7 @@ async function installProjectApp(passphrase) {
     ],
   })
   // ACTIVATE
-  await adminWs.activateApp({ app_id })
+  await adminWs.activateApp({ installed_app_id })
   return installedApp
 }
 
@@ -241,7 +241,7 @@ async function joinProject(passphrase, dispatch) {
   } catch (e) {
     // deactivate app
     const adminWs = await getAdminWs()
-    await adminWs.deactivateApp({ app_id: installedApp.app_id })
+    await adminWs.deactivateApp({ installed_app_id: installedApp.installed_app_id })
     if (e.type === 'error'
           && e.data.type === 'ribosome_error'
           && e.data.data.includes('no project meta exists')) {
