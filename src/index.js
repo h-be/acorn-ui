@@ -49,7 +49,7 @@ let store = createStore(
 )
 
 getAppWs(signalsHandlers(store)).then(async client => {
-  const profilesInfo = await client.appInfo({ app_id: PROFILES_APP_ID })
+  const profilesInfo = await client.appInfo({ installed_app_id: PROFILES_APP_ID })
   const [cellId, _] = profilesInfo.cell_data.find(
     ([_cellId, dnaName]) => dnaName === PROFILES_DNA_NAME
   )
