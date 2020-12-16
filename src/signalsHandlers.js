@@ -6,19 +6,15 @@ the same events types, because their payload signatures match,
 and the reducers handle them the same way
 */
 
-import { createEdge, archiveEdge } from './projects/edges/actions'
-import { createGoal, archiveGoalFully } from './projects/goals/actions'
-import { createGoalVote, archiveGoalVote } from './projects/goal-votes/actions'
-import {
-  createGoalMember,
-  archiveGoalMember,
-} from './projects/goal-members/actions'
-import {
-  createGoalComment,
-  archiveGoalComment,
-} from './projects/goal-comments/actions'
+import * as edgeActions from './projects/edges/actions'
+import * as goalActions from './projects/goals/actions'
+import * as goalVoteActions from './projects/goal-votes/actions'
+import * as goalMemberActions from './projects/goal-members/actions'
+import * as goalCommentActions from './projects/goal-comments/actions'
+import * as entryPointActions from './projects/entry-points/actions'
 import { setMember } from './projects/members/actions'
 import { setAgent } from './agents/actions'
+import { cellIdToString } from 'connoropolous-hc-redux-middleware'
 
 // We directly use the 'success' type, since these actions
 // have already succeeded on another machine, and we're just reflecting them locally
@@ -26,81 +22,122 @@ function createSignalAction(holochainAction, cellId, payload) {
   return {
     type: holochainAction.success().type,
     payload,
+    meta: {
+      cellIdString: cellIdToString(cellId),
+    },
   }
+}
+
+// all possible values of `payload.action` off a signal
+const ActionType = {
+  Create: 'create',
+  Update: 'update',
+  Delete: 'delete',
+}
+
+// all possible values of `payload.entry_type` off a signal
+const SignalType = {
+  // Profiles Zome
+  Agent: 'agent',
+  // Projects Zome
+  Edge: 'edge',
+  EntryPoint: 'entry_point',
+  Goal: 'goal',
+  // custom signal type for a goal_with_edge
+  // this is because it's important to the UI to receive both
+  // the new goal, and the edge, at the same moment
+  GoalWithEdge: 'goal_with_edge',
+  // custom signal type for goal_fully_archived
+  // this is because it's important to the UI to receive
+  // both the archived goal, and everything connected to it that
+  // has archived at the same time
+  ArchiveGoalFully: 'archive_goal_fully',
+  GoalComment: 'goal_comment',
+  GoalMember: 'goal_member',
+  GoalVote: 'goal_vote',
+  Member: 'member',
+  ProjectMeta: 'project_meta',
+}
+
+const crudActionSets = {
+  Edge: edgeActions,
+  Goal: goalActions,
+  GoalVote: goalVoteActions,
+  GoalMember: goalMemberActions,
+  GoalComment: goalCommentActions,
+  EntryPoint: entryPointActions,
+}
+const crudTypes = {
+  edge: 'Edge',
+  goal: 'Goal',
+  goal_vote: 'GoalVote',
+  goal_member: 'GoalMember',
+  goal_comment: 'GoalComment',
+  entry_point: 'EntryPoint',
+}
+
+// entryTypeName = CamelCase
+const pickCrudAction = (entryTypeName, actionType) => {
+  // these all follow a pattern, on account of the fact that they used
+  // createCrudActionCreators to set themselves up
+  let actionPrefix
+  switch (actionType) {
+    case ActionType.Create:
+      actionPrefix = 'create'
+      break
+    case ActionType.Update:
+      actionPrefix = 'update'
+      break
+    case ActionType.Delete:
+      actionPrefix = 'archive'
+      break
+    default:
+      throw new Error('unknown actionType')
+  }
+  const actionSet = crudActionSets[entryTypeName]
+  // such as `createGoalComment`
+  const actionName = `${actionPrefix}${entryTypeName}`
+  return actionSet[actionName]
 }
 
 export default store => signal => {
   console.log(signal)
-  return
+  const { cellId, payload } = signal.data
 
-  const cellId = rawSignal.instance_id
-  const signalContent = rawSignal.signal
-  let signalArgs
-  try {
-    signalArgs = JSON.parse(signalContent.arguments)
-  } catch (e) {
-    console.log(e, signalContent)
+  // switch to CamelCasing if defined
+  const crudType = crudTypes[payload.entry_type]
+  if (crudType) {
+    const action = pickCrudAction(crudType, payload.action)
+    store.dispatch(createSignalAction(action, cellId, payload))
+    // we captured the action for this signal, so early exit
     return
   }
-  switch (signalContent.name) {
-    case 'new_agent':
-      const { agent } = signalArgs
+
+  // otherwise use non-crud actions
+  switch (payload.entry_type) {
+    // profiles zome
+    case SignalType.Agent:
       // this one is different than the rest on purpose
       // there's no "local action" equivalent
-      store.dispatch(setAgent(agent))
+      store.dispatch(setAgent(payload))
       break
-    case 'new_member':
-      const { member } = signalArgs
+    // projects zome
+    case SignalType.Member:
       // this one is different than the rest on purpose
       // there's no "local action" equivalent
-      store.dispatch(setMember(cellId, member))
+      store.dispatch(setMember(cellIdToString(cellId), payload.data))
       break
-    case 'goal_maybe_with_edge':
-      const { goal } = signalArgs
-      store.dispatch(createSignalAction(createGoal, cellId, goal))
-      break
-    case 'goal_archived':
-      const { archived } = signalArgs
-      store.dispatch(createSignalAction(archiveGoalFully, cellId, archived))
-      break
-    // covers create and update cases
-    case 'edge':
-      const { edge } = signalArgs
-      store.dispatch(createSignalAction(createEdge, cellId, edge))
-      break
-    case 'edge_archived':
+    case SignalType.GoalWithEdge:
       store.dispatch(
-        createSignalAction(archiveEdge, cellId, signalArgs.address)
+        createSignalAction(goalActions.createGoalWithEdge, cellId, payload.data)
       )
       break
-    case 'goal_comment':
-      const { goalComment } = signalArgs
-      store.dispatch(createSignalAction(createGoalComment, cellId, goalComment))
-      break
-    case 'goal_comment_archived':
+    case SignalType.ArchiveGoalFully:
       store.dispatch(
-        createSignalAction(archiveGoalComment, cellId, signalArgs.address)
-      )
-      break
-    case 'goal_member':
-      const { goalMember } = signalArgs
-      store.dispatch(createSignalAction(createGoalMember, cellId, goalMember))
-      break
-    case 'goal_member_archived':
-      store.dispatch(
-        createSignalAction(archiveGoalMember, cellId, signalArgs.address)
-      )
-      break
-    case 'goal_vote':
-      const { goalVote } = signalArgs
-      store.dispatch(createSignalAction(createGoalVote, cellId, goalVote))
-      break
-    case 'goal_vote_archived':
-      store.dispatch(
-        createSignalAction(archiveGoalVote, cellId, signalArgs.address)
+        createSignalAction(goalActions.archiveGoalFully, cellId, payload.data)
       )
       break
     default:
-      console.log('unrecognised signal type received: ', signalContent.name)
+      console.log('unrecognised entry_type received: ', payload.entry_type)
   }
 }

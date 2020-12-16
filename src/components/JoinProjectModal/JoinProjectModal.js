@@ -27,6 +27,7 @@ export default function JoinProjectModal({
     setValidatingSecret(true)
     try {
       const projectExists = await onJoinProject(projectSecret)
+      console.log(projectExists)
       if (!projectExists) {
         setInvalidText('project does not exist or peers could not be found')
       } else {

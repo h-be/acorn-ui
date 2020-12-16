@@ -234,7 +234,6 @@ async function joinProject(passphrase, dispatch) {
       payload: null,
       provenance: getAgentPubKey(), // FIXME: this will need correcting after holochain changes this
     })
-    console.log(projectMeta)
     return true
   } catch (e) {
     console.log(e)
@@ -272,9 +271,7 @@ function mapDispatchToProps(dispatch) {
       }
       await createProject(passphrase, projectMeta, dispatch)
     },
-    joinProject: async passphrase => {
-      await joinProject(passphrase, dispatch)
-    },
+    joinProject: passphrase => joinProject(passphrase, dispatch),
   }
 }
 
