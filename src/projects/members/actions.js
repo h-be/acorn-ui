@@ -15,11 +15,11 @@ const FETCH_MEMBERS = 'fetch_members'
 
 /* action creator functions */
 
-const setMember = (cellId, member) => {
+const setMember = (cellIdString, member) => {
   return {
     type: SET_MEMBER,
     payload: {
-      cellId,
+      cellIdString,
       member,
     },
   }

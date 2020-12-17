@@ -17,7 +17,7 @@ import { PROJECTS_DNA_PATH, PROJECTS_ZOME_NAME } from '../../holochainConfig'
 import { passphraseToUuid } from '../../secrets'
 import { getAdminWs, getAppWs, getAgentPubKey } from '../../hcWebsockets'
 import { fetchEntryPoints } from '../../projects/entry-points/actions'
-import { fetchMembers } from '../../projects/members/actions'
+import { fetchMembers, setMember } from '../../projects/members/actions'
 import {
   createProjectMeta,
   fetchProjectMeta,
@@ -25,8 +25,7 @@ import {
 import selectEntryPoints from '../../projects/entry-points/select'
 
 import DashboardListProject from './DashboardListProject'
-import { getProjectCellIdStrings } from '../../projectAppIds'
-import { setProjectsCellIds } from '../../cells/actions'
+import { joinProjectCellId } from '../../cells/actions'
 
 function Dashboard({
   agentAddress,
@@ -206,12 +205,21 @@ async function installProjectApp(passphrase) {
   return installedApp
 }
 
-async function createProject(passphrase, projectMeta, dispatch) {
+async function createProject(passphrase, projectMeta, agentAddress, dispatch) {
   const installedApp = await installProjectApp(passphrase)
   const cellIdString = cellIdToString(installedApp.cell_data[0][0])
+  // because we are acting optimistically,
+  // because holochain is taking 18 s to respond to this first call
+  // we will directly set ourselves as a member of this cell
+  await dispatch(
+    setMember(cellIdString, { address: agentAddress })
+  )
+  const b1 = Date.now()
   await dispatch(
     createProjectMeta.create({ cellIdString, payload: projectMeta })
   )
+  const b2 = Date.now()
+  console.log('duration in MS over createProject ', b2 - b1)
 }
 
 async function joinProject(passphrase, dispatch) {
@@ -222,11 +230,12 @@ async function joinProject(passphrase, dispatch) {
   // remove the instance again immediately
   const installedApp = await installProjectApp(passphrase)
   const cellId = installedApp.cell_data[0][0]
+  const cellIdString = cellIdToString(installedApp.cell_data[0][0])
   const appWs = await getAppWs()
   // wait 10 seconds for initial sync
-  await new Promise((resolve) => setTimeout(resolve, 10000))
+  await new Promise(resolve => setTimeout(resolve, 10000))
   try {
-    const projectMeta = await appWs.callZome({
+    await appWs.callZome({
       cap: null,
       cell_id: cellId,
       zome_name: PROJECTS_ZOME_NAME,
@@ -234,16 +243,19 @@ async function joinProject(passphrase, dispatch) {
       payload: null,
       provenance: getAgentPubKey(), // FIXME: this will need correcting after holochain changes this
     })
-    console.log(projectMeta)
+    await dispatch(joinProjectCellId(cellIdString))
     return true
   } catch (e) {
-    console.log(e)
     // deactivate app
     const adminWs = await getAdminWs()
-    await adminWs.deactivateApp({ installed_app_id: installedApp.installed_app_id })
-    if (e.type === 'error'
-          && e.data.type === 'ribosome_error'
-          && e.data.data.includes('no project meta exists')) {
+    await adminWs.deactivateApp({
+      installed_app_id: installedApp.installed_app_id,
+    })
+    if (
+      e.type === 'error' &&
+      e.data.type === 'ribosome_error' &&
+      e.data.data.includes('no project meta exists')
+    ) {
       return false
     } else {
       throw e
@@ -270,11 +282,9 @@ function mapDispatchToProps(dispatch) {
         creator_address: agentAddress,
         created_at: Date.now(),
       }
-      await createProject(passphrase, projectMeta, dispatch)
+      await createProject(passphrase, projectMeta, agentAddress, dispatch)
     },
-    joinProject: async passphrase => {
-      await joinProject(passphrase, dispatch)
-    },
+    joinProject: passphrase => joinProject(passphrase, dispatch),
   }
 }
 

@@ -24,10 +24,12 @@ const [
 ] = createCrudActionCreators(PROJECTS_ZOME_NAME, 'goal')
 
 export {
+  // standard crud
   createGoal,
-  createGoalWithEdge,
   fetchGoals,
   updateGoal,
   archiveGoal,
+  // non-standard
+  createGoalWithEdge,
   archiveGoalFully,
 }
