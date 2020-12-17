@@ -108,7 +108,7 @@ export default store => signal => {
   const crudType = crudTypes[payload.entry_type]
   if (crudType) {
     const action = pickCrudAction(crudType, payload.action)
-    store.dispatch(createSignalAction(action, cellId, payload))
+    store.dispatch(createSignalAction(action, cellId, payload.data))
     // we captured the action for this signal, so early exit
     return
   }

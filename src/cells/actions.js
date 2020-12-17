@@ -7,6 +7,7 @@
 
 const SET_PROFILES_CELL_ID = 'SET_PROFILES_CELL_ID'
 const SET_PROJECTS_CELL_IDS = 'SET_PROJECTS_CELL_IDS'
+const JOIN_PROJECT_CELL_ID = 'JOIN_PROJECT_CELL_ID'
 
 /* action creator functions */
 
@@ -24,9 +25,18 @@ const setProjectsCellIds = cellIds => {
   }
 }
 
+const joinProjectCellId = cellId => {
+  return {
+    type: JOIN_PROJECT_CELL_ID,
+    payload: cellId,
+  }
+}
+
 export {
   SET_PROFILES_CELL_ID,
   SET_PROJECTS_CELL_IDS,
+  JOIN_PROJECT_CELL_ID,
   setProfilesCellId,
   setProjectsCellIds,
+  joinProjectCellId
 }

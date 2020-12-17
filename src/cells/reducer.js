@@ -2,7 +2,7 @@ import _ from 'lodash'
 import {
   createProjectMeta,
 } from '../projects/project-meta/actions'
-import { SET_PROFILES_CELL_ID, SET_PROJECTS_CELL_IDS } from './actions'
+import { SET_PROFILES_CELL_ID, SET_PROJECTS_CELL_IDS, JOIN_PROJECT_CELL_ID } from './actions'
 
 const defaultState = {
   profiles: null,
@@ -26,6 +26,11 @@ export default function (state = defaultState, action) {
       return {
         ...state,
         projects: [...state.projects, meta.cellIdString],
+      }
+    case JOIN_PROJECT_CELL_ID:
+      return {
+        ...state,
+        projects: [...state.projects, payload],
       }
     default:
       return state

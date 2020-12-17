@@ -130,8 +130,10 @@ function mapStateToProps(state) {
     // TODO: make this also based on whether the user has just registered (created their profile)
     showEmptyState:
       !!state.agentAddress &&
-      state.projects.goals[projectId] &&
-      Object.values(state.projects.goals[projectId]).length === 0,
+      ((state.projects.goals[projectId] &&
+        Object.values(state.projects.goals[projectId]).length === 0) ||
+        // project is loading
+        !state.projects.goals[projectId]),
   }
 }
 
