@@ -17,7 +17,7 @@ export default function DashboardListProject({
 
   const projectInitials = project.name
     .split(' ')
-    .map(word => word[0].toUpperCase())
+    .map(word => word ? word[0].toUpperCase() : 'X')
     .slice(0, 3)
 
   return (
@@ -45,7 +45,7 @@ export default function DashboardListProject({
         <div className='dashboard-list-project-members'>
           <div className='dashboard-list-project-member-list'>
             {project.members.map(member => (
-              <Avatar
+              member && <Avatar
                 key={member.address}
                 first_name={member.first_name}
                 last_name={member.last_name}
