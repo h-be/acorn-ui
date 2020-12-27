@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Switch,
   Route,
@@ -16,6 +16,7 @@ import Icon from '../Icon/Icon'
 import ListExport from '../ListExport/ListExport'
 import Preferences from '../Preferences/Preferences'
 import Modal from '../Modal/Modal'
+import UpdateBar from '../UpdateBar/UpdateBar'
 
 function ActiveEntryPoint({ entryPoint, activeEntryPointAddresses }) {
   const location = useLocation()
@@ -54,8 +55,10 @@ class Header extends React.Component {
     this.handleStatusEnter = this.handleStatusEnter.bind(this)
     this.handleStatusLeave = this.handleStatusLeave.bind(this)
     this.closeGuidebook = this.closeGuidebook.bind(this)
+    this.setUpdateBarIsOpen = this.setUpdateBarIsOpen.bind(this)
 
     this.state = {
+      updateBarIsOpen: true,
       online: {},
       isStatusHover: false,
       isStatusOpen: false,
@@ -176,6 +179,9 @@ class Header extends React.Component {
   handleStatusLeave() {
     this.setState({ isStatusHover: false })
   }
+  setUpdateBarIsOpen(val) {
+    this.setState({ updateBarIsOpen: val })
+  }
   closeGuidebook() {
     const pathWithoutGuidebook = this.props.location.pathname
     this.props.history.push(pathWithoutGuidebook)
@@ -192,6 +198,10 @@ class Header extends React.Component {
 
     return (
       <div className='header-wrapper'>
+        <UpdateBar
+          active={this.state.updateBarIsOpen}
+          onClose={() => this.setUpdateBarIsOpen(false)}
+        />
         <div className='header'>
           <div className='top-left-panel'>
             <NavLink to='/' className='home-link logo'>
