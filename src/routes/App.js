@@ -18,10 +18,12 @@ import Preferences from '../components/Preferences/Preferences'
 import UpdatePromptModal from '../components/UpdatePromptModal/UpdatePromptModal'
 
 // import new routes here
-import IntroScreen from '../components/IntroScreen/IntroScreen'
 import CreateProfilePage from './CreateProfilePage/CreateProfilePage'
 import Dashboard from './Dashboard/Dashboard'
 import ProjectView from './ProjectView/ProjectView'
+import RunUpdate from './RunUpdate/RunUpdate'
+
+import IntroScreen from '../components/IntroScreen/IntroScreen'
 import selectEntryPoints from '../projects/entry-points/select'
 import ErrorBoundaryScreen from '../components/ErrorScreen/ErrorScreen'
 
@@ -67,6 +69,7 @@ function App(props) {
           <Route path='/register' component={CreateProfilePage} />
           <Route path='/dashboard' component={Dashboard} />
           <Route path='/project/:projectId' component={ProjectView} />
+          <Route path='/run-update' component={RunUpdate} />
           <Route path='/' render={() => <Redirect to='/dashboard' />} />
         </Switch>
         {agentAddress && (
