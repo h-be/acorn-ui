@@ -56,7 +56,7 @@ function Dashboard({
   // add new modal state managers here
 
   const onCreateProject = (project, passphrase) => {
-    createProject(agentAddress, project, passphrase)
+    return createProject(agentAddress, project, passphrase)
   }
 
   const onJoinProject = passphrase => joinProject(passphrase)

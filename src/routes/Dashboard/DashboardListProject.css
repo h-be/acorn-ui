@@ -163,3 +163,7 @@
   margin-bottom: 8px;
   display: flex;
 }
+
+.dashboard-list-project-member-list * {
+  margin-left: 5px;
+}

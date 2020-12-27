@@ -11,6 +11,7 @@ import {
   ProjectModalSubHeading,
 } from '../ProjectModal/ProjectModal'
 import ProjectSecret from '../ProjectSecret/ProjectSecret'
+import ButtonWithPendingState from '../ButtonWithPendingState/ButtonWithPendingState'
 
 // since this is a big wordset, dynamically import it
 // instead of including in the main bundle
@@ -20,6 +21,7 @@ async function generatePassphrase() {
 }
 
 function CreateProjectForm({
+  creatingProject,
   onSubmit,
   projectCreated,
   projectName,
@@ -54,6 +56,8 @@ function CreateProjectForm({
 
   const subheading =
     'You can share the project with people or just keep it to yourself'
+
+  const actionButtonContent = <ButtonWithPendingState pending={creatingProject} pendingText="Creating..." actionText="Create Project" />
 
   return (
     <div
@@ -90,7 +94,7 @@ function CreateProjectForm({
           />
         </div>
       </ProjectModalContent>
-      <ProjectModalButton text='Create Project' onClick={onSubmit} />
+      <ProjectModalButton text={actionButtonContent} onClick={() => !creatingProject && onSubmit()} />
     </div>
   )
 }
@@ -121,15 +125,18 @@ export default function CreateProjectModal({
     setProjectName('')
     setProjectCoverUrl('')
   }
-  const onSubmit = () => {
-    // chain this with a .then
-    onCreateProject(
+  const [creatingProject, setCreatingProject] = useState(false)
+
+  const onSubmit = async () => {
+    setCreatingProject(true)
+    await onCreateProject(
       {
         name: projectName,
         image: projectCoverUrl,
       },
       projectSecret
     )
+    setCreatingProject(false)
     setProjectCreated(true)
     reset()
   }
@@ -168,6 +175,7 @@ export default function CreateProjectModal({
       />
       <CreateProjectForm
         onSubmit={onSubmit}
+        creatingProject={creatingProject}
         projectCreated={projectCreated}
         projectName={projectName}
         setProjectName={setProjectName}

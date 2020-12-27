@@ -12,6 +12,7 @@ import {
   ProjectModalHeading,
   ProjectModalSubHeading,
 } from '../ProjectModal/ProjectModal'
+import ButtonWithPendingState from '../ButtonWithPendingState/ButtonWithPendingState'
 
 export default function JoinProjectModal({
   showModal,
@@ -48,17 +49,7 @@ export default function JoinProjectModal({
 
   const [validatingSecret, setValidatingSecret] = useState(false)
 
-  const validateButtonContent = validatingSecret ? (
-    <span className='validating-button'>
-      <Icon
-        name='acorn-logo-stroked.svg'
-        className='white not-hoverable very-small'
-      />
-      <span>Validating...</span>
-    </span>
-  ) : (
-    'Join'
-  )
+  const validateButtonContent = <ButtonWithPendingState pending={validatingSecret} pendingText="Validating..." actionText="Join" />
 
   const onSecretChange = val => {
     setInvalidText('')
