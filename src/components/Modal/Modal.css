@@ -50,8 +50,8 @@
 
 .modal-wrapper .small-close {
   position: absolute;
-  top: 30px;
-  right: 30px;
+  top: 20px;
+  right: 20px;
   cursor: pointer;
 }
 
@@ -63,6 +63,7 @@
 
 .modal-heading {
   font-size: 22px;
+  line-height: 2.2;
   font-family: 'gilroyextrabold', Helvetica, sans-serif;
   font-weight: normal;
 }

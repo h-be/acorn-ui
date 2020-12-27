@@ -8,6 +8,7 @@ import './Modal.css'
 
 function ModalContent({
   content,
+  secondaryContent,
   heading,
   icon,
   primaryButton,
@@ -18,13 +19,16 @@ function ModalContent({
   return (
     <>
       <div className='modal-header'>
-        <span className='modal-icon'>
-          <Icon name={icon} className='not-hoverable' />
-        </span>
+        {icon && (
+          <span className='modal-icon'>
+            <Icon name={icon} className='not-hoverable' />
+          </span>
+        )}
         <div className='modal-heading'>{heading}</div>
       </div>
-      <div className='modal-content'>
-        <p>{content}</p>
+      <div className='modal-content-wrapper'>
+        <div className='modal-content'>{content}</div>
+        {secondaryContent ? secondaryContent : null}
       </div>
       <div className='modal-footer'>
         {/* TODO: enable "don't show me again" (persist to Holochain or localStorage) */}

@@ -15,6 +15,7 @@ import LoadingScreen from '../components/LoadingScreen/LoadingScreen'
 import Footer from '../components/Footer/Footer'
 import Modal from '../components/Modal/Modal'
 import Preferences from '../components/Preferences/Preferences'
+import UpdatePromptModal from '../components/UpdatePromptModal/UpdatePromptModal'
 
 // import new routes here
 import IntroScreen from '../components/IntroScreen/IntroScreen'
@@ -37,18 +38,21 @@ function App(props) {
   } = props
   const [showProfileEditForm, setShowProfileEditForm] = useState(false)
   const [showPreferences, setShowPreferences] = useState(false)
+  const [showUpdatePromptModal, setShowUpdatePromptModal] = useState(true)
 
   const onProfileSubmit = async profile => {
     await updateWhoami(profile, whoami.address)
     setShowProfileEditForm(false)
   }
   const updateStatus = async statusString => {
-    await updateWhoami({
-      ...whoami.entry,
-      status: statusString
-    }, whoami.address)
+    await updateWhoami(
+      {
+        ...whoami.entry,
+        status: statusString,
+      },
+      whoami.address
+    )
   }
-
 
   const titleText = 'Profile Settings'
   const subText = ''
@@ -76,7 +80,7 @@ function App(props) {
           />
         )}
         {/* This will only show when 'active' prop is true */}
-        {/* Modal for Profile Settings */}
+        {/* Profile Settings Modal */}
         <Modal
           white
           active={showProfileEditForm}
@@ -87,13 +91,19 @@ function App(props) {
             {...{ titleText, subText, submitText, agentAddress }}
           />
         </Modal>
-        {/* Modal for Preferences */}
+        {/* Preferences Modal */}
         <Preferences
           navigation={navigationPreference}
           setNavigationPreference={setNavigationPreference}
           showPreferences={showPreferences}
           setShowPreferences={setShowPreferences}
         />
+        {/* Update Prompt Modal */}
+        <UpdatePromptModal
+          showUpdatePromptModal={showUpdatePromptModal}
+          setShowUpdatePromptModal={setShowUpdatePromptModal}
+        />
+        {/* Loading Screen if no user agent */}
         {!agentAddress && <LoadingScreen />}
         {agentAddress && hasFetchedForWhoami && !whoami && (
           <Redirect to='/intro' />
