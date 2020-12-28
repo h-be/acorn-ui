@@ -219,7 +219,7 @@ async function createProject(passphrase, projectMeta, agentAddress, dispatch) {
     createProjectMeta.create({ cellIdString, payload: projectMeta })
   )
   const b2 = Date.now()
-  console.log('duration in MS over createProject ', b2 - b1)
+  console.log('duration in MS over createProjectMeta ', b2 - b1)
 }
 
 async function joinProject(passphrase, dispatch) {
