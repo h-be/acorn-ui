@@ -29,21 +29,29 @@ function CreateProjectForm({
   projectCoverUrl,
   setProjectCoverUrl,
 }) {
+  const [shouldInvalidateProjectName, setShouldInvalidateProjectName] = useState(false)
   const [isValidProjectName, setisValidProjectName] = useState(true)
   const [errorProjectName, setErrorProjectName] = useState('')
 
   const [isValidProjectCoverUrl, setisValidProjectCoverUrl] = useState(true)
   const [errorProjectCoverUrl, setErrorProjectCoverUrl] = useState('')
 
+  const changeProjectName = name => {
+    setShouldInvalidateProjectName(true)
+    setProjectName(name)
+  }
+  const validateProjectName = () => {
+    if (projectName.length > 0) {
+      setisValidProjectName(true)
+      setErrorProjectName('')
+    } else if (shouldInvalidateProjectName) {
+      setisValidProjectName(false)
+      setErrorProjectName('Project name is required')
+    }
+  }
   useEffect(() => {
-    // if (projectName.length > 0) {
-    //   setisValidProjectName(true)
-    //   setErrorProjectName('')
-    // } else {
-    //   setisValidProjectName(false)
-    //   setErrorProjectName('Project name is required')
-    // }
-  }, [projectName])
+    validateProjectName()
+  }, [projectName, shouldInvalidateProjectName])
 
   useEffect(() => {
     // if (projectCoverUrl.length > 0) {
@@ -57,7 +65,22 @@ function CreateProjectForm({
   const subheading =
     'You can share the project with people or just keep it to yourself'
 
-  const actionButtonContent = <ButtonWithPendingState pending={creatingProject} pendingText="Creating..." actionText="Create Project" />
+  const actionButtonContent = (
+    <ButtonWithPendingState
+      pending={creatingProject}
+      pendingText='Creating...'
+      actionText='Create Project'
+    />
+  )
+
+  // validate before firing event
+  const submit = () => {
+    // set this to trigger the invalid field to show
+    setShouldInvalidateProjectName(true)
+    if (projectName.length > 0 && !creatingProject) {
+      onSubmit()
+    }
+  }
 
   return (
     <div
@@ -70,7 +93,7 @@ function CreateProjectForm({
         {/* project name */}
         <ValidatingFormInput
           value={projectName}
-          onChange={setProjectName}
+          onChange={changeProjectName}
           invalidInput={!isValidProjectName}
           validInput={projectName.length > 0 && isValidProjectName}
           errorText={errorProjectName}
@@ -94,7 +117,7 @@ function CreateProjectForm({
           />
         </div>
       </ProjectModalContent>
-      <ProjectModalButton text={actionButtonContent} onClick={() => !creatingProject && onSubmit()} />
+      <ProjectModalButton text={actionButtonContent} onClick={submit} />
     </div>
   )
 }
