@@ -78,6 +78,15 @@
   align-items: center;
 }
 
+.priority-quadrant-goal-squirrels {
+  flex-direction: row;
+  display: flex;
+}
+
+.priority-quadrant-goal-squirrels > * {
+  margin-left: 5px;
+}
+
 .priority-quadrant-goal-squirrels img {
   margin-right: -10px;
 }

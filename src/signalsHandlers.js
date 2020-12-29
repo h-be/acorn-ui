@@ -119,7 +119,7 @@ export default store => signal => {
     case SignalType.Agent:
       // this one is different than the rest on purpose
       // there's no "local action" equivalent
-      store.dispatch(setAgent(payload))
+      store.dispatch(setAgent(payload.data))
       break
     // projects zome
     case SignalType.Member:

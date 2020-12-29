@@ -11,6 +11,7 @@ import {
   ProjectModalSubHeading,
 } from '../ProjectModal/ProjectModal'
 import ProjectSecret from '../ProjectSecret/ProjectSecret'
+import ButtonWithPendingState from '../ButtonWithPendingState/ButtonWithPendingState'
 
 // since this is a big wordset, dynamically import it
 // instead of including in the main bundle
@@ -20,6 +21,7 @@ async function generatePassphrase() {
 }
 
 function CreateProjectForm({
+  creatingProject,
   onSubmit,
   projectCreated,
   projectName,
@@ -27,21 +29,29 @@ function CreateProjectForm({
   projectCoverUrl,
   setProjectCoverUrl,
 }) {
+  const [shouldInvalidateProjectName, setShouldInvalidateProjectName] = useState(false)
   const [isValidProjectName, setisValidProjectName] = useState(true)
   const [errorProjectName, setErrorProjectName] = useState('')
 
   const [isValidProjectCoverUrl, setisValidProjectCoverUrl] = useState(true)
   const [errorProjectCoverUrl, setErrorProjectCoverUrl] = useState('')
 
+  const changeProjectName = name => {
+    setShouldInvalidateProjectName(true)
+    setProjectName(name)
+  }
+  const validateProjectName = () => {
+    if (projectName.length > 0) {
+      setisValidProjectName(true)
+      setErrorProjectName('')
+    } else if (shouldInvalidateProjectName) {
+      setisValidProjectName(false)
+      setErrorProjectName('Project name is required')
+    }
+  }
   useEffect(() => {
-    // if (projectName.length > 0) {
-    //   setisValidProjectName(true)
-    //   setErrorProjectName('')
-    // } else {
-    //   setisValidProjectName(false)
-    //   setErrorProjectName('Project name is required')
-    // }
-  }, [projectName])
+    validateProjectName()
+  }, [projectName, shouldInvalidateProjectName])
 
   useEffect(() => {
     // if (projectCoverUrl.length > 0) {
@@ -55,6 +65,23 @@ function CreateProjectForm({
   const subheading =
     'You can share the project with people or just keep it to yourself'
 
+  const actionButtonContent = (
+    <ButtonWithPendingState
+      pending={creatingProject}
+      pendingText='Creating...'
+      actionText='Create Project'
+    />
+  )
+
+  // validate before firing event
+  const submit = () => {
+    // set this to trigger the invalid field to show
+    setShouldInvalidateProjectName(true)
+    if (projectName.length > 0 && !creatingProject) {
+      onSubmit()
+    }
+  }
+
   return (
     <div
       className={`create-project-form ${
@@ -66,7 +93,7 @@ function CreateProjectForm({
         {/* project name */}
         <ValidatingFormInput
           value={projectName}
-          onChange={setProjectName}
+          onChange={changeProjectName}
           invalidInput={!isValidProjectName}
           validInput={projectName.length > 0 && isValidProjectName}
           errorText={errorProjectName}
@@ -90,7 +117,7 @@ function CreateProjectForm({
           />
         </div>
       </ProjectModalContent>
-      <ProjectModalButton text='Create Project' onClick={onSubmit} />
+      <ProjectModalButton text={actionButtonContent} onClick={submit} />
     </div>
   )
 }
@@ -121,15 +148,18 @@ export default function CreateProjectModal({
     setProjectName('')
     setProjectCoverUrl('')
   }
-  const onSubmit = () => {
-    // chain this with a .then
-    onCreateProject(
+  const [creatingProject, setCreatingProject] = useState(false)
+
+  const onSubmit = async () => {
+    setCreatingProject(true)
+    await onCreateProject(
       {
         name: projectName,
         image: projectCoverUrl,
       },
       projectSecret
     )
+    setCreatingProject(false)
     setProjectCreated(true)
     reset()
   }
@@ -168,6 +198,7 @@ export default function CreateProjectModal({
       />
       <CreateProjectForm
         onSubmit={onSubmit}
+        creatingProject={creatingProject}
         projectCreated={projectCreated}
         projectName={projectName}
         setProjectName={setProjectName}
