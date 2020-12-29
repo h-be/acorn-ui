@@ -7,10 +7,13 @@ import Button from '../Button/Button'
 import ValidatingFormInput from '../ValidatingFormInput/ValidatingFormInput'
 import Avatar from '../Avatar/Avatar'
 import Icon from '../Icon/Icon'
+import ButtonWithPendingState from '../ButtonWithPendingState/ButtonWithPendingState'
 
 const urlRegex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/
 
 function ProfileEditForm({
+  pending,
+  pendingText,
   onSubmit,
   agentAddress,
   whoami,
@@ -28,8 +31,7 @@ function ProfileEditForm({
   const [lastName, setLastName] = useState('')
   const [handle, setHandle] = useState('')
   const [avatarUrl, setAvatarUrl] = useState('')
-  const innerOnSubmit = e => {
-    e.preventDefault()
+  const innerOnSubmit = () => {
     if (isValidUserName && isValidFirstName && isValidLastName) {
       onSubmit({
         first_name: firstName,
@@ -106,6 +108,14 @@ function ProfileEditForm({
   const usernameHelp =
     'Choose something easy for your teammates to use and recall. Avoid space and @.'
   const avatarShow = avatarUrl || 'img/avatar_placeholder.png'
+
+  const actionButton = (
+    <ButtonWithPendingState
+      pending={pending}
+      pendingText={pendingText}
+      actionText={submitText}
+    />
+  )
 
   return (
     <div className='profile_edit_form'>
@@ -184,7 +194,7 @@ function ProfileEditForm({
           />
         </div>
       </form>
-      <Button onClick={innerOnSubmit} text={submitText} />
+      <Button onClick={() => !pending && innerOnSubmit()} text={actionButton} />
     </div>
   )
 }

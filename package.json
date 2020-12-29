@@ -4,6 +4,7 @@
   "description": "the most wonderful state of affairs tree",
   "scripts": {
     "start": "webpack-dev-server --open --config webpack.dev.js",
+    "start2": "webpack-dev-server --open --config webpack.dev2.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.prod.js"
   },

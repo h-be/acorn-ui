@@ -194,6 +194,7 @@ function Aggregated({ votes }) {
   return priorityItems.map(({ icon, title }, index) => {
     return (
       <PrioritySlider
+        key={index}
         icon={icon}
         title={title}
         withLabels={index === 0}
@@ -221,6 +222,7 @@ function WeighIn({ values, onUpdate }) {
     }
     return (
       <PrioritySlider
+        key={index}
         icon={icon}
         title={title}
         withLabels={index === 0}
@@ -266,10 +268,7 @@ function Priority({
 
   const createVote = async () => {
     await createGoalVote({
-      urgency: 0.5,
-      importance: 0.5,
-      impact: 0.5,
-      effort: 0.5,
+      ...values,
       goal_address: goalAddress,
       agent_address: whoami.entry.address,
       unix_timestamp: moment().unix(),
@@ -343,7 +342,7 @@ function Priority({
                 <div
                   className='save-my-vote'
                   onClick={myVote ? onUpdateVote : createVote}>
-                  save my vote
+                  {myVote ? 'update' : 'save'} my vote
                 </div>
                 {/* remove my vote */}
                 {myVote && (

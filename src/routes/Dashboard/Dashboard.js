@@ -56,7 +56,7 @@ function Dashboard({
   // add new modal state managers here
 
   const onCreateProject = (project, passphrase) => {
-    createProject(agentAddress, project, passphrase)
+    return createProject(agentAddress, project, passphrase)
   }
 
   const onJoinProject = passphrase => joinProject(passphrase)
@@ -211,15 +211,13 @@ async function createProject(passphrase, projectMeta, agentAddress, dispatch) {
   // because we are acting optimistically,
   // because holochain is taking 18 s to respond to this first call
   // we will directly set ourselves as a member of this cell
-  await dispatch(
-    setMember(cellIdString, { address: agentAddress })
-  )
+  await dispatch(setMember(cellIdString, { address: agentAddress }))
   const b1 = Date.now()
   await dispatch(
     createProjectMeta.create({ cellIdString, payload: projectMeta })
   )
   const b2 = Date.now()
-  console.log('duration in MS over createProject ', b2 - b1)
+  console.log('duration in MS over createProjectMeta ', b2 - b1)
 }
 
 async function joinProject(passphrase, dispatch) {
@@ -232,8 +230,6 @@ async function joinProject(passphrase, dispatch) {
   const cellId = installedApp.cell_data[0][0]
   const cellIdString = cellIdToString(installedApp.cell_data[0][0])
   const appWs = await getAppWs()
-  // wait 10 seconds for initial sync
-  await new Promise(resolve => setTimeout(resolve, 10000))
   try {
     await appWs.callZome({
       cap: null,
@@ -244,6 +240,20 @@ async function joinProject(passphrase, dispatch) {
       provenance: getAgentPubKey(), // FIXME: this will need correcting after holochain changes this
     })
     await dispatch(joinProjectCellId(cellIdString))
+    // trigger a side effect...
+    // this will let other project members know you're here
+    // without 'blocking' the thread or the UX
+    appWs
+      .callZome({
+        cap: null,
+        cell_id: cellId,
+        zome_name: PROJECTS_ZOME_NAME,
+        fn_name: 'init_signal',
+        payload: null,
+        provenance: getAgentPubKey(), // FIXME: this will need correcting after holochain changes this
+      })
+      .then(() => console.log('succesfully triggered init_signal'))
+      .catch(e => console.error('failed while triggering init_signal: ', e))
     return true
   } catch (e) {
     // deactivate app

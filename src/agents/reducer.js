@@ -18,7 +18,7 @@ export default function(state = defaultState, action) {
     case SET_AGENT:
       return {
         ...state,
-        [payload.address]: payload,
+        [payload.entry.address]: payload.entry,
       }
     case createWhoami.success().type:
     case updateWhoami.success().type:
