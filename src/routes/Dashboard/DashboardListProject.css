@@ -167,3 +167,10 @@
 .dashboard-list-project-member-list * {
   margin-left: 5px;
 }
+
+/* dashboard project item settings */
+
+.dashboard-list-project-settings-button {
+  position: absolute;
+  right: 20px;
+}

@@ -17,7 +17,7 @@ export default function DashboardListProject({
 
   const projectInitials = project.name
     .split(' ')
-    .map(word => word ? word[0].toUpperCase() : 'X')
+    .map(word => (word ? word[0].toUpperCase() : 'X'))
     .slice(0, 3)
 
   return (
@@ -44,15 +44,18 @@ export default function DashboardListProject({
 
         <div className='dashboard-list-project-members'>
           <div className='dashboard-list-project-member-list'>
-            {project.members.map(member => (
-              member && <Avatar
-                key={member.address}
-                first_name={member.first_name}
-                last_name={member.last_name}
-                avatar_url={member.avatar_url}
-                small
-              />
-            ))}
+            {project.members.map(
+              member =>
+                member && (
+                  <Avatar
+                    key={member.address}
+                    first_name={member.first_name}
+                    last_name={member.last_name}
+                    avatar_url={member.avatar_url}
+                    small
+                  />
+                )
+            )}
           </div>
           <div
             className='dashboard-invite-members-button'
@@ -62,6 +65,7 @@ export default function DashboardListProject({
           </div>
         </div>
       </div>
+      {/* project entry points */}
       <div className='dashboard-list-project-entry-points'>
         {/* only allow expanding entry points list if there are some */}
         {project.entryPoints.length > 0 && (
@@ -96,6 +100,8 @@ export default function DashboardListProject({
           </div>
         )}
       </div>
+      {/* project item settings */}
+      <div className='dashboard-list-project-settings-button'>settings</div>
     </div>
   )
 }

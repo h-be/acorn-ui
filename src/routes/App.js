@@ -40,7 +40,7 @@ function App(props) {
   } = props
   const [showProfileEditForm, setShowProfileEditForm] = useState(false)
   const [showPreferences, setShowPreferences] = useState(false)
-  const [showUpdatePromptModal, setShowUpdatePromptModal] = useState(true)
+  const [showUpdatePromptModal, setShowUpdatePromptModal] = useState(false)
 
   const onProfileSubmit = async profile => {
     await updateWhoami(profile, whoami.address)
