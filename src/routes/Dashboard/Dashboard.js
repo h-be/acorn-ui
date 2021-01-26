@@ -27,7 +27,7 @@ import selectEntryPoints from '../../projects/entry-points/select'
 import DashboardListProject from './DashboardListProject'
 import { joinProjectCellId } from '../../cells/actions'
 
-function Dashboard({
+function Dashboard ({
   agentAddress,
   cells,
   projects,
@@ -36,6 +36,7 @@ function Dashboard({
   fetchProjectMeta,
   createProject,
   joinProject,
+  updateIsAvailable,
 }) {
   // cells is an array of cellId strings
   useEffect(() => {
@@ -138,6 +139,7 @@ function Dashboard({
           <div className='my-projects-content'>
             {sortedProjects.map(project => (
               <DashboardListProject
+                updateIsAvailable={updateIsAvailable}
                 key={project.cellId}
                 project={project}
                 setShowInviteMembersModal={setShowInviteMembersModal}
@@ -172,7 +174,7 @@ function Dashboard({
   )
 }
 
-async function installProjectApp(passphrase) {
+async function installProjectApp (passphrase) {
   const uuid = passphraseToUuid(passphrase)
   // add a bit of randomness so that
   // the same passphrase can be tried multiple different times
@@ -180,7 +182,9 @@ async function installProjectApp(passphrase) {
   // in order to eventually find their peers
   // note that this will leave a graveyard of deactivated apps for attempted
   // joins
-  const installed_app_id = `${Math.random().toString().slice(-6)}-${uuid}`
+  const installed_app_id = `${Math.random()
+    .toString()
+    .slice(-6)}-${uuid}`
   const adminWs = await getAdminWs()
   const agent_key = getAgentPubKey()
   if (!agent_key) {
@@ -205,7 +209,7 @@ async function installProjectApp(passphrase) {
   return installedApp
 }
 
-async function createProject(passphrase, projectMeta, agentAddress, dispatch) {
+async function createProject (passphrase, projectMeta, agentAddress, dispatch) {
   const installedApp = await installProjectApp(passphrase)
   const cellIdString = cellIdToString(installedApp.cell_data[0][0])
   // because we are acting optimistically,
@@ -220,7 +224,7 @@ async function createProject(passphrase, projectMeta, agentAddress, dispatch) {
   console.log('duration in MS over createProjectMeta ', b2 - b1)
 }
 
-async function joinProject(passphrase, dispatch) {
+async function joinProject (passphrase, dispatch) {
   // joinProject
   // join a DNA
   // then try to get the project metadata
@@ -273,7 +277,7 @@ async function joinProject(passphrase, dispatch) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return {
     fetchEntryPoints: cellIdString => {
       return dispatch(fetchEntryPoints.create({ cellIdString, payload: null }))
@@ -298,7 +302,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   return {
     agentAddress: state.agentAddress,
     cells: state.cells.projects,

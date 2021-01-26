@@ -1,10 +1,37 @@
+.update-required-button {
+  z-index: 2;
+  border: 2px solid #6600FF;
+  color: #6600FF;
+  font-family: 'hk-grotesk-semibold';
+  border-radius: 30px;
+  padding: 6px 14px 8px;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 10px;
+  width: 168px;
+  position: absolute;
+  right: 0;
+  background: white;
+  font-size: 14px;
+}
+
+.unavailable-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  opacity: 0.7;
+  top: 0;
+}
+
 .dashboard-list-project-wrapper {
   display: flex;
   flex-direction: column;
   border-bottom: 2px solid #ebebeb;
   padding-top: 20px;
   padding-bottom: 20px;
-  padding-right: 10px;
+  /* padding-right: 10px; */
+  position: relative;
 }
 
 .dashboard-list-project {
@@ -171,6 +198,7 @@
 /* dashboard project item settings */
 
 .dashboard-list-project-settings-button {
-  position: absolute;
+  /* position: absolute; */
   right: 20px;
+  text-align: right;
 }

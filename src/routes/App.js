@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Redirect, HashRouter as Router, Switch, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -27,7 +27,7 @@ import IntroScreen from '../components/IntroScreen/IntroScreen'
 import selectEntryPoints from '../projects/entry-points/select'
 import ErrorBoundaryScreen from '../components/ErrorScreen/ErrorScreen'
 
-function App(props) {
+function App (props) {
   const {
     activeEntryPoints,
     projectName,
@@ -40,7 +40,16 @@ function App(props) {
   } = props
   const [showProfileEditForm, setShowProfileEditForm] = useState(false)
   const [showPreferences, setShowPreferences] = useState(false)
+
+  // update releated states
+  const [updateAvailable, setUpdateAvailable] = useState(false)
   const [showUpdatePromptModal, setShowUpdatePromptModal] = useState(false)
+  const [showUpdateBar, setShowUpdateBar] = useState(false)
+
+  const onCloseUpdatePromptModal = () => {
+    setShowUpdatePromptModal(false)
+    setShowUpdateBar(true)
+  }
 
   const onProfileSubmit = async profile => {
     await updateWhoami(profile, whoami.address)
@@ -60,6 +69,34 @@ function App(props) {
   const subText = ''
   const submitText = 'Save Changes'
 
+  useEffect(() => {
+    // every 10 minutes, fetch from github releases
+    // to see if there is any new update available for the app
+    const timerID = setInterval(() => {
+      fetch('https://api.github.com/repos/h-be/acorn-release/releases')
+        .then(response => response.json())
+        .then(releases => {
+          const latestRelease = releases[0]
+          const latestTagName = latestRelease.tag_name
+          const currentRelease = 'v0.3.0'
+          console.log(latestTagName)
+          if (latestTagName !== currentRelease) {
+            setShowUpdatePromptModal(true)
+            clearInterval(timerID)
+            setUpdateAvailable(true)
+            console.log('update avail')
+          }
+        })
+    }, 5000)
+
+    return () => {
+      // this function will be called
+      // when this component unmounts:
+      // 'tear down the timer'
+      clearInterval(timerID)
+    }
+  }, [])
+
   return (
     <ErrorBoundaryScreen>
       <Router>
@@ -67,13 +104,18 @@ function App(props) {
           {/* Add new routes in here */}
           <Route path='/intro' component={IntroScreen} />
           <Route path='/register' component={CreateProfilePage} />
-          <Route path='/dashboard' component={Dashboard} />
+          <Route
+            path='/dashboard'
+            component={() => <Dashboard updateIsAvailable={updateAvailable} />}
+          />
           <Route path='/project/:projectId' component={ProjectView} />
           <Route path='/run-update' component={RunUpdate} />
           <Route path='/' render={() => <Redirect to='/dashboard' />} />
         </Switch>
         {agentAddress && (
           <Header
+            showUpdateBar={showUpdateBar}
+            setShowUpdateBar={setShowUpdateBar}
             activeEntryPoints={activeEntryPoints}
             projectName={projectName}
             whoami={whoami}
@@ -103,8 +145,8 @@ function App(props) {
         />
         {/* Update Prompt Modal */}
         <UpdatePromptModal
-          showUpdatePromptModal={showUpdatePromptModal}
-          setShowUpdatePromptModal={setShowUpdatePromptModal}
+          show={showUpdatePromptModal}
+          onClose={onCloseUpdatePromptModal}
         />
         {/* Loading Screen if no user agent */}
         {!agentAddress && <LoadingScreen />}
@@ -130,7 +172,7 @@ App.propTypes = {
   updateWhoami: PropTypes.func,
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return {
     dispatch,
     setNavigationPreference: preference => {
@@ -139,7 +181,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   const {
     ui: {
       hasFetchedForWhoami,
@@ -176,7 +218,7 @@ function mapStateToProps(state) {
   }
 }
 
-function mergeProps(stateProps, dispatchProps, _ownProps) {
+function mergeProps (stateProps, dispatchProps, _ownProps) {
   const { profilesCellIdString } = stateProps
   const { dispatch } = dispatchProps
   return {
