@@ -15,12 +15,12 @@ import ButtonWithPendingState from '../ButtonWithPendingState/ButtonWithPendingS
 
 // since this is a big wordset, dynamically import it
 // instead of including in the main bundle
-async function generatePassphrase() {
+async function generatePassphrase () {
   const { default: randomWord } = await import('diceware-word')
   return `${randomWord()} ${randomWord()} ${randomWord()} ${randomWord()} ${randomWord()}`
 }
 
-function CreateProjectForm({
+function CreateProjectForm ({
   creatingProject,
   onSubmit,
   projectCreated,
@@ -29,7 +29,10 @@ function CreateProjectForm({
   projectCoverUrl,
   setProjectCoverUrl,
 }) {
-  const [shouldInvalidateProjectName, setShouldInvalidateProjectName] = useState(false)
+  const [
+    shouldInvalidateProjectName,
+    setShouldInvalidateProjectName,
+  ] = useState(false)
   const [isValidProjectName, setisValidProjectName] = useState(true)
   const [errorProjectName, setErrorProjectName] = useState('')
 
@@ -122,7 +125,7 @@ function CreateProjectForm({
   )
 }
 
-function ProjectCreatedModal({ onDone, projectCreated, projectSecret }) {
+function ProjectCreatedModal ({ onDone, projectCreated, projectSecret }) {
   return (
     <div
       className={`project-created-modal ${
@@ -139,7 +142,7 @@ function ProjectCreatedModal({ onDone, projectCreated, projectSecret }) {
   )
 }
 
-export default function CreateProjectModal({
+export default function CreateProjectModal ({
   showModal,
   onClose,
   onCreateProject,
@@ -165,8 +168,12 @@ export default function CreateProjectModal({
   }
 
   const genAndSetPassphrase = async () => {
-    const passphrase = await generatePassphrase()
-    setProjectSecret(passphrase)
+    try {
+      const passphrase = await generatePassphrase()
+      setProjectSecret(passphrase)
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   const onDone = () => {

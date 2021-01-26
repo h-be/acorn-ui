@@ -6,10 +6,11 @@
 }
 
 .project-modal-subheading {
-  font-size: 14px;
-  font-family: 'hk-grotesk-medium', Helvetica, sans-serif;
+  /* font-size: 14px; */
+  font-family: 'hk-grotesk-semibold', Helvetica, sans-serif;
   color: #9b9b9b;
   margin-bottom: 30px;
+  line-height: 1.45;
 }
 
 .project-modal-content-spacer {

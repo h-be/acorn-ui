@@ -78,16 +78,17 @@ function App (props) {
         .then(releases => {
           const latestRelease = releases[0]
           const latestTagName = latestRelease.tag_name
-          const currentRelease = 'v0.3.0'
+          const currentRelease = 'v0.4.0'
           console.log(latestTagName)
           if (latestTagName !== currentRelease) {
             setShowUpdatePromptModal(true)
+            console.log(timerID)
             clearInterval(timerID)
             setUpdateAvailable(true)
             console.log('update avail')
           }
         })
-    }, 5000)
+    }, 1000 * 10 * 60)
 
     return () => {
       // this function will be called

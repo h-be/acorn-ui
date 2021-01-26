@@ -55,7 +55,7 @@ export default function DashboardListProject ({
               {project.members.length > 1 ? 's' : ''}
             </div>
           </div>
-          <div className='dashboard-list-project-members-'>
+          <div className='dashboard-list-project-members-settings'>
             <div className='dashboard-list-project-members'>
               <div
                 className='dashboard-invite-members-button'
@@ -81,7 +81,7 @@ export default function DashboardListProject ({
             </div>
             {/* project item settings */}
             <div className='dashboard-list-project-settings-button'>
-              dot dot dot
+              <Icon name='three-dots.svg' size='large' className='grey' />
             </div>
           </div>
         </div>

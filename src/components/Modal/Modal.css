@@ -35,8 +35,8 @@
 
 .modal-wrapper {
   position: absolute;
-  width: 634px;
-  min-height: 345px;
+  width: 540px;
+  /* min-height: 345px; */
   box-sizing: border-box;
   padding: 50px 60px;
   background-color: #ffff;
@@ -62,7 +62,7 @@
 }
 
 .modal-heading {
-  font-size: 22px;
+  font-size: 23px;
   line-height: 2.2;
   font-family: 'gilroyextrabold', Helvetica, sans-serif;
   font-weight: normal;

@@ -150,6 +150,12 @@
   color: #535353;
 }
 
+.dashboard-list-project-members-settings {
+  display: flex;
+  justify-content: flex-end;
+  align-items: column;
+}
+
 /* dashboard project invite members */
 
 .dashboard-invite-members-button {
@@ -199,6 +205,6 @@
 
 .dashboard-list-project-settings-button {
   /* position: absolute; */
-  right: 20px;
-  text-align: right;
+  /* right: 20px;
+  text-align: right; */
 }
