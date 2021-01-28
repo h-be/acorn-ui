@@ -7,11 +7,8 @@
 }
 
 .dashboard-left-menu {
-  min-width: 140px;
+  margin: 6px 40px 40px 20px;
   position: fixed;
-  padding: 20px;
-  margin-left: 10px;
-  margin-top: 46px;
 }
 
 .dashboard-left-menu-item {
@@ -19,7 +16,7 @@
   font-family: 'gilroyextrabold', Helvetica, sans-serif;
   color: #535353;
   margin-bottom: 10px;
-  padding: 4px;
+  padding: 8px;
   display: flex;
   flex-direction: row;
   cursor: pointer;
@@ -33,15 +30,15 @@
   margin-right: 6px;
 }
 
-.dashboard-left-menu-item:hover,
-.dashboard-left-menu-item.active {
+.dashboard-left-menu-item:hover, .dashboard-left-menu-item.active {
   color: #5f65ff;
   background-color: #f7f7f7;
 }
-.dashboard-left-menu-item:hover .inner-icon,
-.dashboard-left-menu-item.active .inner-icon {
+
+.dashboard-left-menu-item:hover .inner-icon, .dashboard-left-menu-item.active .inner-icon {
   background-color: #5f65ff;
 }
+
 .dashboard-left-menu-item .inner-icon {
   transition: background-color 0.1s ease-in;
 }
@@ -56,10 +53,10 @@
   flex-direction: column;
 }
 
-@media only screen and (max-width: 1045px) {
+@media only screen and (max-width: 1065px) {
   .dashboard-my-projects {
     float: right;
-    max-width: calc(100vw - 200px);
+    max-width: calc(100vw - 220px);
     margin-right: 40px;
   }
 }
@@ -108,8 +105,9 @@
   align-items: center;
   position: relative;
 }
+
 .my-projects-sorting-selected {
-  border: 1.5px solid #d0d0d0;
+  border: 2px solid #d0d0d0;
   border-radius: 30px;
   padding: 8px 14px;
   margin-left: 10px;
@@ -119,16 +117,20 @@
   cursor: pointer;
   color: #535353;
 }
+
 .my-projects-sorting-selected .icon {
   margin-left: 10px;
   transition: transform 0.2s ease-in;
 }
+
 .my-projects-sorting-selected:hover {
   color: #5f65ff;
 }
+
 .my-projects-sorting-selected:hover .icon .inner-icon {
   background-color: #5f65ff;
 }
+
 .my-projects-sorting-selected .icon.active {
   transform: rotateX(180deg);
   -webkit-transform: rotate(180deg);
@@ -142,13 +144,15 @@
   padding: 8px 0;
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
-  z-index: 1;
+  z-index: 2;
   list-style: none;
 }
+
 .my-projects-sorting-select li {
   padding: 8px 24px;
   color: #535353;
 }
+
 .my-projects-sorting-select li:hover {
   color: #5f65ff;
 }
@@ -157,16 +161,20 @@
   background-color: #f2f2f2;
   cursor: pointer;
 }
+
 .my-projects-sorting-select-enter {
   opacity: 0;
 }
+
 .my-projects-sorting-select-enter-active {
   opacity: 1;
   transition: opacity 100ms ease-in;
 }
+
 .my-projects-sorting-select-exit {
   opacity: 1;
 }
+
 .my-projects-sorting-select-exit-active {
   opacity: 0;
   transition: opacity 100ms ease-out;

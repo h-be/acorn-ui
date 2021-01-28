@@ -24,7 +24,10 @@ import {
 } from '../../projects/project-meta/actions'
 import selectEntryPoints from '../../projects/entry-points/select'
 
-import DashboardListProject from './DashboardListProject'
+import {
+  DashboardListProject,
+  DashboardListProjectLoading,
+} from './DashboardListProject'
 import { joinProjectCellId } from '../../cells/actions'
 
 function Dashboard ({
@@ -37,6 +40,7 @@ function Dashboard ({
   createProject,
   joinProject,
   updateIsAvailable,
+  setShowUpdatePromptModal,
 }) {
   // cells is an array of cellId strings
   useEffect(() => {
@@ -62,7 +66,7 @@ function Dashboard ({
 
   const onJoinProject = passphrase => joinProject(passphrase)
 
-  const hasProjects = projects.length > 0 // write 'false' if want to see Empty State
+  const hasProjects = cells.length > 0 // write 'false' if want to see Empty State
 
   const setSortBy = sortBy => () => {
     setSelectedSort(sortBy)
@@ -137,14 +141,24 @@ function Dashboard ({
             </div>
           </div>
           <div className='my-projects-content'>
-            {sortedProjects.map(project => (
-              <DashboardListProject
-                updateIsAvailable={updateIsAvailable}
-                key={project.cellId}
-                project={project}
-                setShowInviteMembersModal={setShowInviteMembersModal}
-              />
-            ))}
+            {/* Only render the sorted projects with their real metadata */}
+            {cells.length !== projects.length &&
+              cells.map(cellId => (
+                <DashboardListProjectLoading key={'dlpl-key' + cellId} />
+              ))}
+            {/* if they are all loaded */}
+            {cells.length === projects.length &&
+              sortedProjects.map(project => {
+                return (
+                  <DashboardListProject
+                    updateIsAvailable={updateIsAvailable}
+                    setShowUpdatePromptModal={setShowUpdatePromptModal}
+                    key={'dlp-key' + project.cellId}
+                    project={project}
+                    setShowInviteMembersModal={setShowInviteMembersModal}
+                  />
+                )
+              })}
             {!hasProjects && (
               <DashboardEmptyState
                 onJoinClick={() => setShowJoinModal(true)}
@@ -303,6 +317,7 @@ function mapDispatchToProps (dispatch) {
 }
 
 function mapStateToProps (state) {
+  console.log(state.cells.projects)
   return {
     agentAddress: state.agentAddress,
     cells: state.cells.projects,

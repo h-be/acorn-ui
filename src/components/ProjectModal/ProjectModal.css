@@ -1,5 +1,5 @@
 .project-modal-heading {
-  font-size: 22px;
+  font-size: 24px;
   font-family: 'gilroyextrabold', Helvetica, sans-serif;
   color: #222222;
   margin-bottom: 10px;
@@ -14,8 +14,8 @@
 }
 
 .project-modal-content-spacer {
-  margin-bottom: 90px;
-  margin-top: 76px;
+  margin-bottom: 50px;
+  margin-top: 50px;
 }
 
 .project-modal-button {

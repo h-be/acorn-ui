@@ -8,7 +8,7 @@
   z-index: 10;
 }
 
-.picker-popup .small-close {
+.picker-popup .very-small-close {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -16,7 +16,7 @@
 }
 
 .picker-popup-heading {
-  font-size: 16px;
+  font-size: 18px;
   font-family: 'gilroyextrabold';
   color: #717171;
   text-align: center;

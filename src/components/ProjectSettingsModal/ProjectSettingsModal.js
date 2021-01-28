@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import './CreateProjectModal.css'
+import { connect } from 'react-redux'
+import { updateProjectMeta } from '../../projects/project-meta/actions'
+
+import './ProjectSettingsModal.css'
 
 import ValidatingFormInput from '../ValidatingFormInput/ValidatingFormInput'
 import Modal from '../Modal/Modal'
@@ -20,10 +23,9 @@ async function generatePassphrase () {
   return `${randomWord()} ${randomWord()} ${randomWord()} ${randomWord()} ${randomWord()}`
 }
 
-function CreateProjectForm ({
-  creatingProject,
+function EditProjectForm ({
+  updatingProject,
   onSubmit,
-  projectCreated,
   projectName,
   setProjectName,
   projectCoverUrl,
@@ -65,32 +67,20 @@ function CreateProjectForm ({
     // }
   }, [projectCoverUrl])
 
-  const subheading =
-    'You can share the project with people or just keep it to yourself'
-
-  const actionButtonContent = (
-    <ButtonWithPendingState
-      pending={creatingProject}
-      pendingText='Creating...'
-      actionText='Create Project'
-    />
-  )
+  const subheading = `Change this project's name or image`
 
   // validate before firing event
   const submit = () => {
     // set this to trigger the invalid field to show
     setShouldInvalidateProjectName(true)
-    if (projectName.length > 0 && !creatingProject) {
+    if (projectName.length > 0 && !updatingProject) {
       onSubmit()
     }
   }
 
   return (
-    <div
-      className={`create-project-form ${
-        projectCreated ? 'project-created' : ''
-      }`}>
-      <ProjectModalHeading title='Create a new project' />
+    <div className='edit-project-form'>
+      <ProjectModalHeading title='Edit project' />
       <ProjectModalSubHeading title={subheading} />
       <ProjectModalContentSpacer>
         <ProjectModalContent>
@@ -105,7 +95,7 @@ function CreateProjectForm ({
             placeholder='The best project ever'
           />
           {/* project cover image */}
-          <div className='create-project-image-row'>
+          <div className='edit-project-image-row'>
             <ValidatingFormInput
               value={projectCoverUrl}
               onChange={setProjectCoverUrl}
@@ -118,105 +108,77 @@ function CreateProjectForm ({
               errorText={errorProjectCoverUrl}
             />
             <div
-              className='create-project-image'
+              className='edit-project-image'
               style={{ backgroundImage: `url(${projectCoverUrl})` }}
             />
           </div>
         </ProjectModalContent>
       </ProjectModalContentSpacer>
-      <ProjectModalButton text={actionButtonContent} onClick={submit} />
+      <ProjectModalButton text='Update' onClick={submit} />
     </div>
   )
 }
 
-function ProjectCreatedModal ({ onDone, projectCreated, projectSecret }) {
-  return (
-    <div
-      className={`project-created-modal ${
-        projectCreated ? 'project-created' : ''
-      }`}>
-      <ProjectModalHeading title='New project created!' />
-      <ProjectModalContentSpacer>
-        <ProjectModalContent>
-          <ProjectSecret passphrase={projectSecret} />
-        </ProjectModalContent>
-      </ProjectModalContentSpacer>
-      <ProjectModalButton text='Done' onClick={onDone} />
-    </div>
-  )
-}
+// function projectUpdatedModal ({ onDone, projectUpdated, projectSecret }) {
+//   return (
+//     <div
+//       className={`project-created-modal ${
+//         projectUpdated ? 'project-created' : ''
+//       }`}>
+//       <ProjectModalHeading title='New project created!' />
+//       <ProjectModalContent>
+//         <ProjectModalContentSpacer>
+//           <ProjectSecret passphrase={projectSecret} />
+//         </ProjectModalContentSpacer>
+//       </ProjectModalContent>
+//       <ProjectModalButton text='Done' onClick={onDone} />
+//     </div>
+//   )
+// }
 
-export default function CreateProjectModal ({
+function ProjectSettingsModal ({
   showModal,
   onClose,
-  onCreateProject,
+  updateProjectMeta,
+  projectAddress,
+  creatorAddress,
+  createdAt,
+  passphrase,
+  cellIdString,
+  projectNameProp,
+  projectCoverUrlProp,
 }) {
-  const reset = () => {
-    setProjectName('')
-    setProjectCoverUrl('')
-  }
-  const [creatingProject, setCreatingProject] = useState(false)
+  const [updatingProject, setUpdatingProject] = useState(false)
 
   const onSubmit = async () => {
-    setCreatingProject(true)
-    await onCreateProject(
+    setUpdatingProject(true)
+    await updateProjectMeta(
       {
         name: projectName,
         image: projectCoverUrl,
+        creator_address: creatorAddress,
+        created_at: createdAt,
+        passphrase: passphrase,
       },
-      projectSecret
+      projectAddress,
+      cellIdString
     )
-    setCreatingProject(false)
-    setProjectCreated(true)
-    reset()
-  }
-
-  let hasUnmounted = false
-
-  const genAndSetPassphrase = async () => {
-    try {
-      const passphrase = await generatePassphrase()
-      if (!hasUnmounted) setProjectSecret(passphrase)
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
-  const onDone = () => {
+    setUpdatingProject(false)
     onClose()
-    setProjectCreated(false)
-    genAndSetPassphrase()
   }
 
-  const [projectSecret, setProjectSecret] = useState('')
-  const [projectCreated, setProjectCreated] = useState(false)
-  const [projectName, setProjectName] = useState('')
-  const [projectCoverUrl, setProjectCoverUrl] = useState('')
-
-  // generate a passphrase on component mount
-  useEffect(() => {
-    hasUnmounted = false
-    genAndSetPassphrase()
-    return () => {
-      hasUnmounted = true
-    }
-  }, [])
+  const [projectName, setProjectName] = useState(projectNameProp)
+  const [projectCoverUrl, setProjectCoverUrl] = useState(projectCoverUrlProp)
 
   return (
     <Modal
       white
       active={showModal}
-      onClose={projectCreated ? onDone : onClose}
-      className='create-project-modal-wrapper'>
-      <ProjectCreatedModal
-        projectSecret={projectSecret}
-        onDone={onDone}
-        projectCreated={projectCreated}
-      />
-      <CreateProjectForm
+      onClose={onClose}
+      className='edit-project-modal-wrapper'>
+      <EditProjectForm
         onSubmit={onSubmit}
-        creatingProject={creatingProject}
-        projectCreated={projectCreated}
+        updatingProject={updatingProject}
         projectName={projectName}
         setProjectName={setProjectName}
         projectCoverUrl={projectCoverUrl}
@@ -225,3 +187,28 @@ export default function CreateProjectModal ({
     </Modal>
   )
 }
+
+function mapStateToProps (state) {
+  // props for the component
+
+  return {}
+}
+
+function mapDispatchToProps (dispatch) {
+  // props for the component
+  return {
+    updateProjectMeta: (entry, address, cellIdString) => {
+      return dispatch(
+        updateProjectMeta.create({
+          payload: { entry, address },
+          cellIdString: cellIdString,
+        })
+      )
+    },
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProjectSettingsModal)

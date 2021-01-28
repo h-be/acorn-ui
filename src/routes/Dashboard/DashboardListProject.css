@@ -1,18 +1,24 @@
 .update-required-button {
-  z-index: 2;
-  border: 2px solid #6600FF;
   color: #6600FF;
   font-family: 'hk-grotesk-semibold';
-  border-radius: 30px;
-  padding: 6px 14px 8px;
+  border-radius: 18px;
+  padding: 0px 10px 2px;
   text-align: center;
   cursor: pointer;
   margin-bottom: 10px;
-  width: 168px;
+  /* width: 168px; */
   position: absolute;
-  right: 0;
+  bottom: 21px;
   background: white;
   font-size: 14px;
+  line-height: 1.8;
+  z-index: 2;
+  left: 72px;
+  transition: color 0.2s;
+}
+
+.update-required-button:hover {
+  color: #7c24ff;
 }
 
 .unavailable-layer {
@@ -22,6 +28,7 @@
   background-color: #ffffff;
   opacity: 0.7;
   top: 0;
+  z-index: 1
 }
 
 .dashboard-list-project-wrapper {
@@ -30,7 +37,6 @@
   border-bottom: 2px solid #ebebeb;
   padding-top: 20px;
   padding-bottom: 20px;
-  /* padding-right: 10px; */
   position: relative;
 }
 
@@ -61,7 +67,7 @@
 }
 
 .dashboard-list-project-name {
-  font-size: 22px;
+  font-size: 24px;
   font-family: 'hk-grotesk-extrabold', Helvetica, sans-serif;
   text-decoration: none;
   color: #535353;
@@ -69,6 +75,38 @@
   margin-bottom: 12px;
   cursor: pointer;
   transition: color 0.2s ease-in;
+}
+
+.dashboard-list-project-name.placeholder {
+  background-color: #f1f1f1;
+  width: 150px;
+  height: 30px;
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  margin-bottom: 16px;
+}
+
+.dashboard-list-project-name.placeholder::before, .dashboard-list-project-member-count.placeholder::before {
+  content: '';
+  display: block;
+  position: absolute;
+  left: -150px;
+  top: 0;
+  height: 30px;
+  width: 200px;
+  background: linear-gradient(to right, transparent 0%, #f7f7f7 50%, transparent 100%);
+  animation: load 1.5s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+}
+
+@keyframes load {
+  from {
+    left: -150px;
+  }
+  to {
+    left: 100%;
+  }
 }
 
 .dashboard-list-project-name:hover {
@@ -79,6 +117,15 @@
   font-family: 'hk-grotesk-medium', Helvetica, sans-serif;
   font-size: 16px;
   color: #bcbcbc;
+}
+
+.dashboard-list-project-member-count.placeholder {
+  background-color: #f1f1f1;
+  width: 80px;
+  height: 18px;
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
 }
 
 /* dashboard project entry points section */
@@ -152,32 +199,41 @@
 
 .dashboard-list-project-members-settings {
   display: flex;
-  justify-content: flex-end;
-  align-items: column;
+  /* justify-content: flex-end; */
+  flex-direction: column;
+}
+
+.dashboard-list-project-settings-button .icon {
+  position: absolute;
+  right: 0;
+  bottom: 18px;
+  padding: 10px 4px;
 }
 
 /* dashboard project invite members */
 
 .dashboard-invite-members-button {
-  border: 1.5px solid #d0d0d0;
-  border-radius: 30px;
-  font-size: 12px;
-  padding: 6px 14px 8px;
+  border: 1.8px solid #d0d0d0;
+  border-radius: 50%;
   text-align: center;
   cursor: pointer;
-  margin-bottom: 10px;
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
 }
 
 .dashboard-invite-members-button:hover {
-  color: #5f65ff;
+  border: 1.8px solid #5f65ff;
 }
 
 .dashboard-invite-members-button .icon {
-  margin-right: 4px;
-  width: 12px;
+  width: 16px;
+  height: 16px;
+  padding: 0px;
+  cursor: pointer;
 }
 
 .dashboard-invite-members-button:hover .inner-icon {
@@ -188,17 +244,18 @@
 
 .dashboard-list-project-members {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .dashboard-list-project-member-list {
-  margin-bottom: 8px;
+  /* margin-bottom: 8px; */
   display: flex;
 }
 
 .dashboard-list-project-member-list * {
-  margin-left: 5px;
+  margin-right: 4px;
 }
 
 /* dashboard project item settings */

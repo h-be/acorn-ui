@@ -196,6 +196,7 @@ class Header extends React.Component {
         <UpdateBar
           active={this.props.showUpdateBar}
           onClose={() => this.props.setShowUpdateBar(false)}
+          setShowUpdatePromptModal={this.props.setShowUpdatePromptModal}
         />
         <div className='header'>
           <div className='top-left-panel'>

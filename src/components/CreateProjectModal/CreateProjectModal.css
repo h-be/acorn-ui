@@ -1,6 +1,6 @@
 .create-project-modal-wrapper {
   /* width: 550px; */
-  height: 453px;
+  height: 523px;
   overflow: hidden;
   position: relative;
   justify-content: space-between;
@@ -28,8 +28,8 @@
 
 .create-project-image {
   margin-left: 8px;
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   background-size: cover;
   background-repeat: no-repeat;
   border-radius: 5px;
@@ -70,4 +70,9 @@
   opacity: 1;
   -webkit-transform: scale(1);
   transform: scale(1);
+}
+
+.project-created-modal.project-created .project-modal-content-spacer {
+  margin-bottom: 104px;
+  margin-top: 104px;
 }

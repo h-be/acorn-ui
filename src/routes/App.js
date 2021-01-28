@@ -78,7 +78,7 @@ function App (props) {
         .then(releases => {
           const latestRelease = releases[0]
           const latestTagName = latestRelease.tag_name
-          const currentRelease = 'v0.4.0'
+          const currentRelease = 'v0.3.0'
           console.log(latestTagName)
           if (latestTagName !== currentRelease) {
             setShowUpdatePromptModal(true)
@@ -107,7 +107,12 @@ function App (props) {
           <Route path='/register' component={CreateProfilePage} />
           <Route
             path='/dashboard'
-            component={() => <Dashboard updateIsAvailable={updateAvailable} />}
+            render={() => (
+              <Dashboard
+                updateIsAvailable={updateAvailable}
+                setShowUpdatePromptModal={setShowUpdatePromptModal}
+              />
+            )}
           />
           <Route path='/project/:projectId' component={ProjectView} />
           <Route path='/run-update' component={RunUpdate} />
@@ -117,6 +122,7 @@ function App (props) {
           <Header
             showUpdateBar={showUpdateBar}
             setShowUpdateBar={setShowUpdateBar}
+            setShowUpdatePromptModal={setShowUpdatePromptModal}
             activeEntryPoints={activeEntryPoints}
             projectName={projectName}
             whoami={whoami}

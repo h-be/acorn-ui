@@ -4,7 +4,11 @@ import './UpdateBar.css'
 
 import Icon from '../Icon/Icon'
 
-export default function UpdateBar({ active, onClose }) {
+export default function UpdateBar ({
+  active,
+  onClose,
+  setShowUpdatePromptModal,
+}) {
   return (
     <CSSTransition
       in={active}
@@ -13,11 +17,15 @@ export default function UpdateBar({ active, onClose }) {
       classNames='update-bar'>
       <div className='update-bar-wrapper'>
         <span>A new version of Acorn is available. </span>
-        <a className='update-bar-link'>Update to the new version now.</a>
+        <a
+          className='update-bar-link'
+          onClick={() => setShowUpdatePromptModal(true)}>
+          Update to the new version now.
+        </a>
         <div className='update-bar-close'>
           <Icon
             name='x-bold.svg'
-            size='small-close'
+            size='very-small-close'
             className='white'
             onClick={() => onClose()}
           />
