@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import './RunUpdate.css'
 
-function RunUpdate({ preRestart }) {
+function RunUpdate({ preRestart, version }) {
   // if not preRestart, then this is postRestart
 
   const title = preRestart ? 'Preparing your update' : 'Finishing your update'
   const [status, setStatus] = useState('')
 
+  console.log(version)
+  
   useEffect(() => {
-    if (preRestart) {
-      setStatus('Exporting your data. The app will restart shortly.')
+    if (window.require) {
+      const { ipcRenderer } = window.require('electron')
+      ipcRenderer.send('start-update-download', version)
+      if (preRestart) {
+        setStatus('Exporting your data. The app will restart shortly.')
+      } else {
+        setStatus('Importing your data.')
+      }
     } else {
-      setStatus('Importing your data.')
+      setStatus('Not in an electron app, cant run update')
     }
   }, [])
 

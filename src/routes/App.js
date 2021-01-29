@@ -70,8 +70,7 @@ function App (props) {
   const submitText = 'Save Changes'
 
   useEffect(() => {
-    const version = window.require('electron').app.getVersion()
-    console.log(version)
+    let thisVersion = 'v0.4.0'
     // every 10 minutes, fetch from github releases
     // to see if there is any new update available for the app
     const checkForGithubUpdates = () => {
@@ -80,16 +79,20 @@ function App (props) {
         .then(releases => {
           const latestRelease = releases[0]
           const latestTagName = latestRelease.tag_name
-          const currentRelease = 'v0.3.0'
-          if (latestTagName !== currentRelease) {
+          if (latestTagName !== thisVersion) {
             setShowUpdatePromptModal(true)
             clearInterval(timerID)
-            setUpdateAvailable(true)
+            setUpdateAvailable(latestTagName)
           }
         })
     }
     const timerID = setInterval(checkForGithubUpdates, 1000 * 10 * 60)
-    checkForGithubUpdates()
+    if (window.require) {
+      window.require('electron').ipcRenderer.invoke('get-version').then((version) => {
+        thisVersion = version
+        checkForGithubUpdates()
+      })
+    }
 
     return () => {
       // this function will be called
@@ -116,7 +119,7 @@ function App (props) {
             )}
           />
           <Route path='/project/:projectId' component={ProjectView} />
-          <Route path='/run-update' render={() => <RunUpdate preRestart />} />
+          <Route path='/run-update' render={() => <RunUpdate preRestart version={updateAvailable} />} />
           <Route path='/finish-update' render={() => <RunUpdate />} />
           <Route path='/' render={() => <Redirect to='/dashboard' />} />
         </Switch>
