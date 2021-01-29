@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './Icon.css'
 
-function Icon({
+function Icon ({
   name,
   withBackground,
   size,
@@ -34,14 +34,6 @@ function Icon({
       )}
     </div>
   )
-}
-
-Icon.propTypes = {
-  name: PropTypes.string.isRequired,
-  withBackground: PropTypes.bool,
-  onClick: PropTypes.func,
-  size: PropTypes.string,
-  className: PropTypes.string,
 }
 
 export default Icon

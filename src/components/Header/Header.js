@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Switch,
   Route,
@@ -16,8 +16,9 @@ import Icon from '../Icon/Icon'
 import ListExport from '../ListExport/ListExport'
 import Preferences from '../Preferences/Preferences'
 import Modal from '../Modal/Modal'
+import UpdateBar from '../UpdateBar/UpdateBar'
 
-function ActiveEntryPoint({ entryPoint, activeEntryPointAddresses }) {
+function ActiveEntryPoint ({ entryPoint, activeEntryPointAddresses }) {
   const location = useLocation()
   const entryPointsAbsentThisOne = activeEntryPointAddresses
     .filter(address => address !== entryPoint.address)
@@ -39,7 +40,7 @@ function ActiveEntryPoint({ entryPoint, activeEntryPointAddresses }) {
 }
 
 class Header extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.handleClickOutside = this.handleClickOutside.bind(this)
     this.clickAvatar = this.clickAvatar.bind(this)
@@ -67,7 +68,7 @@ class Header extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.changeStatus(
       this.props.whoami ? this.props.whoami.entry.status : 'Online'
     )
@@ -90,14 +91,14 @@ class Header extends React.Component {
     })
   }
 
-  handleClickOutside(e) {
+  handleClickOutside (e) {
     this.setState({
       isProfileOpen: false,
       isExportOpen: false,
       isStatusOpen: false,
     })
   }
-  clickProfile(e) {
+  clickProfile (e) {
     this.props.setShowProfileEditForm(true)
     this.setState({
       isProfileOpen: false,
@@ -105,7 +106,7 @@ class Header extends React.Component {
       isStatusOpen: false,
     })
   }
-  clickPreferences(e) {
+  clickPreferences (e) {
     this.props.setShowPreferences(true)
     this.setState({
       isProfileOpen: false,
@@ -114,37 +115,37 @@ class Header extends React.Component {
       isGuideOpen: false,
     })
   }
-  clickAvatar(e) {
+  clickAvatar (e) {
     this.setState({
       isProfileOpen: !this.state.isProfileOpen,
       isExportOpen: false,
       isStatusOpen: false,
     })
   }
-  hover(bool) {
+  hover (bool) {
     this.setState({ avatar: bool })
   }
 
-  clickStatus(e) {
+  clickStatus (e) {
     this.setState({
       isStatusOpen: !this.state.isStatusOpen,
       isExportOpen: false,
       isProfileOpen: false,
     })
   }
-  clickExport(e) {
+  clickExport (e) {
     this.setState({
       isExportOpen: !this.state.isExportOpen,
       isStatusOpen: false,
       isProfileOpen: false,
     })
   }
-  clickSearch(e) {}
-  saveStatus(status) {
+  clickSearch (e) {}
+  saveStatus (status) {
     this.props.updateStatus(status)
     this.changeStatus(status)
   }
-  changeStatus(status) {
+  changeStatus (status) {
     switch (status) {
       case 'Online':
         this.setState({
@@ -170,17 +171,17 @@ class Header extends React.Component {
       isStatusOpen: false,
     })
   }
-  handleStatusEnter() {
+  handleStatusEnter () {
     this.setState({ isStatusHover: true })
   }
-  handleStatusLeave() {
+  handleStatusLeave () {
     this.setState({ isStatusHover: false })
   }
-  closeGuidebook() {
+  closeGuidebook () {
     const pathWithoutGuidebook = this.props.location.pathname
     this.props.history.push(pathWithoutGuidebook)
   }
-  render() {
+  render () {
     const activeEntryPointAddresses = this.props.activeEntryPoints.map(
       entryPoint => entryPoint.address
     )
@@ -192,6 +193,11 @@ class Header extends React.Component {
 
     return (
       <div className='header-wrapper'>
+        <UpdateBar
+          active={this.props.showUpdateBar}
+          onClose={() => this.props.setShowUpdateBar(false)}
+          setShowUpdatePromptModal={this.props.setShowUpdatePromptModal}
+        />
         <div className='header'>
           <div className='top-left-panel'>
             <NavLink to='/' className='home-link logo'>

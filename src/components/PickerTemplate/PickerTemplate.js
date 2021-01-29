@@ -3,7 +3,7 @@ import './PickerTemplate.css'
 
 import Icon from '../Icon/Icon'
 
-export default function PickerTemplate({
+export default function PickerTemplate ({
   className,
   children,
   heading,
@@ -14,7 +14,7 @@ export default function PickerTemplate({
       <Icon
         className='vertical_action_close'
         name='x.svg'
-        size='small-close'
+        size='very-small-close'
         className='grey'
         onClick={() => onClose()}
       />

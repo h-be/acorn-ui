@@ -6,6 +6,7 @@
   cursor: pointer;
   position: relative;
 }
+
 .inner-icon {
   /* default: black */
   background-color: #000000;
@@ -61,16 +62,16 @@
 }
 
 .icon.small-close {
-  width: 18px;
-  height: 18px;
-  padding: 3px;
+  width: 24px;
+  height: 24px;
+  padding: 4px;
   cursor: pointer;
 }
 
 .icon.very-small-close {
-  width: 14px;
-  height: 14px;
-  padding: 3px;
+  width: 18px;
+  height: 18px;
+  padding: 2px;
   cursor: pointer;
 }
 
@@ -164,6 +165,7 @@
   transition-delay: 0.9s;
   visibility: visible;
   transition-property: visibility;
+  z-index: 9999;
 }
 
 .icon-tooltip {
@@ -185,5 +187,4 @@
 
 .icon-tooltip.top {
   bottom: 30px;
-  z-index: 9999;
 }

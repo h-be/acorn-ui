@@ -10,7 +10,7 @@ module.exports = merge(common, {
   },
   plugins: [
     new webpack.DefinePlugin({
-      __APP_NAME__: JSON.stringify('my-app11'),
+      __APP_NAME__: JSON.stringify('my-app6'),
       __ADMIN_PORT__: 1234,
       __APP_PORT__: 8888,
     }),

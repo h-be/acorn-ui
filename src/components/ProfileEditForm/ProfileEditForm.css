@@ -1,5 +1,5 @@
 .profile_edit_form {
-  width: 510px;
+  /* width: 510px; */
   text-align: center;
   margin: 0 auto;
 }
@@ -16,9 +16,9 @@
 }
 
 .profile_edit_form h1 {
-  margin-bottom: 0;
-  font-size: 20px;
-  line-height: 24px;
+  margin: 0;
+  font-size: 24px;
+  line-height: 32px;
   color: #4d4d4d;
   font-family: 'gilroyextrabold', 'gilroyextrabold', Helvetica, sans-serif;
   font-weight: normal;
@@ -71,7 +71,6 @@
     text-align: center;
     margin: 0 auto;
   }
-
   .validating_form_input {
     margin-bottom: 30px;
   }
