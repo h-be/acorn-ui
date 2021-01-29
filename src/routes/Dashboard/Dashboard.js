@@ -317,7 +317,6 @@ function mapDispatchToProps (dispatch) {
 }
 
 function mapStateToProps (state) {
-  console.log(state.cells.projects)
   return {
     agentAddress: state.agentAddress,
     cells: state.cells.projects,

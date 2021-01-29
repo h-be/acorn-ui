@@ -180,6 +180,11 @@
   transition: opacity 100ms ease-out;
 }
 
+/* dont show a physical scroll bar */
+.my-projects-content::-webkit-scrollbar {
+  display: none;
+}
+
 .my-projects-content {
   position: relative;
   overflow-y: scroll;
