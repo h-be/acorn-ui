@@ -33,6 +33,10 @@
   background: rgb(243 241 233 / 70%);
 }
 
+.modal-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
 .modal-wrapper {
   position: absolute;
   width: 540px;

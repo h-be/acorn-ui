@@ -70,25 +70,26 @@ function App (props) {
   const submitText = 'Save Changes'
 
   useEffect(() => {
+    const version = window.require('electron').app.getVersion()
+    console.log(version)
     // every 10 minutes, fetch from github releases
     // to see if there is any new update available for the app
-    const timerID = setInterval(() => {
+    const checkForGithubUpdates = () => {
       fetch('https://api.github.com/repos/h-be/acorn-release/releases')
         .then(response => response.json())
         .then(releases => {
           const latestRelease = releases[0]
           const latestTagName = latestRelease.tag_name
           const currentRelease = 'v0.3.0'
-          console.log(latestTagName)
           if (latestTagName !== currentRelease) {
             setShowUpdatePromptModal(true)
-            console.log(timerID)
             clearInterval(timerID)
             setUpdateAvailable(true)
-            console.log('update avail')
           }
         })
-    }, 1000 * 10 * 60)
+    }
+    const timerID = setInterval(checkForGithubUpdates, 1000 * 10 * 60)
+    checkForGithubUpdates()
 
     return () => {
       // this function will be called
@@ -115,7 +116,8 @@ function App (props) {
             )}
           />
           <Route path='/project/:projectId' component={ProjectView} />
-          <Route path='/run-update' component={RunUpdate} />
+          <Route path='/run-update' render={() => <RunUpdate preRestart />} />
+          <Route path='/finish-update' render={() => <RunUpdate />} />
           <Route path='/' render={() => <Redirect to='/dashboard' />} />
         </Switch>
         {agentAddress && (

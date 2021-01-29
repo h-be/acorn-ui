@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './UpdatePromptModal.css'
 
-import Icon from '../Icon/Icon'
-import Button from '../Button/Button'
 import Modal, { ModalContent } from '../Modal/Modal'
+import { useHistory } from 'react-router-dom'
 
 export default function UpdatePromptModal ({ show, onClose }) {
+  const history = useHistory()
   const updateDetails = (
     <div className='update-details-wrapper'>
       <div className='update-details-title'>About this update</div>
@@ -28,6 +28,10 @@ export default function UpdatePromptModal ({ show, onClose }) {
     </div>
   )
 
+  const runUpdate = () => {
+    history.push('/run-update')
+  }
+
   return (
     <>
       <Modal white active={show} onClose={onClose}>
@@ -36,6 +40,7 @@ export default function UpdatePromptModal ({ show, onClose }) {
           content='You are required to update to the new version to access your collaborative projects. You can keep continue using your personal projects without the update.'
           secondaryContent={updateDetails}
           primaryButton='Update now'
+          primaryButtonAction={runUpdate}
           altButton="I'll update later"
           altButtonAction={onClose}
         />
