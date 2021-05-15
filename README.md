@@ -1,3 +1,8 @@
+# Deprecated
+
+## This code now lives at [https://github.com/h-be/acorn](https://github.com/h-be/acorn) in the `web` folder.
+
+
 # acorn-ui
 
 the user interface for Acorn app, see [acorn-hc](https://github.com/h-be/acorn-hc) for backend
